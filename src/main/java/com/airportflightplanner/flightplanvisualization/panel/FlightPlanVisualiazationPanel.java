@@ -90,15 +90,14 @@ public class FlightPlanVisualiazationPanel extends JPanel {
         table.setDefaultRenderer(String.class, centerRenderer);
         table.setFillsViewportHeight(true);
 
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(table.getModel());
+        table.setRowSorter(sorter);
+        List<RowSorter.SortKey> sortKeys = new ArrayList<>();
 
-         TableRowSorter<TableModel> sorter = new         TableRowSorter<>(table.getModel());
-         table.setRowSorter(sorter);
-         List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+        sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
 
-         sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
-
-         sorter.setSortKeys(sortKeys);
-         sorter.sort();
+        sorter.setSortKeys(sortKeys);
+        sorter.sort();
 
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setViewportView(table);

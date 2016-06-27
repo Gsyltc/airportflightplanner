@@ -119,5 +119,4 @@ public class FlightPlanVisualizationListModel extends AbstractListModel<FlightPl
             fireContentsChanged(this, FIRST_ROW, list.size() - 1);
         }
     }
-
 }

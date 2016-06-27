@@ -23,7 +23,6 @@ import com.jgoodies.forms.layout.RowSpec;
  */
 public class MainPanel extends FormDebugPanel {
 
-
     /**
      *
      */
