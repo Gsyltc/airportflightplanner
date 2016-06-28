@@ -7,7 +7,7 @@ package com.airportflightplanner.flightplanvisualization.panel;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
-import com.airportflightplanner.main.visualelements.messages.MainPanelMessages;
+import com.airportflightplanner.common.types.StartDays;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
@@ -43,25 +43,25 @@ public class DaysSelectionPanel extends JPanel {
                 new RowSpec[] { //
                         FormSpecs.PREF_ROWSPEC, }));//
 
-        JCheckBox chckbxNewCheckBox = new JCheckBox(MainPanelMessages.MONDAY);
+        JCheckBox chckbxNewCheckBox = new JCheckBox(StartDays.MONDAY.toString());
         add(chckbxNewCheckBox, "1, 1");
 
-        JCheckBox chckbxNewCheckBox_1 = new JCheckBox(MainPanelMessages.TUESDAY);
+        JCheckBox chckbxNewCheckBox_1 = new JCheckBox(StartDays.TUESDAY.toString());
         add(chckbxNewCheckBox_1, "3, 1");
 
-        JCheckBox chckbxNewCheckBox_2 = new JCheckBox(MainPanelMessages.WEDNESDAY);
+        JCheckBox chckbxNewCheckBox_2 = new JCheckBox(StartDays.WEDNESDAY.toString());
         add(chckbxNewCheckBox_2, "5, 1");
 
-        JCheckBox chckbxNewCheckBox_3 = new JCheckBox(MainPanelMessages.THRUSDAY);
+        JCheckBox chckbxNewCheckBox_3 = new JCheckBox(StartDays.THRUSDAY.toString());
         add(chckbxNewCheckBox_3, "7, 1");
 
-        JCheckBox chckbxNewCheckBox_4 = new JCheckBox(MainPanelMessages.FRIDAY);
+        JCheckBox chckbxNewCheckBox_4 = new JCheckBox(StartDays.FRIDAY.toString());
         add(chckbxNewCheckBox_4, "9, 1");
 
-        JCheckBox chckbxS = new JCheckBox(MainPanelMessages.SATURDAY);
+        JCheckBox chckbxS = new JCheckBox(StartDays.SATURDAY.toString());
         add(chckbxS, "11, 1");
 
-        JCheckBox chckbxD = new JCheckBox(MainPanelMessages.SUNDAY);
+        JCheckBox chckbxD = new JCheckBox(StartDays.SUNDAY.toString());
         add(chckbxD, "13, 1");
     }
 

@@ -24,7 +24,7 @@ import com.airportflightplanner.common.utils.properties.CommonProperties;
 public class AirportLoader {
     /** The logger of this class. */
     private static final Log          LOGGER   = LogFactory.getLog(AirportLoader.class);
-
+    /** */
     private static final List<String> AIRPORTS = new ArrayList<String>();
 
     /**

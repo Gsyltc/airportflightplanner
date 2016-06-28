@@ -4,8 +4,10 @@
  */
 package com.airportflightplanner.common.model;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.measure.unit.SI;
 
@@ -15,23 +17,23 @@ import org.jscience.geography.coordinates.Altitude;
 
 import com.airportflightplanner.common.api.flightplan.FlightPlanWriter;
 import com.airportflightplanner.common.api.flightplan.FligthPlanProperties;
-import com.airportflightplanner.common.api.steerpoints.SteerPointReader;
 import com.airportflightplanner.common.types.ArrivalType;
 import com.airportflightplanner.common.types.DepartureType;
 import com.airportflightplanner.common.types.FlightType;
+import com.airportflightplanner.common.types.StartDays;
 import com.jgoodies.binding.beans.Model;
 
 /**
  * @author Goubaud Sylvain
  *
  */
-public class FlighPlanModel extends Model implements FlightPlanWriter { 
+public class FlighPlanModel extends Model implements FlightPlanWriter {
     /**
      *
      */
     private static final long              serialVersionUID     = 9068391147414760708L;
     /** */
-    private Map<Integer, SteerPointReader> steerPoints          = new ConcurrentHashMap<Integer, SteerPointReader>();
+    private List<String> steerPoints          = new CopyOnWriteArrayList<String>();
     /** */
     private String                         departureAirport;
     /** */
@@ -47,7 +49,7 @@ public class FlighPlanModel extends Model implements FlightPlanWriter {
     /** */
     private String                         aircraftCie;
     /** */
-    private Period                       duration;
+    private Period                         duration;
     /** */
     private ArrivalType                    arrivalType          = ArrivalType.STRAIGHT_IN_APPROCH;
     /** */
@@ -60,13 +62,17 @@ public class FlighPlanModel extends Model implements FlightPlanWriter {
     private Altitude                       landingLightAltitude = Altitude.valueOf(0.0, SI.METER);
     /** */
     private String                         name;
+    /** */
+    private Set<StartDays>                 startDays            = new HashSet<StartDays>();
+    /** */
+    private String                         alternateAirport;
 
     /**
      *
      * {@inheritDoc}
      */
     @Override
-    public Map<Integer, SteerPointReader> getSteerPoints() {
+    public List<String> getSteerPoints() {
         return steerPoints;
     }
 
@@ -197,12 +203,31 @@ public class FlighPlanModel extends Model implements FlightPlanWriter {
     }
 
     /**
+    *
+    * {@inheritDoc}
+    */
+   @Override
+    public Set<StartDays> getStartDays() {
+        return startDays;
+    }
+
+
+    /**
      *
      * {@inheritDoc}
      */
     @Override
-    public void setSteerPoints(final Map<Integer, SteerPointReader> value) {
-        Map<Integer, SteerPointReader> oldValue = this.steerPoints;
+    public String getAlternateAirport() {
+        return alternateAirport;
+    }
+
+    /**
+     *
+     * {@inheritDoc}
+     */
+    @Override
+    public void setSteerPoints(final List<String> value) {
+        List<String> oldValue = getSteerPoints();
         if (!value.equals(oldValue)) {
             this.steerPoints = value;
             firePropertyChange(FligthPlanProperties.STEERPOINTS_MAP, oldValue, steerPoints);
@@ -215,7 +240,7 @@ public class FlighPlanModel extends Model implements FlightPlanWriter {
      */
     @Override
     public void setDepartureAirport(final String value) {
-        String oldValue = this.departureAirport;
+        String oldValue = getDepartureAirport();
         if (!value.equals(oldValue)) {
             this.departureAirport = value;
             firePropertyChange(FligthPlanProperties.DEPARTURE_AIRPORT, oldValue, departureAirport);
@@ -228,7 +253,7 @@ public class FlighPlanModel extends Model implements FlightPlanWriter {
      */
     @Override
     public void setArrivalAirport(final String value) {
-        String oldValue = this.arrivalAirport;
+        String oldValue = getArrivalAirport();
         if (!value.equals(oldValue)) {
             this.arrivalAirport = value;
             firePropertyChange(FligthPlanProperties.ARRIVAL_AIRPORT, oldValue, arrivalAirport);
@@ -241,7 +266,7 @@ public class FlighPlanModel extends Model implements FlightPlanWriter {
      */
     @Override
     public void setStartTime(final LocalTime value) {
-        LocalTime oldValue = this.startTime;
+        LocalTime oldValue = getStartTime();
         if ((null != value) && !value.equals(oldValue)) {
             this.startTime = value;
             firePropertyChange(FligthPlanProperties.START_TIME, oldValue, startTime);
@@ -254,7 +279,7 @@ public class FlighPlanModel extends Model implements FlightPlanWriter {
      */
     @Override
     public void setEndTime(final LocalTime value) {
-        LocalTime oldValue = this.endTime;
+        LocalTime oldValue = getEndTime();
         if ((null != value) && !value.equals(oldValue)) {
             this.endTime = value;
             firePropertyChange(FligthPlanProperties.END_TIME, oldValue, endTime);
@@ -267,7 +292,7 @@ public class FlighPlanModel extends Model implements FlightPlanWriter {
      */
     @Override
     public void setCallSign(final String value) {
-        String oldValue = this.callSign;
+        String oldValue = getCallSign();
         if (!value.equals(oldValue)) {
             this.callSign = value;
             firePropertyChange(FligthPlanProperties.CALLSIGN, oldValue, callSign);
@@ -280,7 +305,7 @@ public class FlighPlanModel extends Model implements FlightPlanWriter {
      */
     @Override
     public void setAircraftType(final String value) {
-        String oldValue = this.aircraftType;
+        String oldValue = getAircraftType();
         if (!value.equals(oldValue)) {
             this.aircraftType = value;
             firePropertyChange(FligthPlanProperties.AIRCRAFT_TYPE, oldValue, aircraftType);
@@ -293,7 +318,7 @@ public class FlighPlanModel extends Model implements FlightPlanWriter {
      */
     @Override
     public void setAircraftCie(final String value) {
-        String oldValue = this.aircraftCie;
+        String oldValue = getAircraftCie();
         if (!value.equals(oldValue)) {
             this.aircraftCie = value;
             firePropertyChange(FligthPlanProperties.AIRCRAFT_CIE, oldValue, aircraftCie);
@@ -306,7 +331,7 @@ public class FlighPlanModel extends Model implements FlightPlanWriter {
      */
     @Override
     public void setDuration(final Period value) {
-        Period oldValue = this.duration;
+        Period oldValue = getDuration();
         if ((null != value) && !value.equals(oldValue)) {
             this.duration = value;
             firePropertyChange(FligthPlanProperties.DURATION, oldValue, duration);
@@ -319,7 +344,7 @@ public class FlighPlanModel extends Model implements FlightPlanWriter {
      */
     @Override
     public void setArrivalType(final ArrivalType value) {
-        ArrivalType oldValue = this.arrivalType;
+        ArrivalType oldValue = getArrivalType();
         if (!value.equals(oldValue)) {
             this.arrivalType = value;
             firePropertyChange(FligthPlanProperties.AIRCRAFT_TYPE, oldValue, arrivalType);
@@ -332,7 +357,7 @@ public class FlighPlanModel extends Model implements FlightPlanWriter {
      */
     @Override
     public void setDepartureType(final DepartureType value) {
-        DepartureType oldValue = this.departureType;
+        DepartureType oldValue = getDepartureType();
         if (!value.equals(oldValue)) {
             this.departureType = value;
             firePropertyChange(FligthPlanProperties.DEPARTURE_TYPE, oldValue, departureType);
@@ -345,7 +370,7 @@ public class FlighPlanModel extends Model implements FlightPlanWriter {
      */
     @Override
     public void setFlighType(final FlightType value) {
-        FlightType oldValue = this.flightType;
+        FlightType oldValue = getFlightType();
         if (!value.equals(oldValue)) {
             this.flightType = value;
             firePropertyChange(FligthPlanProperties.FLIGHT_TYPE, oldValue, flightType);
@@ -358,7 +383,7 @@ public class FlighPlanModel extends Model implements FlightPlanWriter {
      */
     @Override
     public void setFlightToCompletion(final Boolean value) {
-        Boolean oldValue = this.isFlightToCompletion;
+        Boolean oldValue = isFlightToCompletion();
         if (!value.equals(oldValue)) {
             this.isFlightToCompletion = value;
             firePropertyChange(FligthPlanProperties.FLIGHT_TO_COMPLETION, oldValue, isFlightToCompletion);
@@ -371,7 +396,7 @@ public class FlighPlanModel extends Model implements FlightPlanWriter {
      */
     @Override
     public void setLandingLightAltitude(final Altitude value) {
-        Altitude oldValue = this.landingLightAltitude;
+        Altitude oldValue = getLandingLightAltitude();
         if (!value.equals(oldValue)) {
             this.landingLightAltitude = value;
             firePropertyChange(FligthPlanProperties.LANDING_LIGHT_ALTITUDE, oldValue, landingLightAltitude);
@@ -384,10 +409,36 @@ public class FlighPlanModel extends Model implements FlightPlanWriter {
      */
     @Override
     public void setName(final String value) {
-        String oldValue = this.name;
+        String oldValue = getName();
         if (!value.equals(oldValue)) {
             this.name = value;
             firePropertyChange(FligthPlanProperties.NAME, oldValue, name);
+        }
+    }
+
+    /**
+     *
+     * {@inheritDoc}
+     */
+    @Override
+    public void setStartDays(final Set<StartDays> value) {
+        Set<StartDays> oldValue = getStartDays();
+        if (!value.equals(oldValue)) {
+            this.startDays = value;
+            firePropertyChange(FligthPlanProperties.START_DAYS, oldValue, startDays);
+        }
+
+    }
+    /**
+    *
+    * {@inheritDoc}
+    */
+   @Override
+    public void setAlternateAirport(final String value) {
+        String oldValue = getAlternateAirport();
+        if (!value.equals(oldValue)) {
+            this.alternateAirport = value;
+            firePropertyChange(FligthPlanProperties.ALTERNATE_AIRPORT, oldValue, alternateAirport);
         }
     }
 

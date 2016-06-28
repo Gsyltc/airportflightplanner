@@ -7,9 +7,9 @@ package com.airportflightplanner.main.visualelements;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 
+import com.airportflightplanner.flightplancreation.FlightPlanCreationPanel;
 import com.airportflightplanner.flightplanvisualization.panel.FlightPlanVisualiazationPanel;
 import com.airportflightplanner.main.visualelements.messages.MainPanelMessages;
-import com.airportflightplanner.main.visualelements.panels.FlightPlanCreationPanel;
 import com.airportflightplanner.main.visualelements.panels.WaypointEditionPanel;
 import com.jgoodies.forms.debug.FormDebugPanel;
 import com.jgoodies.forms.layout.ColumnSpec;

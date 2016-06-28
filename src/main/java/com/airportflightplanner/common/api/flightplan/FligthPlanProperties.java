@@ -40,4 +40,8 @@ public interface FligthPlanProperties {
     public static final String LANDING_LIGHT_ALTITUDE = "landingLightAltitude";
     /** */
     public static final String NAME                   = "name";
+    /** */
+    public static final String START_DAYS             = "startDays";
+    /** */
+    public static final String ALTERNATE_AIRPORT      = "alternateAirport";
 }

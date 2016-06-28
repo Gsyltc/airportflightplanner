@@ -4,16 +4,17 @@
  */
 package com.airportflightplanner.common.api.flightplan;
 
-import java.util.Map;
+import java.util.List;
+import java.util.Set;
 
 import org.joda.time.LocalTime;
 import org.joda.time.Period;
 import org.jscience.geography.coordinates.Altitude;
 
-import com.airportflightplanner.common.api.steerpoints.SteerPointReader;
 import com.airportflightplanner.common.types.ArrivalType;
 import com.airportflightplanner.common.types.DepartureType;
 import com.airportflightplanner.common.types.FlightType;
+import com.airportflightplanner.common.types.StartDays;
 
 /**
  * @author Goubaud Sylvain
@@ -24,7 +25,7 @@ public interface FlightPlanWriter extends FlightPlanReader {
      *
      * @param value
      */
-    void setSteerPoints(Map<Integer, SteerPointReader> value);
+    void setSteerPoints(List<String> value);
 
     /**
      *
@@ -109,4 +110,16 @@ public interface FlightPlanWriter extends FlightPlanReader {
      * @param value
      */
     void setName(String value);
+
+    /**
+     *
+     * @param value
+     */
+    void setStartDays(Set<StartDays> value);
+
+    /**
+     *
+     * @param value
+     */
+    void setAlternateAirport(String value);
 }
