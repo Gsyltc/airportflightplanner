@@ -2,7 +2,7 @@
  *
  * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
  */
-package com.airportflightplanner.loader.flightplan;
+package com.airportflightplanner.common.types;
 
 /**
  * @author Goubaud Sylvain

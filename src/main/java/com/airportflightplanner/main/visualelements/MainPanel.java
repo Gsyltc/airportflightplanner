@@ -7,9 +7,10 @@ package com.airportflightplanner.main.visualelements;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 
+import com.airportflightplanner.common.model.FlighPlanCollectionModel;
+import com.airportflightplanner.flightplancreation.FlightPlanCreationPanel;
 import com.airportflightplanner.flightplanvisualization.panel.FlightPlanVisualiazationPanel;
 import com.airportflightplanner.main.visualelements.messages.MainPanelMessages;
-import com.airportflightplanner.main.visualelements.panels.FlightPlanCreationPanel;
 import com.airportflightplanner.main.visualelements.panels.WaypointEditionPanel;
 import com.jgoodies.forms.debug.FormDebugPanel;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -26,17 +27,22 @@ public class MainPanel extends FormDebugPanel {
     /**
      *
      */
-    private static final long   serialVersionUID = -1014619836487219532L;
+    private static final long              serialVersionUID = -1014619836487219532L;
     /**
      *
      */
-    private static final int    FIRST_TAB        = 0;
+    private static final int               FIRST_TAB        = 0;
+    /** */
+    private final FlighPlanCollectionModel flighPlanCollectionModel;
 
     /**
      * 3
      *
+     * @param flighPlanCollectionModel
+     *
      */
-    public MainPanel() {
+    public MainPanel(final FlighPlanCollectionModel flighPlanCollectionModel) {
+        this.flighPlanCollectionModel = flighPlanCollectionModel;
         buildPanel();
     }
 
@@ -83,7 +89,7 @@ public class MainPanel extends FormDebugPanel {
      * @return
      */
     private FlightPlanVisualiazationPanel createFlightPlanVisualiazationPanel() {
-        FlightPlanVisualiazationPanel panel = new FlightPlanVisualiazationPanel();
+        FlightPlanVisualiazationPanel panel = new FlightPlanVisualiazationPanel(flighPlanCollectionModel);
         return panel;
     }
 

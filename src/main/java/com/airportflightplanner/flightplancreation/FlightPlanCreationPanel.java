@@ -2,7 +2,7 @@
  *
  * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
  */
-package com.airportflightplanner.main.visualelements.panels;
+package com.airportflightplanner.flightplancreation;
 
 import com.jgoodies.forms.debug.FormDebugPanel;
 

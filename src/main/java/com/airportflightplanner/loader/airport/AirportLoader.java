@@ -24,13 +24,13 @@ import com.airportflightplanner.common.utils.properties.CommonProperties;
 public class AirportLoader {
     /** The logger of this class. */
     private static final Log          LOGGER   = LogFactory.getLog(AirportLoader.class);
-
+    /** */
     private static final List<String> AIRPORTS = new ArrayList<String>();
 
     /**
      *
      */
-    public void loadAirports() {
+    public void init() {
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(CommonProperties.ROUTES_DIRECTORY)) {
             for (Path path : stream) {
                 AIRPORTS.add(path.getFileName().toString());

@@ -57,8 +57,9 @@ public class GeographicProcessor {
                     latLongSpeed.getLatLong().longitudeValue(NonSI.DEGREE_ANGLE), latLongSpeed.getAltitude().doubleValue(NonSI.FOOT));
 
             if (null != lastCoord) {
-                result += (new GeodeticCalculator().calculateGeodeticMeasurement(//
-                        Ellipsoid.WGS84, lastCoord, coord).getPointToPointDistance()) / latLongSpeed.getVelocity().doubleValue(SI.METERS_PER_SECOND);
+                result += ((new GeodeticCalculator().calculateGeodeticMeasurement(//
+                        Ellipsoid.WGS84, lastCoord, coord).getPointToPointDistance()) / //
+                        latLongSpeed.getVelocity().doubleValue(SI.METERS_PER_SECOND)) * 1000;
             }
 
             lastCoord = coord;

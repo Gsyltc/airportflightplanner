@@ -10,6 +10,12 @@
         </property>
     </bean>
 
-    <bean id="id-AirportsLoader" class="com.airportflightplanner.loader.airport.AirportLoader" init-method="loadAirports" />
+    <!-- Model -->
+    <bean id="id-AirportsLoader" class="com.airportflightplanner.loader.airport.AirportLoader" init-method="init" />
+
+    <bean id="id-FlightPlansLoader" class="com.airportflightplanner.loader.flightplan.FlightPlanLoader" init-method="init">
+        <property name="flightPlanModelAdapter" ref="id-FlightPlanModelAdapter" />
+        <property name="flighPlanCollectionModel" ref="id-FlightPlansCollection" />
+    </bean>
 
 </beans>

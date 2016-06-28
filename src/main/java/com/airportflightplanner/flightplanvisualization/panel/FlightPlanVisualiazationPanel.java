@@ -17,6 +17,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.airportflightplanner.common.model.FlighPlanCollectionModel;
 import com.airportflightplanner.flightplanvisualization.presenter.FlightPlanVisualizationPresenter;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -32,11 +34,12 @@ public class FlightPlanVisualiazationPanel extends JPanel {
     /**
      *
      */
-    private final FlighPlanCollectionModel         fpcm             = new FlighPlanCollectionModel();
+    @Autowired(required = true)
+    private final FlighPlanCollectionModel         flightPlansCollection;
     /**
      * <
      */
-    private final FlightPlanVisualizationPresenter presenter        = new FlightPlanVisualizationPresenter(fpcm);
+    private final FlightPlanVisualizationPresenter presenter;
     /** */
     private JTable                                 table;
 
@@ -50,11 +53,14 @@ public class FlightPlanVisualiazationPanel extends JPanel {
      */
 
     /**
+     * @param flightPlansCollection
      *
      */
-    public FlightPlanVisualiazationPanel() {
+    public FlightPlanVisualiazationPanel(final FlighPlanCollectionModel flightPlansCollection) {
+        this.flightPlansCollection = flightPlansCollection;
+        presenter = new FlightPlanVisualizationPresenter(flightPlansCollection);
+        flightPlansCollection.addFligfhtPlanModelListener(presenter.getListModel());
         buildPanel();
-        fpcm.addFligfhtPlanModelListener(presenter.getListModel());
     }
 
     /**
@@ -73,7 +79,7 @@ public class FlightPlanVisualiazationPanel extends JPanel {
                         FormSpecs.PREF_ROWSPEC, //
                         FormSpecs.RELATED_GAP_ROWSPEC, }));
 
-        add(new CurrentAirportPanel(fpcm), "2, 2, 3, 1, fill, fill");
+        add(new CurrentAirportPanel(flightPlansCollection), "2, 2, 3, 1, fill, fill");
         add(new DaysSelectionPanel(), "2, 4, 3, 1, fill, fill");
         add(createFlightVisualizationPanel(), "2, 6, 3, 1, fill, top");
     }
