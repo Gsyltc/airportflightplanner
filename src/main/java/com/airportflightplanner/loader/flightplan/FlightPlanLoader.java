@@ -64,8 +64,6 @@ public class FlightPlanLoader {
         });
     }
 
-
-
     /**
      * @param currentAirport
      *
@@ -149,7 +147,8 @@ public class FlightPlanLoader {
 
                             case STARTARRIVETYPE:
                                 if (!line.equals(FlightPlanInformationTypes.ENDARRIVETYPE.name())) {
-//                                    flightPlanModelAdapter.updateFlightPlan(newFlightPlan, informationsType, line);
+                                    // flightPlanModelAdapter.updateFlightPlan(newFlightPlan,
+                                    // informationsType, line);
                                 }
                                 break;
 
@@ -171,13 +170,15 @@ public class FlightPlanLoader {
 
                             case STARTDEPARTTYPE:
                                 if (!line.equals(FlightPlanInformationTypes.ENDDEPARTTYPE.name())) {
-//                                    flightPlanModelAdapter.updateFlightPlan(newFlightPlan, informationsType, line);
+                                    // flightPlanModelAdapter.updateFlightPlan(newFlightPlan,
+                                    // informationsType, line);
                                 }
                                 break;
 
                             case STARTFLIGHTTYPE:
                                 if (!line.equals(FlightPlanInformationTypes.ENDFLIGHTTYPE.name())) {
-//                                    flightPlanModelAdapter.updateFlightPlan(newFlightPlan, informationsType, line);
+                                    // flightPlanModelAdapter.updateFlightPlan(newFlightPlan,
+                                    // informationsType, line);
                                 }
                                 break;
 
