@@ -98,7 +98,7 @@ public class MainPanel extends FormDebugPanel {
      * @return
      */
     private FlightPlanCreationPanel createFlightPlanCreationPanel() {
-        FlightPlanCreationPanel panel = new FlightPlanCreationPanel();
+        FlightPlanCreationPanel panel = new FlightPlanCreationPanel(flighPlanCollectionModel);
         return panel;
     }
 }
