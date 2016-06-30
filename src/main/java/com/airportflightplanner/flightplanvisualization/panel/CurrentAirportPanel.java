@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.airportflightplanner.common.model.FlighPlanCollectionModel;
+import com.airportflightplanner.flightplanvisualization.messages.FlightPlanVisualizationMessages;
 import com.airportflightplanner.loader.airport.AirportLoader;
 import com.jgoodies.binding.adapter.ComboBoxAdapter;
 import com.jgoodies.binding.value.ValueHolder;
@@ -53,11 +54,11 @@ public class CurrentAirportPanel extends JPanel {
                 ColumnSpec.decode("pref:grow"), }, //
                 new RowSpec[] { FormSpecs.PREF_ROWSPEC, }));
 
-        JLabel airportLabel = DefaultComponentFactory.getInstance().createLabel("Airport");
+        JLabel airportLabel = DefaultComponentFactory.getInstance().createLabel(FlightPlanVisualizationMessages.AIRPORT);
 
         add(airportLabel, "1, 1, right, default");
 
-        JLabel timeLabel = DefaultComponentFactory.getInstance().createLabel("Time");
+        JLabel timeLabel = DefaultComponentFactory.getInstance().createLabel(FlightPlanVisualizationMessages.TIME);
         add(timeLabel, "5, 1, right, default");
 
         add(createAirportComboxBox(), "3, 1, fill, default");

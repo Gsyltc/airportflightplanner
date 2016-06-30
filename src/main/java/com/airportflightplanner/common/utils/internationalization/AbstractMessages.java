@@ -9,6 +9,10 @@ package com.airportflightplanner.common.utils.internationalization;
  *
  */
 public abstract class AbstractMessages {
+
+    /** */
+    public static final String LABEL = ".label";
+
     /**
      *
      * @param key
