@@ -12,7 +12,7 @@ import com.airportflightplanner.common.utils.internationalization.AbstractMessag
  */
 public class MainPanelMessages extends AbstractMessages {
     /** */
-    private static final String PREFIX         = "MainPanelMessages.";
+    private static final String PREFIX         = MainPanelMessages.class.getSimpleName() + ".";
 
     /** */
     public static final String  CREATE         = format(PREFIX + "CREATE");
