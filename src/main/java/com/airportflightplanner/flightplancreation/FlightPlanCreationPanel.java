@@ -6,12 +6,15 @@ package com.airportflightplanner.flightplancreation;
 
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.text.SimpleDateFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
@@ -37,6 +40,8 @@ public class FlightPlanCreationPanel extends FormDebugPanel {
      *
      */
     private final FlighPlanCollectionModel flightPlansCollection;
+    /** */
+    private JComboBox<String>              routeSelector;
 
     /**
      * *
@@ -47,6 +52,7 @@ public class FlightPlanCreationPanel extends FormDebugPanel {
     protected JTextField                   startTextField;
     /** */
     protected JTextField                   endTextField;
+    /** */
     private JTextField                     timeTextField;
 
     /**
@@ -98,20 +104,41 @@ public class FlightPlanCreationPanel extends FormDebugPanel {
                         FormSpecs.PREF_ROWSPEC, //
                         FormSpecs.RELATED_GAP_ROWSPEC, }));
 
-
-
         JLabel startLabel = new JLabel(FlightPlanCreationPanelMessages.START_LABEL);
         add(startLabel, "2,2,3,1");
         add(createStartTextField(), "2,4,3,1");
 
         JLabel endLabel = new JLabel(FlightPlanCreationPanelMessages.END_LABEL);
-        add(endLabel, "6,2,4,1");
+        add(endLabel, "6,2,3,1");
         add(createEndTextField(), "6,4,3,1");
 
         JLabel timeLabel = new JLabel(FlightPlanCreationPanelMessages.TIME_LABEL);
-        add(timeLabel, "10,2,4,1");
+        add(timeLabel, "10,2,3,1");
         add(createTimeTextField(), "10,4,3,1");
 
+        JLabel routeLabel = new JLabel(FlightPlanCreationPanelMessages.ROUTE_LABEL);
+        add(routeLabel, "2,6,5,1");
+        add(createRouteSelectorCombo(), "2,8,7,1");
+
+    }
+
+    /**
+     *
+     * @return
+     */
+    private JComboBox<String> createRouteSelectorCombo() {
+        routeSelector = new JComboBox<>();
+        routeSelector.addItemListener(new ItemListener() {
+
+            /** */
+            @Override
+            public void itemStateChanged(final ItemEvent arg0) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+
+        return routeSelector;
     }
 
     /**
