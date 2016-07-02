@@ -8,13 +8,15 @@ package com.airportflightplanner.flightplancreation.messages;
 import com.airportflightplanner.common.utils.internationalization.AbstractMessages;
 
 /**
- * @author DCNS
+ * @author Goubaud Sylvain
  *
  */
 public class FlightPlanCreationPanelMessages extends AbstractMessages {
     /** */
     private static final String PREFIX             = FlightPlanCreationPanelMessages.class.getSimpleName() + ".";
 
+    /** */
+    public static final String  SCHEDULE_LABEL     = format(PREFIX + "SCHEDULE" + LABEL);
     /** */
     public static final String  START_LABEL        = format(PREFIX + "START" + LABEL);
     /** */
@@ -35,4 +37,6 @@ public class FlightPlanCreationPanelMessages extends AbstractMessages {
     public static final String  ARRIVAL_LABEL      = format(PREFIX + "ARRIVALTYPE" + LABEL);
     /** */
     public static final String  LANDINGLIGHT_LABEL = format(PREFIX + "LANDINGLIGHT" + LABEL);
+/** */
+    public static final String ROUTE_PANEL_LABEL = format(PREFIX + "ROUTE_PANEL" + LABEL);
 }

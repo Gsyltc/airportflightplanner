@@ -10,7 +10,8 @@ import java.util.Set;
 
 import javax.measure.unit.NonSI;
 
-import org.joda.time.LocalTime;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.joda.time.Period;
 import org.jscience.geography.coordinates.Altitude;
 
@@ -23,6 +24,7 @@ import com.airportflightplanner.common.types.FlightType;
 import com.airportflightplanner.common.types.StartDays;
 import com.airportflightplanner.common.utils.internationalization.Internationalizer;
 import com.airportflightplanner.flightplanprocessor.GeographicProcessor;
+import com.airportflightplanner.flightplanprocessor.TimeProcessor;
 
 /**
  * @author Goubaud Sylvain
@@ -30,7 +32,8 @@ import com.airportflightplanner.flightplanprocessor.GeographicProcessor;
  */
 public class FlightPlanModelAdapterImpl implements FlightPlanModelAdapter {
 
-
+    /** The logger of this class. */
+    private static final Log LOGGER = LogFactory.getLog(FlightPlanModelAdapterImpl.class);
 
     /**
      *
@@ -51,20 +54,6 @@ public class FlightPlanModelAdapterImpl implements FlightPlanModelAdapter {
      * {@inheritDoc}
      */
     @Override
-    public void addStartDays(final FlighPlanModel newFlightPlan, final Set<String> startDays) {
-        Set<StartDays> tmpSet = new HashSet<StartDays>();
-        for (String string : startDays) {
-            tmpSet.add(StartDays.valueOf(string));
-        }
-
-        newFlightPlan.setStartDays(tmpSet);
-    }
-
-    /**
-     *
-     * {@inheritDoc}
-     */
-    @Override
     public void updateFlightPlan(final FlighPlanModel newFlightPlan, final FlightPlanInformationTypes informationsType, final String line) {
         switch (informationsType) {
         case START_FLY_TO_COMPLETION:
@@ -76,7 +65,7 @@ public class FlightPlanModelAdapterImpl implements FlightPlanModelAdapter {
             break;
 
         case STARTAIRCRAFT:
-            String[] split = line.split(" ");
+            String[] split = line.split(" +");
             String[] splitAirCraft = split[0].split("_");
             String aircraftType = splitAirCraft[0];
             if (splitAirCraft.length > 1) {
@@ -88,27 +77,66 @@ public class FlightPlanModelAdapterImpl implements FlightPlanModelAdapter {
         case STARTALTERNATEAIRPORT:
             newFlightPlan.setAlternateAirport(line);
             break;
+
         case STARTARRIVETYPE:
-            newFlightPlan.setArrivalType(ArrivalType.valueOf(line));
+            try {
+                newFlightPlan.setArrivalType(ArrivalType.valueOf(Integer.parseInt(line)));
+            } catch (NumberFormatException e) {
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Error while reading arrival type");
+                }
+            }
             break;
         case STARTCALLSIGN:
             newFlightPlan.setCallSign(line);
             break;
+
         case STARTDEPAIRPORT:
             newFlightPlan.setDepartureAirport(line);
             break;
+
         case STARTDEPARTTYPE:
-            newFlightPlan.setDepartureType(DepartureType.valueOf(line));
+            try {
+                newFlightPlan.setDepartureType(DepartureType.valueOf(Integer.parseInt(line)));
+            } catch (NumberFormatException e) {
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Error while reading departure type");
+                }
+            }
             break;
         case STARTDESTAIRPORT:
             newFlightPlan.setArrivalAirport(line);
             break;
+
         case STARTFLIGHTTYPE:
-            newFlightPlan.setFlighType(FlightType.valueOf(line));
+            try {
+                newFlightPlan.setFlighType(FlightType.valueOf(Integer.parseInt(line)));
+            } catch (NumberFormatException e) {
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Error while reading start flight type");
+                }
+            }
             break;
 
         case STARTTIME:
-            newFlightPlan.setStartTime(LocalTime.parse(line));
+            try {
+                newFlightPlan.setStartTime(TimeProcessor.getLocalTime(line));
+            } catch (NumberFormatException e) {
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Error while reading start time");
+                }
+            }
+            break;
+
+        case STARTDAYS:
+            String days[] = line.split(" +");
+
+            Set<StartDays> tmpSet = new HashSet<StartDays>();
+            for (String day : days) {
+                tmpSet.add(StartDays.valueOf(Integer.parseInt(day)));
+            }
+
+            newFlightPlan.setStartDays(tmpSet);
             break;
 
         default:

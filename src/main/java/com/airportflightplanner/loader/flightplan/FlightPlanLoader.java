@@ -14,9 +14,7 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.annotation.PostConstruct;
 
@@ -128,57 +126,59 @@ public class FlightPlanLoader {
                                 break;
 
                             case START_FLY_TO_COMPLETION:
+                                line = reader.readLine();
                                 if (!line.equals(FlightPlanInformationTypes.END_FLY_TO_COMPLETION.name())) {
                                     flightPlanModelAdapter.updateFlightPlan(newFlightPlan, informationsType, line);
                                 }
                                 break;
 
                             case START_LANDING_LIGHT_ALT:
+                                line = reader.readLine();
                                 if (!line.equals(FlightPlanInformationTypes.END_LANDING_LIGHT_ALT.name())) {
                                     flightPlanModelAdapter.updateFlightPlan(newFlightPlan, informationsType, line);
                                 }
                                 break;
 
                             case STARTALTERNATEAIRPORT:
+                                line = reader.readLine();
                                 if (!line.equals(FlightPlanInformationTypes.ENDALTERNATEAIRPORT.name())) {
                                     flightPlanModelAdapter.updateFlightPlan(newFlightPlan, informationsType, line);
                                 }
                                 break;
 
                             case STARTARRIVETYPE:
+                                line = reader.readLine();
                                 if (!line.equals(FlightPlanInformationTypes.ENDARRIVETYPE.name())) {
-                                    // flightPlanModelAdapter.updateFlightPlan(newFlightPlan,
-                                    // informationsType, line);
+                                    flightPlanModelAdapter.updateFlightPlan(newFlightPlan, informationsType, line);
                                 }
                                 break;
 
                             case STARTCALLSIGN:
+                                line = reader.readLine();
                                 if (!line.equals(FlightPlanInformationTypes.ENDCALLSIGN.name())) {
                                     flightPlanModelAdapter.updateFlightPlan(newFlightPlan, informationsType, line);
                                 }
                                 break;
 
                             case STARTDAYS:
-                                Set<String> startDays = new HashSet<String>();
                                 line = reader.readLine();
-                                while (!line.equals(FlightPlanInformationTypes.ENDDAYS.name())) {
-                                    startDays.add(line);
-                                    line = reader.readLine();
+                                if (!line.equals(FlightPlanInformationTypes.ENDDAYS.name())) {
+                                    flightPlanModelAdapter.updateFlightPlan(newFlightPlan, informationsType, line);
                                 }
-                                flightPlanModelAdapter.addStartDays(newFlightPlan, startDays);
+
                                 break;
 
                             case STARTDEPARTTYPE:
+                                line = reader.readLine();
                                 if (!line.equals(FlightPlanInformationTypes.ENDDEPARTTYPE.name())) {
-                                    // flightPlanModelAdapter.updateFlightPlan(newFlightPlan,
-                                    // informationsType, line);
+                                    flightPlanModelAdapter.updateFlightPlan(newFlightPlan, informationsType, line);
                                 }
                                 break;
 
                             case STARTFLIGHTTYPE:
+                                line = reader.readLine();
                                 if (!line.equals(FlightPlanInformationTypes.ENDFLIGHTTYPE.name())) {
-                                    // flightPlanModelAdapter.updateFlightPlan(newFlightPlan,
-                                    // informationsType, line);
+                                    flightPlanModelAdapter.updateFlightPlan(newFlightPlan, informationsType, line);
                                 }
                                 break;
 

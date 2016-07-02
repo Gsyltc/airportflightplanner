@@ -6,7 +6,6 @@
 package com.airportflightplanner.common.api.adapter;
 
 import java.util.List;
-import java.util.Set;
 
 import com.airportflightplanner.common.model.FlighPlanModel;
 import com.airportflightplanner.common.types.FlightPlanInformationTypes;
@@ -31,12 +30,4 @@ public interface FlightPlanModelAdapter {
      * @param line
      */
     void updateFlightPlan(FlighPlanModel newFlightPlan, FlightPlanInformationTypes informationsType, String line);
-
-    /**
-     *
-     * @param newFlightPlan
-     * @param startDays
-     */
-    void addStartDays(FlighPlanModel newFlightPlan, Set<String> startDays);
-
 }

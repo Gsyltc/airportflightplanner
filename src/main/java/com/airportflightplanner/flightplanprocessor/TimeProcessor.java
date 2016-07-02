@@ -24,16 +24,16 @@ import org.joda.time.format.PeriodFormatterBuilder;
  */
 public class TimeProcessor {
     /** The logger of this class. */
-    private static final Log              LOGGER           = LogFactory.getLog(TimeProcessor.class);
+    private static final Log              LOGGER                      = LogFactory.getLog(TimeProcessor.class);
 
     /** */
-    private static final DateTimeZone     CURRENT_TIMEZONE = DateTimeZone.getDefault();
+    private static final DateTimeZone     CURRENT_TIMEZONE            = DateTimeZone.getDefault();
 
     /** */
-    public static final Pattern           PATTERN          = Pattern.compile("^([0-2]|[0-1][0-9]|2[0-3])((:[0-9])|(:[0-5][0-9]))?");
+    public static final Pattern           PATTERN                     = Pattern.compile("^([0-2]|[0-1][0-9]|2[0-3])((:[0-9])|(:[0-5][0-9]))?");
 
     /** */
-    public static final PeriodFormatter   PERIOD_DISPLAYER    = new PeriodFormatterBuilder().minimumPrintedDigits(2).appendHours().appendSeparator(":")   //
+    public static final PeriodFormatter   PERIOD_DISPLAYER            = new PeriodFormatterBuilder().minimumPrintedDigits(2).appendHours().appendSeparator(":")   //
             .minimumPrintedDigits(2).printZeroAlways().appendMinutes().toFormatter();
 
     /** */
@@ -41,7 +41,7 @@ public class TimeProcessor {
             printZeroRarelyLast().appendMinutes().appendSuffix(" m", " m").toFormatter();
 
     /** */
-    public static final DateTimeFormatter TIME_DISPLAYER   = new DateTimeFormatterBuilder().appendHourOfDay(2).appendLiteral(":").                     //
+    public static final DateTimeFormatter TIME_DISPLAYER              = new DateTimeFormatterBuilder().appendHourOfDay(2).appendLiteral(":").                     //
             appendMinuteOfHour(2).toFormatter();
 
     /**
@@ -62,7 +62,7 @@ public class TimeProcessor {
      */
     public static LocalTime convertUtcToCurrentTimeZone(final String utcTimeString) {
         try {
-            LocalTime utcTime = LocalTime.parse(utcTimeString);
+            LocalTime utcTime = getLocalTime(utcTimeString);
             return convertUtcToCurrentTimeZone(utcTime);
         } catch (IllegalArgumentException e) {
             LOGGER.info("Time format not valid");
@@ -78,15 +78,16 @@ public class TimeProcessor {
      * @return
      */
     private static LocalTime calculateByTimeAndDuration(final String origin, final String duration, final boolean isAdded) {
-        if (isMatch(origin) && isMatch(duration)) {
-            LocalTime originLocalTime = LocalTime.parse(origin);
+        if (isMatch(duration)) {
+            LocalTime originLocalTime = getLocalTime(origin);
             Period durationLocalTime = Period.parse(duration, PERIOD_DISPLAYER);
-            if (isAdded) {
-                return originLocalTime.plus(durationLocalTime);
+            if (null != originLocalTime) {
+                if (isAdded) {
+                    return originLocalTime.plus(durationLocalTime);
+                }
+                return originLocalTime.minus(durationLocalTime);
             }
-            return originLocalTime.minus(durationLocalTime);
         }
-
         return null;
     }
 
@@ -95,7 +96,7 @@ public class TimeProcessor {
      * @param value
      * @return
      */
-    public static boolean isMatch(final String value) {
+    private static boolean isMatch(final String value) {
         Matcher m = PATTERN.matcher(value);
         return m.matches();
     }
@@ -127,12 +128,26 @@ public class TimeProcessor {
      * @return
      */
     public static String getDuration(final String origin, final String end) {
-        if (isMatch(origin) && isMatch(end)) {
-            LocalTime originLocalTime = LocalTime.parse(origin);
-            LocalTime endLocalTime = LocalTime.parse(end);
+        LocalTime originLocalTime = getLocalTime(origin);
+        LocalTime endLocalTime = getLocalTime(end);
+        if ((null != originLocalTime) && (null != endLocalTime)) {
             return Period.fieldDifference(originLocalTime, endLocalTime).toString(PERIOD_DISPLAYER);
         }
-        System.out.println("Error While calculting time");
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Error while calculating duration");
+        }
+        return null;
+    }
+
+    /**
+     *
+     * @param dateString
+     * @return
+     */
+    public static LocalTime getLocalTime(final String dateString) {
+        if (isMatch(dateString)) {
+            return LocalTime.parse(dateString);
+        }
         return null;
     }
 }
