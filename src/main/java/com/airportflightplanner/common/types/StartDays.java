@@ -8,7 +8,7 @@ package com.airportflightplanner.common.types;
 import com.airportflightplanner.common.utils.internationalization.Internationalizer;
 
 /**
- * @author DCNS
+ * @author Goubaud Sylvain
  *
  */
 public enum StartDays {

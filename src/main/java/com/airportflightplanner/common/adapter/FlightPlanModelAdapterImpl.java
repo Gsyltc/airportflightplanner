@@ -10,6 +10,8 @@ import java.util.Set;
 
 import javax.measure.unit.NonSI;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.joda.time.LocalTime;
 import org.joda.time.Period;
 import org.jscience.geography.coordinates.Altitude;
@@ -30,7 +32,8 @@ import com.airportflightplanner.flightplanprocessor.GeographicProcessor;
  */
 public class FlightPlanModelAdapterImpl implements FlightPlanModelAdapter {
 
-
+    /** The logger of this class. */
+    private static final Log LOGGER = LogFactory.getLog(FlightPlanModelAdapterImpl.class);
 
     /**
      *
@@ -88,8 +91,15 @@ public class FlightPlanModelAdapterImpl implements FlightPlanModelAdapter {
         case STARTALTERNATEAIRPORT:
             newFlightPlan.setAlternateAirport(line);
             break;
+
         case STARTARRIVETYPE:
-            newFlightPlan.setArrivalType(ArrivalType.valueOf(line));
+            try {
+                newFlightPlan.setArrivalType(ArrivalType.valueOf(Integer.parseInt(line)));
+            } catch (NumberFormatException e) {
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Error while reading arrival type");
+                }
+            }
             break;
         case STARTCALLSIGN:
             newFlightPlan.setCallSign(line);
@@ -98,18 +108,32 @@ public class FlightPlanModelAdapterImpl implements FlightPlanModelAdapter {
             newFlightPlan.setDepartureAirport(line);
             break;
         case STARTDEPARTTYPE:
-            newFlightPlan.setDepartureType(DepartureType.valueOf(line));
+            try {
+                newFlightPlan.setDepartureType(DepartureType.valueOf(Integer.parseInt(line)));
+            } catch (NumberFormatException e) {
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Error while reading departure type");
+                }
+            }
             break;
         case STARTDESTAIRPORT:
             newFlightPlan.setArrivalAirport(line);
             break;
+
         case STARTFLIGHTTYPE:
-            newFlightPlan.setFlighType(FlightType.valueOf(line));
+            try {
+            newFlightPlan.setFlighType(FlightType.valueOf(Integer.parseInt(line)));
+            } catch (NumberFormatException e) {
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Error while reading start flight type");
+                }
+            }
             break;
 
         case STARTTIME:
             newFlightPlan.setStartTime(LocalTime.parse(line));
             break;
+
 
         default:
             break;

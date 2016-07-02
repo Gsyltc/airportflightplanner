@@ -38,9 +38,6 @@ public class FlightPlanVisualizationTableAdapter extends AbstractTableAdapter<Fl
      */
     public FlightPlanVisualizationTableAdapter(final FlightPlanVisualizationListModel listModel) {
         setListModel(listModel);
-//        periodFormatterBuilder.appendHours().appendSuffix(" h ", " h ").//
-//                printZeroRarelyLast().appendMinutes().appendSuffix(" m", " m").toFormatter();
-//        dateTimeFormatterBuilder.appendHourOfDay(2).appendLiteral(" :").appendMinuteOfHour(2).toFormatter();
 
         listModel.addListDataListener(new ListDataListener() {
             /**

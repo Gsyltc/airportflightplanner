@@ -16,6 +16,6 @@ public class FlightPlanVisualizationMessages extends AbstractMessages {
 
     /** */
     public static final String  AIRPORT = format(PREFIX + "AIRPORT" + LABEL);
-
-    public static final String  TIME    = format(PREFIX + "TIME" + LABEL);;
+    /** */
+    public static final String  TIME    = format(PREFIX + "TIME" + LABEL);
 }

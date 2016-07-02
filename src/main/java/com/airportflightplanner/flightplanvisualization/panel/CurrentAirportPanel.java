@@ -9,9 +9,11 @@ import java.awt.event.ItemListener;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import com.airportflightplanner.common.model.FlighPlanCollectionModel;
+import com.airportflightplanner.common.selection.Signal;
+import com.airportflightplanner.common.selection.TopicName;
+import com.airportflightplanner.common.visualelement.CommonPanel;
 import com.airportflightplanner.flightplanvisualization.messages.FlightPlanVisualizationMessages;
 import com.airportflightplanner.loader.airport.AirportLoader;
 import com.jgoodies.binding.adapter.ComboBoxAdapter;
@@ -27,7 +29,7 @@ import com.jgoodies.forms.layout.RowSpec;
  * @author Goubaud Sylvain
  *
  */
-public class CurrentAirportPanel extends JPanel {
+public class CurrentAirportPanel extends CommonPanel {
     /**
      *
      */
@@ -43,7 +45,16 @@ public class CurrentAirportPanel extends JPanel {
      */
     public CurrentAirportPanel(final FlighPlanCollectionModel fpcm) {
         this.flightPlansCollection = fpcm;
+        build();
+    }
 
+    /**
+     *
+     * {@inheritDoc}
+     */
+    @Override
+    protected void build() {
+        super.build();
         setLayout(new FormLayout(new ColumnSpec[] { //
                 ColumnSpec.decode("pref:grow"), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
@@ -64,6 +75,8 @@ public class CurrentAirportPanel extends JPanel {
         add(createAirportComboxBox(), "3, 1, fill, default");
         add(createTimeComboxBox(), "7, 1, fill, default");
 
+        Signal signal = new Signal(TopicName.UPDATE_AIRPORT_TOPIC);
+        createSignal(TopicName.UPDATE_AIRPORT_TOPIC, signal);
     }
 
     /**
@@ -86,6 +99,8 @@ public class CurrentAirportPanel extends JPanel {
             public void itemStateChanged(final ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     flightPlansCollection.setCurrentAirport(e.getItem().toString());
+                    Signal signal = findSignal(TopicName.UPDATE_AIRPORT_TOPIC);
+                    signal.fireSignal(this);
                 }
             }
         });
@@ -98,8 +113,17 @@ public class CurrentAirportPanel extends JPanel {
      * @return
      */
     private JComboBox<?> createTimeComboxBox() {
-        JComboBox<?> comboBox = new JComboBox();
+        JComboBox<?> comboBox = new JComboBox<Object>();
 
         return comboBox;
+    }
+
+    /**
+     *
+     * {@inheritDoc}
+     */
+    @Override
+    public void slotAction(final Object object) {
+        System.out.println("Fire : CurrentAirportPanel - " + object.toString());
     }
 }
