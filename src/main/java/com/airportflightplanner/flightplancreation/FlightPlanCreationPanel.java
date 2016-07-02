@@ -4,15 +4,14 @@
  */
 package com.airportflightplanner.flightplancreation;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.text.SimpleDateFormat;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -20,6 +19,7 @@ import javax.swing.JTextField;
 
 import com.airportflightplanner.common.model.FlighPlanCollectionModel;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
+import com.airportflightplanner.flightplanprocessor.TimeProcessor;
 import com.jgoodies.forms.debug.FormDebugPanel;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
@@ -42,23 +42,12 @@ public class FlightPlanCreationPanel extends FormDebugPanel {
     private final FlighPlanCollectionModel flightPlansCollection;
     /** */
     private JComboBox<String>              routeSelector;
-
-    /**
-     * *
-     *
-     */
-    private final SimpleDateFormat         dateFormatter    = new SimpleDateFormat("hh:mm");
     /** */
     protected JTextField                   startTextField;
     /** */
     protected JTextField                   endTextField;
     /** */
-    private JTextField                     timeTextField;
-
-    /**
-     *
-     */
-    protected static final Pattern         PATTERN          = Pattern.compile("^([0-2]|[0-1][0-9]|2[0-3])((:[0-9])|(:[0-5][0-9]))?");
+    protected JTextField                   timeTextField;
 
     /**
     *
@@ -147,8 +136,14 @@ public class FlightPlanCreationPanel extends FormDebugPanel {
      */
     private JTextField createTimeTextField() {
         timeTextField = new JTextField();
-        timeTextField.addKeyListener(new KeyTypingListener(timeTextField));
+        timeTextField.addKeyListener(new KeyTypingListener(timeTextField, TextFieldsEnum.TIME));
+        timeTextField.addActionListener(new ActionListener() {
 
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                textFieldUpdater(TextFieldsEnum.TIME, timeTextField.getText());
+            }
+        });
         timeTextField.addFocusListener(new FocusListener() {
             /**
              *
@@ -156,11 +151,7 @@ public class FlightPlanCreationPanel extends FormDebugPanel {
              */
             @Override
             public void focusLost(final FocusEvent e) {
-                if (endTextField.isEditable()) {
-                    startTextField.setText("00:23");
-                } else {
-                    endTextField.setText("20:00");
-                }
+                textFieldUpdater(TextFieldsEnum.TIME, timeTextField.getText());
             }
 
             /**
@@ -181,8 +172,14 @@ public class FlightPlanCreationPanel extends FormDebugPanel {
      */
     private JTextField createEndTextField() {
         endTextField = new JTextField();
-        endTextField.addKeyListener(new KeyTypingListener(endTextField));
+        endTextField.addKeyListener(new KeyTypingListener(endTextField, TextFieldsEnum.END));
+        endTextField.addActionListener(new ActionListener() {
 
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                textFieldUpdater(TextFieldsEnum.END, endTextField.getText());
+            }
+        });
         endTextField.addFocusListener(new FocusListener() {
             /**
              *
@@ -190,12 +187,7 @@ public class FlightPlanCreationPanel extends FormDebugPanel {
              */
             @Override
             public void focusLost(final FocusEvent e) {
-                if (!endTextField.getText().isEmpty()) {
-                    startTextField.setEditable(false);
-                } else {
-                    startTextField.setEditable(true);
-                    endTextField.setText("");
-                }
+                textFieldUpdater(TextFieldsEnum.END, endTextField.getText());
             }
 
             /**
@@ -206,6 +198,7 @@ public class FlightPlanCreationPanel extends FormDebugPanel {
             public void focusGained(final FocusEvent e) {
                 //
             }
+
         });
         return endTextField;
     }
@@ -216,8 +209,14 @@ public class FlightPlanCreationPanel extends FormDebugPanel {
      */
     private JTextField createStartTextField() {
         startTextField = new JTextField();
-        startTextField.addKeyListener(new KeyTypingListener(startTextField));
+        startTextField.addKeyListener(new KeyTypingListener(startTextField, TextFieldsEnum.START));
+        startTextField.addActionListener(new ActionListener() {
 
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                textFieldUpdater(TextFieldsEnum.START, startTextField.getText());
+            }
+        });
         startTextField.addFocusListener(new FocusListener() {
             /**
              *
@@ -225,12 +224,7 @@ public class FlightPlanCreationPanel extends FormDebugPanel {
              */
             @Override
             public void focusLost(final FocusEvent e) {
-                if (!startTextField.getText().isEmpty()) {
-                    endTextField.setEditable(false);
-                } else {
-                    endTextField.setEditable(true);
-                    startTextField.setText("");
-                }
+                textFieldUpdater(TextFieldsEnum.START, startTextField.getText());
             }
 
             /**
@@ -246,6 +240,67 @@ public class FlightPlanCreationPanel extends FormDebugPanel {
     }
 
     /**
+     * Update the correct text field start, end not empty & time empty=> update
+     * time// if start ,time not empty & end empty=> update end // if end, time
+     * not empty & start empty => update start// if all not empty => if start or
+     * end updated => update time | if time updated => update end
+     *
+     * @param sender
+     * @param value
+     */
+    protected void textFieldUpdater(final TextFieldsEnum sender, final String value) {
+        boolean isStartEmpty = startTextField.getText().isEmpty();
+        boolean isEndEmpty = endTextField.getText().isEmpty();
+        boolean isTimeEmpty = timeTextField.getText().isEmpty();
+
+        switch (sender) {
+        case START:
+            if (!isTimeEmpty) {
+                endTextField.setText(TimeProcessor.getEndTime(value, timeTextField.getText()));
+            } else {
+                if (!isEndEmpty) {
+                    timeTextField.setText(TimeProcessor.getDuration(value, endTextField.getText()));
+                }
+            }
+            break;
+
+        case END:
+            if (!isTimeEmpty) {
+                startTextField.setText(TimeProcessor.getStartTime(value, timeTextField.getText()));
+            } else {
+                if (!isStartEmpty) {
+                    timeTextField.setText(TimeProcessor.getDuration(startTextField.getText(), value));
+                }
+            }
+
+            break;
+        case TIME:
+            if (!isTimeEmpty) {
+                if (!isStartEmpty) {
+                    endTextField.setText(TimeProcessor.getEndTime(startTextField.getText(), value));
+
+                } else {
+                    if (!isEndEmpty) {
+                        startTextField.setText(TimeProcessor.getStartTime(endTextField.getText(), value));
+                    } else {
+                        endTextField.setText("TO EMPTY 2");
+
+                    }
+                }
+            } else {
+                if (!isStartEmpty && isEndEmpty) {
+                    timeTextField.setText(TimeProcessor.getDuration(startTextField.getText(), endTextField.getText()));
+                }
+            }
+
+            break;
+
+        default:
+            break;
+        }
+    }
+
+    /**
      *
      * @author Goubaud Sylvain
      *
@@ -254,13 +309,17 @@ public class FlightPlanCreationPanel extends FormDebugPanel {
 
         /** */
         private final JTextField textField;
+        /** */
+        private final TextFieldsEnum   type;
 
         /**
          * @param textField
+         * @param type
          *
          */
-        public KeyTypingListener(final JTextField textField) {
+        public KeyTypingListener(final JTextField textField, final TextFieldsEnum type) {
             this.textField = textField;
+            this.type = type;
         }
 
         /**
@@ -269,10 +328,12 @@ public class FlightPlanCreationPanel extends FormDebugPanel {
          */
         @Override
         public void keyTyped(final KeyEvent e) {
-            Matcher m = PATTERN.matcher(textField.getText() + e.getKeyChar());
-            if (!m.matches()) {
+            if (!TimeProcessor.isMatch(textField.getText() + e.getKeyChar())) {
                 e.consume();
             }
+//            if (e.getKeyCode() == ){
+//                textFieldUpdater(type, textField.getText());
+//            }
         }
 
         /**
@@ -301,5 +362,14 @@ public class FlightPlanCreationPanel extends FormDebugPanel {
         public void keyPressed(final KeyEvent e) {
             //
         }
+    }
+
+    /**
+     *
+     * @author Goubaud Sylvain
+     *
+     */
+    private enum TextFieldsEnum {
+        START, END, TIME
     }
 }

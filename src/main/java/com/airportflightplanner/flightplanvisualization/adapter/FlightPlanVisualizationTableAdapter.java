@@ -7,11 +7,9 @@ package com.airportflightplanner.flightplanvisualization.adapter;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
-import org.joda.time.format.DateTimeFormatterBuilder;
-import org.joda.time.format.PeriodFormatterBuilder;
-
 import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
 import com.airportflightplanner.common.api.flightplancollection.FlightPlanCollectionReader;
+import com.airportflightplanner.flightplanprocessor.TimeProcessor;
 import com.airportflightplanner.flightplanvisualization.presenter.FlightPlanVisualizationListModel;
 import com.jgoodies.binding.adapter.AbstractTableAdapter;
 
@@ -24,10 +22,6 @@ public class FlightPlanVisualizationTableAdapter extends AbstractTableAdapter<Fl
     *
     */
     private static final long                                 serialVersionUID         = -1614722326210452309L;
-    /** */
-    private final PeriodFormatterBuilder                      periodFormatterBuilder   = new PeriodFormatterBuilder();
-
-    private final DateTimeFormatterBuilder                    dateTimeFormatterBuilder = new DateTimeFormatterBuilder();
     /** */
     private final static FlightPlanVisualisationTableColumn[] COLUMN_NAME              = new FlightPlanVisualisationTableColumn[] {                 //
                                                                                                FlightPlanVisualisationTableColumn.START_AIRPORT,    //
@@ -44,9 +38,9 @@ public class FlightPlanVisualizationTableAdapter extends AbstractTableAdapter<Fl
      */
     public FlightPlanVisualizationTableAdapter(final FlightPlanVisualizationListModel listModel) {
         setListModel(listModel);
-        periodFormatterBuilder.appendHours().appendSuffix(" h ", " h ").//
-                printZeroRarelyLast().appendMinutes().appendSuffix(" m", " m").toFormatter();
-        dateTimeFormatterBuilder.appendHourOfDay(2).appendLiteral(" :").appendMinuteOfHour(2).toFormatter();
+//        periodFormatterBuilder.appendHours().appendSuffix(" h ", " h ").//
+//                printZeroRarelyLast().appendMinutes().appendSuffix(" m", " m").toFormatter();
+//        dateTimeFormatterBuilder.appendHourOfDay(2).appendLiteral(" :").appendMinuteOfHour(2).toFormatter();
 
         listModel.addListDataListener(new ListDataListener() {
             /**
@@ -92,13 +86,13 @@ public class FlightPlanVisualizationTableAdapter extends AbstractTableAdapter<Fl
 
         case DEPARTURE_TIME:
             if (null != flightPlan.getStartTime()) {
-                return flightPlan.getStartTime().toString(dateTimeFormatterBuilder.toFormatter());
+                return flightPlan.getStartTime().toString(TimeProcessor.TIME_DISPLAYER);
             }
             return null;
 
         case ARRIVAL_TIME:
             if (null != flightPlan.getEndTime()) {
-                return flightPlan.getEndTime().toString(dateTimeFormatterBuilder.toFormatter());
+                return flightPlan.getEndTime().toString(TimeProcessor.TIME_DISPLAYER);
             }
             return null;
 
@@ -110,7 +104,7 @@ public class FlightPlanVisualizationTableAdapter extends AbstractTableAdapter<Fl
 
         case DURATION:
             if (null != flightPlan.getDuration()) {
-                return flightPlan.getDuration().toString(periodFormatterBuilder.toFormatter());
+                return flightPlan.getDuration().toString(TimeProcessor.FLIGHTPLAN_PERIOD_DISPLAYER);
             }
             return "";
 

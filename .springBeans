@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beansProjectDescription>
+	<version>1</version>
+	<pluginVersion><![CDATA[3.7.3.201602250914-RELEASE]]></pluginVersion>
+	<configSuffixes>
+		<configSuffix><![CDATA[xml]]></configSuffix>
+	</configSuffixes>
+	<enableImports><![CDATA[false]]></enableImports>
+	<configs>
+		<config>src/main/resources/config/imports.xml</config>
+		<config>src/main/resources/config/models/flightplanmodel.xml</config>
+		<config>src/main/resources/config/application/config.xml</config>
+		<config>src/main/resources/config/internationalization/config.xml</config>
+	</configs>
+	<autoconfigs>
+	</autoconfigs>
+	<configSets>
+		<configSet>
+			<name><![CDATA[All]]></name>
+			<allowBeanDefinitionOverriding>true</allowBeanDefinitionOverriding>
+			<incomplete>false</incomplete>
+			<configs>
+				<config>src/main/resources/config/application/config.xml</config>
+				<config>src/main/resources/config/imports.xml</config>
+				<config>src/main/resources/config/internationalization/config.xml</config>
+				<config>src/main/resources/config/models/flightplanmodel.xml</config>
+			</configs>
+			<profiles>
+			</profiles>
+		</configSet>
+	</configSets>
+</beansProjectDescription>
