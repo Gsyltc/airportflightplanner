@@ -26,11 +26,12 @@ public class FlightPlanCreationPanel extends CommonPanel {
     /**
      *
      */
-    private static final long                 serialVersionUID  = 4047549681152943474L;
+    private static final long                       serialVersionUID  = 4047549681152943474L;
     /**
      *
      */
     private final PresentationModel<FlighPlanModel> currentFlightPlan = new PresentationModel<FlighPlanModel>();
+
 
     /**
     *

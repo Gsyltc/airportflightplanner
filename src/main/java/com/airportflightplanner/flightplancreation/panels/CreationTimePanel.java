@@ -46,15 +46,15 @@ public class CreationTimePanel extends CommonPanel {
     /**
      *
      */
-    private static final long                       serialVersionUID = 8098225641658386495L;
+    private static final long                         serialVersionUID = 8098225641658386495L;
     /** */
-    protected JTextField                            startTextField;
+    protected JTextField                              startTextField;
     /** */
-    protected JTextField                            endTextField;
+    protected JTextField                              endTextField;
     /** */
-    protected JTextField                            timeTextField;
+    protected JTextField                              timeTextField;
     /** */
-    private final PresentationModel<FlighPlanModel> currentFlightPlan;
+    protected final PresentationModel<FlighPlanModel> currentFlightPlan;
 
     /**
      * @param currentFlightPlan
@@ -129,7 +129,7 @@ public class CreationTimePanel extends CommonPanel {
 
             @Override
             public void actionPerformed(final ActionEvent e) {
-                textFieldUpdater(TextFieldsEnum.TIME, timeTextField.getText());
+                textFieldUpdater(TextFieldsEnum.TIME);
             }
         });
         timeTextField.addFocusListener(new FocusListener() {
@@ -139,7 +139,7 @@ public class CreationTimePanel extends CommonPanel {
              */
             @Override
             public void focusLost(final FocusEvent e) {
-                textFieldUpdater(TextFieldsEnum.TIME, timeTextField.getText());
+                textFieldUpdater(TextFieldsEnum.TIME);
             }
 
             /**
@@ -184,7 +184,7 @@ public class CreationTimePanel extends CommonPanel {
              */
             @Override
             public void actionPerformed(final ActionEvent e) {
-                textFieldUpdater(TextFieldsEnum.END, endTextField.getText());
+                textFieldUpdater(TextFieldsEnum.END);
             }
         });
         endTextField.addFocusListener(new FocusListener() {
@@ -194,7 +194,7 @@ public class CreationTimePanel extends CommonPanel {
              */
             @Override
             public void focusLost(final FocusEvent e) {
-                textFieldUpdater(TextFieldsEnum.END, endTextField.getText());
+                textFieldUpdater(TextFieldsEnum.END);
             }
 
             /**
@@ -236,7 +236,7 @@ public class CreationTimePanel extends CommonPanel {
 
             @Override
             public void actionPerformed(final ActionEvent e) {
-                textFieldUpdater(TextFieldsEnum.START, startTextField.getText());
+                textFieldUpdater(TextFieldsEnum.START);
             }
         });
         startTextField.addFocusListener(new FocusListener() {
@@ -246,7 +246,7 @@ public class CreationTimePanel extends CommonPanel {
              */
             @Override
             public void focusLost(final FocusEvent e) {
-                textFieldUpdater(TextFieldsEnum.START, startTextField.getText());
+                textFieldUpdater(TextFieldsEnum.START);
             }
 
             /**
@@ -268,13 +268,11 @@ public class CreationTimePanel extends CommonPanel {
      * end updated => update time | if time updated => update end
      *
      * @param sender
-     * @param value
      */
-    protected void textFieldUpdater(final TextFieldsEnum sender, final String value) {
+    protected void textFieldUpdater(final TextFieldsEnum sender) {
         boolean isStartEmpty = startTextField.getText().isEmpty();
         boolean isEndEmpty = endTextField.getText().isEmpty();
         boolean isTimeEmpty = timeTextField.getText().isEmpty();
-        FlighPlanModel bean = currentFlightPlan.getBean();
         switch (sender) {
         case START:
             if (!isTimeEmpty) {
