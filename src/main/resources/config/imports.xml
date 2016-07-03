@@ -6,7 +6,7 @@
 
     <import resource="./application/config.xml" />
     <import resource="./internationalization/config.xml" />
-    
+    <import resource="./importexport/config.xml" />
     <import resource="./models/flightplanmodel.xml" />
 
 </beans>

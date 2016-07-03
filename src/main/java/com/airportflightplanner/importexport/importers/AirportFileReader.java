@@ -2,7 +2,7 @@
  *
  * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
  */
-package com.airportflightplanner.loader.airport;
+package com.airportflightplanner.importexport.importers;
 
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
@@ -21,9 +21,9 @@ import com.airportflightplanner.common.utils.properties.CommonProperties;
  * @author Goubaud Sylvain
  *
  */
-public class AirportLoader {
+public class AirportFileReader {
     /** The logger of this class. */
-    private static final Log          LOGGER   = LogFactory.getLog(AirportLoader.class);
+    private static final Log          LOGGER   = LogFactory.getLog(AirportFileReader.class);
     /** */
     private static final List<String> AIRPORTS = new ArrayList<String>();
 

@@ -35,19 +35,19 @@ public class FlighPlanModel extends Model implements FlightPlanWriter {
     /** */
     private List<String>      steerPoints          = new CopyOnWriteArrayList<String>();
     /** */
-    private String            departureAirport;
+    private String            departureAirport     = "";
     /** */
-    private String            arrivalAirport;
+    private String            arrivalAirport       = "";
     /** */
     private LocalTime         startTime;
     /** */
     private LocalTime         endTime;
     /** */
-    private String            callSign;
+    private String            callSign             = "";
     /** */
-    private String            aircraftType;
+    private String            aircraftType         = "";
     /** */
-    private String            aircraftCie;
+    private String            aircraftCie          = "";
     /** */
     private Period            duration;
     /** */
@@ -65,7 +65,7 @@ public class FlighPlanModel extends Model implements FlightPlanWriter {
     /** */
     private Set<StartDays>    startDays            = new HashSet<StartDays>();
     /** */
-    private String            alternateAirport;
+    private String            alternateAirport     = "";
 
     /**
      *

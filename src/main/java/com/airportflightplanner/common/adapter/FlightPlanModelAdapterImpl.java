@@ -65,13 +65,14 @@ public class FlightPlanModelAdapterImpl implements FlightPlanModelAdapter {
             break;
 
         case STARTAIRCRAFT:
-            String[] split = line.split(" +");
-            String[] splitAirCraft = split[0].split("_");
-            String aircraftType = splitAirCraft[0];
+            String[] aircraftType = line.split(" +");
+            if (aircraftType.length > 0){
+                newFlightPlan.setAircraftType(aircraftType[0]);
+            }
+            String[] splitAirCraft = aircraftType[0].split("_");
             if (splitAirCraft.length > 1) {
                 newFlightPlan.setAircraftCie(Internationalizer.getI18String(splitAirCraft[1]));
             }
-            newFlightPlan.setAircraftType(aircraftType);
 
             break;
         case STARTALTERNATEAIRPORT:

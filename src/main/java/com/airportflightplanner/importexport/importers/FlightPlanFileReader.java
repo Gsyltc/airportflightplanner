@@ -2,7 +2,7 @@
  *
  * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
  */
-package com.airportflightplanner.loader.flightplan;
+package com.airportflightplanner.importexport.importers;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -33,9 +33,9 @@ import com.airportflightplanner.common.utils.properties.CommonProperties;
  * @author Goubaud Sylvain
  *
  */
-public class FlightPlanLoader {
+public class FlightPlanFileReader {
     /** The logger of this class. */
-    private static final Log         LOGGER = LogFactory.getLog(FlightPlanLoader.class);
+    private static final Log         LOGGER = LogFactory.getLog(FlightPlanFileReader.class);
 
     /**
     *

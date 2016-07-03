@@ -94,7 +94,7 @@ public class FlightPlanVisualizationTableAdapter extends AbstractTableAdapter<Fl
             return null;
 
         case AIRCRAFT_TYPE:
-            return flightPlan.getAircraftType();
+            return flightPlan.getAircraftType().split("_")[0];
 
         case COMPANY:
             return flightPlan.getAircraftCie();

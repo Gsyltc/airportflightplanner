@@ -4,10 +4,20 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 
-    <bean id="id-PropertiesLoader" class="com.airportflightplanner.common.utils.properties.PropertiesLoader" init-method="init">
-        <property name="propertiesFile">
-            <value>application.properties</value>
-        </property>
+
+    <!-- Readers -->
+    <bean id="id-AirportFileReader" class="com.airportflightplanner.importexport.importers.AirportFileReader" init-method="init" />
+
+    <bean id="id-FlightPlanFileReader" class="com.airportflightplanner.importexport.importers.FlightPlanFileReader" init-method="init">
+        <property name="flightPlanModelAdapter" ref="id-FlightPlanModelAdapter" />
+        <property name="flighPlanCollectionModel" ref="id-FlightPlansCollection" />
+    </bean>
+
+
+
+    <!-- Writers -->
+    <bean id="id-FlighPlanFileWriter" class="com.airportflightplanner.importexport.exporters.FlighPlanFileWriter" init-method="init">
+        <property name="flightPlanModelAdapter" ref="id-FlightPlanModelAdapter" />
     </bean>
 
 </beans>

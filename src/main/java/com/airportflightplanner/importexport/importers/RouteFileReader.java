@@ -3,13 +3,13 @@
  * 2016 Goubaud Sylvain.
  *
  */
-package com.airportflightplanner.loader.route;
+package com.airportflightplanner.importexport.importers;
 
 /**
  * @author Goubaud Sylvain
  *
  */
-public class RouteLoader {
+public class RouteFileReader {
 
 }
 

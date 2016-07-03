@@ -15,7 +15,7 @@ import com.airportflightplanner.common.slotsignal.Signal;
 import com.airportflightplanner.common.slotsignal.TopicName;
 import com.airportflightplanner.common.visualelement.CommonPanel;
 import com.airportflightplanner.flightplanvisualization.messages.FlightPlanVisualizationMessages;
-import com.airportflightplanner.loader.airport.AirportLoader;
+import com.airportflightplanner.importexport.importers.AirportFileReader;
 import com.jgoodies.binding.adapter.ComboBoxAdapter;
 import com.jgoodies.binding.value.ValueHolder;
 import com.jgoodies.binding.value.ValueModel;
@@ -84,7 +84,7 @@ public class CurrentAirportPanel extends CommonPanel {
         JComboBox<?> comboBox = new JComboBox<String>();
 
         ValueModel selectionHolder = new ValueHolder();
-        ComboBoxAdapter<String> comboBoxAdapter = new ComboBoxAdapter<String>(AirportLoader.getAirports(), selectionHolder);
+        ComboBoxAdapter<String> comboBoxAdapter = new ComboBoxAdapter<String>(AirportFileReader.getAirports(), selectionHolder);
         comboBox.setModel(comboBoxAdapter);
 
         comboBox.addItemListener(new ItemListener() {
