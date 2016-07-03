@@ -12,21 +12,25 @@ import com.airportflightplanner.common.slotsignal.api.SlotAction;
 import com.airportflightplanner.common.slotsignal.api.SlotReceiver;
 
 /**
- * @author DCNS
+ * @author Goubaud Sylvain
  *
  */
-public class Slot implements Observer {
+public class Slot<E extends Object> implements Observer {
     /** */
     private final String       topicName;
     /** */
     private final SlotReceiver receiver;
     /** */
-    private SlotAction         slotAction;
+    private SlotAction<E>      slotAction;
 
     /**
+     * A slot can listen an event fire by a signal
      *
      * @param topicName
+     *            define the topic to listen
      * @param receiver
+     *            the receiver is the object with the action to run when a
+     *            signal is received
      */
     public Slot(final String topicName, final SlotReceiver receiver) {
         this.topicName = topicName;
@@ -35,7 +39,7 @@ public class Slot implements Observer {
     }
 
     /**
-     * @return
+     * @return the receiver
      *
      */
     SlotReceiver getReceiver() {
@@ -49,22 +53,24 @@ public class Slot implements Observer {
      */
     @Override
     public void update(final Observable o, final Object arg) {
-        slotAction.doAction(arg);
+        slotAction.doAction((E) arg);
     }
 
     /**
+     * Return the topic name of the slot
      *
-     * @return
+     * @return the topis
      */
     String getTopicName() {
         return topicName;
     }
 
     /**
+     * Define the action for the slot
      *
      * @param slotAction
      */
-    public void setSlotAction(final SlotAction slotAction) {
+    public void setSlotAction(final SlotAction<E> slotAction) {
         this.slotAction = slotAction;
 
     }

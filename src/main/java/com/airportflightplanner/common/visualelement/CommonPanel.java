@@ -16,7 +16,7 @@ import com.airportflightplanner.common.slotsignal.Slot;
 import com.airportflightplanner.common.slotsignal.api.SlotReceiver;
 
 /**
- * @author DCNS
+ * @author Goubaud Sylvain
  *
  */
 public abstract class CommonPanel extends JPanel implements SlotReceiver {

@@ -398,7 +398,7 @@ public class CreationTimePanel extends CommonPanel {
      */
     @Override
     public void attachSlotAction() {
-        Slot filghtPlanSlot = new Slot(TopicName.FLIGHTPLAN_TABLE_SELECTED, this);
+        Slot<FlighPlanModel> filghtPlanSlot = new Slot<FlighPlanModel>(TopicName.FLIGHTPLAN_TABLE_SELECTED, this);
         filghtPlanSlot.setSlotAction(new SlotAction<FlighPlanModel>() {
             /**
              *

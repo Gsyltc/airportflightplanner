@@ -8,7 +8,7 @@ package com.airportflightplanner.common.slotsignal;
 import com.airportflightplanner.common.slotsignal.api.SlotReceiver;
 
 /**
- * @author DCNS
+ * @author Goubaud Sylvain
  *
  */
 public class AbstractSenderReceiver implements SlotReceiver {

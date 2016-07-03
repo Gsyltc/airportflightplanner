@@ -16,8 +16,6 @@
 
 
     <!-- Writers -->
-    <bean id="id-FlighPlanFileWriter" class="com.airportflightplanner.importexport.exporters.FlighPlanFileWriter" init-method="init">
-        <property name="flightPlanModelAdapter" ref="id-FlightPlanModelAdapter" />
-    </bean>
+    <bean id="id-FlighPlanFileWriter" class="com.airportflightplanner.importexport.exporters.FlighPlanFileWriter" init-method="init" />
 
 </beans>

@@ -16,7 +16,6 @@ import org.apache.commons.logging.LogFactory;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormatterBuilder;
 
-import com.airportflightplanner.common.api.adapter.FlightPlanModelAdapter;
 import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
 import com.airportflightplanner.common.slotsignal.AbstractSenderReceiver;
 import com.airportflightplanner.common.slotsignal.Slot;
@@ -32,7 +31,7 @@ import com.airportflightplanner.flightplanprocessor.TimeProcessor;
 import com.airportflightplanner.importexport.importers.FlightPlanFileReader;
 
 /**
- * @author DCNS
+ * @author Goubaud Sylvain
  *
  */
 public class FlighPlanFileWriter extends AbstractSenderReceiver {
@@ -42,10 +41,6 @@ public class FlighPlanFileWriter extends AbstractSenderReceiver {
     /** */
     public static final DateTimeFormatter WRITER_FORMATTER = new DateTimeFormatterBuilder().appendHourOfDay(2).   //
             appendMinuteOfHour(2).toFormatter();
-    /**
-    *
-    */
-    private FlightPlanModelAdapter        flightPlanModelAdapter;
 
     /**
      * @param flightPlan
@@ -212,19 +207,11 @@ public class FlighPlanFileWriter extends AbstractSenderReceiver {
 
     /**
      *
-     * @param flightPlanModelAdapter
-     */
-    public void setFlightPlanModelAdapter(final FlightPlanModelAdapter flightPlanModelAdapter) {
-        this.flightPlanModelAdapter = flightPlanModelAdapter;
-    }
-
-    /**
-     *
      * {@inheritDoc}
      */
     @Override
     public void attachSlotAction() {
-        Slot airportSlot = new Slot(TopicName.FLIGHTPLAN_TABLE_SELECTED, this);
+        Slot<FlightPlanReader> airportSlot = new Slot<FlightPlanReader>(TopicName.WRITE_FLIGHT_PLAN, this);
         airportSlot.setSlotAction(new SlotAction<FlightPlanReader>() {
             /**
              *

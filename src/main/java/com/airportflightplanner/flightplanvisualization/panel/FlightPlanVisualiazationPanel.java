@@ -152,12 +152,12 @@ public class FlightPlanVisualiazationPanel extends CommonPanel {
      */
     @Override
     public void attachSlotAction() {
-        Slot slot = new Slot(TopicName.UPDATE_AIRPORT_TOPIC, this);
+        Slot<String> slot = new Slot<String>(TopicName.UPDATE_AIRPORT_TOPIC, this);
         slot.setSlotAction(new SlotAction<String>() {
 
             @Override
             public void doAction(final String object) {
-                System.out.println("FP Vizu panel : " + object);
+
 
             }
         });

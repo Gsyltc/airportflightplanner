@@ -31,6 +31,7 @@ public class SignalModels {
     private static final Map<String, Set<Slot>> slots   = new ConcurrentHashMap<String, Set<Slot>>();
 
     /**
+     * Create a signal
      *
      * @param signal
      */
@@ -46,6 +47,7 @@ public class SignalModels {
     }
 
     /**
+     * Attach a slot to a signal
      *
      * @param topicName
      */
@@ -62,6 +64,7 @@ public class SignalModels {
     }
 
     /**
+     * Add a slot to the slot list
      *
      * @param slot
      */

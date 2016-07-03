@@ -89,7 +89,7 @@ public class FlightPlanCreationPanel extends CommonPanel {
      */
     @Override
     public void attachSlotAction() {
-        Slot airportSlot = new Slot(TopicName.UPDATE_AIRPORT_TOPIC, this);
+        Slot<String> airportSlot = new Slot<String>(TopicName.UPDATE_AIRPORT_TOPIC, this);
         airportSlot.setSlotAction(new SlotAction<String>() {
             /**
              *

@@ -6,7 +6,7 @@
 package com.airportflightplanner.common.slotsignal.api;
 
 /**
- * @author DCNS
+ * @author Goubaud Sylvain
  *
  */
 public interface SlotReceiver {
