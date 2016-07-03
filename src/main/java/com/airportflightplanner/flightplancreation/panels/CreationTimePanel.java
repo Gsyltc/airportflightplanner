@@ -26,9 +26,9 @@ import com.airportflightplanner.common.model.FlighPlanModel;
 import com.airportflightplanner.common.slotsignal.Slot;
 import com.airportflightplanner.common.slotsignal.TopicName;
 import com.airportflightplanner.common.slotsignal.api.SlotAction;
+import com.airportflightplanner.common.utils.time.TimeUtils;
 import com.airportflightplanner.common.visualelement.CommonPanel;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
-import com.airportflightplanner.flightplanprocessor.TimeProcessor;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.adapter.BasicComponentFactory;
 import com.jgoodies.binding.value.BufferedValueModel;
@@ -120,7 +120,7 @@ public class CreationTimePanel extends CommonPanel {
             @Override
             public void propertyChange(final PropertyChangeEvent evt) {
                 if (evt.getNewValue() instanceof Period) {
-                    timeTextField.setText(((Period) evt.getNewValue()).toString(TimeProcessor.PERIOD_DISPLAYER));
+                    timeTextField.setText(((Period) evt.getNewValue()).toString(TimeUtils.PERIOD_DISPLAYER));
                 }
             }
         });
@@ -170,7 +170,7 @@ public class CreationTimePanel extends CommonPanel {
             @Override
             public void propertyChange(final PropertyChangeEvent evt) {
                 if (evt.getNewValue() instanceof LocalTime) {
-                    endTextField.setText(((LocalTime) evt.getNewValue()).toString(TimeProcessor.TIME_DISPLAYER));
+                    endTextField.setText(((LocalTime) evt.getNewValue()).toString(TimeUtils.TIME_DISPLAYER));
                 }
             }
         });
@@ -226,7 +226,7 @@ public class CreationTimePanel extends CommonPanel {
             @Override
             public void propertyChange(final PropertyChangeEvent evt) {
                 if (evt.getNewValue() instanceof LocalTime) {
-                    startTextField.setText(((LocalTime) evt.getNewValue()).toString(TimeProcessor.TIME_DISPLAYER));
+                    startTextField.setText(((LocalTime) evt.getNewValue()).toString(TimeUtils.TIME_DISPLAYER));
                 }
             }
         });
@@ -277,11 +277,11 @@ public class CreationTimePanel extends CommonPanel {
         case START:
             if (!isTimeEmpty) {
                 currentFlightPlan.setBufferedValue(FligthPlanProperties.END_TIME, //
-                        TimeProcessor.getEndTime(startTextField.getText(), timeTextField.getText()));
+                        TimeUtils.getEndTime(startTextField.getText(), timeTextField.getText()));
             } else {
                 if (!isEndEmpty) {
                     currentFlightPlan.setBufferedValue(FligthPlanProperties.DURATION, //
-                            TimeProcessor.getDuration(startTextField.getText(), endTextField.getText()));
+                            TimeUtils.getDuration(startTextField.getText(), endTextField.getText()));
                 }
             }
             break;
@@ -289,11 +289,11 @@ public class CreationTimePanel extends CommonPanel {
         case END:
             if (!isTimeEmpty) {
                 currentFlightPlan.setBufferedValue(FligthPlanProperties.START_TIME, //
-                        TimeProcessor.getStartTime(endTextField.getText(), timeTextField.getText()));
+                        TimeUtils.getStartTime(endTextField.getText(), timeTextField.getText()));
             } else {
                 if (!isStartEmpty) {
                     currentFlightPlan.setBufferedValue(FligthPlanProperties.DURATION, //
-                            TimeProcessor.getDuration(startTextField.getText(), endTextField.getText()));
+                            TimeUtils.getDuration(startTextField.getText(), endTextField.getText()));
                 }
             }
 
@@ -302,11 +302,11 @@ public class CreationTimePanel extends CommonPanel {
             if (!isTimeEmpty) {
                 if (!isStartEmpty) {
                     currentFlightPlan.setBufferedValue(FligthPlanProperties.END_TIME, //
-                            TimeProcessor.getEndTime(startTextField.getText(), timeTextField.getText()));
+                            TimeUtils.getEndTime(startTextField.getText(), timeTextField.getText()));
                 } else {
                     if (!isEndEmpty) {
                         currentFlightPlan.setBufferedValue(FligthPlanProperties.START_TIME, //
-                                TimeProcessor.getStartTime(endTextField.getText(), timeTextField.getText()));
+                                TimeUtils.getStartTime(endTextField.getText(), timeTextField.getText()));
                     } else {
                         endTextField.setText("TO EMPTY 2");
 
@@ -315,7 +315,7 @@ public class CreationTimePanel extends CommonPanel {
             } else {
                 if (!isStartEmpty && isEndEmpty) {
                     currentFlightPlan.setBufferedValue(FligthPlanProperties.DURATION, //
-                            TimeProcessor.getDuration(startTextField.getText(), endTextField.getText()));
+                            TimeUtils.getDuration(startTextField.getText(), endTextField.getText()));
                 }
             }
 
@@ -350,7 +350,7 @@ public class CreationTimePanel extends CommonPanel {
          */
         @Override
         public void keyTyped(final KeyEvent e) {
-            if (null == TimeProcessor.getLocalTime(textField.getText() + e.getKeyChar())) {
+            if (null == TimeUtils.getLocalTime(textField.getText() + e.getKeyChar())) {
                 e.consume();
             }
         }

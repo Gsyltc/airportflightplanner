@@ -2,15 +2,15 @@
  *
  * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
  */
-package com.airportflightplanner.flightplanvisualization.adapter;
+package com.airportflightplanner.flightplanvisualization.adapter.flightplan;
 
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
 import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
-import com.airportflightplanner.common.api.flightplancollection.FlightPlanCollectionReader;
-import com.airportflightplanner.flightplanprocessor.TimeProcessor;
-import com.airportflightplanner.flightplanvisualization.presenter.FlightPlanVisualizationListModel;
+import com.airportflightplanner.common.api.flightplancollection.flightplan.FlightPlanCollectionReader;
+import com.airportflightplanner.common.utils.time.TimeUtils;
+import com.airportflightplanner.flightplanvisualization.presenter.flightplan.FlightPlanVisualizationListModel;
 import com.jgoodies.binding.adapter.AbstractTableAdapter;
 
 /**
@@ -83,13 +83,13 @@ public class FlightPlanVisualizationTableAdapter extends AbstractTableAdapter<Fl
 
         case DEPARTURE_TIME:
             if (null != flightPlan.getStartTime()) {
-                return flightPlan.getStartTime().toString(TimeProcessor.TIME_DISPLAYER);
+                return flightPlan.getStartTime().toString(TimeUtils.TIME_DISPLAYER);
             }
             return null;
 
         case ARRIVAL_TIME:
             if (null != flightPlan.getEndTime()) {
-                return flightPlan.getEndTime().toString(TimeProcessor.TIME_DISPLAYER);
+                return flightPlan.getEndTime().toString(TimeUtils.TIME_DISPLAYER);
             }
             return null;
 
@@ -101,7 +101,7 @@ public class FlightPlanVisualizationTableAdapter extends AbstractTableAdapter<Fl
 
         case DURATION:
             if (null != flightPlan.getDuration()) {
-                return flightPlan.getDuration().toString(TimeProcessor.FLIGHTPLAN_PERIOD_DISPLAYER);
+                return flightPlan.getDuration().toString(TimeUtils.FLIGHTPLAN_PERIOD_DISPLAYER);
             }
             return "";
 

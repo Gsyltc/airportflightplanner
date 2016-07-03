@@ -10,10 +10,10 @@ import java.util.List;
 import javax.swing.SwingUtilities;
 
 import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
-import com.airportflightplanner.common.api.flightplancollection.FlightPlanCollectionWriter;
-import com.airportflightplanner.common.api.flightplancollection.FligthPlanCollectionProperties;
+import com.airportflightplanner.common.api.flightplancollection.flightplan.FlightPlanCollectionWriter;
+import com.airportflightplanner.common.api.flightplancollection.flightplan.FligthPlanCollectionProperties;
 import com.airportflightplanner.flightplanvisualization.api.FlightPlanVisualizationListModelListener;
-import com.airportflightplanner.flightplanvisualization.presenter.FlightPlanVisualizationListModel;
+import com.airportflightplanner.flightplanvisualization.presenter.flightplan.FlightPlanVisualizationListModel;
 import com.jgoodies.binding.beans.Model;
 
 /**

@@ -2,7 +2,7 @@
  *
  * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
  */
-package com.airportflightplanner.common.api.flightplancollection;
+package com.airportflightplanner.common.api.flightplancollection.flightplan;
 
 import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
 import com.airportflightplanner.flightplanvisualization.api.FlightPlanVisualizationListModelListener;

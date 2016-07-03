@@ -4,6 +4,7 @@
  */
 package com.airportflightplanner.common.api.steerpoints;
 
+import javax.measure.DecimalMeasure;
 import javax.measure.quantity.Velocity;
 
 import org.jscience.geography.coordinates.Altitude;
@@ -24,7 +25,7 @@ public interface SteerPointReader {
      *
      * @return
      */
-    Velocity getVelocity();
+    DecimalMeasure<Velocity> getVelocity();
 
     /**
      *

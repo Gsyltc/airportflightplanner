@@ -27,7 +27,7 @@ import com.airportflightplanner.common.types.FlightPlanInformationTypes;
 import com.airportflightplanner.common.types.FlightType;
 import com.airportflightplanner.common.types.StartDays;
 import com.airportflightplanner.common.utils.properties.CommonProperties;
-import com.airportflightplanner.flightplanprocessor.TimeProcessor;
+import com.airportflightplanner.common.utils.time.TimeUtils;
 import com.airportflightplanner.importexport.importers.FlightPlanFileReader;
 
 /**
@@ -63,7 +63,7 @@ public class FlighPlanFileWriter extends AbstractSenderReceiver {
                 // STARTTIME
                 fileWriter.write(FlightPlanInformationTypes.STARTTIME.name());
                 fileWriter.write(System.lineSeparator());
-                fileWriter.write(flightPlan.getStartTime().toString(TimeProcessor.TIME_DISPLAYER));
+                fileWriter.write(flightPlan.getStartTime().toString(TimeUtils.TIME_DISPLAYER));
                 fileWriter.write(System.lineSeparator());
                 fileWriter.write(FlightPlanInformationTypes.ENDSTARTTIME.name());
                 fileWriter.write(System.lineSeparator());

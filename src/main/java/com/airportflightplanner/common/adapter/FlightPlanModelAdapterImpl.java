@@ -22,9 +22,9 @@ import com.airportflightplanner.common.types.DepartureType;
 import com.airportflightplanner.common.types.FlightPlanInformationTypes;
 import com.airportflightplanner.common.types.FlightType;
 import com.airportflightplanner.common.types.StartDays;
+import com.airportflightplanner.common.utils.geographics.GeographicUtils;
 import com.airportflightplanner.common.utils.internationalization.Internationalizer;
-import com.airportflightplanner.flightplanprocessor.GeographicProcessor;
-import com.airportflightplanner.flightplanprocessor.TimeProcessor;
+import com.airportflightplanner.common.utils.time.TimeUtils;
 
 /**
  * @author Goubaud Sylvain
@@ -44,8 +44,7 @@ public class FlightPlanModelAdapterImpl implements FlightPlanModelAdapter {
         newFlightPlan.setSteerPoints(steerpoints);
 
         // calculate Flight Time
-        GeographicProcessor gp = new GeographicProcessor();
-        long result = gp.getFlightTime(steerpoints);
+        long result = GeographicUtils.getFlightTime(steerpoints);
         newFlightPlan.setDuration(new Period(result));
     }
 
@@ -121,7 +120,7 @@ public class FlightPlanModelAdapterImpl implements FlightPlanModelAdapter {
 
         case STARTTIME:
             try {
-                newFlightPlan.setStartTime(TimeProcessor.getLocalTime(line));
+                newFlightPlan.setStartTime(TimeUtils.getLocalTime(line));
             } catch (NumberFormatException e) {
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Error while reading start time");

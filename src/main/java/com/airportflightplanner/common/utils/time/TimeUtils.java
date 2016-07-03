@@ -2,7 +2,7 @@
  *
  * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
  */
-package com.airportflightplanner.flightplanprocessor;
+package com.airportflightplanner.common.utils.time;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,9 +22,9 @@ import org.joda.time.format.PeriodFormatterBuilder;
  * @author Goubaud Sylvain
  *
  */
-public class TimeProcessor {
+public class TimeUtils {
     /** The logger of this class. */
-    private static final Log              LOGGER                      = LogFactory.getLog(TimeProcessor.class);
+    private static final Log              LOGGER                      = LogFactory.getLog(TimeUtils.class);
 
     /** */
     private static final DateTimeZone     CURRENT_TIMEZONE            = DateTimeZone.getDefault();

@@ -4,6 +4,7 @@
  */
 package com.airportflightplanner.common.model;
 
+import javax.measure.DecimalMeasure;
 import javax.measure.quantity.Velocity;
 
 import org.jscience.geography.coordinates.Altitude;
@@ -26,7 +27,7 @@ public class SteerPointModel extends Model implements SteerPointWriter {
     /** */
     LatLong                   latLong;
     /** */
-    private Velocity          velocity;
+    private DecimalMeasure<Velocity>          velocity;
     /** */
     private Altitude          altitude;
     /** */
@@ -46,7 +47,7 @@ public class SteerPointModel extends Model implements SteerPointWriter {
      * {@inheritDoc}
      */
     @Override
-    public Velocity getVelocity() {
+    public DecimalMeasure<Velocity> getVelocity() {
         return velocity;
     }
 
@@ -86,10 +87,10 @@ public class SteerPointModel extends Model implements SteerPointWriter {
      * {@inheritDoc}
      */
     @Override
-    public void setVelocity(final Velocity value) {
-        Velocity oldValue = this.velocity;
-        if (!value.equals(oldValue)) {
-            this.velocity = value;
+    public void setVelocity(final DecimalMeasure<Velocity> decimalMeasure) {
+        DecimalMeasure<Velocity> oldValue = this.velocity;
+        if (!decimalMeasure.equals(oldValue)) {
+            this.velocity = decimalMeasure;
             firePropertyChange(SteerPointProperties.VELOCITY, oldValue, velocity);
         }
     }

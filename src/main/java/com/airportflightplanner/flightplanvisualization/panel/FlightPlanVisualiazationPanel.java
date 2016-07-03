@@ -28,7 +28,7 @@ import com.airportflightplanner.common.slotsignal.Slot;
 import com.airportflightplanner.common.slotsignal.TopicName;
 import com.airportflightplanner.common.slotsignal.api.SlotAction;
 import com.airportflightplanner.common.visualelement.CommonPanel;
-import com.airportflightplanner.flightplanvisualization.presenter.FlightPlanVisualizationPresenter;
+import com.airportflightplanner.flightplanvisualization.presenter.flightplan.FlightPlanVisualizationPresenter;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
@@ -89,11 +89,14 @@ public class FlightPlanVisualiazationPanel extends CommonPanel {
                         FormSpecs.PREF_ROWSPEC, //
                         FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC, //
+                        FormSpecs.RELATED_GAP_ROWSPEC, //
+                        FormSpecs.PREF_ROWSPEC, //
                         FormSpecs.RELATED_GAP_ROWSPEC, }));
 
         add(new CurrentAirportPanel(flightPlansCollection), "2, 2, 3, 1, fill, fill");
         add(new DaysSelectionPanel(), "2, 4, 3, 1, fill, fill");
-        add(createFlightVisualizationPanel(), "2, 6, 3, 1, fill, top");
+        add(createFlightVisualizationPanel(), "2, 6, 3, 1");
+        add(new SteePointdPanel(), "2, 8, 3, 1");
 
     }
 
@@ -157,7 +160,6 @@ public class FlightPlanVisualiazationPanel extends CommonPanel {
 
             @Override
             public void doAction(final String object) {
-
 
             }
         });
