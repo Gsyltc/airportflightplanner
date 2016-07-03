@@ -2,12 +2,12 @@
  *
  * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
  */
-package com.airportflightplanner.flightplanvisualization.presenter;
+package com.airportflightplanner.flightplanvisualization.presenter.flightplan;
 
 import javax.swing.ListModel;
 
 import com.airportflightplanner.common.model.FlighPlanCollectionModel;
-import com.airportflightplanner.flightplanvisualization.adapter.FlightPlanVisualizationTableAdapter;
+import com.airportflightplanner.flightplanvisualization.adapter.flightplan.FlightPlanVisualizationTableAdapter;
 import com.jgoodies.binding.PresentationModel;
 
 /**

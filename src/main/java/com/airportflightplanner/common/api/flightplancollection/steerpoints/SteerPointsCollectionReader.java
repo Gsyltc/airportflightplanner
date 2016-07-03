@@ -2,41 +2,42 @@
  *
  * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
  */
-package com.airportflightplanner.common.api.flightplancollection;
+package com.airportflightplanner.common.api.flightplancollection.steerpoints;
 
 import javax.swing.ListModel;
 
 import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
+import com.airportflightplanner.common.api.steerpoints.SteerPointReader;
 
 /**
  * @author Goubaud Sylvain
  *
  */
-public interface FlightPlanCollectionReader {
+public interface SteerPointsCollectionReader {
 
     /**
      *
      * @param value
      * @return
      */
-    public FlightPlanReader getFlightPlanByIndex(final int value);
+    SteerPointReader getSteerPointByIndex(final int value);
 
     /**
      *
      * @return
      */
-    public int getFlightPlanCollectionSize();
+    int getSteerPointsCollectionSize();
 
     /**
      *
      * @return
      */
-    ListModel<FlightPlanReader> getListModel();
+    ListModel<SteerPointReader> getListModel();
 
     /**
      *
      * @return
      */
-    String getCurrentAirport();
+    FlightPlanReader getCurrentFlightPlan();
 
 }

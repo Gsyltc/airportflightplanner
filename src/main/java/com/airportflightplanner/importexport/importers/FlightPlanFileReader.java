@@ -23,7 +23,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.airportflightplanner.common.api.adapter.FlightPlanModelAdapter;
 import com.airportflightplanner.common.api.flightplan.FligthPlanProperties;
-import com.airportflightplanner.common.api.flightplancollection.FligthPlanCollectionProperties;
+import com.airportflightplanner.common.api.flightplancollection.flightplan.FligthPlanCollectionProperties;
 import com.airportflightplanner.common.model.FlighPlanCollectionModel;
 import com.airportflightplanner.common.model.FlighPlanModel;
 import com.airportflightplanner.common.types.FlightPlanInformationTypes;

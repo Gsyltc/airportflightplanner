@@ -2,7 +2,7 @@
  *
  * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
  */
-package com.airportflightplanner.flightplanvisualization.adapter;
+package com.airportflightplanner.flightplanvisualization.adapter.flightplan;
 
 import com.airportflightplanner.common.utils.internationalization.Internationalizer;
 

@@ -2,15 +2,15 @@
  *
  * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
  */
-package com.airportflightplanner.flightplanvisualization.adapter;
+package com.airportflightplanner.flightplanvisualization.adapter.flightplan;
 
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
 import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
-import com.airportflightplanner.common.api.flightplancollection.FlightPlanCollectionReader;
+import com.airportflightplanner.common.api.flightplancollection.flightplan.FlightPlanCollectionReader;
 import com.airportflightplanner.flightplanprocessor.TimeProcessor;
-import com.airportflightplanner.flightplanvisualization.presenter.FlightPlanVisualizationListModel;
+import com.airportflightplanner.flightplanvisualization.presenter.flightplan.FlightPlanVisualizationListModel;
 import com.jgoodies.binding.adapter.AbstractTableAdapter;
 
 /**

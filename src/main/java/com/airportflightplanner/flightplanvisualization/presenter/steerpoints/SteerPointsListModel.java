@@ -2,7 +2,7 @@
  *
  * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
  */
-package com.airportflightplanner.flightplanvisualization.presenter;
+package com.airportflightplanner.flightplanvisualization.presenter.steerpoints;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,21 +10,21 @@ import java.util.List;
 
 import javax.swing.AbstractListModel;
 
-import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
-import com.airportflightplanner.flightplanvisualization.api.FlightPlanVisualizationListModelListener;
+import com.airportflightplanner.common.api.steerpoints.SteerPointReader;
+import com.airportflightplanner.flightplanvisualization.api.SteerPointsListModelListener;
 
 /**
  * @author Goubaud Sylvain
  *
  */
-public class FlightPlanVisualizationListModel extends AbstractListModel<FlightPlanReader> implements FlightPlanVisualizationListModelListener {
+public class SteerPointsListModel extends AbstractListModel<SteerPointReader> implements SteerPointsListModelListener {
 
     /**
      *
      */
     private static final long            serialVersionUID = -6702145855038118674L;
     /** */
-    private final List<FlightPlanReader> list             = new ArrayList<FlightPlanReader>();
+    private final List<SteerPointReader> list             = new ArrayList<SteerPointReader>();
     /** */
     private static final int             FIRST_ROW        = 0;
 
@@ -32,7 +32,7 @@ public class FlightPlanVisualizationListModel extends AbstractListModel<FlightPl
      *
      * @param list
      */
-    public void setList(final List<FlightPlanReader> list) {
+    public void setList(final List<SteerPointReader> list) {
         this.list.clear();
         this.list.addAll(list);
         fireContentsChanged(this, FIRST_ROW, Math.max(list.size() - 1, 0));
@@ -59,7 +59,7 @@ public class FlightPlanVisualizationListModel extends AbstractListModel<FlightPl
      *
      * @return
      */
-    public List<FlightPlanReader> getList() {
+    public List<SteerPointReader> getList() {
         return Collections.unmodifiableList(list);
     }
 
@@ -77,8 +77,8 @@ public class FlightPlanVisualizationListModel extends AbstractListModel<FlightPl
      * {@inheritDoc}
      */
     @Override
-    public FlightPlanReader getElementAt(final int index) {
-        FlightPlanReader elementAt = list.get(index);
+    public SteerPointReader getElementAt(final int index) {
+        SteerPointReader elementAt = list.get(index);
         return elementAt;
     }
 
@@ -87,35 +87,35 @@ public class FlightPlanVisualizationListModel extends AbstractListModel<FlightPl
      * @param element
      * @return
      */
-    public int indexOf(final FlightPlanReader element) {
+    public int indexOf(final SteerPointReader element) {
         return list.indexOf(element);
     }
 
-    public void add(final FlightPlanReader value) {
+    public void add(final SteerPointReader value) {
         list.add(value);
         fireContentsChanged(this, FIRST_ROW, list.size() - 1);
     }
 
     /**
      *
-     * @param flightPlan
+     * @param steerPoint
      */
     @Override
-    public void addFlightPlan(final FlightPlanReader flightPlan) {
-        if ((null != flightPlan) && !list.contains(flightPlan)) {
-            list.add(flightPlan);
+    public void addSteerPoint(final SteerPointReader steerPoint) {
+        if ((null != steerPoint) && !list.contains(steerPoint)) {
+            list.add(steerPoint);
             fireContentsChanged(this, FIRST_ROW, list.size() - 1);
         }
     }
 
     /**
      *
-     * @param flightPlan
+     * @param steerPoint
      */
     @Override
-    public void removeFlightPlan(final FlightPlanReader flightPlan) {
-        if ((null != flightPlan) && list.contains(flightPlan)) {
-            list.remove(flightPlan);
+    public void removeSteerPoint(final SteerPointReader steerPoint) {
+        if ((null != steerPoint) && list.contains(steerPoint)) {
+            list.remove(steerPoint);
             fireContentsChanged(this, FIRST_ROW, list.size() - 1);
         }
     }
