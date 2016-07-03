@@ -157,7 +157,7 @@ public class FlightPlanVisualiazationPanel extends CommonPanel {
 
             @Override
             public void doAction(final String object) {
-                System.out.println("FP Vizu panel : " + object);
+
 
             }
         });
