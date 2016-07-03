@@ -46,15 +46,15 @@ public class CreationTimePanel extends CommonPanel {
     /**
      *
      */
-    private static final long                       serialVersionUID = 8098225641658386495L;
+    private static final long                         serialVersionUID = 8098225641658386495L;
     /** */
-    protected JTextField                            startTextField;
+    protected JTextField                              startTextField;
     /** */
-    protected JTextField                            endTextField;
+    protected JTextField                              endTextField;
     /** */
-    protected JTextField                            timeTextField;
+    protected JTextField                              timeTextField;
     /** */
-    private final PresentationModel<FlighPlanModel> currentFlightPlan;
+    protected final PresentationModel<FlighPlanModel> currentFlightPlan;
 
     /**
      * @param currentFlightPlan

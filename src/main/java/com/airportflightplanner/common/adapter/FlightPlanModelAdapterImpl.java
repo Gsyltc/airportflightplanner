@@ -139,6 +139,7 @@ public class FlightPlanModelAdapterImpl implements FlightPlanModelAdapter {
             newFlightPlan.setStartDays(tmpSet);
             break;
 
+
         default:
             break;
         }
