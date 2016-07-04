@@ -161,6 +161,7 @@ public class FlightPlanVisualiazationPanel extends CommonPanel {
             @Override
             public void doAction(final String object) {
 
+
             }
         });
 
