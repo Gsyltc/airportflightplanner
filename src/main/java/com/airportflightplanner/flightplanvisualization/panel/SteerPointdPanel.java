@@ -63,7 +63,6 @@ public class SteerPointdPanel extends CommonPanel {
     */
 
     /**
-     * @param steerPointsCollectionModel
      *
      */
     public SteerPointdPanel() {

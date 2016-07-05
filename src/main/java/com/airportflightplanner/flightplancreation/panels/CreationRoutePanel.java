@@ -12,6 +12,9 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.border.TitledBorder;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.airportflightplanner.common.model.FlighPlanModel;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
 import com.jgoodies.binding.PresentationModel;
@@ -26,12 +29,15 @@ import com.jgoodies.forms.layout.RowSpec;
  *
  */
 public class CreationRoutePanel extends FormDebugPanel {
+    /** The logger of this class. */
+    private static final Log                        LOGGER           = LogFactory.getLog(CreationRoutePanel.class);
+
     /**
      *
      */
-    private static final long                 serialVersionUID = -2692513903084994308L;
+    private static final long                       serialVersionUID = -2692513903084994308L;
     /** */
-    private JComboBox<String>                 routeSelector;
+    private JComboBox<String>                       routeSelector;
     /** */
     private final PresentationModel<FlighPlanModel> currentFlightPlan;
 
@@ -62,6 +68,8 @@ public class CreationRoutePanel extends FormDebugPanel {
                         FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC, //
                         FormSpecs.RELATED_GAP_ROWSPEC, //
+                        FormSpecs.PREF_ROWSPEC, //
+                        FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC }));
 
         TitledBorder timePanelBorder = new TitledBorder(FlightPlanCreationPanelMessages.ROUTE_PANEL_LABEL);
@@ -69,7 +77,26 @@ public class CreationRoutePanel extends FormDebugPanel {
 
         JLabel routeLabel = new JLabel(FlightPlanCreationPanelMessages.ROUTE_LABEL);
         add(routeLabel, "2,4,5,1");
-        add(createRouteSelectorCombo(), "2,6,11,1");
+        add(createRouteSelectorCombo(), "2,6,11,1,fill,fill");
+
+        JGoogleMapEditorPan googleMap = new JGoogleMapEditorPan();
+        try {
+//            googleMap.setApiKey("maCleGoogleMap");
+             googleMap.setRoadmap(googleMap.viewHybrid);
+
+            /**
+             * Afficher la ville de Strabourg
+             */
+            googleMap.showLocation("strasbourg", "france", 390, 400);
+            /**
+             * Afficher Paris en fonction ses coordonnées GPS
+             */
+            googleMap.showCoordinate("48.8667", "2.3333", 390, 400);
+        } catch (Exception ex) {
+            LOGGER.debug(ex);
+        }
+
+        add(googleMap, "2,8,11,1");
     }
 
     /**
