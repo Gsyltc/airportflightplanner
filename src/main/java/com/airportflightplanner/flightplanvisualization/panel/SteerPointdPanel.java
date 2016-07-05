@@ -38,7 +38,7 @@ import com.jgoodies.forms.layout.RowSpec;
  * @author DCNS
  *
  */
-public class SteePointdPanel extends CommonPanel {
+public class SteerPointdPanel extends CommonPanel {
     /**
     *
     */
@@ -66,7 +66,7 @@ public class SteePointdPanel extends CommonPanel {
      * @param steerPointsCollectionModel
      *
      */
-    public SteePointdPanel() {
+    public SteerPointdPanel() {
         presenter = new SteerPointsPresenter(steerPointsCollectionModel);
         steerPointsCollectionModel.addSteerPointsListModelListener(presenter.getListModel());
         build();

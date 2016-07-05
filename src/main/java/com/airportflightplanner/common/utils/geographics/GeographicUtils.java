@@ -7,6 +7,7 @@ package com.airportflightplanner.common.utils.geographics;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -24,6 +25,7 @@ import org.jscience.geography.coordinates.LatLong;
 
 import com.airportflightplanner.common.api.steerpoints.SteerPointReader;
 import com.airportflightplanner.common.model.SteerPointModel;
+import com.airportflightplanner.common.types.GeographicFormatter;
 
 /**
  * @author Goubaud Sylvain
@@ -153,7 +155,7 @@ public class GeographicUtils {
         DecimalFormat formatSecond = new DecimalFormat("##.####");
         formatSecond.setRoundingMode(RoundingMode.CEILING);
 
-        return String.format("%s° %s' %s'' %s", new Object[] { formatDegree.format(degree), formatMinutes.format(intMinutes), //
+        return MessageFormat.format(GeographicFormatter.LATITUDE_DMS, new Object[] { formatDegree.format(degree), formatMinutes.format(intMinutes), //
                 formatSecond.format(second), direction });
 
     }

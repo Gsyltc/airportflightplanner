@@ -9,6 +9,7 @@
             <util:list>
                 <value>internationalization.i18NMessages</value>
                 <value>internationalization.companies.i18NMessages</value>
+                <value>internationalization.datatypes.i18NMessages</value>
             </util:list>
         </property>
     </bean>

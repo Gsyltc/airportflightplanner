@@ -96,7 +96,7 @@ public class FlightPlanVisualiazationPanel extends CommonPanel {
         add(new CurrentAirportPanel(flightPlansCollection), "2, 2, 3, 1, fill, fill");
         add(new DaysSelectionPanel(), "2, 4, 3, 1, fill, fill");
         add(createFlightVisualizationPanel(), "2, 6, 3, 1");
-        add(new SteePointdPanel(), "2, 8, 3, 1");
+        add(new SteerPointdPanel(), "2, 8, 3, 1");
 
     }
 

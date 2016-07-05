@@ -4,6 +4,8 @@
  */
 package com.airportflightplanner.flightplanvisualization.adapter.steerpoints;
 
+import java.text.MessageFormat;
+
 import javax.measure.quantity.Velocity;
 import javax.measure.unit.NonSI;
 import javax.swing.event.ListDataEvent;
@@ -11,6 +13,7 @@ import javax.swing.event.ListDataListener;
 
 import com.airportflightplanner.common.api.flightplancollection.flightplan.FlightPlanCollectionReader;
 import com.airportflightplanner.common.api.steerpoints.SteerPointReader;
+import com.airportflightplanner.common.types.GeographicFormatter;
 import com.airportflightplanner.common.utils.geographics.GeographicUtils;
 import com.airportflightplanner.flightplanvisualization.presenter.steerpoints.SteerPointsListModel;
 import com.jgoodies.binding.adapter.AbstractTableAdapter;
@@ -81,10 +84,10 @@ public class SteerPointsTableAdapter extends AbstractTableAdapter<FlightPlanColl
             return GeographicUtils.getFormattedLongitude(steerpoint.getLatLong());
 
         case ALTITUDE:
-            return steerpoint.getAltitude().longValue(NonSI.FOOT);
+            return MessageFormat.format(GeographicFormatter.ALTITUDE_FOOT, new Object[] { steerpoint.getAltitude().longValue(NonSI.FOOT) });
 
         case VELOCITY:
-            return steerpoint.getVelocity();
+            return MessageFormat.format(GeographicFormatter.VELOCITY_KNOT, new Object[] { steerpoint.getVelocity().getValue() });
 
         default:
             break;
