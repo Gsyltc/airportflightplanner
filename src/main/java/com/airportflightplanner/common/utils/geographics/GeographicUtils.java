@@ -66,6 +66,22 @@ public class GeographicUtils {
 
     /**
      *
+     * @param steerpointsString
+     * @return
+     */
+    public static String getEncodePolyline(final List<String> steerpointsString) {
+        List<SteerPointReader> steerPoints = getSteerPoints(steerpointsString);
+        String points = "";
+        for (SteerPointReader steerPointReader : steerPoints) {
+            points += "|" +steerPointReader.getLatLong().latitudeValue(NonSI.DEGREE_ANGLE) + "," + //
+                    steerPointReader.getLatLong().longitudeValue(NonSI.DEGREE_ANGLE);
+        }
+        // EncodedPolyline polyline = new EncodedPolyline(points);
+        return points;
+    }
+
+    /**
+     *
      * @param latLong
      * @return
      */

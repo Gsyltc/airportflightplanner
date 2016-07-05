@@ -13,7 +13,19 @@ import java.nio.file.Paths;
  */
 public class CommonProperties {
 
-    /** */
-    public static final Path ROUTES_DIRECTORY = Paths.get(PropertiesLoader.getPropertyByName("Application.xplane.directory") + //
-            PropertiesLoader.getPropertyByName("Application.xplane.routes.directory"));
+	/** */
+	public static final Path ROUTES_DIRECTORY = Paths
+			.get(PropertiesLoader.getPropertyByName("Application.xplane.directory") + //
+					PropertiesLoader.getPropertyByName("Application.xplane.routes.directory"));
+
+	/** */
+	public static final String GOOGLE_MAPTYPE = PropertiesLoader
+			.getPropertyByName("Application.default.google.mapType");
+
+	/** */
+	public static final String GOOGLE_KEY = PropertiesLoader.getPropertyByName("Application.default.google.apiKey");
+	/** */
+	public static final String GOOGLE_ZOOM_FACTOR = PropertiesLoader
+			.getPropertyByName("Application.default.google.zoomFactor");
+
 }
