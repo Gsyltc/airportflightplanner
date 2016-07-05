@@ -67,6 +67,31 @@ public class JGoogleMapEditorPan extends JEditorPane {
         this.roadmap = roadMap;
     }
 
+    public void test(final String string) {
+        string.substring(0, string.length() - 2);
+        // String path = "&path=color:0xff00ff|weight:5|45.3215,7.1254";
+        // path += "|45.9215,8.1254";
+        // path += "|46.5215,7.8254";
+
+        if (this.ApiKey.isEmpty()) {
+            // throw new Exception("Developper API Key not set !!!!");
+        }
+
+        String url = "http://maps.googleapis.com/maps/api/staticmap?";
+        url += "&path=color:0xff00ff|weight:5" + string;
+        url += "&size=" + 400 + "x" + 400;
+        url += "&maptype=" + this.roadmap;
+        // url += "&markers=color:blue" + "45.9215,8.1254";
+        url += "&sensor=false";
+        url += "&key=" + this.ApiKey;
+
+        String html = "<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'>";
+        html += "<html><head></head><body>";
+        html += "<img src='" + url + "'>";
+        html += "</body></html>";
+        this.setText(html);
+    }
+
     /**
      * Afficher la carte d'après des coordonnées GPS
      *
