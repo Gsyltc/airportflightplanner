@@ -17,7 +17,7 @@ import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormatterBuilder;
 
 import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
-import com.airportflightplanner.common.slotsignal.AbstractSenderReceiver;
+import com.airportflightplanner.common.slotsignal.AbstractSlotReceiver;
 import com.airportflightplanner.common.slotsignal.Slot;
 import com.airportflightplanner.common.slotsignal.TopicName;
 import com.airportflightplanner.common.slotsignal.api.SlotAction;
@@ -34,7 +34,7 @@ import com.airportflightplanner.importexport.importers.FlightPlanFileReader;
  * @author Goubaud Sylvain
  *
  */
-public class FlighPlanFileWriter extends AbstractSenderReceiver {
+public class FlighPlanFileWriter extends AbstractSlotReceiver {
     /** The logger of this class. */
     private static final Log              LOGGER           = LogFactory.getLog(FlightPlanFileReader.class);
 

@@ -5,13 +5,15 @@
  */
 package com.airportflightplanner.common.slotsignal;
 
+import java.util.List;
+
 import com.airportflightplanner.common.slotsignal.api.SlotReceiver;
 
 /**
  * @author Goubaud Sylvain
  *
  */
-public class AbstractSenderReceiver implements SlotReceiver {
+public class AbstractSlotReceiver implements SlotReceiver {
 
     /**
      *
@@ -39,6 +41,16 @@ public class AbstractSenderReceiver implements SlotReceiver {
     public void attachSignal() {
         // To Ovverride if needed
 
+    }
+
+    /**
+     * For Spring Injection ONLY - Need to be Oeverrided at demand
+     *
+     * @param slots
+     *            List of Slots to attach
+     */
+    public void setSlots(final List<Slot<? extends Object>> slots) {
+        // To override if needed
     }
 
 }

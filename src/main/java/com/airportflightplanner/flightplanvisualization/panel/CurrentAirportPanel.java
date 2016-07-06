@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import com.airportflightplanner.common.model.FlighPlanCollectionModel;
 import com.airportflightplanner.common.slotsignal.Signal;
 import com.airportflightplanner.common.slotsignal.TopicName;
+import com.airportflightplanner.common.utils.properties.CommonProperties;
 import com.airportflightplanner.common.visualelement.CommonPanel;
 import com.airportflightplanner.flightplanvisualization.messages.FlightPlanVisualizationMessages;
 import com.airportflightplanner.importexport.importers.AirportFileReader;
@@ -86,7 +87,6 @@ public class CurrentAirportPanel extends CommonPanel {
         ValueModel selectionHolder = new ValueHolder();
         ComboBoxAdapter<String> comboBoxAdapter = new ComboBoxAdapter<String>(AirportFileReader.getAirports(), selectionHolder);
         comboBox.setModel(comboBoxAdapter);
-
         comboBox.addItemListener(new ItemListener() {
             /**
              *
@@ -103,6 +103,7 @@ public class CurrentAirportPanel extends CommonPanel {
             }
         });
 
+        comboBox.setSelectedItem(CommonProperties.getPropertyValue(CommonProperties.DEFAULT_AIRPORT));
         return comboBox;
     }
 

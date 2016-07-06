@@ -5,6 +5,7 @@
  */
 package com.airportflightplanner.common.visualelement;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -20,10 +21,16 @@ import com.airportflightplanner.common.slotsignal.api.SlotReceiver;
  *
  */
 public abstract class CommonPanel extends JPanel implements SlotReceiver {
+    /**
+     *
+     */
+    private static final long                  serialVersionUID = -9041291520151245877L;
     /** */
-    public Map<String, Signal> signals = new ConcurrentHashMap<String, Signal>();
+    public Map<String, Signal>                 signals          = new ConcurrentHashMap<String, Signal>();
     /** */
-    public Map<String, Slot>   slots   = new ConcurrentHashMap<String, Slot>();
+    public Map<String, Slot<? extends Object>> slots            = new ConcurrentHashMap<String, Slot<? extends Object>>();
+
+    public Map<String, ? extends Object>       attributeMap     = new ConcurrentHashMap<String, Object>();
 
     /**
      *
@@ -43,7 +50,17 @@ public abstract class CommonPanel extends JPanel implements SlotReceiver {
     }
 
     @Override
-    public void attachSignal(){
+    public void attachSignal() {
+        // To override if needed
+    }
+
+    /**
+     * For Spring Injection ONLY - Need to be Oeverrided at demand
+     *
+     * @param slots
+     *            List of Slots to attach
+     */
+    public void setSlots(final List<? extends Object> slots) {
         // To override if needed
     }
 

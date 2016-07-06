@@ -47,7 +47,7 @@ public class CreationRoutePanel extends CommonPanel {
 	/** */
 	private final PresentationModel<FlighPlanModel> currentFlightPlan;
 	/** */
-	protected JGoogleMapEditorPan googleMap;
+	protected GoogleMapPane googleMap;
 
 	/**
 	 * @param currentFlightPlan
@@ -109,8 +109,8 @@ public class CreationRoutePanel extends CommonPanel {
 		return routeSelector;
 	}
 
-	private JGoogleMapEditorPan createMap(){
-    	 googleMap = new JGoogleMapEditorPan();
+	private GoogleMapPane createMap(){
+    	 googleMap = new GoogleMapPane();
     	 googleMap.setDimension(getBounds());
     	 return googleMap;
     }

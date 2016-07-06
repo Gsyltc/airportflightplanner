@@ -13,7 +13,8 @@ package com.airportflightplanner.common.slotsignal.api;
 public interface SlotAction<E extends Object> {
     /**
      *
-     * @param object
+     * @param arg
      */
-    void doAction(E object);
+    void doAction(E arg);
+
 }

@@ -13,6 +13,7 @@ import com.airportflightplanner.common.slotsignal.api.SlotReceiver;
 
 /**
  * @author Goubaud Sylvain
+ * @param <E>
  *
  */
 public class Slot<E extends Object> implements Observer {
@@ -68,10 +69,10 @@ public class Slot<E extends Object> implements Observer {
     /**
      * Define the action for the slot
      *
-     * @param slotAction
+     * @param newSlotAction
      */
-    public void setSlotAction(final SlotAction<E> slotAction) {
-        this.slotAction = slotAction;
+    public void setSlotAction(final SlotAction<E> newSlotAction) {
+        this.slotAction = newSlotAction;
 
     }
 
