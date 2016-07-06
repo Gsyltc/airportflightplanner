@@ -9,6 +9,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -26,11 +28,20 @@ import com.airportflightplanner.common.slotsignal.api.SlotAction;
  */
 public class PropertiesUtils extends AbstractSlotReceiver {
     /** */
-    private String            fileName = "application.properties";
+    private String                        fileName              = "application.properties";
     /** */
-    private static Properties prop;
+    private final String                  userConfigPath        = "config/";
+    /** */
+    private final String                  systemConfigPath      = "com/airportflightplanner/common/utils/properties/";
+    /** */
+    private static Properties             userProperties        = new Properties();
+    /** */
+    private static Properties             applicationProperties = new Properties();
+    /** */
+    private static final List<Properties> PROPERTIES            = new ArrayList<Properties>();
+
     /** The logger of this class. */
-    private static final Log  LOGGER   = LogFactory.getLog(PropertiesUtils.class);
+    private static final Log              LOGGER                = LogFactory.getLog(PropertiesUtils.class);
 
     /**
      *
@@ -38,26 +49,36 @@ public class PropertiesUtils extends AbstractSlotReceiver {
     @Override
     public void init() {
         super.init();
-        prop = new Properties();
-        File configFile = new File("config/" + fileName);
+        PROPERTIES.add(userProperties);
+        PROPERTIES.add(applicationProperties);
+
+        File configFile = new File(userConfigPath + fileName);
         if (!configFile.exists()) {
             try (InputStream defaultInputStream = getClass().getClassLoader().getResourceAsStream(fileName)) {
-                prop.load(defaultInputStream);
+                userProperties.load(defaultInputStream);
             } catch (IOException e) {
                 if (LOGGER.isErrorEnabled()) {
                     LOGGER.error("Error while loading the default configuration file", e);
                 }
             }
         } else {
-            try (InputStream fileInputStream = new FileInputStream("config/" + fileName)) {
-                prop.load(fileInputStream);
+            try (InputStream fileInputStream = new FileInputStream(userConfigPath + fileName)) {
+                userProperties.load(fileInputStream);
             } catch (IOException e) {
                 if (LOGGER.isErrorEnabled()) {
                     LOGGER.error("Error while loading the current configuration file", e);
                 }
             }
-
         }
+
+        try (InputStream defaultInputStream = getClass().getClassLoader().getResourceAsStream(systemConfigPath + fileName)) {
+            applicationProperties.load(defaultInputStream);
+        } catch (IOException e) {
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("Error while loading the default configuration file", e);
+            }
+        }
+
     }
 
     /**
@@ -66,8 +87,14 @@ public class PropertiesUtils extends AbstractSlotReceiver {
      * @return
      */
     public static String getPropertyByName(final String key) {
-        if (null != prop) {
-            return prop.getProperty(key);
+        for (Properties properties : PROPERTIES) {
+            if (properties.containsKey(key)) {
+                return properties.getProperty(key);
+            }
+        }
+
+        if (LOGGER.isErrorEnabled()) {
+            LOGGER.error("Error while loading properties. Property " + key + " not found");
         }
         return "";
     }
@@ -78,8 +105,8 @@ public class PropertiesUtils extends AbstractSlotReceiver {
      * @param value
      */
     public static void setPropertyByName(final String key, final String value) {
-        if (null != prop) {
-            prop.setProperty(key, value);
+        if (null != userProperties) {
+            userProperties.setProperty(key, value);
         }
     }
 
@@ -95,9 +122,9 @@ public class PropertiesUtils extends AbstractSlotReceiver {
      *
      */
     protected void updateProperties() {
-        File file = new File("config/" + fileName);
+        File file = new File(userConfigPath + fileName);
         try (FileOutputStream propertiesStream = new FileOutputStream(file)) {
-            prop.store(propertiesStream, "");
+            userProperties.store(propertiesStream, "");
         } catch (IOException e) {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("Error while writing application properties", e);
@@ -133,9 +160,10 @@ public class PropertiesUtils extends AbstractSlotReceiver {
              */
             @Override
             public void doAction(final Map<String, String> arg) {
-                setPropertyByName(CommonProperties.GOOGLE_KEY, arg.get(CommonProperties.GOOGLE_KEY));
                 setPropertyByName(CommonProperties.GOOGLE_MAPTYPE, arg.get(CommonProperties.GOOGLE_MAPTYPE));
                 setPropertyByName(CommonProperties.GOOGLE_ZOOM_FACTOR, arg.get(CommonProperties.GOOGLE_ZOOM_FACTOR));
+                setPropertyByName(CommonProperties.GOOGLE_POLYLINE_COLOR, arg.get(CommonProperties.GOOGLE_POLYLINE_COLOR));
+                setPropertyByName(CommonProperties.GOOGLE_POLYLINE_WIDTH, arg.get(CommonProperties.GOOGLE_POLYLINE_WIDTH));
                 updateProperties();
             }
 

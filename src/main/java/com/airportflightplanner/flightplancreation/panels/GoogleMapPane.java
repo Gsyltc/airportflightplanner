@@ -5,6 +5,7 @@
  */
 package com.airportflightplanner.flightplancreation.panels;
 
+import java.awt.Dimension;
 import java.awt.Rectangle;
 
 import javax.swing.JEditorPane;
@@ -37,7 +38,7 @@ public class GoogleMapPane extends JEditorPane {
     /** */
     private int               mapWidth;
     /** */
-    private double            mapHeight;
+    private int               mapHeight;
 
     /**
      * Constructeur: initialisation du EditorKit
@@ -49,6 +50,10 @@ public class GoogleMapPane extends JEditorPane {
         this.setContentType("text/html");
         this.setEditorKit(kit);
         this.setDocument(htmlDoc);
+        setMaximumSize(new Dimension(mapWidth, mapHeight));
+        setMinimumSize(new Dimension(mapWidth, mapHeight));
+        setSize(mapWidth, mapHeight);
+
     }
 
     /**
@@ -78,7 +83,7 @@ public class GoogleMapPane extends JEditorPane {
 
         String url = "http://maps.googleapis.com/maps/api/staticmap?";
         url += "&path=color:" + polylineColor + "|weight:" + polylineWeigth + string;
-        url += "&size=" + 400 + "x" + 400;
+        url += "&size=" + mapWidth + "x" + mapHeight;
         url += "&maptype=" + this.roadmap.name().toLowerCase();
         // url += "&markers=color:blue" + "45.9215,8.1254";
         url += "&sensor=false";
@@ -98,6 +103,6 @@ public class GoogleMapPane extends JEditorPane {
      */
     public void setDimension(final Rectangle bounds) {
         this.mapWidth = (int) bounds.getWidth();
-        this.mapHeight = bounds.getHeight();
+        this.mapHeight = (int) bounds.getHeight();
     }
 }

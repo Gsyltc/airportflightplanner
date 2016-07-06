@@ -4,13 +4,22 @@
  */
 package com.airportflightplanner.flightplancreation;
 
+import java.awt.Dimension;
+import java.awt.Rectangle;
+import java.util.List;
+
+import javax.swing.JPanel;
+
+import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
 import com.airportflightplanner.common.model.FlighPlanModel;
 import com.airportflightplanner.common.slotsignal.Slot;
 import com.airportflightplanner.common.slotsignal.TopicName;
 import com.airportflightplanner.common.slotsignal.api.SlotAction;
+import com.airportflightplanner.common.utils.geographics.GeographicUtils;
 import com.airportflightplanner.common.visualelement.CommonPanel;
 import com.airportflightplanner.flightplancreation.panels.CreationRoutePanel;
 import com.airportflightplanner.flightplancreation.panels.CreationTimePanel;
+import com.airportflightplanner.flightplancreation.panels.GoogleMapPane;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
@@ -31,7 +40,7 @@ public class FlightPlanCreationPanel extends CommonPanel {
      *
      */
     private final PresentationModel<FlighPlanModel> currentFlightPlan = new PresentationModel<FlighPlanModel>();
-
+    private GoogleMapPane                           googleMap;
 
     /**
     *
@@ -81,6 +90,8 @@ public class FlightPlanCreationPanel extends CommonPanel {
 
         CreationRoutePanel routePanel = new CreationRoutePanel(currentFlightPlan);
         add(routePanel, "2,6,11,1");
+
+        add(createMap(), "2,10,11,1");
     }
 
     /**
@@ -101,5 +112,38 @@ public class FlightPlanCreationPanel extends CommonPanel {
 
             }
         });
+
+        Slot<FlightPlanReader> slot = new Slot<>(TopicName.FLIGHTPLAN_TABLE_SELECTED, this);
+        slot.setSlotAction(new SlotAction<FlightPlanReader>() {
+            /**
+             *
+             * {@inheritDoc}
+             */
+            @Override
+            public void doAction(final FlightPlanReader flightPlanReader) {
+                if (null != flightPlanReader) {
+                    List<String> steerPointsList = flightPlanReader.getSteerPoints();
+                    String polyline = GeographicUtils.getEncodePolyline(steerPointsList);
+                    googleMap.createPolyline(polyline);
+                }
+            }
+        });
+    }
+
+    /**
+     *
+     * @return
+     */
+    private JPanel createMap() {
+        JPanel panel = new JPanel();
+        panel.setSize(400, 400);
+        panel.setMinimumSize(new Dimension(400, 400));
+
+        googleMap = new GoogleMapPane();
+        googleMap.setDimension(new Rectangle(0, 0, 400, 400));
+        googleMap.setSize(400, 400);
+        panel.add(googleMap);
+
+        return panel;
     }
 }
