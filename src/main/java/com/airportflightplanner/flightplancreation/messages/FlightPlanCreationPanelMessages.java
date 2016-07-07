@@ -37,6 +37,11 @@ public class FlightPlanCreationPanelMessages extends AbstractMessages {
     public static final String  ARRIVAL_LABEL      = format(PREFIX + "ARRIVALTYPE" + LABEL);
     /** */
     public static final String  LANDINGLIGHT_LABEL = format(PREFIX + "LANDINGLIGHT" + LABEL);
-/** */
-    public static final String ROUTE_PANEL_LABEL = format(PREFIX + "ROUTE_PANEL" + LABEL);
+    /** */
+    public static final String  ROUTE_PANEL_LABEL  = format(PREFIX + "ROUTE_PANEL" + LABEL);
+    /** */
+    public static final String  MARKER_START       = format(PREFIX + "MARKER_START" + LABEL);
+    /** */
+    public static final String  MARKER_END       = format(PREFIX + "MARKER_END" + LABEL);
+
 }

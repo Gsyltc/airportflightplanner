@@ -6,7 +6,6 @@ package com.airportflightplanner.flightplancreation;
 
 import java.awt.Dimension;
 import java.awt.Rectangle;
-import java.util.List;
 
 import javax.swing.JPanel;
 
@@ -17,9 +16,12 @@ import com.airportflightplanner.common.slotsignal.TopicName;
 import com.airportflightplanner.common.slotsignal.api.SlotAction;
 import com.airportflightplanner.common.utils.geographics.GeographicUtils;
 import com.airportflightplanner.common.visualelement.CommonPanel;
+import com.airportflightplanner.flightplancreation.api.model.GoogleMapWriter;
+import com.airportflightplanner.flightplancreation.model.GoogleMapModel;
 import com.airportflightplanner.flightplancreation.panels.CreationRoutePanel;
 import com.airportflightplanner.flightplancreation.panels.CreationTimePanel;
 import com.airportflightplanner.flightplancreation.panels.GoogleMapPane;
+import com.google.maps.model.EncodedPolyline;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
@@ -35,12 +37,20 @@ public class FlightPlanCreationPanel extends CommonPanel {
     /**
      *
      */
-    private static final long                       serialVersionUID  = 4047549681152943474L;
+    private static final long                         serialVersionUID  = 4047549681152943474L;
+    /** */
+    protected static final int                        DEPARTURE_POINT   = 0;
     /**
      *
      */
-    private final PresentationModel<FlighPlanModel> currentFlightPlan = new PresentationModel<FlighPlanModel>();
-    private GoogleMapPane                           googleMap;
+    private final PresentationModel<FlighPlanModel>   currentFlightPlan = new PresentationModel<FlighPlanModel>();
+    /**
+    *
+    */
+    protected final PresentationModel<GoogleMapModel> googleMapModel    = new PresentationModel<GoogleMapModel>();
+
+    /** */
+    protected GoogleMapPane                           googleMap;
 
     /**
     *
@@ -53,8 +63,9 @@ public class FlightPlanCreationPanel extends CommonPanel {
     }
 
     /**
-    *
-    */
+     *
+     * {@inheritDoc}
+     */
     @Override
     protected void build() {
         super.build();
@@ -122,9 +133,11 @@ public class FlightPlanCreationPanel extends CommonPanel {
             @Override
             public void doAction(final FlightPlanReader flightPlanReader) {
                 if (null != flightPlanReader) {
-                    List<String> steerPointsList = flightPlanReader.getSteerPoints();
-                    String polyline = GeographicUtils.getEncodePolyline(steerPointsList);
-                    googleMap.createPolyline(polyline);
+                    GoogleMapWriter googleMapWriter = new GoogleMapModel();
+                    googleMapModel.setBean((GoogleMapModel) googleMapWriter);
+                    googleMapWriter.setMarkers(GeographicUtils.getSteerPoints(flightPlanReader.getSteerPoints()));
+                    EncodedPolyline polyline = GeographicUtils.getEncodePolyline(flightPlanReader.getSteerPoints());
+                    googleMapWriter.setEncodedPolyline(polyline);
                 }
             }
         });
@@ -132,6 +145,7 @@ public class FlightPlanCreationPanel extends CommonPanel {
 
     /**
      *
+     * @param googleMapModel
      * @return
      */
     private JPanel createMap() {
@@ -139,7 +153,7 @@ public class FlightPlanCreationPanel extends CommonPanel {
         panel.setSize(400, 400);
         panel.setMinimumSize(new Dimension(400, 400));
 
-        googleMap = new GoogleMapPane();
+        googleMap = new GoogleMapPane(googleMapModel);
         googleMap.setDimension(new Rectangle(0, 0, 400, 400));
         googleMap.setSize(400, 400);
         panel.add(googleMap);

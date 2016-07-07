@@ -26,6 +26,7 @@ import org.jscience.geography.coordinates.LatLong;
 import com.airportflightplanner.common.api.steerpoints.SteerPointReader;
 import com.airportflightplanner.common.model.SteerPointModel;
 import com.airportflightplanner.common.types.GeographicFormatter;
+import com.google.maps.model.EncodedPolyline;
 
 /**
  * @author Goubaud Sylvain
@@ -69,15 +70,15 @@ public class GeographicUtils {
      * @param steerpointsString
      * @return
      */
-    public static String getEncodePolyline(final List<String> steerpointsString) {
+    public static EncodedPolyline getEncodePolyline(final List<String> steerpointsString) {
         List<SteerPointReader> steerPoints = getSteerPoints(steerpointsString);
         String points = "";
         for (SteerPointReader steerPointReader : steerPoints) {
-            points += "|" +steerPointReader.getLatLong().latitudeValue(NonSI.DEGREE_ANGLE) + "," + //
+            points += "|" + steerPointReader.getLatLong().latitudeValue(NonSI.DEGREE_ANGLE) + "," + //
                     steerPointReader.getLatLong().longitudeValue(NonSI.DEGREE_ANGLE);
         }
-        // EncodedPolyline polyline = new EncodedPolyline(points);
-        return points;
+        EncodedPolyline polyline = new EncodedPolyline(points);
+        return polyline;
     }
 
     /**
