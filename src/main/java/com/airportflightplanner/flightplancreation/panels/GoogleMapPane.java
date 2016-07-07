@@ -116,7 +116,7 @@ public class GoogleMapPane extends JEditorPane {
         }
 
         String url = "http://maps.googleapis.com/maps/api/staticmap?";
-        url += "&path=color:" + polylineColor + "|weight:" + polylineWeigth;
+        url += "&path=color:" + polylineColor + "|weight:" + polylineWeigth + "|geodesic:true";
         url += GoogleMapProcessor.getEncodedRoad(googleMapModel.getBean());
         url += "&size=" + mapWidth + "x" + mapHeight;
         url += "&maptype=" + this.roadmap.name().toLowerCase();
