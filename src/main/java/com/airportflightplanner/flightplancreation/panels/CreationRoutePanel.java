@@ -12,9 +12,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.border.TitledBorder;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.airportflightplanner.common.model.FlighPlanModel;
 import com.airportflightplanner.common.visualelement.CommonPanel;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
@@ -30,8 +27,6 @@ import com.jgoodies.forms.layout.RowSpec;
  */
 public class CreationRoutePanel extends CommonPanel {
     /** The logger of this class. */
-    private static final Log                        LOGGER           = LogFactory.getLog(CreationRoutePanel.class);
-
     /**
      *
      */
@@ -79,7 +74,6 @@ public class CreationRoutePanel extends CommonPanel {
         JLabel routeLabel = new JLabel(FlightPlanCreationPanelMessages.ROUTE_LABEL);
         add(routeLabel, "2,4,5,1");
         add(createRouteSelectorCombo(), "2,6,11,1");
-
 
     }
 
