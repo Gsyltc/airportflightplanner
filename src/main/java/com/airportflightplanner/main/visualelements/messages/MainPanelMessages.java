@@ -11,13 +11,11 @@ import com.airportflightplanner.common.utils.internationalization.AbstractMessag
  *
  */
 public class MainPanelMessages extends AbstractMessages {
-    /** */
-    private static final String PREFIX         = MainPanelMessages.class.getSimpleName() + ".";
+  /** */
+  private static final String PREFIX = MainPanelMessages.class.getSimpleName() + ".";
 
-    /** */
-    public static final String  CREATE         = format(PREFIX + "CREATE");
-    /** */
-    public static final String  MODIFY         = format(PREFIX + "MODIFY");
-    /** */
-    public static final String  SELECT_AIRPORT = format(PREFIX + "SELECT_AIRPORT");
+  /** */
+  public static final String  CREATE = format(PREFIX + "CREATE");
+  /** */
+  public static final String  MODIFY = format(PREFIX + "MODIFY");
 }

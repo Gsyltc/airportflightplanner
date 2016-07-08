@@ -32,116 +32,117 @@ import com.airportflightplanner.common.utils.time.TimeUtils;
  */
 public class FlightPlanModelAdapterImpl implements FlightPlanModelAdapter {
 
-    /** The logger of this class. */
-    private static final Log LOGGER = LogFactory.getLog(FlightPlanModelAdapterImpl.class);
+  /** The logger of this class. */
+  private static final Log LOGGER = LogFactory.getLog(FlightPlanModelAdapterImpl.class);
 
-    /**
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public void addSteerpoints(final FlighPlanModel newFlightPlan, final List<String> steerpoints) {
-        newFlightPlan.setSteerPoints(steerpoints);
+  /**
+   *
+   * {@inheritDoc}
+   */
+  @Override
+  public void addSteerpoints(final FlighPlanModel newFlightPlan, final List<String> steerpoints) {
+    newFlightPlan.setSteerPoints(steerpoints);
 
-        // calculate Flight Time
-        long result = GeographicUtils.getFlightTime(steerpoints);
-        newFlightPlan.setDuration(new Period(result));
-    }
+    // calculate Flight Time
+    final long result = GeographicUtils.getFlightTime(steerpoints);
+    newFlightPlan.setDuration(new Period(result));
+  }
 
-    /**
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public void updateFlightPlan(final FlighPlanModel newFlightPlan, final FlightPlanInformationTypes informationsType, final String line) {
-        switch (informationsType) {
-        case START_FLY_TO_COMPLETION:
-            newFlightPlan.setFlightToCompletion(Boolean.valueOf(line));
+  /**
+   *
+   * {@inheritDoc}
+   */
+  @Override
+  public void updateFlightPlan(final FlighPlanModel newFlightPlan,
+      final FlightPlanInformationTypes informationsType, final String line) {
+    switch (informationsType) {
+    case START_FLY_TO_COMPLETION:
+      newFlightPlan.setFlightToCompletion(Boolean.valueOf(line));
 
-            break;
-        case START_LANDING_LIGHT_ALT:
-            newFlightPlan.setLandingLightAltitude(Altitude.valueOf((Double.valueOf(line)), NonSI.FOOT));
-            break;
+      break;
+    case START_LANDING_LIGHT_ALT:
+      newFlightPlan.setLandingLightAltitude(Altitude.valueOf((Double.valueOf(line)), NonSI.FOOT));
+      break;
 
-        case STARTAIRCRAFT:
-            String[] aircraftType = line.split(" +");
-            if (aircraftType.length > 0){
-                newFlightPlan.setAircraftType(aircraftType[0]);
-            }
-            String[] splitAirCraft = aircraftType[0].split("_");
-            if (splitAirCraft.length > 1) {
-                newFlightPlan.setAircraftCie(Internationalizer.getI18String(splitAirCraft[1]));
-            }
+    case STARTAIRCRAFT:
+      final String[] aircraftType = line.split(" +");
+      if (aircraftType.length > 0) {
+        newFlightPlan.setAircraftType(aircraftType[0]);
+      }
+      final String[] splitAirCraft = aircraftType[0].split("_");
+      if (splitAirCraft.length > 1) {
+        newFlightPlan.setAircraftCie(Internationalizer.getI18String(splitAirCraft[1]));
+      }
 
-            break;
-        case STARTALTERNATEAIRPORT:
-            newFlightPlan.setAlternateAirport(line);
-            break;
+      break;
+    case STARTALTERNATEAIRPORT:
+      newFlightPlan.setAlternateAirport(line);
+      break;
 
-        case STARTARRIVETYPE:
-            try {
-                newFlightPlan.setArrivalType(ArrivalType.valueOf(Integer.parseInt(line)));
-            } catch (NumberFormatException e) {
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Error while reading arrival type");
-                }
-            }
-            break;
-        case STARTCALLSIGN:
-            newFlightPlan.setCallSign(line);
-            break;
-
-        case STARTDEPAIRPORT:
-            newFlightPlan.setDepartureAirport(line);
-            break;
-
-        case STARTDEPARTTYPE:
-            try {
-                newFlightPlan.setDepartureType(DepartureType.valueOf(Integer.parseInt(line)));
-            } catch (NumberFormatException e) {
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Error while reading departure type");
-                }
-            }
-            break;
-        case STARTDESTAIRPORT:
-            newFlightPlan.setArrivalAirport(line);
-            break;
-
-        case STARTFLIGHTTYPE:
-            try {
-                newFlightPlan.setFlighType(FlightType.valueOf(Integer.parseInt(line)));
-            } catch (NumberFormatException e) {
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Error while reading start flight type");
-                }
-            }
-            break;
-
-        case STARTTIME:
-            try {
-                newFlightPlan.setStartTime(TimeUtils.getLocalTime(line));
-            } catch (NumberFormatException e) {
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Error while reading start time");
-                }
-            }
-            break;
-
-        case STARTDAYS:
-            String days[] = line.split(" +");
-
-            Set<StartDays> tmpSet = new HashSet<StartDays>();
-            for (String day : days) {
-                tmpSet.add(StartDays.valueOf(Integer.parseInt(day)));
-            }
-
-            newFlightPlan.setStartDays(tmpSet);
-            break;
-
-
-        default:
-            break;
+    case STARTARRIVETYPE:
+      try {
+        newFlightPlan.setArrivalType(ArrivalType.valueOf(Integer.parseInt(line)));
+      } catch (final NumberFormatException e) {
+        if (LOGGER.isDebugEnabled()) {
+          LOGGER.debug("Error while reading arrival type");
         }
+      }
+      break;
+    case STARTCALLSIGN:
+      newFlightPlan.setCallSign(line);
+      break;
+
+    case STARTDEPAIRPORT:
+      newFlightPlan.setDepartureAirport(line);
+      break;
+
+    case STARTDEPARTTYPE:
+      try {
+        newFlightPlan.setDepartureType(DepartureType.valueOf(Integer.parseInt(line)));
+      } catch (final NumberFormatException e) {
+        if (LOGGER.isDebugEnabled()) {
+          LOGGER.debug("Error while reading departure type");
+        }
+      }
+      break;
+    case STARTDESTAIRPORT:
+      newFlightPlan.setArrivalAirport(line);
+      break;
+
+    case STARTFLIGHTTYPE:
+      try {
+        newFlightPlan.setFlighType(FlightType.valueOf(Integer.parseInt(line)));
+      } catch (final NumberFormatException e) {
+        if (LOGGER.isDebugEnabled()) {
+          LOGGER.debug("Error while reading start flight type");
+        }
+      }
+      break;
+
+    case STARTTIME:
+      try {
+        newFlightPlan.setStartTime(TimeUtils.getLocalTime(line));
+      } catch (final NumberFormatException e) {
+        if (LOGGER.isDebugEnabled()) {
+          LOGGER.debug("Error while reading start time");
+        }
+      }
+      break;
+
+    case STARTDAYS:
+      final String days[] = line.split(" +");
+
+      final Set<StartDays> tmpSet = new HashSet<StartDays>();
+      for (final String day : days) {
+        tmpSet.add(StartDays.valueOf(Integer.parseInt(day)));
+      }
+
+      newFlightPlan.setStartDays(tmpSet);
+      break;
+
+    default:
+      break;
     }
+  }
+
 }
