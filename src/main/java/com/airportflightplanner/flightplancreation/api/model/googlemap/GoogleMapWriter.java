@@ -3,7 +3,7 @@
  * 2016 Goubaud Sylvain.
  *
  */
-package com.airportflightplanner.flightplancreation.api.model;
+package com.airportflightplanner.flightplancreation.api.model.googlemap;
 
 import java.util.List;
 

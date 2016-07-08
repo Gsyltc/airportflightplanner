@@ -31,95 +31,98 @@ import com.jgoodies.forms.layout.RowSpec;
  *
  */
 public class CurrentAirportPanel extends CommonPanel {
-    /**
-     *
-     */
-    private static final long                serialVersionUID = -8872582029412974363L;
-    /**
-     *
-     */
-    protected final FlighPlanCollectionModel flightPlansCollection;
+  /**
+   *
+   */
+  private static final long                serialVersionUID = -8872582029412974363L;
+  /**
+   *
+   */
+  protected final FlighPlanCollectionModel flightPlansCollection;
 
-    /**
-     * @param fpcm
-     *
-     */
-    public CurrentAirportPanel(final FlighPlanCollectionModel fpcm) {
-        this.flightPlansCollection = fpcm;
-        build();
+  /**
+   * @param fpcm
+   *
+   */
+  public CurrentAirportPanel(final FlighPlanCollectionModel fpcm) {
+    flightPlansCollection = fpcm;
+    build();
+  }
+
+  /**
+   *
+   * {@inheritDoc}
+   */
+  @Override
+  protected void build() {
+    super.build();
+    setLayout(new FormLayout(new ColumnSpec[] { //
+        ColumnSpec.decode("pref:grow"), //
+        FormSpecs.RELATED_GAP_COLSPEC, //
+        ColumnSpec.decode("pref:grow"), //
+        FormSpecs.RELATED_GAP_COLSPEC, //
+        ColumnSpec.decode("pref:grow"), //
+        FormSpecs.RELATED_GAP_COLSPEC, //
+        ColumnSpec.decode("pref:grow"), }, //
+        new RowSpec[] { FormSpecs.PREF_ROWSPEC, }));
+
+    final JLabel airportLabel = DefaultComponentFactory.getInstance().createLabel(FlightPlanVisualizationMessages.AIRPORT);
+
+    add(airportLabel, "1, 1, right, default");
+
+    final JLabel timeLabel = DefaultComponentFactory.getInstance().createLabel(FlightPlanVisualizationMessages.TIME);
+    add(timeLabel, "5, 1, right, default");
+
+    add(createAirportComboxBox(), "3, 1, fill, default");
+    add(createTimeComboxBox(), "7, 1, fill, default");
+  }
+
+  /**
+   *
+   * @return
+   */
+  private JComboBox<?> createAirportComboxBox() {
+    final JComboBox<?> comboBox = new JComboBox<String>();
+
+    final ValueModel selectionHolder = new ValueHolder();
+    final ComboBoxAdapter<String> comboBoxAdapter = new ComboBoxAdapter<String>(AirportFileReader.getAirports(), selectionHolder);
+    comboBox.setModel(comboBoxAdapter);
+    comboBox.addItemListener(new ItemListener() {
+      /**
+       *
+       * {@inheritDoc}
+       */
+      @Override
+      public void itemStateChanged(final ItemEvent e) {
+        if (e.getStateChange() == ItemEvent.SELECTED) {
+          final String currentAirport = e.getItem().toString();
+          flightPlansCollection.setCurrentAirport(currentAirport);
+          final Signal signal = findSignal(TopicName.UPDATE_AIRPORT_TOPIC);
+          signal.fireSignal(currentAirport);
+        }
+      }
+    });
+
+    comboBox.setSelectedItem(CommonProperties.getPropertyValue(CommonProperties.DEFAULT_AIRPORT));
+    return comboBox;
+  }
+
+  /**
+   *
+   * @return
+   */
+  private JComboBox<?> createTimeComboxBox() {
+    final JComboBox<?> comboBox = new JComboBox<Object>();
+
+    return comboBox;
+  }
+
+  @Override
+  public void attachSignal() {
+    Signal signal = findSignal(TopicName.UPDATE_AIRPORT_TOPIC);
+    if (null == signal) {
+      signal = new Signal(TopicName.UPDATE_AIRPORT_TOPIC);
     }
-
-    /**
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    protected void build() {
-        super.build();
-        setLayout(new FormLayout(new ColumnSpec[] { //
-                ColumnSpec.decode("pref:grow"), //
-                FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode("pref:grow"), //
-                FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode("pref:grow"), //
-                FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode("pref:grow"), }, //
-                new RowSpec[] { FormSpecs.PREF_ROWSPEC, }));
-
-        JLabel airportLabel = DefaultComponentFactory.getInstance().createLabel(FlightPlanVisualizationMessages.AIRPORT);
-
-        add(airportLabel, "1, 1, right, default");
-
-        JLabel timeLabel = DefaultComponentFactory.getInstance().createLabel(FlightPlanVisualizationMessages.TIME);
-        add(timeLabel, "5, 1, right, default");
-
-        add(createAirportComboxBox(), "3, 1, fill, default");
-        add(createTimeComboxBox(), "7, 1, fill, default");
-    }
-
-    /**
-     *
-     * @return
-     */
-    private JComboBox<?> createAirportComboxBox() {
-        JComboBox<?> comboBox = new JComboBox<String>();
-
-        ValueModel selectionHolder = new ValueHolder();
-        ComboBoxAdapter<String> comboBoxAdapter = new ComboBoxAdapter<String>(AirportFileReader.getAirports(), selectionHolder);
-        comboBox.setModel(comboBoxAdapter);
-        comboBox.addItemListener(new ItemListener() {
-            /**
-             *
-             * {@inheritDoc}
-             */
-            @Override
-            public void itemStateChanged(final ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    String currentAirport = e.getItem().toString();
-                    flightPlansCollection.setCurrentAirport(currentAirport);
-                    Signal signal = findSignal(TopicName.UPDATE_AIRPORT_TOPIC);
-                    signal.fireSignal(currentAirport);
-                }
-            }
-        });
-
-        comboBox.setSelectedItem(CommonProperties.getPropertyValue(CommonProperties.DEFAULT_AIRPORT));
-        return comboBox;
-    }
-
-    /**
-     *
-     * @return
-     */
-    private JComboBox<?> createTimeComboxBox() {
-        JComboBox<?> comboBox = new JComboBox<Object>();
-
-        return comboBox;
-    }
-
-    @Override
-    public void attachSignal() {
-        Signal signal = new Signal(TopicName.UPDATE_AIRPORT_TOPIC);
-        createSignal(TopicName.UPDATE_AIRPORT_TOPIC, signal);
-    }
+    createSignal(TopicName.UPDATE_AIRPORT_TOPIC, signal);
+  }
 }

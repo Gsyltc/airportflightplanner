@@ -33,6 +33,7 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
+import com.jgoodies.forms.layout.Sizes;
 
 /**
  * @author DCNS
@@ -77,19 +78,18 @@ public class SteerPointdPanel extends CommonPanel {
     @Override
     protected void build() {
         super.build();
-        setLayout(new FormLayout(new ColumnSpec[] { FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("3dlu:grow"), //
-                FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode("pref:grow"), //
-                FormSpecs.RELATED_GAP_COLSPEC, }, //
-                new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, //
-                        FormSpecs.PREF_ROWSPEC, //
-                        FormSpecs.RELATED_GAP_ROWSPEC, //
-                        FormSpecs.PREF_ROWSPEC, //
-                        FormSpecs.RELATED_GAP_ROWSPEC, //
-                        FormSpecs.PREF_ROWSPEC, //
-                        FormSpecs.RELATED_GAP_ROWSPEC, }));
+        setLayout(new FormLayout(new ColumnSpec[] {
+            FormSpecs.RELATED_GAP_COLSPEC,
+            ColumnSpec.decode("3dlu:grow"),
+            FormSpecs.RELATED_GAP_COLSPEC,
+            ColumnSpec.decode("pref:grow"),
+            FormSpecs.RELATED_GAP_COLSPEC,},
+          new RowSpec[] {
+            FormSpecs.RELATED_GAP_ROWSPEC,
+            FormSpecs.DEFAULT_ROWSPEC,
+            FormSpecs.RELATED_GAP_ROWSPEC,}));
 
-        add(createSteerPointsPanel(), "2, 6, 3, 1, fill, top");
+        add(createSteerPointsPanel(), "2, 2, 3, 1, fill, top");
 
     }
 
@@ -102,8 +102,8 @@ public class SteerPointdPanel extends CommonPanel {
         centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 
         table = new JTable(presenter.getTableAdapter());
+        table.setColumnSelectionAllowed(true);
         table.setDefaultRenderer(String.class, centerRenderer);
-        table.setFillsViewportHeight(true);
 
         TableRowSorter<TableModel> sorter = new TableRowSorter<>(table.getModel());
         table.setRowSorter(sorter);

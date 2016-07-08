@@ -9,7 +9,7 @@ import javax.measure.unit.NonSI;
 
 import org.jscience.geography.coordinates.LatLong;
 
-import com.airportflightplanner.flightplancreation.api.model.GoogleMapReader;
+import com.airportflightplanner.flightplancreation.api.model.googlemap.GoogleMapReader;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
 
 /**
@@ -20,9 +20,9 @@ public class GoogleMapProcessor {
     /** */
     private static final String MARKER_PREFIX = "&markers=color:";
     /** */
-    private static final String START_MARKER  = MARKER_PREFIX + "blue%7Clabel:" + FlightPlanCreationPanelMessages.MARKER_START + "%7C";
+    private static final String START_MARKER  = MARKER_PREFIX + "red%7Clabel:" + FlightPlanCreationPanelMessages.MARKER_START + "%7C";
     /** */
-    private static final String END_MARKER    = MARKER_PREFIX + "red%7Clabel:" + FlightPlanCreationPanelMessages.MARKER_END + "%7C";
+    private static final String END_MARKER    = MARKER_PREFIX + "green%7Clabel:" + FlightPlanCreationPanelMessages.MARKER_END + "%7C";
 
     /**
      *

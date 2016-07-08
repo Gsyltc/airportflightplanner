@@ -11,8 +11,8 @@ import java.util.List;
 import org.jscience.geography.coordinates.LatLong;
 
 import com.airportflightplanner.common.api.steerpoints.SteerPointReader;
-import com.airportflightplanner.flightplancreation.api.model.GoogleMapModelProperties;
-import com.airportflightplanner.flightplancreation.api.model.GoogleMapWriter;
+import com.airportflightplanner.flightplancreation.api.model.googlemap.GoogleMapModelProperties;
+import com.airportflightplanner.flightplancreation.api.model.googlemap.GoogleMapWriter;
 import com.google.maps.model.EncodedPolyline;
 import com.jgoodies.binding.beans.Model;
 

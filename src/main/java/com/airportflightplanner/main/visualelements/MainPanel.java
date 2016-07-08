@@ -42,6 +42,8 @@ public class MainPanel extends FormDebugPanel {
      *
      */
     public MainPanel(final FlighPlanCollectionModel flighPlanCollectionModel) {
+      setPaintRows(false);
+      setPaintInBackground(false);
         this.flighPlanCollectionModel = flighPlanCollectionModel;
         buildPanel();
     }
@@ -51,12 +53,16 @@ public class MainPanel extends FormDebugPanel {
      */
     private void buildPanel() {
         // Set Layout
-        setLayout(new FormLayout(new ColumnSpec[] { //
-                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("pref:grow"), //
-                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("pref:grow"), //
-                FormSpecs.RELATED_GAP_COLSPEC, }, //
-                new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, RowSpec.decode("pref:grow"), //
-                        FormSpecs.RELATED_GAP_ROWSPEC, }));
+        setLayout(new FormLayout(new ColumnSpec[] {
+            FormSpecs.RELATED_GAP_COLSPEC,
+            ColumnSpec.decode("pref:grow"),
+            FormSpecs.RELATED_GAP_COLSPEC,
+            ColumnSpec.decode("right:pref"),
+            FormSpecs.RELATED_GAP_COLSPEC,},
+          new RowSpec[] {
+            FormSpecs.RELATED_GAP_ROWSPEC,
+            FormSpecs.DEFAULT_ROWSPEC,
+            FormSpecs.RELATED_GAP_ROWSPEC,}));
 
         // Create Panel
         FlightPlanCreationPanel createPanel = createFlightPlanCreationPanel();
@@ -71,7 +77,7 @@ public class MainPanel extends FormDebugPanel {
 
         // Add component to main panel
         add(fpVisuPanel, "2, 2, fill, fill");
-        add(tabbedPane, "4, 2, fill, fill");
+        add(tabbedPane, "4, 2, center, fill");
 
     }
 
