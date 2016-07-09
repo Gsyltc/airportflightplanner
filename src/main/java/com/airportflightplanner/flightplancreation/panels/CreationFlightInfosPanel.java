@@ -22,6 +22,7 @@ import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
 import com.airportflightplanner.common.api.flightplan.FligthPlanProperties;
 import com.airportflightplanner.common.types.StartDays;
 import com.airportflightplanner.common.visualelement.CommonPanel;
+import com.airportflightplanner.flightplancreation.api.model.flightinfos.FlightInfosWriter;
 import com.airportflightplanner.flightplancreation.api.model.flightinfos.FligthInfosProperties;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
 import com.airportflightplanner.flightplancreation.model.FlighInfosModel;
@@ -46,6 +47,8 @@ public class CreationFlightInfosPanel extends CommonPanel {
    *
    */
   private static final long                          serialVersionUID   = -2692513903084994308L;
+  /** */
+  protected static final int                         NO_SELECTION       = -1;
   /** */
   private final PresentationModel<FlightPlanReader>  currentFlightPlan;
   /** */
@@ -141,13 +144,13 @@ public class CreationFlightInfosPanel extends CommonPanel {
         if (evt.getNewValue() instanceof FlightPlanReader) {
           final String aircraftType = ((FlightPlanReader) evt.getNewValue()).getAircraftType();
           final FlighInfosModel bean = presenterInfoModel.getBean();
-          bean.setLiveries(AircraftTypeAdapter.getAircraftLiveriesByType(aircraftType));
-          bean.setCompanies(AircraftTypeAdapter.getAircraftCompaniesByType(aircraftType));
+          // bean.setLiveries(AircraftTypeAdapter.getAircraftLiveriesByClassCpie(aircraftType));
+          // bean.setCompanies(AircraftTypeAdapter.getAircraftCompaniesByType(aircraftType));
 
           final String aircraftClass = AircraftTypeAdapter.getAircraftClass(aircraftType);
           bean.setAircraftClass(aircraftClass);
-          bean.setAircraftLivery(aircraftType);
           bean.setAircraftCie(AircraftTypeAdapter.getAircraftCie(aircraftType));
+          bean.setAircraftLivery(aircraftType);
         }
       }
     });
@@ -173,14 +176,15 @@ public class CreationFlightInfosPanel extends CommonPanel {
   private JComboBox<String> createAircraftClassComboBox() {
     final Set<String> aircraftClass = AircraftTypeAdapter.getAircraftClass();
     final JComboBox<String> component = BasicComponentFactory.createComboBox(new SelectionInList<>(aircraftClass.toArray()));
-    final FlighInfosModel model = presenterInfoModel.getBean();
-    model.addPropertyChangeListener(FligthInfosProperties.AIRCRAFT_CLASS, new PropertyChangeListener() {
+    final FlighInfosModel bean = presenterInfoModel.getBean();
+    bean.addPropertyChangeListener(FligthInfosProperties.AIRCRAFT_CLASS, new PropertyChangeListener() {
       /**
        *
        * {@inheritDoc}
        */
       @Override
       public void propertyChange(final PropertyChangeEvent evt) {
+        refreshData(evt.getPropertyName());
         component.setSelectedItem(evt.getNewValue());
       }
     });
@@ -192,10 +196,13 @@ public class CreationFlightInfosPanel extends CommonPanel {
        */
       @Override
       public void actionPerformed(final ActionEvent e) {
+        System.out.println("Action Perfomed Class " + bean.getCompanies());
         if (e.getSource() instanceof JComboBox) {
-          final String airCraft = (String) ((JComboBox<?>) e.getSource()).getSelectedItem();
-          model.setAircraftClass((String) ((JComboBox<?>) e.getSource()).getSelectedItem());
-          model.setCompanies(AircraftTypeAdapter.getAircraftCompaniesByClass(airCraft));
+          System.out.println("Action Perfomed Class " + e.getActionCommand());
+          // bean.setCompanies(AircraftTypeAdapter.getAircraftCompaniesByClass(bean.getAircraftClass()));
+          // bean.setLiveries(AircraftTypeAdapter.getAircraftCompaniesByClass(bean.getAircraftClass()
+          // + "_" + bean.getAircraftClass()));
+          // bean.setAircraftClass((String) ((JComboBox<?>) e.getSource()).getSelectedItem());
         }
       }
     });
@@ -210,6 +217,7 @@ public class CreationFlightInfosPanel extends CommonPanel {
   private JComboBox<String> createAircraftLiveryComboBox() {
 
     final ValueModel model = presenterInfoModel.getModel(FligthInfosProperties.LIVERIES);
+
     final SelectionInList<String> selectionInList = new SelectionInList<String>(model);
     final JComboBox<String> component = BasicComponentFactory.createComboBox(selectionInList);
     final FlighInfosModel bean = presenterInfoModel.getBean();
@@ -220,22 +228,31 @@ public class CreationFlightInfosPanel extends CommonPanel {
        */
       @Override
       public void propertyChange(final PropertyChangeEvent evt) {
-        component.setSelectedItem(evt.getNewValue());
+        refreshData(evt.getPropertyName());
+        if ((null != evt.getNewValue())) {
+          component.setSelectedItem(evt.getNewValue());
+        } else {
+          component.setSelectedIndex(NO_SELECTION);
+        }
       }
     });
 
-    component.addActionListener(new ActionListener() {
-      /**
-       *
-       * {@inheritDoc}
-       */
-      @Override
-      public void actionPerformed(final ActionEvent e) {
-        System.out.println("Set new aircraft liverie in the model");
-
-      }
-    });
+    // component.addActionListener(new ActionListener() {
+    // /**
+    // *
+    // * {@inheritDoc}
+    // */
+    // @Override
+    // public void actionPerformed(final ActionEvent e) {
+    // System.out.println("Action Perfomed Liverie");
+    // final String livery = (String) ((JComboBox<?>) e.getSource()).getSelectedItem();
+    // if (null != livery) {
+    // bean.setAircraftLivery((String) ((JComboBox<?>) e.getSource()).getSelectedItem());
+    // }
+    // }
+    // });
     return component;
+
   }
 
   /**
@@ -256,25 +273,53 @@ public class CreationFlightInfosPanel extends CommonPanel {
        */
       @Override
       public void propertyChange(final PropertyChangeEvent evt) {
-        component.setSelectedItem(evt.getNewValue());
-      }
-    });
-
-    component.addActionListener(new ActionListener() {
-      /**
-       *
-       * {@inheritDoc}
-       */
-      @Override
-      public void actionPerformed(final ActionEvent e) {
-        if (e.getSource() instanceof JComboBox) {
-          final String company = (String) ((JComboBox) e.getSource()).getSelectedItem();
-          bean.setAircraftCie(company);
-          // bean.setLiveries(AircraftTypeAdapter.getAircraftLiveriesByType(airCraftType));
+        refreshData(evt.getPropertyName());
+        if ((null != evt.getNewValue())) {
+          component.setSelectedItem(evt.getNewValue());
+        } else {
+          component.setSelectedIndex(NO_SELECTION);
         }
-
       }
     });
+
+    // component.addActionListener(new ActionListener() {
+    //
+    // /**
+    // *
+    // * {@inheritDoc}
+    // */
+    // @Override
+    // public void actionPerformed(final ActionEvent e) {
+    // if (e.getSource() instanceof JComboBox) {
+    // System.out.println("Action Perfomed Companie");
+    // bean.setAircraftCie((String) ((JComboBox<?>) e.getSource()).getSelectedItem());
+    // }
+    // }
+    // });
     return component;
+  }
+
+  /**
+   *
+   */
+  protected void refreshData(final String propertyName) {
+    System.out.println("Property change :" + propertyName);
+    final FlightInfosWriter bean = presenterInfoModel.getBean();
+    switch (propertyName) {
+    // La classe à changée, on reset le model des compagnies et des livrées
+    case FligthInfosProperties.AIRCRAFT_CLASS:
+
+      bean.setCompanies(AircraftTypeAdapter.getAircraftCompaniesByClass(bean.getAircraftClass()));
+      break;
+
+    case FligthInfosProperties.AIRCRAFT_CIE:
+      bean.setLiveries(AircraftTypeAdapter.getAircraftLiveriesByClassCpie(bean.getAircraftClass() + "_" + bean.getAircraftCie()));
+      break;
+
+    default:
+      break;
+    }
+
+    // La compagnie a changee, on reset le modele des livrees
   }
 }
