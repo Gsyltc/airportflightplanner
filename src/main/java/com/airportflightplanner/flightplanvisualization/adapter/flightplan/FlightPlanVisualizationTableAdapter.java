@@ -7,7 +7,7 @@ package com.airportflightplanner.flightplanvisualization.adapter.flightplan;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
-import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
+import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
 import com.airportflightplanner.common.api.flightplancollection.flightplan.FlightPlanCollectionReader;
 import com.airportflightplanner.common.utils.time.TimeUtils;
 import com.airportflightplanner.flightplanvisualization.presenter.flightplan.FlightPlanVisualizationListModel;
@@ -73,7 +73,7 @@ public class FlightPlanVisualizationTableAdapter extends AbstractTableAdapter<Fl
     @Override
     public Object getValueAt(final int row, final int column) {
         FlightPlanVisualisationTableColumn fpColumn = FlightPlanVisualisationTableColumn.valueOf(column);
-        FlightPlanReader flightPlan = (FlightPlanReader) getListModel().getElementAt(row);
+        FligthPlanReader flightPlan = (FligthPlanReader) getListModel().getElementAt(row);
         switch (fpColumn) {
         case START_AIRPORT:
             return flightPlan.getDepartureAirport();

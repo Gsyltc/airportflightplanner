@@ -16,7 +16,7 @@ import org.joda.time.Period;
 import org.jscience.geography.coordinates.Altitude;
 
 import com.airportflightplanner.common.api.adapter.FlightPlanModelAdapter;
-import com.airportflightplanner.common.model.FlighPlanModel;
+import com.airportflightplanner.common.model.FligthPlanModel;
 import com.airportflightplanner.common.types.ArrivalType;
 import com.airportflightplanner.common.types.DepartureType;
 import com.airportflightplanner.common.types.FlightPlanInformationTypes;
@@ -40,7 +40,7 @@ public class FlightPlanModelAdapterImpl implements FlightPlanModelAdapter {
    * {@inheritDoc}
    */
   @Override
-  public void addSteerpoints(final FlighPlanModel newFlightPlan, final List<String> steerpoints) {
+  public void addSteerpoints(final FligthPlanModel newFlightPlan, final List<String> steerpoints) {
     newFlightPlan.setSteerPoints(steerpoints);
 
     // calculate Flight Time
@@ -53,7 +53,7 @@ public class FlightPlanModelAdapterImpl implements FlightPlanModelAdapter {
    * {@inheritDoc}
    */
   @Override
-  public void updateFlightPlan(final FlighPlanModel newFlightPlan,
+  public void updateFlightPlan(final FligthPlanModel newFlightPlan,
       final FlightPlanInformationTypes informationsType, final String line) {
     switch (informationsType) {
     case START_FLY_TO_COMPLETION:

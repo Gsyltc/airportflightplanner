@@ -6,7 +6,7 @@ package com.airportflightplanner.common.api.flightplancollection.flightplan;
 
 import javax.swing.ListModel;
 
-import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
+import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
 
 /**
  * @author Goubaud Sylvain
@@ -19,7 +19,7 @@ public interface FlightPlanCollectionReader {
      * @param value
      * @return
      */
-    public FlightPlanReader getFlightPlanByIndex(final int value);
+    public FligthPlanReader getFlightPlanByIndex(final int value);
 
     /**
      *
@@ -31,7 +31,7 @@ public interface FlightPlanCollectionReader {
      *
      * @return
      */
-    ListModel<FlightPlanReader> getListModel();
+    ListModel<FligthPlanReader> getListModel();
 
     /**
      *

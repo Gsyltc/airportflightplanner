@@ -83,7 +83,7 @@ public class FlighInfosModel extends Model implements FlightInfosWriter {
   @Override
   public void setAircraftCie(final String value) {
     final String oldValue = getAircraftCie();
-    if (!value.equals(oldValue)) {
+    if (null != value && !value.equals(oldValue)) {
       aircraftCie = value;
       firePropertyChange(FligthInfosProperties.AIRCRAFT_CIE, oldValue, aircraftCie);
     }
@@ -96,7 +96,7 @@ public class FlighInfosModel extends Model implements FlightInfosWriter {
   @Override
   public void setAircraftClass(final String value) {
     final String oldValue = getAircraftClass();
-    if (!value.equals(oldValue)) {
+    if (null != value && !value.equals(oldValue)) {
       aircraftClass = value;
       firePropertyChange(FligthInfosProperties.AIRCRAFT_CLASS, oldValue, aircraftClass);
     }
@@ -109,7 +109,7 @@ public class FlighInfosModel extends Model implements FlightInfosWriter {
   @Override
   public void setAircraftLivery(final String value) {
     final String oldValue = getAircraftLivery();
-    if (!value.equals(oldValue)) {
+    if (null != value && !value.equals(oldValue)) {
       aircraftLivery = value;
       firePropertyChange(FligthInfosProperties.AIRCRAFT_LIVERY, oldValue, aircraftLivery);
     }

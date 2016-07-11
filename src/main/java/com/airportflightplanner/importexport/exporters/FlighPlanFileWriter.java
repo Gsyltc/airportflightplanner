@@ -16,7 +16,7 @@ import org.apache.commons.logging.LogFactory;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormatterBuilder;
 
-import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
+import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
 import com.airportflightplanner.common.slotsignal.AbstractSlotReceiver;
 import com.airportflightplanner.common.slotsignal.Slot;
 import com.airportflightplanner.common.slotsignal.TopicName;
@@ -46,7 +46,7 @@ public class FlighPlanFileWriter extends AbstractSlotReceiver {
      * @param flightPlan
      *
      */
-    protected void writeFlightPlans(final FlightPlanReader flightPlan) {
+    protected void writeFlightPlans(final FligthPlanReader flightPlan) {
         if (null != flightPlan) {
             String flightPlanFileName = flightPlan.getDepartureAirport() + "/" + flightPlan.getStartTime().toString(WRITER_FORMATTER) + "_" + //
                     flightPlan.getDepartureAirport() + "TEST_" + flightPlan.getArrivalAirport() + "_" + //
@@ -211,16 +211,15 @@ public class FlighPlanFileWriter extends AbstractSlotReceiver {
      */
     @Override
     public void attachSlotAction() {
-        Slot<FlightPlanReader> airportSlot = new Slot<FlightPlanReader>(TopicName.WRITE_FLIGHT_PLAN, this);
-        airportSlot.setSlotAction(new SlotAction<FlightPlanReader>() {
+        Slot<FligthPlanReader> airportSlot = new Slot<FligthPlanReader>(TopicName.WRITE_FLIGHT_PLAN, this);
+        airportSlot.setSlotAction(new SlotAction<FligthPlanReader>() {
             /**
              *
              * {@inheritDoc}
              */
             @Override
-            public void doAction(final FlightPlanReader object) {
+            public void doAction(final FligthPlanReader object) {
                 writeFlightPlans(object);
-
             }
         });
 

@@ -9,7 +9,7 @@ import java.awt.Rectangle;
 
 import javax.swing.JPanel;
 
-import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
+import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
 import com.airportflightplanner.common.slotsignal.Slot;
 import com.airportflightplanner.common.slotsignal.TopicName;
 import com.airportflightplanner.common.slotsignal.api.SlotAction;
@@ -44,7 +44,7 @@ public class FlightPlanCreationPanel extends CommonPanel {
   /**
    *
    */
-  protected final PresentationModel<FlightPlanReader> currentFlightPlan = new PresentationModel<FlightPlanReader>();
+  protected final PresentationModel<FligthPlanReader> currentFlightPlan = new PresentationModel<FligthPlanReader>();
   /** */
   protected GoogleMapPane                             googleMap;
 
@@ -69,14 +69,14 @@ public class FlightPlanCreationPanel extends CommonPanel {
    */
   @Override
   public void attachSlotAction() {
-    final Slot<FlightPlanReader> slot = new Slot<>(TopicName.FLIGHTPLAN_TABLE_SELECTED, this);
-    slot.setSlotAction(new SlotAction<FlightPlanReader>() {
+    final Slot<FligthPlanReader> slot = new Slot<FligthPlanReader>(TopicName.FLIGHTPLAN_TABLE_SELECTED, this);
+    slot.setSlotAction(new SlotAction<FligthPlanReader>() {
       /**
        *
        * {@inheritDoc}
        */
       @Override
-      public void doAction(final FlightPlanReader flightPlanReader) {
+      public void doAction(final FligthPlanReader flightPlanReader) {
         if (null != flightPlanReader) {
 
           currentFlightPlan.triggerFlush();

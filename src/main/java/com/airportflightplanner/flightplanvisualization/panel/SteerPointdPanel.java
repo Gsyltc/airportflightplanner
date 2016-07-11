@@ -19,7 +19,7 @@ import javax.swing.table.TableRowSorter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
+import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
 import com.airportflightplanner.common.api.steerpoints.SteerPointReader;
 import com.airportflightplanner.common.model.SteerPointsCollectionModel;
 import com.airportflightplanner.common.slotsignal.Signal;
@@ -33,7 +33,6 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
-import com.jgoodies.forms.layout.Sizes;
 
 /**
  * @author DCNS
@@ -124,14 +123,14 @@ public class SteerPointdPanel extends CommonPanel {
      */
     @Override
     public void attachSlotAction() {
-        Slot<FlightPlanReader> slot = new Slot<FlightPlanReader>(TopicName.FLIGHTPLAN_TABLE_SELECTED, this);
-        slot.setSlotAction(new SlotAction<FlightPlanReader>() {
+        Slot<FligthPlanReader> slot = new Slot<FligthPlanReader>(TopicName.FLIGHTPLAN_TABLE_SELECTED, this);
+        slot.setSlotAction(new SlotAction<FligthPlanReader>() {
             /**
              *
              * {@inheritDoc}
              */
             @Override
-            public void doAction(final FlightPlanReader flightPlanReader) {
+            public void doAction(final FligthPlanReader flightPlanReader) {
                 steerPointsCollectionModel.getListModel().clear();
                 if (null != flightPlanReader) {
                     List<SteerPointReader> steerPoints = GeographicUtils.getSteerPoints(flightPlanReader.getSteerPoints());

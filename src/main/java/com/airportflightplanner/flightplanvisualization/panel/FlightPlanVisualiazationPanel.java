@@ -21,7 +21,7 @@ import javax.swing.table.TableRowSorter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
+import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
 import com.airportflightplanner.common.model.FlighPlanCollectionModel;
 import com.airportflightplanner.common.slotsignal.Signal;
 import com.airportflightplanner.common.slotsignal.Slot;
@@ -118,7 +118,7 @@ public class FlightPlanVisualiazationPanel extends CommonPanel {
              */
             @Override
             public void valueChanged(final ListSelectionEvent e) {
-                FlightPlanReader flightPlan = null;
+                FligthPlanReader flightPlan = null;
                 if (e.getValueIsAdjusting()) {
                     ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 

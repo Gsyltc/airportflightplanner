@@ -44,4 +44,6 @@ public interface FligthPlanProperties {
     public static final String START_DAYS             = "startDays";
     /** */
     public static final String ALTERNATE_AIRPORT      = "alternateAirport";
+    /** */
+    public static final String FILENAME               = "fileName";
 }

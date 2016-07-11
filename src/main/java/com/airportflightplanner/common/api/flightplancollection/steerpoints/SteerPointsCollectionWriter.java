@@ -6,7 +6,7 @@ package com.airportflightplanner.common.api.flightplancollection.steerpoints;
 
 import java.util.List;
 
-import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
+import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
 import com.airportflightplanner.common.api.steerpoints.SteerPointReader;
 import com.airportflightplanner.flightplanvisualization.api.SteerPointsListModelListener;
 
@@ -41,7 +41,7 @@ public interface SteerPointsCollectionWriter extends SteerPointsCollectionReader
 
     /**
      *
-     * @param currentAirport
+     * @param currentFlightPlan
      */
-    void setCurrentFlightPlan(FlightPlanReader currentFlightPlan);
+    void setCurrentFlightPlan(FligthPlanReader currentFlightPlan);
 }

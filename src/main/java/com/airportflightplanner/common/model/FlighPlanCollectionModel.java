@@ -9,7 +9,7 @@ import java.util.List;
 
 import javax.swing.SwingUtilities;
 
-import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
+import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
 import com.airportflightplanner.common.api.flightplancollection.flightplan.FlightPlanCollectionWriter;
 import com.airportflightplanner.common.api.flightplancollection.flightplan.FligthPlanCollectionProperties;
 import com.airportflightplanner.flightplanvisualization.api.FlightPlanVisualizationListModelListener;
@@ -38,7 +38,7 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
      * {@inheritDoc}
      */
     @Override
-    public void addFlightPlan(final FlightPlanReader value) {
+    public void addFlightPlan(final FligthPlanReader value) {
         if (null != value) {
             for (FlightPlanVisualizationListModelListener flightPlanListModelListener : listeners) {
                 flightPlanListModelListener.addFlightPlan(value);
@@ -52,7 +52,7 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
      * {@inheritDoc}
      */
     @Override
-    public void removeFlightPlan(final FlightPlanReader value) {
+    public void removeFlightPlan(final FligthPlanReader value) {
         if (null != value) {
             for (FlightPlanVisualizationListModelListener flightPlanListModelListener : listeners) {
                 flightPlanListModelListener.removeFlightPlan(value);
@@ -66,7 +66,7 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
      * {@inheritDoc}
      */
     @Override
-    public FlightPlanReader getFlightPlanByIndex(final int value) {
+    public FligthPlanReader getFlightPlanByIndex(final int value) {
         return flightPlanListModel.getElementAt(value);
     }
 

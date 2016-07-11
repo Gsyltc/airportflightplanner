@@ -4,7 +4,7 @@
  */
 package com.airportflightplanner.flightplanvisualization.api;
 
-import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
+import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
 
 /**
  * @author Goubaud Sylvain
@@ -16,11 +16,11 @@ public interface FlightPlanVisualizationListModelListener {
      *
      * @param flightPlan
      */
-    void addFlightPlan(FlightPlanReader flightPlan);
+    void addFlightPlan(FligthPlanReader flightPlan);
 
     /**
      *
      * @param flightPlan
      */
-    void removeFlightPlan(FlightPlanReader flightPlan);
+    void removeFlightPlan(FligthPlanReader flightPlan);
 }

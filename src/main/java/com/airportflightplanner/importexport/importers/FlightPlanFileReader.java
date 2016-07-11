@@ -25,7 +25,7 @@ import com.airportflightplanner.common.api.adapter.FlightPlanModelAdapter;
 import com.airportflightplanner.common.api.flightplan.FligthPlanProperties;
 import com.airportflightplanner.common.api.flightplancollection.flightplan.FligthPlanCollectionProperties;
 import com.airportflightplanner.common.model.FlighPlanCollectionModel;
-import com.airportflightplanner.common.model.FlighPlanModel;
+import com.airportflightplanner.common.model.FligthPlanModel;
 import com.airportflightplanner.common.types.FlightPlanInformationTypes;
 import com.airportflightplanner.common.utils.properties.CommonProperties;
 
@@ -70,8 +70,8 @@ public class FlightPlanFileReader {
         flighPlanCollectionModel.getListModel().clear();
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(CommonProperties.ROUTES_DIRECTORY.resolve(currentAirport), "*.{txt}")) {
             for (Path path : stream) {
-                FlighPlanModel newFlightPlan = new FlighPlanModel();
-
+                FligthPlanModel newFlightPlan = new FligthPlanModel();
+                newFlightPlan.setFileName(path.getFileName().toString().replace("*.txt", ""));
                 // Attach listener for flight time
                 newFlightPlan.addPropertyChangeListener(FligthPlanProperties.DURATION, new PropertyChangeListener() {
                     /**

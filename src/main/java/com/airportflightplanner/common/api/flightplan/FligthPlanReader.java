@@ -20,7 +20,7 @@ import com.airportflightplanner.common.types.StartDays;
  * @author Goubaud Sylvain
  *
  */
-public interface FlightPlanReader {
+public interface FligthPlanReader {
     /**
      *
      * @return
@@ -122,5 +122,10 @@ public interface FlightPlanReader {
      * @return
      */
     Set<StartDays> getStartDays();
+    /**
+     *
+     * @return
+     */
+    String getFileName();
 
 }

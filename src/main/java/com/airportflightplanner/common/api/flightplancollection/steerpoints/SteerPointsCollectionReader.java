@@ -6,7 +6,7 @@ package com.airportflightplanner.common.api.flightplancollection.steerpoints;
 
 import javax.swing.ListModel;
 
-import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
+import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
 import com.airportflightplanner.common.api.steerpoints.SteerPointReader;
 
 /**
@@ -38,6 +38,6 @@ public interface SteerPointsCollectionReader {
      *
      * @return
      */
-    FlightPlanReader getCurrentFlightPlan();
+    FligthPlanReader getCurrentFlightPlan();
 
 }

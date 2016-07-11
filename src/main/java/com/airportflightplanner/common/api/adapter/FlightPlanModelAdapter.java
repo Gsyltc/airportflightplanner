@@ -7,7 +7,7 @@ package com.airportflightplanner.common.api.adapter;
 
 import java.util.List;
 
-import com.airportflightplanner.common.model.FlighPlanModel;
+import com.airportflightplanner.common.model.FligthPlanModel;
 import com.airportflightplanner.common.types.FlightPlanInformationTypes;
 
 /**
@@ -21,7 +21,7 @@ public interface FlightPlanModelAdapter {
      * @param newFlightPlan
      * @param steerpoints
      */
-    void addSteerpoints(FlighPlanModel newFlightPlan, List<String> steerpoints);
+    void addSteerpoints(FligthPlanModel newFlightPlan, List<String> steerpoints);
 
     /**
      *
@@ -29,5 +29,5 @@ public interface FlightPlanModelAdapter {
      * @param informationsType
      * @param line
      */
-    void updateFlightPlan(FlighPlanModel newFlightPlan, FlightPlanInformationTypes informationsType, String line);
+    void updateFlightPlan(FligthPlanModel newFlightPlan, FlightPlanInformationTypes informationsType, String line);
 }

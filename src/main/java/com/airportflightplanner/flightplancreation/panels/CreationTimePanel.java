@@ -21,8 +21,8 @@ import javax.swing.border.TitledBorder;
 import org.joda.time.LocalTime;
 import org.joda.time.Period;
 
-import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
 import com.airportflightplanner.common.api.flightplan.FligthPlanProperties;
+import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
 import com.airportflightplanner.common.utils.time.TimeUtils;
 import com.airportflightplanner.common.visualelement.CommonPanel;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
@@ -111,7 +111,7 @@ public class CreationTimePanel extends CommonPanel {
    */
   private static final long                           serialVersionUID = 8098225641658386495L;
   /** */
-  protected final PresentationModel<FlightPlanReader> currentFlightPlan;
+  protected final PresentationModel<FligthPlanReader> currentFlightPlan;
   /** */
   protected JTextField                                endTextField;
 
@@ -125,7 +125,7 @@ public class CreationTimePanel extends CommonPanel {
    * @param currentFlightPlan2
    *
    */
-  public CreationTimePanel(final PresentationModel<FlightPlanReader> currentFlightPlan2) {
+  public CreationTimePanel(final PresentationModel<FligthPlanReader> currentFlightPlan2) {
     currentFlightPlan = currentFlightPlan2;
     build();
   }

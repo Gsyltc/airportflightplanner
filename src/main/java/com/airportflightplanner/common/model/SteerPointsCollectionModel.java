@@ -9,7 +9,7 @@ import java.util.List;
 
 import javax.swing.SwingUtilities;
 
-import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
+import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
 import com.airportflightplanner.common.api.flightplancollection.flightplan.FligthPlanCollectionProperties;
 import com.airportflightplanner.common.api.flightplancollection.steerpoints.SteerPointsCollectionWriter;
 import com.airportflightplanner.common.api.steerpoints.SteerPointReader;
@@ -32,7 +32,7 @@ public class SteerPointsCollectionModel extends Model implements SteerPointsColl
     /** */
     private final List<SteerPointsListModelListener> listeners            = new ArrayList<SteerPointsListModelListener>();
     /** */
-    private FlightPlanReader                         currentFlightPlan;
+    private FligthPlanReader                         currentFlightPlan;
 
     /**
      *
@@ -87,8 +87,8 @@ public class SteerPointsCollectionModel extends Model implements SteerPointsColl
      * {@inheritDoc}
      */
     @Override
-    public void setCurrentFlightPlan(final FlightPlanReader currentFlightPlan) {
-        FlightPlanReader oldValue = this.currentFlightPlan;
+    public void setCurrentFlightPlan(final FligthPlanReader currentFlightPlan) {
+        FligthPlanReader oldValue = this.currentFlightPlan;
         if (!currentFlightPlan.equals(oldValue)) {
             this.currentFlightPlan = currentFlightPlan;
             firePropertyChange(FligthPlanCollectionProperties.CURRENT_AIRPORT, oldValue, this.currentFlightPlan);
@@ -100,7 +100,7 @@ public class SteerPointsCollectionModel extends Model implements SteerPointsColl
      * {@inheritDoc}
      */
     @Override
-    public FlightPlanReader getCurrentFlightPlan() {
+    public FligthPlanReader getCurrentFlightPlan() {
         return currentFlightPlan;
     }
 

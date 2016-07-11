@@ -4,7 +4,7 @@
  */
 package com.airportflightplanner.common.api.flightplancollection.flightplan;
 
-import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
+import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
 import com.airportflightplanner.flightplanvisualization.api.FlightPlanVisualizationListModelListener;
 
 /**
@@ -16,13 +16,13 @@ public interface FlightPlanCollectionWriter extends FlightPlanCollectionReader {
      *
      * @param value
      */
-    void addFlightPlan(FlightPlanReader value);
+    void addFlightPlan(FligthPlanReader value);
 
     /**
      *
      * @param value
      */
-    void removeFlightPlan(FlightPlanReader value);
+    void removeFlightPlan(FligthPlanReader value);
 
     /**
      *
