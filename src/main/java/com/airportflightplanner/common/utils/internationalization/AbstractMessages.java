@@ -10,8 +10,11 @@ package com.airportflightplanner.common.utils.internationalization;
  */
 public abstract class AbstractMessages {
 
+    private static final String PREFIX  = AbstractMessages.class.getSimpleName() + ".";
     /** */
-    public static final String LABEL = ".label";
+    public static final String  LABEL   = ".label";
+    /** */
+    public static final String  UNKNOWN = format(PREFIX + "UNKNOWN");
 
     /**
      *

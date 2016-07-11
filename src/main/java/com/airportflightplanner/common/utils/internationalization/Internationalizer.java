@@ -34,8 +34,8 @@ public class Internationalizer {
         try {
             message = resourceBundleMessageSource.getMessage(key, null, Locale.getDefault());
         } catch (NoSuchMessageException e) {
-            LOGGER.info("Key not internationalized : " + key);
-            message = key;
+            // LOGGER.info("Key not internationalized : " + key);
+            message = key + AbstractMessages.UNKNOWN;
         }
         return message;
     }
