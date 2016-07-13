@@ -28,7 +28,7 @@ public class GoogleMapModel extends Model implements GoogleMapWriter {
     /** */
     private static final int       FIRST_STERRPOINT = 0;
     /** */
-    private EncodedPolyline        polyline;
+    private transient EncodedPolyline        polyline;
     /** */
     private List<SteerPointReader> specificSteerPoint;
 

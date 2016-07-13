@@ -70,8 +70,10 @@ public class FlightPlanFileReader {
         flighPlanCollectionModel.getListModel().clear();
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(CommonProperties.ROUTES_DIRECTORY.resolve(currentAirport), "*.{txt}")) {
             for (Path path : stream) {
+                Path fileName = path.getFileName();
+                if (null != fileName) {
                 FligthPlanModel newFlightPlan = new FligthPlanModel();
-                newFlightPlan.setFileName(path.getFileName().toString().replace("*.txt", ""));
+                newFlightPlan.setFileName(fileName.toString().replace("*.txt", ""));
                 // Attach listener for flight time
                 newFlightPlan.addPropertyChangeListener(FligthPlanProperties.DURATION, new PropertyChangeListener() {
                     /**
@@ -99,70 +101,70 @@ public class FlightPlanFileReader {
                             switch (informationsType) {
                             case STARTTIME:
                                 line = reader.readLine();
-                                if (!line.equals(FlightPlanInformationTypes.ENDSTARTTIME.name())) {
+                                if (!FlightPlanInformationTypes.ENDSTARTTIME.name().equals(line)) {
                                     flightPlanModelAdapter.updateFlightPlan(newFlightPlan, informationsType, line);
                                 }
                                 break;
 
                             case STARTAIRCRAFT:
                                 line = reader.readLine();
-                                if (!line.equals(FlightPlanInformationTypes.ENDAIRCRAFT.name())) {
+                                if (!FlightPlanInformationTypes.ENDAIRCRAFT.name().equals(line)) {
                                     flightPlanModelAdapter.updateFlightPlan(newFlightPlan, informationsType, line);
                                 }
                                 break;
 
                             case STARTDESTAIRPORT:
                                 line = reader.readLine();
-                                if (!line.equals(FlightPlanInformationTypes.ENDDESTAIRPORT.name())) {
+                                if (!FlightPlanInformationTypes.ENDDESTAIRPORT.name().equals(line)) {
                                     flightPlanModelAdapter.updateFlightPlan(newFlightPlan, informationsType, line);
                                 }
                                 break;
 
                             case STARTDEPAIRPORT:
                                 line = reader.readLine();
-                                if (!line.equals(FlightPlanInformationTypes.ENDDEPAIRPORT.name())) {
+                                if (!FlightPlanInformationTypes.ENDDEPAIRPORT.name().equals(line)) {
                                     flightPlanModelAdapter.updateFlightPlan(newFlightPlan, informationsType, line);
                                 }
                                 break;
 
                             case START_FLY_TO_COMPLETION:
                                 line = reader.readLine();
-                                if (!line.equals(FlightPlanInformationTypes.END_FLY_TO_COMPLETION.name())) {
+                                if (!FlightPlanInformationTypes.END_FLY_TO_COMPLETION.name().equals(line)) {
                                     flightPlanModelAdapter.updateFlightPlan(newFlightPlan, informationsType, line);
                                 }
                                 break;
 
                             case START_LANDING_LIGHT_ALT:
                                 line = reader.readLine();
-                                if (!line.equals(FlightPlanInformationTypes.END_LANDING_LIGHT_ALT.name())) {
+                                if (!FlightPlanInformationTypes.END_LANDING_LIGHT_ALT.name().equals(line)) {
                                     flightPlanModelAdapter.updateFlightPlan(newFlightPlan, informationsType, line);
                                 }
                                 break;
 
                             case STARTALTERNATEAIRPORT:
                                 line = reader.readLine();
-                                if (!line.equals(FlightPlanInformationTypes.ENDALTERNATEAIRPORT.name())) {
+                                if (!FlightPlanInformationTypes.ENDALTERNATEAIRPORT.name().equals(line)) {
                                     flightPlanModelAdapter.updateFlightPlan(newFlightPlan, informationsType, line);
                                 }
                                 break;
 
                             case STARTARRIVETYPE:
                                 line = reader.readLine();
-                                if (!line.equals(FlightPlanInformationTypes.ENDARRIVETYPE.name())) {
+                                if (!FlightPlanInformationTypes.ENDARRIVETYPE.name().equals(line)) {
                                     flightPlanModelAdapter.updateFlightPlan(newFlightPlan, informationsType, line);
                                 }
                                 break;
 
                             case STARTCALLSIGN:
                                 line = reader.readLine();
-                                if (!line.equals(FlightPlanInformationTypes.ENDCALLSIGN.name())) {
+                                if (!FlightPlanInformationTypes.ENDCALLSIGN.name().equals(line)) {
                                     flightPlanModelAdapter.updateFlightPlan(newFlightPlan, informationsType, line);
                                 }
                                 break;
 
                             case STARTDAYS:
                                 line = reader.readLine();
-                                if (!line.equals(FlightPlanInformationTypes.ENDDAYS.name())) {
+                                if (!FlightPlanInformationTypes.ENDDAYS.name().equals(line)) {
                                     flightPlanModelAdapter.updateFlightPlan(newFlightPlan, informationsType, line);
                                 }
 
@@ -170,14 +172,14 @@ public class FlightPlanFileReader {
 
                             case STARTDEPARTTYPE:
                                 line = reader.readLine();
-                                if (!line.equals(FlightPlanInformationTypes.ENDDEPARTTYPE.name())) {
+                                if (!FlightPlanInformationTypes.ENDDEPARTTYPE.name().equals(line)) {
                                     flightPlanModelAdapter.updateFlightPlan(newFlightPlan, informationsType, line);
                                 }
                                 break;
 
                             case STARTFLIGHTTYPE:
                                 line = reader.readLine();
-                                if (!line.equals(FlightPlanInformationTypes.ENDFLIGHTTYPE.name())) {
+                                if (!FlightPlanInformationTypes.ENDFLIGHTTYPE.name().equals(line)) {
                                     flightPlanModelAdapter.updateFlightPlan(newFlightPlan, informationsType, line);
                                 }
                                 break;
@@ -185,7 +187,7 @@ public class FlightPlanFileReader {
                             case STARTSTEERPOINTS:
                                 List<String> steerpoints = new ArrayList<String>();
                                 line = reader.readLine();
-                                while (!line.equals(FlightPlanInformationTypes.ENDSTEERPOINTS.name())) {
+                                while (!FlightPlanInformationTypes.ENDSTEERPOINTS.name().equals(line)) {
                                     steerpoints.add(line);
                                     line = reader.readLine();
                                 }
@@ -200,6 +202,7 @@ public class FlightPlanFileReader {
                 }
 
                 flighPlanCollectionModel.addFlightPlan(newFlightPlan);
+            }
             }
         } catch (IOException e) {
             LOGGER.error("Error while reading Flght plans", e);

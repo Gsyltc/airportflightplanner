@@ -45,7 +45,7 @@ public class CreationTimePanel extends CommonPanel {
    * @author Goubaud Sylvain
    *
    */
-  protected class KeyTypingListener implements KeyListener {
+  protected static class KeyTypingListener implements KeyListener {
 
     /** */
     private final JTextField textField;

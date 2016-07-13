@@ -19,17 +19,17 @@ import com.airportflightplanner.common.adapter.AircraftTypeAdapter;
  */
 public class AircraftsLiveriesMapper {
   /** */
-  private final String                         aircraftClass = "";
+//  private final String                         aircraftClass = "";
   /** */
   private final Map<String, SortedSet<String>> liveriesMap   = new HashMap<String, SortedSet<String>>();
 
-  /**
-   *
-   * @return
-   */
-  public String getAircraftClass() {
-    return aircraftClass;
-  }
+//  /**
+//   *
+//   * @return
+//   */
+//  public String getAircraftClass() {
+//    return aircraftClass;
+//  }
 
   public void addLivery(final String airCraftType) {
     final String cpie = AircraftTypeAdapter.getAircraftCie(airCraftType);

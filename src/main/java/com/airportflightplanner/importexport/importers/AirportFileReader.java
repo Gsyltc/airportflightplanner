@@ -33,7 +33,10 @@ public class AirportFileReader {
     public void init() {
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(CommonProperties.ROUTES_DIRECTORY)) {
             for (Path path : stream) {
-                AIRPORTS.add(path.getFileName().toString());
+                Path fileName = path.getFileName();
+                if (null != fileName) {
+                    AIRPORTS.add(fileName.toString());
+                }
             }
         } catch (IOException e) {
             LOGGER.error("Error while reading Flght plans", e);

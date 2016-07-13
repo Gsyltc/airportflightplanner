@@ -112,7 +112,7 @@ public class GoogleMapPane extends JEditorPane {
      */
     protected void updateMap() {
         if (this.apiKey.isEmpty()) {
-            // throw new Exception("Developper API Key not set !!!!");
+             throw new IllegalArgumentException("Developper API Key not set !!!!");
         }
 
         String url = "http://maps.googleapis.com/maps/api/staticmap?";

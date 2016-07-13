@@ -72,12 +72,14 @@ public class GeographicUtils {
      */
     public static EncodedPolyline getEncodePolyline(final List<String> steerpointsString) {
         List<SteerPointReader> steerPoints = getSteerPoints(steerpointsString);
-        String points = "";
+        StringBuilder sb = new StringBuilder();
         for (SteerPointReader steerPointReader : steerPoints) {
-            points += "|" + steerPointReader.getLatLong().latitudeValue(NonSI.DEGREE_ANGLE) + "," + //
-                    steerPointReader.getLatLong().longitudeValue(NonSI.DEGREE_ANGLE);
+            sb.append("|")
+            .append(steerPointReader.getLatLong().latitudeValue(NonSI.DEGREE_ANGLE))//
+            .append(",")//
+            .append(steerPointReader.getLatLong().longitudeValue(NonSI.DEGREE_ANGLE));
         }
-        EncodedPolyline polyline = new EncodedPolyline(points);
+        EncodedPolyline polyline = new EncodedPolyline(sb.toString());
         return polyline;
     }
 
@@ -125,14 +127,12 @@ public class GeographicUtils {
     }
 
     /**
-     * @see https://en.wikiversity.org/wiki/Geographic_coordinate_conversion
      * @param coord
+     * @param isLAtitude
      * @return
      */
     private static String decimalToDMS(final double coord, final boolean isLAtitude) {
         double value = coord;
-        String output, degrees, minutes, seconds;
-
         // Degree
         double mod = value % 1;
         int degree = (int) value;
@@ -172,7 +172,8 @@ public class GeographicUtils {
         DecimalFormat formatSecond = new DecimalFormat("##.####");
         formatSecond.setRoundingMode(RoundingMode.CEILING);
 
-        return MessageFormat.format(GeographicFormatter.LATITUDE_DMS, new Object[] { formatDegree.format(degree), formatMinutes.format(intMinutes), //
+        return MessageFormat.format(GeographicFormatter.LATITUDE_DMS, new Object[] { formatDegree.format(degree),//
+                formatMinutes.format(intMinutes), //
                 formatSecond.format(second), direction });
 
     }
@@ -180,10 +181,14 @@ public class GeographicUtils {
     /**
      * Conversion DMS to decimal
      *
-     * @see https://en.wikiversity.org/wiki/Geographic_coordinate_conversion
      *      Input: latitude or longitude in the DMS format ( example: W 79° 58'
      *      55.903") Return: latitude or longitude in decimal format
      *      hemisphereOUmeridien => {W,E,S,N}
+     * @param hemisphereOUmeridien
+     * @param degres
+     * @param minutes
+     * @param secondes
+     * @return
      *
      */
     public double DMSToDecimal(final String hemisphereOUmeridien, final double degres, final double minutes, final double secondes) {
