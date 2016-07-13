@@ -7,8 +7,6 @@ package com.airportflightplanner.common.utils.internationalization;
 import java.util.List;
 import java.util.Locale;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.support.ResourceBundleMessageSource;
 
@@ -17,8 +15,6 @@ import org.springframework.context.support.ResourceBundleMessageSource;
  *
  */
 public class Internationalizer {
-    /** The logger of this class. */
-    private static final Log                   LOGGER                      = LogFactory.getLog(Internationalizer.class);
 
     /** */
     private static ResourceBundleMessageSource resourceBundleMessageSource = new ResourceBundleMessageSource();
@@ -34,7 +30,6 @@ public class Internationalizer {
         try {
             message = resourceBundleMessageSource.getMessage(key, null, Locale.getDefault());
         } catch (NoSuchMessageException e) {
-            // LOGGER.info("Key not internationalized : " + key);
             message = key + AbstractMessages.UNKNOWN;
         }
         return message;

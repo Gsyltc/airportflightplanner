@@ -100,7 +100,7 @@ public class CreationStartDaysPanel extends CommonPanel {
              */
             @Override
             public void propertyChange(final PropertyChangeEvent evt) {
-                if (evt.getNewValue() instanceof FligthPlanReader) {
+//                if (evt.getNewValue() instanceof FligthPlanReader) {
 //                    final String aircraftType = ((FligthPlanReader) evt.getNewValue()).getAircraftType();
 //                    final FlighInfosModel bean = presenterInfoModel.getBean();
 //
@@ -108,7 +108,7 @@ public class CreationStartDaysPanel extends CommonPanel {
 //                    bean.setAircraftClass(aircraftClass);
 //                    bean.setAircraftCie(AircraftTypeAdapter.getAircraftCie(aircraftType));
 //                    bean.setAircraftLivery(aircraftType);
-                }
+//                }
             }
         });
 

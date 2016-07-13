@@ -6,7 +6,6 @@
 package com.airportflightplanner.flightplancreation.panels;
 
 import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.border.TitledBorder;
 
 import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
@@ -28,10 +27,10 @@ public class CreationOptionsPanel extends CommonPanel {
    *
    */
   private static final long                         serialVersionUID = -2692513903084994308L;
-  /** */
-  private JComboBox<String>                         routeSelector;
-  /** */
-  private final PresentationModel<FligthPlanReader> currentFlightPlan;
+//  /** */
+//  private JComboBox<String>                         routeSelector;
+//  /** */
+//  private final PresentationModel<FligthPlanReader> currentFlightPlan;
   /** */
   protected GoogleMapPane                           googleMap;
 
@@ -40,7 +39,7 @@ public class CreationOptionsPanel extends CommonPanel {
    *
    */
   public CreationOptionsPanel(final PresentationModel<FligthPlanReader> currentFlightPlan) {
-    this.currentFlightPlan = currentFlightPlan;
+//    this.currentFlightPlan = currentFlightPlan;
     build();
   }
 
