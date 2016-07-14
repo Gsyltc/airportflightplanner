@@ -32,6 +32,7 @@ public abstract class CommonPanel extends JPanel implements SlotReceiver {
     /** */
     protected Map<String, ? extends Object>       attributeMap     = new ConcurrentHashMap<String, Object>();
 
+
     /**
      *
      */

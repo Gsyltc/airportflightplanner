@@ -40,12 +40,12 @@ public class GeographicUtils {
      * @return
      */
     public static List<SteerPointReader> getSteerPoints(final List<String> steerpointsString) {
-        List<SteerPointReader> steerPointList = new ArrayList<SteerPointReader>();
-        for (String lines : steerpointsString) {
-            Pattern p = Pattern.compile(" +");
+        final List<SteerPointReader> steerPointList = new ArrayList<SteerPointReader>();
+        for (final String lines : steerpointsString) {
+            final Pattern pattern = Pattern.compile(" +");
             // séparation en sous-chaînes
-            String[] items = p.split(lines, 10);
-            SteerPointModel steerPoint = new SteerPointModel();
+            final String[] items = pattern.split(lines, 10);
+            final SteerPointModel steerPoint = new SteerPointModel();
 
             steerPoint.setLatLong(LatLong.valueOf(Double.valueOf(items[0]), Double.valueOf(items[1]), NonSI.DEGREE_ANGLE));
             steerPoint.setVelocity(new DecimalMeasure<Velocity>(new BigDecimal(items[4]), NonSI.KNOT));
@@ -71,15 +71,14 @@ public class GeographicUtils {
      * @return
      */
     public static EncodedPolyline getEncodePolyline(final List<String> steerpointsString) {
-        List<SteerPointReader> steerPoints = getSteerPoints(steerpointsString);
-        StringBuilder sb = new StringBuilder();
-        for (SteerPointReader steerPointReader : steerPoints) {
-            sb.append("|")
-            .append(steerPointReader.getLatLong().latitudeValue(NonSI.DEGREE_ANGLE))//
+        final List<SteerPointReader> steerPoints = getSteerPoints(steerpointsString);
+        final StringBuilder stringBuilder = new StringBuilder();
+        for (final SteerPointReader steerPointReader : steerPoints) {
+            stringBuilder.append("|").append(steerPointReader.getLatLong().latitudeValue(NonSI.DEGREE_ANGLE))//
             .append(",")//
             .append(steerPointReader.getLatLong().longitudeValue(NonSI.DEGREE_ANGLE));
         }
-        EncodedPolyline polyline = new EncodedPolyline(sb.toString());
+        final EncodedPolyline polyline = new EncodedPolyline(stringBuilder.toString());
         return polyline;
     }
 
@@ -109,15 +108,15 @@ public class GeographicUtils {
     private static long calculate(final List<SteerPointReader> steerPointList) {
         double result = 0.0;
         GlobalPosition lastCoord = null;
-        for (SteerPointReader latLongSpeed : steerPointList) {
+        for (final SteerPointReader latLongSpeed : steerPointList) {
 
-            GlobalPosition coord = new GlobalPosition(latLongSpeed.getLatLong().latitudeValue(NonSI.DEGREE_ANGLE), //
+            final GlobalPosition coord = new GlobalPosition(latLongSpeed.getLatLong().latitudeValue(NonSI.DEGREE_ANGLE), //
                     latLongSpeed.getLatLong().longitudeValue(NonSI.DEGREE_ANGLE), latLongSpeed.getAltitude().doubleValue(NonSI.FOOT));
 
             if (null != lastCoord) {
-                result += ((new GeodeticCalculator().calculateGeodeticMeasurement(//
-                        Ellipsoid.WGS84, lastCoord, coord).getPointToPointDistance()) / //
-                        latLongSpeed.getVelocity().doubleValue(SI.METERS_PER_SECOND)) * 1000;
+                result += new GeodeticCalculator().calculateGeodeticMeasurement(//
+                        Ellipsoid.WGS84, lastCoord, coord).getPointToPointDistance() / //
+                        latLongSpeed.getVelocity().doubleValue(SI.METERS_PER_SECOND) * 1000;
             }
 
             lastCoord = coord;
@@ -135,7 +134,7 @@ public class GeographicUtils {
         double value = coord;
         // Degree
         double mod = value % 1;
-        int degree = (int) value;
+        final int degree = (int) value;
         String direction = "";
         DecimalFormat formatDegree = null;
         if (isLAtitude) {
@@ -165,14 +164,14 @@ public class GeographicUtils {
         if (intMinutes < 0) {
             intMinutes *= -1;
         }
-        DecimalFormat formatMinutes = new DecimalFormat("##");
+        final DecimalFormat formatMinutes = new DecimalFormat("##");
         formatMinutes.setRoundingMode(RoundingMode.CEILING);
 
-        double second = mod * 60;
-        DecimalFormat formatSecond = new DecimalFormat("##.####");
+        final double second = mod * 60;
+        final DecimalFormat formatSecond = new DecimalFormat("##.####");
         formatSecond.setRoundingMode(RoundingMode.CEILING);
 
-        return MessageFormat.format(GeographicFormatter.LATITUDE_DMS, new Object[] { formatDegree.format(degree),//
+        return MessageFormat.format(GeographicFormatter.LATITUDE_DMS, new Object[] { formatDegree.format(degree), //
                 formatMinutes.format(intMinutes), //
                 formatSecond.format(second), direction });
 
@@ -181,25 +180,26 @@ public class GeographicUtils {
     /**
      * Conversion DMS to decimal.
      *
-     *      Input: latitude or longitude in the DMS format ( example: W 79° 58'
-     *      55.903") Return: latitude or longitude in decimal format
-     *      hemisphereOUmeridien => {W,E,S,N}
-     * @param hemisphereOUmeridien
+     * Input: latitude or longitude in the DMS format ( example: W 79° 58'
+     * 55.903") Return: latitude or longitude in decimal format
+     * hemisphereOUmeridien => {W,E,S,N}
+     *
+     * @param hemOUmeridien
      * @param degres
      * @param minutes
      * @param secondes
      * @return
      *
      */
-    public double DMSToDecimal(final String hemisphereOUmeridien, final double degres, final double minutes, final double secondes) {
-        double LatOrLon = 0;
+    public double dMSToDecimal(final String hemOUmeridien, final double degres, final double minutes, final double secondes) {
+        double latOrLon = 0;
         double signe = 1.0;
 
-        if ((hemisphereOUmeridien.equals("W")) || (hemisphereOUmeridien.equals("S"))) {
+        if (hemOUmeridien.equals("W") || hemOUmeridien.equals("S")) {
             signe = -1.0;
         }
-        LatOrLon = signe * (Math.floor(degres) + (Math.floor(minutes) / 60.0) + (secondes / 3600.0));
+        latOrLon = signe * (Math.floor(degres) + Math.floor(minutes) / 60.0 + secondes / 3600.0);
 
-        return (LatOrLon);
+        return latOrLon;
     }
 }
