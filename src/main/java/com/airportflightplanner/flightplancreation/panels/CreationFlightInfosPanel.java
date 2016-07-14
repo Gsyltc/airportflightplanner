@@ -308,7 +308,7 @@ public class CreationFlightInfosPanel extends CommonPanel {
     protected void refreshData(final String propertyName) {
         final FlightInfosWriter bean = presenterInfoModel.getBean();
         switch (propertyName) {
-        // La classe à changée, on reset le model des compagnies et des livrées
+        // La classe a changee, on reset le model des compagnies et des livrees
         case FligthInfosProperties.AIRCRAFT_CLASS:
             bean.setCompanies(AircraftTypeAdapter.getAircraftCompaniesByClass(bean.getAircraftClass()));
             break;
