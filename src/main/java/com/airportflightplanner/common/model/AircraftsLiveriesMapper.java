@@ -14,58 +14,50 @@ import java.util.TreeSet;
 import com.airportflightplanner.common.adapter.AircraftTypeAdapter;
 
 /**
- * @author DCNS
+ * @author Goubaud Sylvain
  *
  */
 public class AircraftsLiveriesMapper {
-  /** */
-//  private final String                         aircraftClass = "";
-  /** */
-  private final Map<String, SortedSet<String>> liveriesMap   = new HashMap<String, SortedSet<String>>();
+    /** */
+    private final Map<String, SortedSet<String>> liveriesMap = new HashMap<String, SortedSet<String>>();
 
-//  /**
-//   *
-//   * @return
-//   */
-//  public String getAircraftClass() {
-//    return aircraftClass;
-//  }
-
-  public void addLivery(final String airCraftType) {
-    final String cpie = AircraftTypeAdapter.getAircraftCie(airCraftType);
-    if (!liveriesMap.containsKey(cpie)) {
-      final SortedSet<String> liveries = new TreeSet<String>();
-      liveries.add(airCraftType);
-      liveriesMap.put(cpie, liveries);
-    } else {
-      final SortedSet<String> liveries = liveriesMap.get(cpie);
-      liveries.add(airCraftType);
+    /**
+     *
+     * @param airCraftType
+     *            aircraft type.
+     */
+    public final void addLivery(final String airCraftType) {
+        final String cpie = AircraftTypeAdapter.getAircraftCie(airCraftType);
+        if (!liveriesMap.containsKey(cpie)) {
+            final SortedSet<String> liveries = new TreeSet<String>();
+            liveries.add(airCraftType);
+            liveriesMap.put(cpie, liveries);
+        } else {
+            final SortedSet<String> liveries = liveriesMap.get(cpie);
+            liveries.add(airCraftType);
+        }
     }
-  }
 
-  /**
-   *
-   * @param aircraftCie
-   * @return
-   */
-  public SortedSet<String> getLiveriesByCpie(final String aircraftCie) {
-    if (liveriesMap.containsKey(aircraftCie)) {
-      return Collections.unmodifiableSortedSet(liveriesMap.get(aircraftCie));
+    /**
+     *
+     * @param aircraftCie
+     *            aircraft companu.
+     * @return list of liveries for the company.
+     */
+    public final SortedSet<String> getLiveriesByCpie(final String aircraftCie) {
+        if (liveriesMap.containsKey(aircraftCie)) {
+            return Collections.unmodifiableSortedSet(liveriesMap.get(aircraftCie));
+        }
+        return Collections.emptySortedSet();
     }
-    return Collections.emptySortedSet();
-  }
 
-  /**
-   *
-   * @return
-   */
-  public SortedSet<String> getCompagnies() {
-    final SortedSet<String> sortedSet = new TreeSet<>(liveriesMap.keySet());
-    // final List<String> companies = new ArrayList<String>();
-    // for (final String key : sortedSet) {
-    // companies.add(key);
-    // }
-    return Collections.unmodifiableSortedSet(sortedSet);
-  }
+    /**
+     *
+     * @return list of companies.
+     */
+    public final SortedSet<String> getCompagnies() {
+        final SortedSet<String> sortedSet = new TreeSet<>(liveriesMap.keySet());
+        return Collections.unmodifiableSortedSet(sortedSet);
+    }
 
 }

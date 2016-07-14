@@ -30,18 +30,19 @@ public class SteerPointsListModel extends AbstractListModel<SteerPointReader> im
 
     /**
      *
-     * @param list
+     * @param newList
+     *            the list to update.
      */
-    public void setList(final List<SteerPointReader> list) {
+    public final void setList(final List<SteerPointReader> newList) {
         this.list.clear();
-        this.list.addAll(list);
-        fireContentsChanged(this, FIRST_ROW, Math.max(list.size() - 1, 0));
+        this.list.addAll(newList);
+        fireContentsChanged(this, FIRST_ROW, Math.max(newList.size() - 1, 0));
     }
 
     /**
      *
      */
-    public void clear() {
+    public final void clear() {
         this.list.clear();
         fireContentsChanged(this, -1, -1);
     }
@@ -49,17 +50,18 @@ public class SteerPointsListModel extends AbstractListModel<SteerPointReader> im
     /**
      *
      * @param elementCOunt
+     *            elements.
      */
-    protected void fireIntervalAdded(final int elementCOunt) {
+    protected final void fireIntervalAdded(final int elementCOunt) {
         int index0 = list.size() - elementCOunt;
         fireIntervalAdded(this, Math.max(FIRST_ROW, index0), Math.max(FIRST_ROW, list.size() - 1));
     }
 
     /**
      *
-     * @return
+     * @return list of steerpoints.
      */
-    public List<SteerPointReader> getList() {
+    public final List<SteerPointReader> getList() {
         return Collections.unmodifiableList(list);
     }
 
@@ -68,7 +70,7 @@ public class SteerPointsListModel extends AbstractListModel<SteerPointReader> im
      * {@inheritDoc}
      */
     @Override
-    public int getSize() {
+    public final int getSize() {
         return list.size();
     }
 
@@ -77,22 +79,28 @@ public class SteerPointsListModel extends AbstractListModel<SteerPointReader> im
      * {@inheritDoc}
      */
     @Override
-    public SteerPointReader getElementAt(final int index) {
+    public final SteerPointReader getElementAt(final int index) {
         SteerPointReader elementAt = list.get(index);
         return elementAt;
     }
 
     /**
      *
-     * @param element
-     * @return
+     * @param SteerPointReader
+     *            a steerpoint.
+     * @return Index of the steerpoint.
      */
-    public int indexOf(final SteerPointReader element) {
-        return list.indexOf(element);
+    public final int indexOf(final SteerPointReader SteerPointReader) {
+        return list.indexOf(SteerPointReader);
     }
 
-    public void add(final SteerPointReader value) {
-        list.add(value);
+    /**
+     *
+     * @param SteerPointReader
+     *            a Steerpoint.
+     */
+    public final void add(final SteerPointReader SteerPointReader) {
+        list.add(SteerPointReader);
         fireContentsChanged(this, FIRST_ROW, list.size() - 1);
     }
 
@@ -101,7 +109,7 @@ public class SteerPointsListModel extends AbstractListModel<SteerPointReader> im
      * @param steerPoint
      */
     @Override
-    public void addSteerPoint(final SteerPointReader steerPoint) {
+    public final void addSteerPoint(final SteerPointReader steerPoint) {
         if ((null != steerPoint) && !list.contains(steerPoint)) {
             list.add(steerPoint);
             fireContentsChanged(this, FIRST_ROW, list.size() - 1);
@@ -113,7 +121,7 @@ public class SteerPointsListModel extends AbstractListModel<SteerPointReader> im
      * @param steerPoint
      */
     @Override
-    public void removeSteerPoint(final SteerPointReader steerPoint) {
+    public final void removeSteerPoint(final SteerPointReader steerPoint) {
         if ((null != steerPoint) && list.contains(steerPoint)) {
             list.remove(steerPoint);
             fireContentsChanged(this, FIRST_ROW, list.size() - 1);

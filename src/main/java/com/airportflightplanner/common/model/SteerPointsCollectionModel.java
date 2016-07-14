@@ -39,7 +39,7 @@ public class SteerPointsCollectionModel extends Model implements SteerPointsColl
      * {@inheritDoc}
      */
     @Override
-    public void addSteerPoints(final List<SteerPointReader> value) {
+    public final  void addSteerPoints(final List<SteerPointReader> value) {
         if (null != value) {
             for (SteerPointsListModelListener steerpointsListModelListener : listeners) {
                 for (SteerPointReader steerPointModel : value) {
@@ -55,7 +55,7 @@ public class SteerPointsCollectionModel extends Model implements SteerPointsColl
      * {@inheritDoc}
      */
     @Override
-    public void removeSteerPoint(final SteerPointReader value) {
+    public final  void removeSteerPoint(final SteerPointReader value) {
         if (null != value) {
             for (SteerPointsListModelListener steerpointsListModelListener : listeners) {
                 steerpointsListModelListener.removeSteerPoint(value);
@@ -69,7 +69,7 @@ public class SteerPointsCollectionModel extends Model implements SteerPointsColl
      * {@inheritDoc}
      */
     @Override
-    public SteerPointReader getSteerPointByIndex(final int value) {
+    public final  SteerPointReader getSteerPointByIndex(final int value) {
         return steerPointsListModel.getElementAt(value);
     }
 
@@ -78,7 +78,7 @@ public class SteerPointsCollectionModel extends Model implements SteerPointsColl
      * {@inheritDoc}
      */
     @Override
-    public int getSteerPointsCollectionSize() {
+    public final  int getSteerPointsCollectionSize() {
         return steerPointsListModel.getSize();
     }
 
@@ -87,7 +87,7 @@ public class SteerPointsCollectionModel extends Model implements SteerPointsColl
      * {@inheritDoc}
      */
     @Override
-    public void setCurrentFlightPlan(final FligthPlanReader currentFlightPlan) {
+    public final  void setCurrentFlightPlan(final FligthPlanReader currentFlightPlan) {
         FligthPlanReader oldValue = this.currentFlightPlan;
         if (!currentFlightPlan.equals(oldValue)) {
             this.currentFlightPlan = currentFlightPlan;
@@ -100,7 +100,7 @@ public class SteerPointsCollectionModel extends Model implements SteerPointsColl
      * {@inheritDoc}
      */
     @Override
-    public FligthPlanReader getCurrentFlightPlan() {
+    public final  FligthPlanReader getCurrentFlightPlan() {
         return currentFlightPlan;
     }
 
@@ -129,7 +129,7 @@ public class SteerPointsCollectionModel extends Model implements SteerPointsColl
      * {@inheritDoc}
      */
     @Override
-    public SteerPointsListModel getListModel() {
+    public  final SteerPointsListModel getListModel() {
         return steerPointsListModel;
     }
 
@@ -138,7 +138,7 @@ public class SteerPointsCollectionModel extends Model implements SteerPointsColl
      * {@inheritDoc}
      */
     @Override
-    public void addSteerPointsListModelListener(final  SteerPointsListModelListener listener) {
+    public final  void addSteerPointsListModelListener(final  SteerPointsListModelListener listener) {
         this.listeners.add(listener);
     }
 
@@ -147,7 +147,7 @@ public class SteerPointsCollectionModel extends Model implements SteerPointsColl
      * {@inheritDoc}
      */
     @Override
-    public void removeSteerPointsListModelListener(final  SteerPointsListModelListener listener) {
+    public final  void removeSteerPointsListModelListener(final  SteerPointsListModelListener listener) {
         this.listeners.remove(listener);
     }
 

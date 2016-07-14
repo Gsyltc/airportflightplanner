@@ -44,9 +44,10 @@ public class FlighPlanFileWriter extends AbstractSlotReceiver {
 
     /**
      * @param flightPlan
+     *            a flgihtPlan.
      *
      */
-    protected void writeFlightPlans(final FligthPlanReader flightPlan) {
+    protected final  void writeFlightPlans(final FligthPlanReader flightPlan) {
         if (null != flightPlan) {
             String flightPlanFileName = flightPlan.getDepartureAirport() + "/" + flightPlan.getStartTime().toString(WRITER_FORMATTER) + "_" + //
                     flightPlan.getDepartureAirport() + "TEST_" + flightPlan.getArrivalAirport() + "_" + //
@@ -135,7 +136,12 @@ public class FlighPlanFileWriter extends AbstractSlotReceiver {
                     if (null != flightPlan.isFlightToCompletion()) {
                         fileWriter.write(FlightPlanInformationTypes.START_FLY_TO_COMPLETION.name());
                         fileWriter.write(System.lineSeparator());
-                        fileWriter.write(flightPlan.isFlightToCompletion() ? "1" : "0");
+                        if (flightPlan.isFlightToCompletion()) {
+                            fileWriter.write("1");
+                        } else {
+                            fileWriter.write("0");
+                        }
+
                         fileWriter.write(System.lineSeparator());
                         fileWriter.write(FlightPlanInformationTypes.END_FLY_TO_COMPLETION.name());
                         fileWriter.write(System.lineSeparator());
@@ -211,7 +217,7 @@ public class FlighPlanFileWriter extends AbstractSlotReceiver {
      * {@inheritDoc}
      */
     @Override
-    public void attachSlotAction() {
+    public final void attachSlotAction() {
         Slot<FligthPlanReader> airportSlot = new Slot<FligthPlanReader>(TopicName.WRITE_FLIGHT_PLAN, this);
         airportSlot.setSlotAction(new SlotAction<FligthPlanReader>() {
             /**

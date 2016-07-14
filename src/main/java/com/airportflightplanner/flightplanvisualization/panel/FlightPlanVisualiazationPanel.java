@@ -45,7 +45,7 @@ public class FlightPlanVisualiazationPanel extends CommonPanel {
     @Autowired(required = true)
     protected final FlighPlanCollectionModel       flightPlansCollection;
     /**
-     * <
+     *
      */
     private final FlightPlanVisualizationPresenter presenter;
     /** */
@@ -63,13 +63,14 @@ public class FlightPlanVisualiazationPanel extends CommonPanel {
      */
 
     /**
-     * @param flightPlansCollection
+     * @param newFlightPlanColltionModel
+     *            the Flightplan collection model.
      *
      */
-    public FlightPlanVisualiazationPanel(final FlighPlanCollectionModel flightPlansCollection) {
-        this.flightPlansCollection = flightPlansCollection;
-        presenter = new FlightPlanVisualizationPresenter(flightPlansCollection);
-        flightPlansCollection.addFligfhtPlanModelListener(presenter.getListModel());
+    public FlightPlanVisualiazationPanel(final FlighPlanCollectionModel newFlightPlanColltionModel) {
+        this.flightPlansCollection = newFlightPlanColltionModel;
+        presenter = new FlightPlanVisualizationPresenter(newFlightPlanColltionModel);
+        newFlightPlanColltionModel.addFligfhtPlanModelListener(presenter.getListModel());
         build();
     }
 
@@ -77,7 +78,7 @@ public class FlightPlanVisualiazationPanel extends CommonPanel {
      *
      */
     @Override
-    protected void build() {
+    protected final void build() {
         super.build();
         setLayout(new FormLayout(new ColumnSpec[] { FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("3dlu:grow"), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
@@ -101,7 +102,7 @@ public class FlightPlanVisualiazationPanel extends CommonPanel {
     }
 
     /**
-     * @return
+     * @return the panel.
      *
      */
     private JScrollPane createFlightVisualizationPanel() {
@@ -154,13 +155,12 @@ public class FlightPlanVisualiazationPanel extends CommonPanel {
      * {@inheritDoc}
      */
     @Override
-    public void attachSlotAction() {
+    public final void attachSlotAction() {
         Slot<String> slot = new Slot<String>(TopicName.UPDATE_AIRPORT_TOPIC, this);
         slot.setSlotAction(new SlotAction<String>() {
 
             @Override
             public void doAction(final String object) {
-
 
             }
         });
@@ -172,7 +172,7 @@ public class FlightPlanVisualiazationPanel extends CommonPanel {
      * {@inheritDoc}
      */
     @Override
-    public void attachSignal() {
+    public final void attachSignal() {
         signal = new Signal(TopicName.FLIGHTPLAN_TABLE_SELECTED);
         createSignal(TopicName.FLIGHTPLAN_TABLE_SELECTED, signal);
     }

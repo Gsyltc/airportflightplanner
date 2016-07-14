@@ -122,7 +122,7 @@ public class SteerPointdPanel extends CommonPanel {
      * {@inheritDoc}
      */
     @Override
-    public void attachSlotAction() {
+    public  final void attachSlotAction() {
         Slot<FligthPlanReader> slot = new Slot<FligthPlanReader>(TopicName.FLIGHTPLAN_TABLE_SELECTED, this);
         slot.setSlotAction(new SlotAction<FligthPlanReader>() {
             /**

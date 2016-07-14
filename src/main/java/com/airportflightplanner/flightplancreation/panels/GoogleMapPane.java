@@ -34,16 +34,18 @@ public class GoogleMapPane extends JEditorPane {
     /** */
     private final String                            apiKey           = CommonProperties.getPropertyValue(CommonProperties.GOOGLE_KEY);
     /** */
-    private MapType                                 roadmap          = MapType.valueOf(CommonProperties.getPropertyValue(CommonProperties.GOOGLE_MAPTYPE));
+    private MapType                                 roadmap          =                                                                           //
+            MapType.valueOf(CommonProperties.getPropertyValue(CommonProperties.GOOGLE_MAPTYPE));
     /** */
     private final String                            polylineColor    = CommonProperties.getPropertyValue(CommonProperties.GOOGLE_POLYLINE_COLOR);
     /** */
     private final String                            polylineWeigth   = CommonProperties.getPropertyValue(CommonProperties.GOOGLE_POLYLINE_WIDTH);
-
     /** */
-    private int                                     mapWidth         = 400;
+    private static final int                        DEFAULT_SIZE     = 400;
     /** */
-    private int                                     mapHeight        = 400;
+    private int                                     mapWidth         = DEFAULT_SIZE;
+    /** */
+    private int                                     mapHeight        = DEFAULT_SIZE;
     /** */
     private final PresentationModel<GoogleMapModel> googleMapModel;
     /** */
@@ -112,7 +114,7 @@ public class GoogleMapPane extends JEditorPane {
      */
     protected void updateMap() {
         if (this.apiKey.isEmpty()) {
-             throw new IllegalArgumentException("Developper API Key not set !!!!");
+            throw new IllegalArgumentException("Developper API Key not set !!!!");
         }
 
         String url = "http://maps.googleapis.com/maps/api/staticmap?";

@@ -21,65 +21,68 @@ import com.airportflightplanner.common.slotsignal.api.SlotReceiver;
  *
  */
 public abstract class CommonPanel extends JPanel implements SlotReceiver {
-  /**
-   *
-   */
-  private static final long                  serialVersionUID = -9041291520151245877L;
-  /** */
-  public Map<String, Signal>                 signals          = new ConcurrentHashMap<String, Signal>();
-  /** */
-  public Map<String, Slot<? extends Object>> slots            = new ConcurrentHashMap<String, Slot<? extends Object>>();
+    /**
+     *
+     */
+    private static final long                     serialVersionUID = -9041291520151245877L;
+    /** */
+    protected Map<String, Signal>                 signals          = new ConcurrentHashMap<String, Signal>();
+    /** */
+    protected Map<String, Slot<? extends Object>> slots            = new ConcurrentHashMap<String, Slot<? extends Object>>();
+    /** */
+    protected Map<String, ? extends Object>       attributeMap     = new ConcurrentHashMap<String, Object>();
 
-  public Map<String, ? extends Object>       attributeMap     = new ConcurrentHashMap<String, Object>();
+    /**
+     *
+     */
+    protected void build() {
+        attachSignal();
+        attachSlotAction();
+    }
 
-  /**
-   *
-   */
-  protected void build() {
-    attachSignal();
-    attachSlotAction();
-  }
+    /**
+     *
+     * {@inheritDoc}
+     */
+    @Override
+    public void attachSlotAction() {
+        // To overide if needed
+    }
 
-  /**
-   *
-   * {@inheritDoc}
-   */
-  @Override
-  public void attachSlotAction() {
-    // To overide if needed
-  }
+    @Override
+    public void attachSignal() {
+        // To override if needed
+    }
 
-  @Override
-  public void attachSignal() {
-    // To override if needed
-  }
+    /**
+     * For Spring Injection ONLY - Need to be Oeverrided at demand. *
+     *
+     * @param slots
+     *            List of Slots to attach.
+     */
+    public void setSlots(final List<? extends Object> slots) {
+        // To override if needed
+    }
 
-  /**
-   * For Spring Injection ONLY - Need to be Oeverrided at demand
-   *
-   * @param slots
-   *          List of Slots to attach
-   */
-  public void setSlots(final List<? extends Object> slots) {
-    // To override if needed
-  }
+    /**
+     *
+     * @param topicName
+     *            thez topic.
+     * @param signal
+     *            the signal.
+     */
+    protected final void createSignal(final String topicName, final Signal signal) {
+        SignalModels.createSignal(signal);
+        signals.put(topicName, signal);
+    }
 
-  /**
-   *
-   * @param topicName
-   * @param signal
-   */
-  protected final void createSignal(final String topicName, final Signal signal) {
-    SignalModels.createSignal(signal);
-    signals.put(topicName, signal);
-  }
-
-  /**
-   *
-   * @param topicName
-   * @return
-   */
-  public final Signal findSignal(final String topicName) {
-    return signals.get(topicName);
-  }
+    /**
+     *
+     * @param topicName
+     *            the topic atteched to a signal.
+     * @return the signal.
+     */
+    public final Signal findSignal(final String topicName) {
+        return signals.get(topicName);
+    }
 }

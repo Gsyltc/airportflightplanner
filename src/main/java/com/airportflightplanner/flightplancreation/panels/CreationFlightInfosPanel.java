@@ -55,11 +55,12 @@ public class CreationFlightInfosPanel extends CommonPanel {
     protected final PresentationModel<FlighInfosModel> presenterInfoModel = new PresentationModel<FlighInfosModel>(new FlighInfosModel());
 
     /**
-     * @param currentFlightPlan
+     * @param newCurrentFlightPlan
+     *            .
      *
      */
-    public CreationFlightInfosPanel(final PresentationModel<FligthPlanReader> currentFlightPlan) {
-        this.currentFlightPlan = currentFlightPlan;
+    public CreationFlightInfosPanel(final PresentationModel<FligthPlanReader> newCurrentFlightPlan) {
+        this.currentFlightPlan = newCurrentFlightPlan;
         build();
     }
 
@@ -97,26 +98,26 @@ public class CreationFlightInfosPanel extends CommonPanel {
 
         setBorder(new TitledBorder(null, FlightPlanCreationPanelMessages.FLIGHT_INFOS_LABEL));
 
-        final JCheckBox chckbxNewCheckBox = new JCheckBox(StartDays.MONDAY.toString());
-        add(chckbxNewCheckBox, "2, 2");
+        final JCheckBox cbMon = new JCheckBox(StartDays.MONDAY.toString());
+        add(cbMon, "2, 2");
 
-        final JCheckBox chckbxNewCheckBox_1 = new JCheckBox(StartDays.TUESDAY.toString());
-        add(chckbxNewCheckBox_1, "4, 2");
+        final JCheckBox cbTueday = new JCheckBox(StartDays.TUESDAY.toString());
+        add(cbTueday, "4, 2");
 
-        final JCheckBox chckbxNewCheckBox_2 = new JCheckBox(StartDays.WEDNESDAY.toString());
-        add(chckbxNewCheckBox_2, "6, 2");
+        final JCheckBox cbWed = new JCheckBox(StartDays.WEDNESDAY.toString());
+        add(cbWed, "6, 2");
 
-        final JCheckBox chckbxNewCheckBox_3 = new JCheckBox(StartDays.THRUSDAY.toString());
-        add(chckbxNewCheckBox_3, "8, 2");
+        final JCheckBox cdThrus = new JCheckBox(StartDays.THRUSDAY.toString());
+        add(cdThrus, "8, 2");
 
-        final JCheckBox chckbxNewCheckBox_4 = new JCheckBox(StartDays.FRIDAY.toString());
-        add(chckbxNewCheckBox_4, "10, 2");
+        final JCheckBox cbFri = new JCheckBox(StartDays.FRIDAY.toString());
+        add(cbFri, "10, 2");
 
-        final JCheckBox chckbxNewCheckBox_5 = new JCheckBox(StartDays.SATURDAY.toString());
-        add(chckbxNewCheckBox_5, "12, 2");
+        final JCheckBox cbSat = new JCheckBox(StartDays.SATURDAY.toString());
+        add(cbSat, "12, 2");
 
-        final JCheckBox chckbxNewCheckBox_6 = new JCheckBox(StartDays.SUNDAY.toString());
-        add(chckbxNewCheckBox_6, "14, 2");
+        final JCheckBox cbSun = new JCheckBox(StartDays.SUNDAY.toString());
+        add(cbSun, "14, 2");
 
         final JLabel callSignLabel = new JLabel(FlightPlanCreationPanelMessages.CALLSIGN_LABEL);
         add(callSignLabel, "10, 4, right, default");

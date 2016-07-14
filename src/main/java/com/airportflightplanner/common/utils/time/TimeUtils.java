@@ -33,16 +33,19 @@ public class TimeUtils {
     public static final Pattern           PATTERN                     = Pattern.compile("^([0-2]|[0-1][0-9]|2[0-3])((:[0-9])|(:[0-5][0-9]))?");
 
     /** */
-    public static final PeriodFormatter   PERIOD_DISPLAYER            = new PeriodFormatterBuilder().minimumPrintedDigits(2).appendHours().appendSeparator(":")   //
-            .minimumPrintedDigits(2).printZeroAlways().appendMinutes().toFormatter();
+    public static final PeriodFormatter   PERIOD_DISPLAYER            =                                                                        //
+            new PeriodFormatterBuilder().minimumPrintedDigits(2).appendHours().appendSeparator(":")                                            //
+                    .minimumPrintedDigits(2).printZeroAlways().appendMinutes().toFormatter();
 
     /** */
-    public static final PeriodFormatter   FLIGHTPLAN_PERIOD_DISPLAYER = new PeriodFormatterBuilder().appendHours().appendSuffix(" h ", " h ").                    //
-            printZeroRarelyLast().appendMinutes().appendSuffix(" m", " m").toFormatter();
+    public static final PeriodFormatter   FLIGHTPLAN_PERIOD_DISPLAYER =                                                                        //
+            new PeriodFormatterBuilder().appendHours().appendSuffix(" h ", " h ").                                                             //
+                    printZeroRarelyLast().appendMinutes().appendSuffix(" m", " m").toFormatter();
 
     /** */
-    public static final DateTimeFormatter TIME_DISPLAYER              = new DateTimeFormatterBuilder().appendHourOfDay(2).appendLiteral(":").                     //
-            appendMinuteOfHour(2).toFormatter();
+    public static final DateTimeFormatter TIME_DISPLAYER              =                                                                        //
+            new DateTimeFormatterBuilder().appendHourOfDay(2).appendLiteral(":").                                                              //
+                    appendMinuteOfHour(2).toFormatter();
 
     /**
      *

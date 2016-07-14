@@ -35,117 +35,121 @@ import com.jgoodies.forms.layout.RowSpec;
  */
 public class FlightPlanCreationPanel extends CommonPanel {
 
-  /** */
-  protected static final int                          DEPARTURE_POINT   = 0;
-  /**
-   *
-   */
-  private static final long                           serialVersionUID  = 4047549681152943474L;
-  /**
-   *
-   */
-  protected final PresentationModel<FligthPlanReader> currentFlightPlan = new PresentationModel<FligthPlanReader>();
-  /** */
-  protected GoogleMapPane                             googleMap;
+    /** */
+    protected static final int                          DEPARTURE_POINT   = 0;
+    /**
+     *
+     */
+    private static final long                           serialVersionUID  = 4047549681152943474L;
+    /** */
+    private static final int                            DEFAULT_HEIGHT    = 400;
+    /** */
+    private static final int                            DEFAULT_WIDTH     = 400;
+    /**
+     *
+     */
+    protected final PresentationModel<FligthPlanReader> currentFlightPlan = new PresentationModel<FligthPlanReader>();
+    /** */
+    protected GoogleMapPane                             googleMap;
 
-  /**
-  *
-  */
-  protected final PresentationModel<GoogleMapModel>   googleMapModel    = new PresentationModel<GoogleMapModel>();
+    /**
+    *
+    */
+    protected final PresentationModel<GoogleMapModel>   googleMapModel    = new PresentationModel<GoogleMapModel>();
 
-  /**
-  *
-  */
+    /**
+    *
+    */
 
-  /**
-   */
-  public FlightPlanCreationPanel() {
-    build();
-  }
+    /**
+     */
+    public FlightPlanCreationPanel() {
+        build();
+    }
 
-  /**
-   *
-   * {@inheritDoc}
-   */
-  @Override
-  public void attachSlotAction() {
-    final Slot<FligthPlanReader> slot = new Slot<FligthPlanReader>(TopicName.FLIGHTPLAN_TABLE_SELECTED, this);
-    slot.setSlotAction(new SlotAction<FligthPlanReader>() {
-      /**
-       *
-       * {@inheritDoc}
-       */
-      @Override
-      public void doAction(final FligthPlanReader flightPlanReader) {
-        if (null != flightPlanReader) {
+    /**
+     *
+     * {@inheritDoc}
+     */
+    @Override
+    public final void attachSlotAction() {
+        final Slot<FligthPlanReader> slot = new Slot<FligthPlanReader>(TopicName.FLIGHTPLAN_TABLE_SELECTED, this);
+        slot.setSlotAction(new SlotAction<FligthPlanReader>() {
+            /**
+             *
+             * {@inheritDoc}
+             */
+            @Override
+            public void doAction(final FligthPlanReader flightPlanReader) {
+                if (null != flightPlanReader) {
 
-          currentFlightPlan.triggerFlush();
-          currentFlightPlan.setBean(flightPlanReader);
+                    currentFlightPlan.triggerFlush();
+                    currentFlightPlan.setBean(flightPlanReader);
 
-          final GoogleMapWriter googleMapWriter = new GoogleMapModel();
-          googleMapModel.setBean((GoogleMapModel) googleMapWriter);
-          googleMapWriter.setMarkers(GeographicUtils.getSteerPoints(flightPlanReader
-              .getSteerPoints()));
-          final EncodedPolyline polyline = GeographicUtils.getEncodePolyline(flightPlanReader
-              .getSteerPoints());
-          googleMapWriter.setEncodedPolyline(polyline);
-        }
-      }
-    });
-  }
+                    final GoogleMapWriter googleMapWriter = new GoogleMapModel();
+                    googleMapModel.setBean((GoogleMapModel) googleMapWriter);
+                    googleMapWriter.setMarkers(GeographicUtils.getSteerPoints(flightPlanReader.getSteerPoints()));
+                    final EncodedPolyline polyline = GeographicUtils.getEncodePolyline(flightPlanReader.getSteerPoints());
+                    googleMapWriter.setEncodedPolyline(polyline);
+                }
+            }
+        });
+    }
 
-  /**
-   *
-   * {@inheritDoc}
-   */
-  @Override
-  protected void build() {
-    super.build();
-    setLayout(new FormLayout(new ColumnSpec[] { FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(
-        "pref:grow"), FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("pref:grow"),
-        FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("pref:grow"),
-        FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("pref:grow"),
-        FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("pref:grow"),
-        FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("pref:grow"),
-        FormSpecs.RELATED_GAP_COLSPEC, }, new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC,
-            FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.PREF_ROWSPEC,
-            FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
-            FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.PREF_ROWSPEC,
-            FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
-            FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.PREF_ROWSPEC,
-            FormSpecs.RELATED_GAP_ROWSPEC, }));
+    /**
+     *
+     * {@inheritDoc}
+     */
+    @Override
+    protected final void build() {
+        super.build();
+        setLayout(new FormLayout(new ColumnSpec[] {//
+                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("pref:grow"), //
+                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("pref:grow"), //
+                 FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("pref:grow"), //
+                  FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("pref:grow"), //
+                  FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("pref:grow"), //
+                  FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("pref:grow"), //
+                  FormSpecs.RELATED_GAP_COLSPEC, }, new RowSpec[] {
+                FormSpecs.RELATED_GAP_ROWSPEC, //
+                FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, //
+                FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, //
+                FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, //
+                FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, //
+                FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, //
+                FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, //
+                FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, //
+                FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, }));
 
-    final CreationTimePanel timePanel = new CreationTimePanel(currentFlightPlan);
-    add(timePanel, "2,2,11,1");
+        final CreationTimePanel timePanel = new CreationTimePanel(currentFlightPlan);
+        add(timePanel, "2,2,11,1");
 
-    final CreationRoutePanel routePanel = new CreationRoutePanel(currentFlightPlan);
-    add(routePanel, "2,4,11,1");
+        final CreationRoutePanel routePanel = new CreationRoutePanel(currentFlightPlan);
+        add(routePanel, "2,4,11,1");
 
-    final CreationFlightInfosPanel flightInfosPanel = new CreationFlightInfosPanel(
-        currentFlightPlan);
-    add(flightInfosPanel, "2,6,11,1");
+        final CreationFlightInfosPanel flightInfosPanel = new CreationFlightInfosPanel(currentFlightPlan);
+        add(flightInfosPanel, "2,6,11,1");
 
-    final CreationOptionsPanel optionsPanel = new CreationOptionsPanel(currentFlightPlan);
-    add(optionsPanel, "2,8,11,1");
+        final CreationOptionsPanel optionsPanel = new CreationOptionsPanel(currentFlightPlan);
+        add(optionsPanel, "2,8,11,1");
 
-    add(createMap(), "2, 14, 11, 1, center, center");
-  }
+        add(createMap(), "2, 14, 11, 1, center, center");
+    }
 
-  /**
-   *
-   * @param googleMapModel
-   * @return
-   */
-  private JPanel createMap() {
-    final JPanel panel = new JPanel();
-    panel.setSize(400, 400);
-    panel.setMinimumSize(new Dimension(400, 400));
+    /**
+     *
+     * @return the Maps.
+     */
+    private JPanel createMap() {
+        final JPanel panel = new JPanel();
+        panel.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        panel.setMinimumSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 
-    googleMap = new GoogleMapPane(googleMapModel);
-    googleMap.setDimension(new Rectangle(0, 0, 400, 400));
-    googleMap.setSize(400, 400);
-    panel.add(googleMap);
+        googleMap = new GoogleMapPane(googleMapModel);
+        googleMap.setDimension(new Rectangle(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT));
+        googleMap.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        panel.add(googleMap);
 
-    return panel;
-  }
+        return panel;
+    }
 }

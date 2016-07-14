@@ -137,7 +137,7 @@ public class PropertiesUtils extends AbstractSlotReceiver {
      * {@inheritDoc}
      */
     @Override
-    public void attachSlotAction() {
+    public final void attachSlotAction() {
         Slot<String> airportSlot = new Slot<String>(TopicName.UPDATE_AIRPORT_TOPIC, this);
         airportSlot.setSlotAction(new SlotAction<String>() {
             /**

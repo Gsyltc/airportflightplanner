@@ -40,7 +40,7 @@ public class FlightPlanModelAdapterImpl implements FlightPlanModelAdapter {
    * {@inheritDoc}
    */
   @Override
-  public void addSteerpoints(final FligthPlanModel newFlightPlan, final List<String> steerpoints) {
+  public  final void addSteerpoints(final FligthPlanModel newFlightPlan, final List<String> steerpoints) {
     newFlightPlan.setSteerPoints(steerpoints);
 
     // calculate Flight Time
@@ -53,7 +53,7 @@ public class FlightPlanModelAdapterImpl implements FlightPlanModelAdapter {
    * {@inheritDoc}
    */
   @Override
-  public void updateFlightPlan(final FligthPlanModel newFlightPlan,
+  public  final void updateFlightPlan(final FligthPlanModel newFlightPlan,
       final FlightPlanInformationTypes informationsType, final String line) {
     switch (informationsType) {
     case START_FLY_TO_COMPLETION:
@@ -130,7 +130,7 @@ public class FlightPlanModelAdapterImpl implements FlightPlanModelAdapter {
       break;
 
     case STARTDAYS:
-      final String days[] = line.split(" +");
+      final String[] days = line.split(" +");
 
       final Set<StartDays> tmpSet = new HashSet<StartDays>();
       for (final String day : days) {

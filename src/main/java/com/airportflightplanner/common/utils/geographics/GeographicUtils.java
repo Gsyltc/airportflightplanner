@@ -179,7 +179,7 @@ public class GeographicUtils {
     }
 
     /**
-     * Conversion DMS to decimal
+     * Conversion DMS to decimal.
      *
      *      Input: latitude or longitude in the DMS format ( example: W 79° 58'
      *      55.903") Return: latitude or longitude in decimal format

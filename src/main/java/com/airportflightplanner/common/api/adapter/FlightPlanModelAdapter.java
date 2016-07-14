@@ -17,17 +17,24 @@ import com.airportflightplanner.common.types.FlightPlanInformationTypes;
 public interface FlightPlanModelAdapter {
 
     /**
+     * Construct a route for the flight plan.
      *
      * @param newFlightPlan
+     *            a flight plan.
      * @param steerpoints
+     *            list of steerpoints.
      */
     void addSteerpoints(FligthPlanModel newFlightPlan, List<String> steerpoints);
 
     /**
+     * Update the flight plan.
      *
      * @param newFlightPlan
+     *            a flight plan.
      * @param informationsType
+     *            Balise type to know the information that must be updated.
      * @param line
+     *            list read in the file.
      */
     void updateFlightPlan(FligthPlanModel newFlightPlan, FlightPlanInformationTypes informationsType, String line);
 }

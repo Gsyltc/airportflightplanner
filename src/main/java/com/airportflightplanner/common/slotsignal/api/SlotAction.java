@@ -14,6 +14,7 @@ public interface SlotAction<E extends Object> {
     /**
      *
      * @param arg
+     *            .
      */
     void doAction(E arg);
 

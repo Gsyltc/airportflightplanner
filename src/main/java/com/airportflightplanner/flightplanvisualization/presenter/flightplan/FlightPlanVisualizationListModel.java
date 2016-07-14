@@ -30,18 +30,19 @@ public class FlightPlanVisualizationListModel extends AbstractListModel<FligthPl
 
     /**
      *
-     * @param list
+     * @param newList
+     *            List of flight plan.
      */
-    public void setList(final List<FligthPlanReader> list) {
+    public final void setList(final List<FligthPlanReader> newList) {
         this.list.clear();
-        this.list.addAll(list);
-        fireContentsChanged(this, FIRST_ROW, Math.max(list.size() - 1, 0));
+        this.list.addAll(newList);
+        fireContentsChanged(this, FIRST_ROW, Math.max(newList.size() - 1, 0));
     }
 
     /**
      *
      */
-    public void clear() {
+    public final void clear() {
         this.list.clear();
         fireContentsChanged(this, -1, -1);
     }
@@ -49,17 +50,18 @@ public class FlightPlanVisualizationListModel extends AbstractListModel<FligthPl
     /**
      *
      * @param elementCOunt
+     *            Element count.
      */
-    protected void fireIntervalAdded(final int elementCOunt) {
+    protected final void fireIntervalAdded(final int elementCOunt) {
         int index0 = list.size() - elementCOunt;
         fireIntervalAdded(this, Math.max(FIRST_ROW, index0), Math.max(FIRST_ROW, list.size() - 1));
     }
 
     /**
      *
-     * @return
+     * @return List of the flight plan
      */
-    public List<FligthPlanReader> getList() {
+    public final List<FligthPlanReader> getList() {
         return Collections.unmodifiableList(list);
     }
 
@@ -68,7 +70,7 @@ public class FlightPlanVisualizationListModel extends AbstractListModel<FligthPl
      * {@inheritDoc}
      */
     @Override
-    public int getSize() {
+    public final int getSize() {
         return list.size();
     }
 
@@ -77,22 +79,28 @@ public class FlightPlanVisualizationListModel extends AbstractListModel<FligthPl
      * {@inheritDoc}
      */
     @Override
-    public FligthPlanReader getElementAt(final int index) {
+    public final FligthPlanReader getElementAt(final int index) {
         FligthPlanReader elementAt = list.get(index);
         return elementAt;
     }
 
     /**
      *
-     * @param element
-     * @return
+     * @param flightPlan
+     *            a flight plan.
+     * @return return the index of the flight plan.
      */
-    public int indexOf(final FligthPlanReader element) {
-        return list.indexOf(element);
+    public final int indexOf(final FligthPlanReader flightPlan) {
+        return list.indexOf(flightPlan);
     }
 
-    public void add(final FligthPlanReader value) {
-        list.add(value);
+    /**
+     *
+     * @param flightPlan
+     *            a flight plan.
+     */
+    public final void add(final FligthPlanReader flightPlan) {
+        list.add(flightPlan);
         fireContentsChanged(this, FIRST_ROW, list.size() - 1);
     }
 
@@ -101,7 +109,7 @@ public class FlightPlanVisualizationListModel extends AbstractListModel<FligthPl
      * @param flightPlan
      */
     @Override
-    public void addFlightPlan(final FligthPlanReader flightPlan) {
+    public final void addFlightPlan(final FligthPlanReader flightPlan) {
         if ((null != flightPlan) && !list.contains(flightPlan)) {
             list.add(flightPlan);
             fireContentsChanged(this, FIRST_ROW, list.size() - 1);
@@ -113,7 +121,7 @@ public class FlightPlanVisualizationListModel extends AbstractListModel<FligthPl
      * @param flightPlan
      */
     @Override
-    public void removeFlightPlan(final FligthPlanReader flightPlan) {
+    public final void removeFlightPlan(final FligthPlanReader flightPlan) {
         if ((null != flightPlan) && list.contains(flightPlan)) {
             list.remove(flightPlan);
             fireContentsChanged(this, FIRST_ROW, list.size() - 1);

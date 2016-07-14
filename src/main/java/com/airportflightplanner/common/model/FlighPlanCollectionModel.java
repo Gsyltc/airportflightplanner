@@ -38,7 +38,7 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
      * {@inheritDoc}
      */
     @Override
-    public void addFlightPlan(final FligthPlanReader value) {
+    public final  void addFlightPlan(final FligthPlanReader value) {
         if (null != value) {
             for (FlightPlanVisualizationListModelListener flightPlanListModelListener : listeners) {
                 flightPlanListModelListener.addFlightPlan(value);
@@ -52,7 +52,7 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
      * {@inheritDoc}
      */
     @Override
-    public void removeFlightPlan(final FligthPlanReader value) {
+    public final  void removeFlightPlan(final FligthPlanReader value) {
         if (null != value) {
             for (FlightPlanVisualizationListModelListener flightPlanListModelListener : listeners) {
                 flightPlanListModelListener.removeFlightPlan(value);
@@ -66,7 +66,7 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
      * {@inheritDoc}
      */
     @Override
-    public FligthPlanReader getFlightPlanByIndex(final int value) {
+    public final  FligthPlanReader getFlightPlanByIndex(final int value) {
         return flightPlanListModel.getElementAt(value);
     }
 
@@ -75,7 +75,7 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
      * {@inheritDoc}
      */
     @Override
-    public int getFlightPlanCollectionSize() {
+    public final  int getFlightPlanCollectionSize() {
         return flightPlanListModel.getSize();
     }
 
@@ -84,10 +84,10 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
      * {@inheritDoc}
      */
     @Override
-    public void setCurrentAirport(final String currentAirport) {
+    public  final void setCurrentAirport(final String value) {
         String oldValue = this.currentAirport;
-        if (!currentAirport.equals(oldValue)) {
-            this.currentAirport = currentAirport;
+        if (!value.equals(oldValue)) {
+            this.currentAirport = value;
             firePropertyChange(FligthPlanCollectionProperties.CURRENT_AIRPORT, oldValue, this.currentAirport);
         }
     }
@@ -97,7 +97,7 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
      * {@inheritDoc}
      */
     @Override
-    public String getCurrentAirport() {
+    public  final String getCurrentAirport() {
         return currentAirport;
     }
 
@@ -126,7 +126,7 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
      * {@inheritDoc}
      */
     @Override
-    public FlightPlanVisualizationListModel getListModel() {
+    public  final FlightPlanVisualizationListModel getListModel() {
         return flightPlanListModel;
     }
 
@@ -135,7 +135,7 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
      * {@inheritDoc}
      */
     @Override
-    public void addFligfhtPlanModelListener(final FlightPlanVisualizationListModelListener listener) {
+    public  final void addFligfhtPlanModelListener(final FlightPlanVisualizationListModelListener listener) {
         this.listeners.add(listener);
     }
 
@@ -144,7 +144,7 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
      * {@inheritDoc}
      */
     @Override
-    public void removeFligfhtPlanModelListener(final FlightPlanVisualizationListModelListener listener) {
+    public  final void removeFligfhtPlanModelListener(final FlightPlanVisualizationListModelListener listener) {
         this.listeners.remove(listener);
     }
 

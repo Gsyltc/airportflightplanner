@@ -19,22 +19,23 @@ import com.airportflightplanner.common.utils.internationalization.Internationali
  *
  */
 public class CreationFlightInfosCompagnieCellRenderer implements ListCellRenderer<String> {
-  /** */
-  protected DefaultListCellRenderer defaultRenderer = new DefaultListCellRenderer();
+    /** */
+    protected DefaultListCellRenderer defaultRenderer = new DefaultListCellRenderer();
 
-  /**
-   *
-   * {@inheritDoc}
-   */
-  @Override
-  public Component getListCellRendererComponent(final JList list, final String value, final int index, final boolean isSelected, final boolean cellHasFocus) {
-    final JLabel renderer = (JLabel) defaultRenderer.getListCellRendererComponent(//
-        list, value, index, isSelected, cellHasFocus);
-    if ((null != value) && !value.equals("XXXXXXXXXXXXXXXXXXXX")) {
-      renderer.setText(Internationalizer.getI18String(value));
+    /**
+     *
+     * {@inheritDoc}
+     */
+    @Override
+    public Component getListCellRendererComponent(final JList list, final String value, //
+            final int index, final boolean isSelected, final boolean cellHasFocus) {
+        final JLabel renderer = (JLabel) defaultRenderer.getListCellRendererComponent(//
+                list, value, index, isSelected, cellHasFocus);
+        if ((null != value) && !value.equals("XXXXXXXXXXXXXXXXXXXX")) {
+            renderer.setText(Internationalizer.getI18String(value));
+        }
+
+        return renderer;
     }
-
-    return renderer;
-  }
 
 }

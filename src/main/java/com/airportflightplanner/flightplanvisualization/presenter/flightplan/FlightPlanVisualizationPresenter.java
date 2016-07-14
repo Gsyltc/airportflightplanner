@@ -18,21 +18,23 @@ public class FlightPlanVisualizationPresenter extends PresentationModel<FlighPla
     /**
      *
      */
-    private static final long      serialVersionUID = 2003878398284031619L;
+    private static final long                   serialVersionUID = 2003878398284031619L;
     /** */
     private FlightPlanVisualizationTableAdapter tableAdapter;
 
     /**
      *
      * @param bean
+     *            the bean for presenter.
      */
     public FlightPlanVisualizationPresenter(final FlighPlanCollectionModel bean) {
         setBean(bean);
     }
 
     /**
-     * Get the table adapter for the flight plan visualization panel
-     * @return
+     * Get the table adapter for the flight plan visualization panel.
+     *
+     * @return the Table adapter.
      */
     public FlightPlanVisualizationTableAdapter getTableAdapter() {
         if (null == tableAdapter) {
@@ -42,11 +44,12 @@ public class FlightPlanVisualizationPresenter extends PresentationModel<FlighPla
     }
 
     /**
-     * Get the list model
-     * @return
+     * Get the list model.
+     *
+     * @return the ListModel.
      */
     public FlightPlanVisualizationListModel getListModel() {
-        if (null == tableAdapter){
+        if (null == tableAdapter) {
             getTableAdapter();
         }
         ListModel<?> model = tableAdapter.getListModel();
