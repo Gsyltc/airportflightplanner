@@ -12,7 +12,7 @@ import javax.swing.border.TitledBorder;
 
 import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
 import com.airportflightplanner.common.types.StartDays;
-import com.airportflightplanner.common.visualelement.CommonPanel;
+import com.airportflightplanner.common.visualelement.AbstractCommonPanel;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -20,22 +20,26 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
-
 /**
  * @author Goubaud Sylvain
  *
  */
-public class CreationStartDaysPanel extends CommonPanel {
-    /** */
-    private final PresentationModel<FligthPlanReader> currentFlightPlan;
-
+public class CreationStartDaysPanel extends AbstractCommonPanel {
     /**
-     * @param currentFlightPlan
      *
      */
-    public CreationStartDaysPanel(final PresentationModel<FligthPlanReader> currentFlightPlan) {
-        this.currentFlightPlan = currentFlightPlan;
-        build();
+    private static final long                                   serialVersionUID = -3484253740768601903L;
+    /** */
+    private final transient PresentationModel<FligthPlanReader> currentFlightPlan;
+
+    /**
+     * @param newCurrentFlightPlan
+     *            flightplan.
+     *
+     */
+    public CreationStartDaysPanel(final PresentationModel<FligthPlanReader> newCurrentFlightPlan) {
+        currentFlightPlan = newCurrentFlightPlan;
+        super.build();
     }
 
     /**
@@ -100,21 +104,19 @@ public class CreationStartDaysPanel extends CommonPanel {
              */
             @Override
             public void propertyChange(final PropertyChangeEvent evt) {
-                //                if (evt.getNewValue() instanceof FligthPlanReader) {
-                //                    final String aircraftType = ((FligthPlanReader) evt.getNewValue()).getAircraftType();
-                //                    final FlighInfosModel bean = presenterInfoModel.getBean();
+                // if (evt.getNewValue() instanceof FligthPlanReader) {
+                // final String aircraftType = ((FligthPlanReader)
+                // evt.getNewValue()).getAircraftType();
+                // final FlighInfosModel bean = presenterInfoModel.getBean();
                 //
-                //                    final String aircraftClass = AircraftTypeAdapter.getAircraftClass(aircraftType);
-                //                    bean.setAircraftClass(aircraftClass);
-                //                    bean.setAircraftCie(AircraftTypeAdapter.getAircraftCie(aircraftType));
-                //                    bean.setAircraftLivery(aircraftType);
-                //                }
+                // final String aircraftClass =
+                // AircraftTypeAdapter.getAircraftClass(aircraftType);
+                // bean.setAircraftClass(aircraftClass);
+                // bean.setAircraftCie(AircraftTypeAdapter.getAircraftCie(aircraftType));
+                // bean.setAircraftLivery(aircraftType);
+                // }
             }
         });
 
     }
 }
-
-
-
-

@@ -8,11 +8,11 @@ package com.airportflightplanner.common.adapter;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.concurrent.ConcurrentHashMap;
 
 import com.airportflightplanner.common.model.AircraftsLiveriesMapper;
 
@@ -22,7 +22,7 @@ import com.airportflightplanner.common.model.AircraftsLiveriesMapper;
  */
 public final class AircraftTypeAdapter {
     /** */
-    private static final Map<String, AircraftsLiveriesMapper> AIRCRAFT_CLASS_CIE = new HashMap<String, AircraftsLiveriesMapper>();
+    private static final Map<String, AircraftsLiveriesMapper> AIRCRAFT_CLASS_CIE = new ConcurrentHashMap<String, AircraftsLiveriesMapper>();
 
     /**
      * Private constructor for util class.

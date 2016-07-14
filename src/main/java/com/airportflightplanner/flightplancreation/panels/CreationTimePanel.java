@@ -24,7 +24,7 @@ import org.joda.time.Period;
 import com.airportflightplanner.common.api.flightplan.FligthPlanProperties;
 import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
 import com.airportflightplanner.common.utils.time.TimeUtils;
-import com.airportflightplanner.common.visualelement.CommonPanel;
+import com.airportflightplanner.common.visualelement.AbstractCommonPanel;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.adapter.BasicComponentFactory;
@@ -38,7 +38,7 @@ import com.jgoodies.forms.layout.RowSpec;
  * @author Goubaud Sylvain
  *
  */
-public class CreationTimePanel extends CommonPanel {
+public class CreationTimePanel extends AbstractCommonPanel {
 
   /**
    *

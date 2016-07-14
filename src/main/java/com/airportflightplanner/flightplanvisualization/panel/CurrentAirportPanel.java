@@ -14,7 +14,7 @@ import com.airportflightplanner.common.model.FlighPlanCollectionModel;
 import com.airportflightplanner.common.slotsignal.Signal;
 import com.airportflightplanner.common.slotsignal.TopicName;
 import com.airportflightplanner.common.utils.properties.CommonProperties;
-import com.airportflightplanner.common.visualelement.CommonPanel;
+import com.airportflightplanner.common.visualelement.AbstractCommonPanel;
 import com.airportflightplanner.flightplanvisualization.messages.FlightPlanVisualizationMessages;
 import com.airportflightplanner.importexport.importers.AirportFileReader;
 import com.jgoodies.binding.adapter.ComboBoxAdapter;
@@ -30,7 +30,7 @@ import com.jgoodies.forms.layout.RowSpec;
  * @author Goubaud Sylvain
  *
  */
-public class CurrentAirportPanel extends CommonPanel {
+public class CurrentAirportPanel extends AbstractCommonPanel {
     /**
      *
      */

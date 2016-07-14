@@ -131,4 +131,27 @@
             </plugin>
         </plugins>
     </build>
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>com.puppycrawl.tools</groupId>
+                <artifactId>checkstyle</artifactId>
+                <version>7.0</version>
+                <configuration>
+                    <configLocation>./tools/rules/checkstyle.xml</configLocation>
+                </configuration>
+            </plugin>
+            <plugin>
+                 <groupId>net.sourceforge.pmd</groupId>
+            <artifactId>pmd-java</artifactId>
+            <version>5.4.1</version>
+                <configuration>
+                    <rulesets>
+                        <ruleset>./tools/rules/pmd.xml</ruleset>
+                    </rulesets>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </reporting>
 </project>

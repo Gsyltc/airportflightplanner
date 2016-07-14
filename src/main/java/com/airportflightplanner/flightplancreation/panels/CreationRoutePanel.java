@@ -13,7 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.border.TitledBorder;
 
 import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
-import com.airportflightplanner.common.visualelement.CommonPanel;
+import com.airportflightplanner.common.visualelement.AbstractCommonPanel;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -25,7 +25,7 @@ import com.jgoodies.forms.layout.RowSpec;
  * @author Goubaud Sylvain
  *
  */
-public class CreationRoutePanel extends CommonPanel {
+public class CreationRoutePanel extends AbstractCommonPanel {
   /** The logger of this class. */
   /**
    *

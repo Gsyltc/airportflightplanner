@@ -33,20 +33,22 @@ import com.google.maps.model.EncodedPolyline;
  *
  */
 public class GeographicUtils {
+    /** */
+    private static final String ROUTE_SEPARATOR = "|";
 
     /**
      *
      * @param steerpointsString
-     * @return
+     *            List of steerpoints.
+     * @return List of steerpoints.
      */
     public static List<SteerPointReader> getSteerPoints(final List<String> steerpointsString) {
         final List<SteerPointReader> steerPointList = new ArrayList<SteerPointReader>();
+        final SteerPointModel steerPoint = new SteerPointModel();
         for (final String lines : steerpointsString) {
             final Pattern pattern = Pattern.compile(" +");
             // séparation en sous-chaînes
             final String[] items = pattern.split(lines, 10);
-            final SteerPointModel steerPoint = new SteerPointModel();
-
             steerPoint.setLatLong(LatLong.valueOf(Double.valueOf(items[0]), Double.valueOf(items[1]), NonSI.DEGREE_ANGLE));
             steerPoint.setVelocity(new DecimalMeasure<Velocity>(new BigDecimal(items[4]), NonSI.KNOT));
             steerPoint.setAltitude(Altitude.valueOf(Double.valueOf(items[2]), NonSI.FOOT));
@@ -68,18 +70,18 @@ public class GeographicUtils {
     /**
      *
      * @param steerpointsString
-     * @return
+     *            List of steerpoints.
+     * @return Encoded Polyline.
      */
     public static EncodedPolyline getEncodePolyline(final List<String> steerpointsString) {
         final List<SteerPointReader> steerPoints = getSteerPoints(steerpointsString);
         final StringBuilder stringBuilder = new StringBuilder();
         for (final SteerPointReader steerPointReader : steerPoints) {
-            stringBuilder.append("|").append(steerPointReader.getLatLong().latitudeValue(NonSI.DEGREE_ANGLE))//
+            stringBuilder.append(ROUTE_SEPARATOR).append(steerPointReader.getLatLong().latitudeValue(NonSI.DEGREE_ANGLE))//
             .append(",")//
             .append(steerPointReader.getLatLong().longitudeValue(NonSI.DEGREE_ANGLE));
         }
-        final EncodedPolyline polyline = new EncodedPolyline(stringBuilder.toString());
-        return polyline;
+        return new EncodedPolyline(stringBuilder.toString());
     }
 
     /**

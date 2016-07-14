@@ -14,7 +14,7 @@ import com.airportflightplanner.common.slotsignal.Slot;
 import com.airportflightplanner.common.slotsignal.TopicName;
 import com.airportflightplanner.common.slotsignal.api.SlotAction;
 import com.airportflightplanner.common.utils.geographics.GeographicUtils;
-import com.airportflightplanner.common.visualelement.CommonPanel;
+import com.airportflightplanner.common.visualelement.AbstractCommonPanel;
 import com.airportflightplanner.flightplancreation.api.model.googlemap.GoogleMapWriter;
 import com.airportflightplanner.flightplancreation.model.GoogleMapModel;
 import com.airportflightplanner.flightplancreation.panels.CreationFlightInfosPanel;
@@ -33,7 +33,7 @@ import com.jgoodies.forms.layout.RowSpec;
  * @author Goubaud Sylvain
  *
  */
-public class FlightPlanCreationPanel extends CommonPanel {
+public class FlightPlanCreationPanel extends AbstractCommonPanel {
 
     /** */
     protected static final int                          DEPARTURE_POINT   = 0;

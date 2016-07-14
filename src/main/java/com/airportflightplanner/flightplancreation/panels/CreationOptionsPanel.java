@@ -9,7 +9,7 @@ import javax.swing.JCheckBox;
 import javax.swing.border.TitledBorder;
 
 import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
-import com.airportflightplanner.common.visualelement.CommonPanel;
+import com.airportflightplanner.common.visualelement.AbstractCommonPanel;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -21,7 +21,7 @@ import com.jgoodies.forms.layout.RowSpec;
  * @author Goubaud Sylvain
  *
  */
-public class CreationOptionsPanel extends CommonPanel {
+public class CreationOptionsPanel extends AbstractCommonPanel {
   /** The logger of this class. */
   /**
    *

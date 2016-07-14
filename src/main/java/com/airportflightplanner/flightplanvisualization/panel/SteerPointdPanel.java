@@ -27,7 +27,7 @@ import com.airportflightplanner.common.slotsignal.Slot;
 import com.airportflightplanner.common.slotsignal.TopicName;
 import com.airportflightplanner.common.slotsignal.api.SlotAction;
 import com.airportflightplanner.common.utils.geographics.GeographicUtils;
-import com.airportflightplanner.common.visualelement.CommonPanel;
+import com.airportflightplanner.common.visualelement.AbstractCommonPanel;
 import com.airportflightplanner.flightplanvisualization.presenter.steerpoints.SteerPointsPresenter;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
@@ -38,7 +38,7 @@ import com.jgoodies.forms.layout.RowSpec;
  * @author DCNS
  *
  */
-public class SteerPointdPanel extends CommonPanel {
+public class SteerPointdPanel extends AbstractCommonPanel {
     /**
     *
     */

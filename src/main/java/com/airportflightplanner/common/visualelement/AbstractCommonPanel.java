@@ -11,6 +11,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.JPanel;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.airportflightplanner.common.slotsignal.Signal;
 import com.airportflightplanner.common.slotsignal.SignalModels;
 import com.airportflightplanner.common.slotsignal.Slot;
@@ -20,18 +23,19 @@ import com.airportflightplanner.common.slotsignal.api.SlotReceiver;
  * @author Goubaud Sylvain
  *
  */
-public abstract class CommonPanel extends JPanel implements SlotReceiver {
+public abstract class AbstractCommonPanel extends JPanel implements SlotReceiver {
     /**
      *
      */
     private static final long                     serialVersionUID = -9041291520151245877L;
     /** */
-    protected Map<String, Signal>                 signals          = new ConcurrentHashMap<String, Signal>();
+    protected transient Map<String, Signal>       signals          = new ConcurrentHashMap<String, Signal>();
     /** */
     protected Map<String, Slot<? extends Object>> slots            = new ConcurrentHashMap<String, Slot<? extends Object>>();
     /** */
     protected Map<String, ? extends Object>       attributeMap     = new ConcurrentHashMap<String, Object>();
-
+    /** The logger of this class. */
+    private static final Log                      LOGGER           = LogFactory.getLog(AbstractCommonPanel.class);
 
     /**
      *
@@ -42,27 +46,35 @@ public abstract class CommonPanel extends JPanel implements SlotReceiver {
     }
 
     /**
-     *
-     * {@inheritDoc}
+     * Method to override. {@inheritDoc}
      */
     @Override
     public void attachSlotAction() {
-        // To overide if needed
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("DEBUG : Attach Action");
+        }
     }
 
+    /**
+     * Method to override. {@inheritDoc}
+     */
     @Override
     public void attachSignal() {
-        // To override if needed
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("DEBUG : Attach Signal");
+        }
     }
 
     /**
      * For Spring Injection ONLY - Need to be Oeverrided at demand. *
      *
-     * @param slots
+     * @param newSlots
      *            List of Slots to attach.
      */
-    public void setSlots(final List<? extends Object> slots) {
-        // To override if needed
+    public void setSlots(final List<? extends Object> newSlots) {
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("DEBUG : Set Slots : " + newSlots);
+        }
     }
 
     /**

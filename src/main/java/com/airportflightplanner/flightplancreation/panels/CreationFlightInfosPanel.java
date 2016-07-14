@@ -21,7 +21,7 @@ import com.airportflightplanner.common.adapter.AircraftTypeAdapter;
 import com.airportflightplanner.common.api.flightplan.FligthPlanProperties;
 import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
 import com.airportflightplanner.common.types.StartDays;
-import com.airportflightplanner.common.visualelement.CommonPanel;
+import com.airportflightplanner.common.visualelement.AbstractCommonPanel;
 import com.airportflightplanner.flightplancreation.api.model.flightinfos.FlightInfosWriter;
 import com.airportflightplanner.flightplancreation.api.model.flightinfos.FligthInfosProperties;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
@@ -41,7 +41,7 @@ import com.jgoodies.forms.layout.RowSpec;
  * @author Goubaud Sylvain
  *
  */
-public class CreationFlightInfosPanel extends CommonPanel {
+public class CreationFlightInfosPanel extends AbstractCommonPanel {
     /** The logger of this class. */
     /**
      *
