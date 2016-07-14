@@ -34,8 +34,8 @@ public class SteerPointsListModel extends AbstractListModel<SteerPointReader> im
      *            the list to update.
      */
     public final void setList(final List<SteerPointReader> newList) {
-        this.list.clear();
-        this.list.addAll(newList);
+        list.clear();
+        list.addAll(newList);
         fireContentsChanged(this, FIRST_ROW, Math.max(newList.size() - 1, 0));
     }
 
@@ -43,7 +43,7 @@ public class SteerPointsListModel extends AbstractListModel<SteerPointReader> im
      *
      */
     public final void clear() {
-        this.list.clear();
+        list.clear();
         fireContentsChanged(this, -1, -1);
     }
 
@@ -53,7 +53,7 @@ public class SteerPointsListModel extends AbstractListModel<SteerPointReader> im
      *            elements.
      */
     protected final void fireIntervalAdded(final int elementCOunt) {
-        int index0 = list.size() - elementCOunt;
+        final int index0 = list.size() - elementCOunt;
         fireIntervalAdded(this, Math.max(FIRST_ROW, index0), Math.max(FIRST_ROW, list.size() - 1));
     }
 
@@ -80,7 +80,7 @@ public class SteerPointsListModel extends AbstractListModel<SteerPointReader> im
      */
     @Override
     public final SteerPointReader getElementAt(final int index) {
-        SteerPointReader elementAt = list.get(index);
+        final SteerPointReader elementAt = list.get(index);
         return elementAt;
     }
 
@@ -110,7 +110,7 @@ public class SteerPointsListModel extends AbstractListModel<SteerPointReader> im
      */
     @Override
     public final void addSteerPoint(final SteerPointReader steerPoint) {
-        if ((null != steerPoint) && !list.contains(steerPoint)) {
+        if (null != steerPoint && !list.contains(steerPoint)) {
             list.add(steerPoint);
             fireContentsChanged(this, FIRST_ROW, list.size() - 1);
         }
@@ -122,7 +122,7 @@ public class SteerPointsListModel extends AbstractListModel<SteerPointReader> im
      */
     @Override
     public final void removeSteerPoint(final SteerPointReader steerPoint) {
-        if ((null != steerPoint) && list.contains(steerPoint)) {
+        if (null != steerPoint && list.contains(steerPoint)) {
             list.remove(steerPoint);
             fireContentsChanged(this, FIRST_ROW, list.size() - 1);
         }

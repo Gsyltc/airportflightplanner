@@ -19,18 +19,19 @@ import com.jgoodies.binding.adapter.AbstractTableAdapter;
  */
 public class FlightPlanVisualizationTableAdapter extends AbstractTableAdapter<FlightPlanCollectionReader> {
     /**
-    *
-    */
+     *
+     */
     private static final long                                 serialVersionUID         = -1614722326210452309L;
     /** */
-    private final static FlightPlanVisualisationTableColumn[] COLUMN_NAME              = new FlightPlanVisualisationTableColumn[] {                 //
-                                                                                               FlightPlanVisualisationTableColumn.START_AIRPORT,    //
-                                                                                               FlightPlanVisualisationTableColumn.DEPARTURE_TIME,   //
-                                                                                               FlightPlanVisualisationTableColumn.ARRIVAL_TIME,     //
-                                                                                               FlightPlanVisualisationTableColumn.AIRCRAFT_TYPE,    //
-                                                                                               FlightPlanVisualisationTableColumn.COMPANY,          //
-                                                                                               FlightPlanVisualisationTableColumn.DEST_AIRPORT,     //
-                                                                                               FlightPlanVisualisationTableColumn.DURATION };
+    private  static final FlightPlanVisualisationTableColumn[] COLUMN_NAME              = //
+            new FlightPlanVisualisationTableColumn[] {                 //
+                    FlightPlanVisualisationTableColumn.START_AIRPORT,    //
+                    FlightPlanVisualisationTableColumn.DEPARTURE_TIME,   //
+                    FlightPlanVisualisationTableColumn.ARRIVAL_TIME,     //
+                    FlightPlanVisualisationTableColumn.AIRCRAFT_TYPE,    //
+                    FlightPlanVisualisationTableColumn.COMPANY,          //
+                    FlightPlanVisualisationTableColumn.DEST_AIRPORT,     //
+                    FlightPlanVisualisationTableColumn.DURATION };
 
     /**
      *
@@ -72,8 +73,8 @@ public class FlightPlanVisualizationTableAdapter extends AbstractTableAdapter<Fl
      */
     @Override
     public Object getValueAt(final int row, final int column) {
-        FlightPlanVisualisationTableColumn fpColumn = FlightPlanVisualisationTableColumn.valueOf(column);
-        FligthPlanReader flightPlan = (FligthPlanReader) getListModel().getElementAt(row);
+        final FlightPlanVisualisationTableColumn fpColumn = FlightPlanVisualisationTableColumn.valueOf(column);
+        final FligthPlanReader flightPlan = (FligthPlanReader) getListModel().getElementAt(row);
         switch (fpColumn) {
         case START_AIRPORT:
             return flightPlan.getDepartureAirport();
@@ -136,7 +137,7 @@ public class FlightPlanVisualizationTableAdapter extends AbstractTableAdapter<Fl
      */
     @Override
     public Class<?> getColumnClass(final int columnIndex) {
-        FlightPlanVisualisationTableColumn fpColumn = FlightPlanVisualisationTableColumn.valueOf(columnIndex);
+        final FlightPlanVisualisationTableColumn fpColumn = FlightPlanVisualisationTableColumn.valueOf(columnIndex);
         switch (fpColumn) {
         case START_AIRPORT:
             return String.class;

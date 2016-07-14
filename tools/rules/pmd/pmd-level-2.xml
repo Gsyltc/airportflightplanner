@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         name="pmd-level-2"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+   <description>PMD Plugin preferences rule set level 2</description>
+   <exclude-pattern>*geodesy*</exclude-pattern>
+   <rule ref="rulesets/java/strings.xml/StringInstantiation"/>
+   <rule ref="rulesets/java/strictexception.xml/AvoidLosingExceptionInformation"/>
+   <rule ref="rulesets/java/naming.xml/SuspiciousEqualsMethodName"/>
+   <rule ref="rulesets/java/migrating.xml/AvoidEnumAsIdentifier"/>
+   <rule ref="rulesets/java/migrating.xml/AvoidAssertAsIdentifier"/>
+   <rule ref="rulesets/java/migrating.xml/IntegerInstantiation"/>
+   <rule ref="rulesets/java/migrating.xml/ByteInstantiation"/>
+   <rule ref="rulesets/java/migrating.xml/ShortInstantiation"/>
+   <rule ref="rulesets/java/migrating.xml/LongInstantiation"/>
+   <rule ref="rulesets/java/logging-java.xml/MoreThanOneLogger"/>
+   <rule ref="rulesets/java/logging-java.xml/SystemPrintln"/>
+   <rule ref="rulesets/java/logging-java.xml/GuardLogStatementJavaUtil"/>
+   <rule ref="rulesets/java/logging-jakarta-commons.xml/GuardLogStatement"/>
+   <rule ref="rulesets/java/design.xml/AvoidReassigningParameters"/>
+   <rule ref="rulesets/java/design.xml/SingleMethodSingleton"/>
+   <rule ref="rulesets/java/design.xml/SingletonClassReturningNewInstance"/>
+   <rule ref="rulesets/java/controversial.xml/AvoidUsingVolatile"/>
+   <rule ref="rulesets/java/controversial.xml/AvoidUsingNativeCode"/>
+   <rule ref="rulesets/java/controversial.xml/DoNotCallGarbageCollectionExplicitly"/>
+   <rule ref="rulesets/java/clone.xml/ProperCloneImplementation"/>
+   <rule ref="rulesets/vm/basic.xml/AvoidReassigningParameters"/>
+   <rule ref="rulesets/vm/basic.xml/EmptyIfStmt"/>
+   <rule ref="rulesets/vm/basic.xml/EmptyForeachStmt"/>
+   <rule ref="rulesets/vm/basic.xml/UnusedMacroParameter"/>
+   <rule ref="rulesets/vm/basic.xml/NoInlineJavaScript"/>
+   <rule ref="rulesets/vm/basic.xml/NoInlineStyles"/>
+   <rule ref="rulesets/java/basic.xml/BooleanInstantiation"/>
+   <rule ref="rulesets/java/basic.xml/BrokenNullCheck"/>
+   <rule ref="rulesets/java/basic.xml/AvoidMultipleUnaryOperators"/>
+   <rule ref="rulesets/java/basic.xml/AvoidBranchingStatementAsLastInLoop"/>
+</ruleset>

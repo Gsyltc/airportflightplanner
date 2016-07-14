@@ -49,7 +49,7 @@ public class AbstractSlotReceiver implements SlotReceiver {
      * @param slots
      *            List of Slots to attach
      */
-    public void setSlots(final List<Slot<? extends Object>> slots) {
+    public void setSlots(final List<SelectionSlot<? extends Object>> slots) {
         // To override if needed
     }
 

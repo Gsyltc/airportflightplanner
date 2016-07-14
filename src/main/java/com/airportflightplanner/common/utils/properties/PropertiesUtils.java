@@ -18,7 +18,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.airportflightplanner.common.slotsignal.AbstractSlotReceiver;
-import com.airportflightplanner.common.slotsignal.Slot;
+import com.airportflightplanner.common.slotsignal.SelectionSlot;
 import com.airportflightplanner.common.slotsignal.TopicName;
 import com.airportflightplanner.common.slotsignal.api.SlotAction;
 
@@ -46,17 +46,24 @@ public class PropertiesUtils extends AbstractSlotReceiver {
     /**
      *
      */
+    public PropertiesUtils() {
+        //
+    }
+
+    /**
+     *
+     */
     @Override
     public void init() {
         super.init();
         PROPERTIES.add(userProperties);
         PROPERTIES.add(applicationProperties);
 
-        File configFile = new File(userConfigPath + fileName);
+        final File configFile = new File(userConfigPath + fileName);
         if (!configFile.exists()) {
             try (InputStream defaultInputStream = getClass().getClassLoader().getResourceAsStream(fileName)) {
                 userProperties.load(defaultInputStream);
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 if (LOGGER.isErrorEnabled()) {
                     LOGGER.error("Error while loading the default configuration file", e);
                 }
@@ -64,7 +71,7 @@ public class PropertiesUtils extends AbstractSlotReceiver {
         } else {
             try (InputStream fileInputStream = new FileInputStream(userConfigPath + fileName)) {
                 userProperties.load(fileInputStream);
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 if (LOGGER.isErrorEnabled()) {
                     LOGGER.error("Error while loading the current configuration file", e);
                 }
@@ -73,7 +80,7 @@ public class PropertiesUtils extends AbstractSlotReceiver {
 
         try (InputStream defaultInputStream = getClass().getClassLoader().getResourceAsStream(systemConfigPath + fileName)) {
             applicationProperties.load(defaultInputStream);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("Error while loading the default configuration file", e);
             }
@@ -87,7 +94,7 @@ public class PropertiesUtils extends AbstractSlotReceiver {
      * @return
      */
     public static String getPropertyByName(final String key) {
-        for (Properties properties : PROPERTIES) {
+        for (final Properties properties : PROPERTIES) {
             if (properties.containsKey(key)) {
                 return properties.getProperty(key);
             }
@@ -122,10 +129,10 @@ public class PropertiesUtils extends AbstractSlotReceiver {
      *
      */
     protected void updateProperties() {
-        File file = new File(userConfigPath + fileName);
+        final File file = new File(userConfigPath + fileName);
         try (FileOutputStream propertiesStream = new FileOutputStream(file)) {
             userProperties.store(propertiesStream, "");
-        } catch (IOException e) {
+        } catch (final IOException e) {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("Error while writing application properties", e);
             }
@@ -138,7 +145,7 @@ public class PropertiesUtils extends AbstractSlotReceiver {
      */
     @Override
     public final void attachSlotAction() {
-        Slot<String> airportSlot = new Slot<String>(TopicName.UPDATE_AIRPORT_TOPIC, this);
+        final SelectionSlot<String> airportSlot = new SelectionSlot<String>(TopicName.UPDATE_AIRPORT_TOPIC, this);
         airportSlot.setSlotAction(new SlotAction<String>() {
             /**
              *
@@ -152,7 +159,7 @@ public class PropertiesUtils extends AbstractSlotReceiver {
 
         });
 
-        Slot<Map<String, String>> googleSlot = new Slot<Map<String, String>>(TopicName.GOOGLE_PARAMETERS, this);
+        final SelectionSlot<Map<String, String>> googleSlot = new SelectionSlot<Map<String, String>>(TopicName.GOOGLE_PARAMETERS, this);
         googleSlot.setSlotAction(new SlotAction<Map<String, String>>() {
             /**
              *
@@ -170,6 +177,10 @@ public class PropertiesUtils extends AbstractSlotReceiver {
         });
     }
 
+    /**
+     *
+     * {@inheritDoc}
+     */
     @Override
     public void attachSignal() {
         // TODO Auto-generated method stub

@@ -18,7 +18,7 @@ public class Signal extends Observable {
   /** */
   private final String     topicName;
 
-  private final List<Slot> slotList = new CopyOnWriteArrayList<Slot>();
+  private final List<SelectionSlot> slotList = new CopyOnWriteArrayList<SelectionSlot>();
 
   /**
    *
@@ -49,7 +49,7 @@ public class Signal extends Observable {
    *
    * @param slot
    */
-  public void createSignal(final Slot slot) {
+  public void createSignal(final SelectionSlot slot) {
     slotList.add(slot);
     addObserver(slot);
   }

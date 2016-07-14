@@ -10,7 +10,7 @@ import java.awt.Rectangle;
 import javax.swing.JPanel;
 
 import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
-import com.airportflightplanner.common.slotsignal.Slot;
+import com.airportflightplanner.common.slotsignal.SelectionSlot;
 import com.airportflightplanner.common.slotsignal.TopicName;
 import com.airportflightplanner.common.slotsignal.api.SlotAction;
 import com.airportflightplanner.common.utils.geographics.GeographicUtils;
@@ -53,18 +53,18 @@ public class FlightPlanCreationPanel extends AbstractCommonPanel {
     protected GoogleMapPane                             googleMap;
 
     /**
-    *
-    */
+     *
+     */
     protected final PresentationModel<GoogleMapModel>   googleMapModel    = new PresentationModel<GoogleMapModel>();
 
     /**
-    *
-    */
+     *
+     */
 
     /**
      */
     public FlightPlanCreationPanel() {
-        build();
+        constructPanel();
     }
 
     /**
@@ -73,7 +73,7 @@ public class FlightPlanCreationPanel extends AbstractCommonPanel {
      */
     @Override
     public final void attachSlotAction() {
-        final Slot<FligthPlanReader> slot = new Slot<FligthPlanReader>(TopicName.FLIGHTPLAN_TABLE_SELECTED, this);
+        final SelectionSlot<FligthPlanReader> slot = new SelectionSlot<FligthPlanReader>(TopicName.FLIGHTPLAN_TABLE_SELECTED, this);
         slot.setSlotAction(new SlotAction<FligthPlanReader>() {
             /**
              *
@@ -102,24 +102,22 @@ public class FlightPlanCreationPanel extends AbstractCommonPanel {
      */
     @Override
     protected final void build() {
-        super.build();
-        setLayout(new FormLayout(new ColumnSpec[] {//
+        setLayout(new FormLayout(new ColumnSpec[] { //
                 FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("pref:grow"), //
                 FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("pref:grow"), //
-                 FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("pref:grow"), //
-                  FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("pref:grow"), //
-                  FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("pref:grow"), //
-                  FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("pref:grow"), //
-                  FormSpecs.RELATED_GAP_COLSPEC, }, new RowSpec[] {
-                FormSpecs.RELATED_GAP_ROWSPEC, //
-                FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, //
-                FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, //
-                FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, //
-                FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, //
-                FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, //
-                FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, //
-                FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, //
-                FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, }));
+                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("pref:grow"), //
+                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("pref:grow"), //
+                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("pref:grow"), //
+                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("pref:grow"), //
+                FormSpecs.RELATED_GAP_COLSPEC, }, new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, //
+                        FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, //
+                        FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, //
+                        FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, //
+                        FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, //
+                        FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, //
+                        FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, //
+                        FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, //
+                        FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, }));
 
         final CreationTimePanel timePanel = new CreationTimePanel(currentFlightPlan);
         add(timePanel, "2,2,11,1");

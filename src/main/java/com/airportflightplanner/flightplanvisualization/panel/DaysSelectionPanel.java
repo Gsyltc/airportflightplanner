@@ -41,28 +41,28 @@ public class DaysSelectionPanel extends JPanel {
                 FormSpecs.RELATED_GAP_COLSPEC, //
                 FormSpecs.DEFAULT_COLSPEC, }, //
                 new RowSpec[] { //
-                        FormSpecs.PREF_ROWSPEC, }));//
+                        FormSpecs.PREF_ROWSPEC, })); //
 
-        JCheckBox chckbxNewCheckBox = new JCheckBox(StartDays.MONDAY.toString());
-        add(chckbxNewCheckBox, "1, 1");
+        final JCheckBox monday = new JCheckBox(StartDays.MONDAY.toString());
+        add(monday, "1, 1");
 
-        JCheckBox chckbxNewCheckBox_1 = new JCheckBox(StartDays.TUESDAY.toString());
-        add(chckbxNewCheckBox_1, "3, 1");
+        final JCheckBox tuesday = new JCheckBox(StartDays.TUESDAY.toString());
+        add(tuesday, "3, 1");
 
-        JCheckBox chckbxNewCheckBox_2 = new JCheckBox(StartDays.WEDNESDAY.toString());
-        add(chckbxNewCheckBox_2, "5, 1");
+        final JCheckBox wednesday = new JCheckBox(StartDays.WEDNESDAY.toString());
+        add(wednesday, "5, 1");
 
-        JCheckBox chckbxNewCheckBox_3 = new JCheckBox(StartDays.THRUSDAY.toString());
-        add(chckbxNewCheckBox_3, "7, 1");
+        final JCheckBox thrusday = new JCheckBox(StartDays.THRUSDAY.toString());
+        add(thrusday, "7, 1");
 
-        JCheckBox chckbxNewCheckBox_4 = new JCheckBox(StartDays.FRIDAY.toString());
-        add(chckbxNewCheckBox_4, "9, 1");
+        final JCheckBox fiday = new JCheckBox(StartDays.FRIDAY.toString());
+        add(fiday, "9, 1");
 
-        JCheckBox chckbxS = new JCheckBox(StartDays.SATURDAY.toString());
-        add(chckbxS, "11, 1");
+        final JCheckBox saturday = new JCheckBox(StartDays.SATURDAY.toString());
+        add(saturday, "11, 1");
 
-        JCheckBox chckbxD = new JCheckBox(StartDays.SUNDAY.toString());
-        add(chckbxD, "13, 1");
+        final JCheckBox sunday = new JCheckBox(StartDays.SUNDAY.toString());
+        add(sunday, "13, 1");
     }
 
 }

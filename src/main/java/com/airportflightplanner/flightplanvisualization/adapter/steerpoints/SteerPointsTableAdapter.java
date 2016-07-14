@@ -24,11 +24,11 @@ import com.jgoodies.binding.adapter.AbstractTableAdapter;
  */
 public class SteerPointsTableAdapter extends AbstractTableAdapter<FlightPlanCollectionReader> {
     /**
-    *
-    */
+     *
+     */
     private static final long                     serialVersionUID = -1614722326210452309L;
     /** */
-    private final static SteerPointsTableColumn[] COLUMN_NAME      = new SteerPointsTableColumn[] {   //
+    private static final SteerPointsTableColumn[] COLUMN_NAME      = new SteerPointsTableColumn[] {   //
             SteerPointsTableColumn.LATITUDE,                                                          //
             SteerPointsTableColumn.LONGITUDE,                                                         //
             SteerPointsTableColumn.VELOCITY,                                                          //
@@ -37,6 +37,7 @@ public class SteerPointsTableAdapter extends AbstractTableAdapter<FlightPlanColl
     /**
      *
      * @param listModel
+     *            List model for the steerpoint.
      */
     public SteerPointsTableAdapter(final SteerPointsListModel listModel) {
         setListModel(listModel);
@@ -44,7 +45,7 @@ public class SteerPointsTableAdapter extends AbstractTableAdapter<FlightPlanColl
         listModel.addListDataListener(new ListDataListener() {
             /**
              *
-             * @param e
+             * {@inheritDoc}
              */
             @Override
             public void intervalRemoved(final ListDataEvent e) {
@@ -53,13 +54,17 @@ public class SteerPointsTableAdapter extends AbstractTableAdapter<FlightPlanColl
 
             /**
              *
-             * @param e
+             * {@inheritDoc}
              */
             @Override
             public void intervalAdded(final ListDataEvent e) {
                 //
             }
 
+            /**
+             *
+             * {@inheritDoc}
+             */
             @Override
             public void contentsChanged(final ListDataEvent e) {
                 fireTableDataChanged();
@@ -74,8 +79,8 @@ public class SteerPointsTableAdapter extends AbstractTableAdapter<FlightPlanColl
      */
     @Override
     public Object getValueAt(final int row, final int column) {
-        SteerPointsTableColumn fpColumn = SteerPointsTableColumn.valueOf(column);
-        SteerPointReader steerpoint = (SteerPointReader) getListModel().getElementAt(row);
+        final SteerPointsTableColumn fpColumn = SteerPointsTableColumn.valueOf(column);
+        final SteerPointReader steerpoint = (SteerPointReader) getListModel().getElementAt(row);
         switch (fpColumn) {
         case LATITUDE:
             return GeographicUtils.getFormattedLatitude(steerpoint.getLatLong());
@@ -120,7 +125,7 @@ public class SteerPointsTableAdapter extends AbstractTableAdapter<FlightPlanColl
      */
     @Override
     public Class<?> getColumnClass(final int columnIndex) {
-        SteerPointsTableColumn fpColumn = SteerPointsTableColumn.valueOf(columnIndex);
+        final SteerPointsTableColumn fpColumn = SteerPointsTableColumn.valueOf(columnIndex);
         switch (fpColumn) {
         case LATITUDE:
             return String.class;

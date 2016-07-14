@@ -6,10 +6,10 @@
 package com.airportflightplanner.common.model;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.concurrent.ConcurrentHashMap;
 
 import com.airportflightplanner.common.adapter.AircraftTypeAdapter;
 
@@ -19,7 +19,7 @@ import com.airportflightplanner.common.adapter.AircraftTypeAdapter;
  */
 public class AircraftsLiveriesMapper {
     /** */
-    private final Map<String, SortedSet<String>> liveriesMap = new HashMap<String, SortedSet<String>>();
+    private transient final Map<String, SortedSet<String>> liveriesMap = new ConcurrentHashMap<String, SortedSet<String>>();
 
     /**
      *
@@ -28,13 +28,13 @@ public class AircraftsLiveriesMapper {
      */
     public final void addLivery(final String airCraftType) {
         final String cpie = AircraftTypeAdapter.getAircraftCie(airCraftType);
-        if (!liveriesMap.containsKey(cpie)) {
+        if (liveriesMap.containsKey(cpie)) {
+            final SortedSet<String> liveries = liveriesMap.get(cpie);
+            liveries.add(airCraftType);
+        } else {
             final SortedSet<String> liveries = new TreeSet<String>();
             liveries.add(airCraftType);
             liveriesMap.put(cpie, liveries);
-        } else {
-            final SortedSet<String> liveries = liveriesMap.get(cpie);
-            liveries.add(airCraftType);
         }
     }
 
@@ -45,10 +45,11 @@ public class AircraftsLiveriesMapper {
      * @return list of liveries for the company.
      */
     public final SortedSet<String> getLiveriesByCpie(final String aircraftCie) {
+        SortedSet<String> result = Collections.emptySortedSet();
         if (liveriesMap.containsKey(aircraftCie)) {
-            return Collections.unmodifiableSortedSet(liveriesMap.get(aircraftCie));
+            result = Collections.unmodifiableSortedSet(liveriesMap.get(aircraftCie));
         }
-        return Collections.emptySortedSet();
+        return result;
     }
 
     /**

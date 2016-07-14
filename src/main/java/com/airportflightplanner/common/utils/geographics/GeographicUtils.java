@@ -35,6 +35,14 @@ import com.google.maps.model.EncodedPolyline;
 public class GeographicUtils {
     /** */
     private static final String ROUTE_SEPARATOR = "|";
+    /** */
+    private static final int    LATITUDE_INDEX  = 0;
+    /** */
+    private static final int    LONGITUDE_INDEX = 1;
+    /** */
+    private static final int    ALTITUDE_INDEX  = 2;
+    /** */
+    private static final int    VELOCITY_INDEX  = 4;
 
     /**
      *
@@ -44,14 +52,15 @@ public class GeographicUtils {
      */
     public static List<SteerPointReader> getSteerPoints(final List<String> steerpointsString) {
         final List<SteerPointReader> steerPointList = new ArrayList<SteerPointReader>();
-        final SteerPointModel steerPoint = new SteerPointModel();
         for (final String lines : steerpointsString) {
+            final SteerPointModel steerPoint = new SteerPointModel();
             final Pattern pattern = Pattern.compile(" +");
             // séparation en sous-chaînes
             final String[] items = pattern.split(lines, 10);
-            steerPoint.setLatLong(LatLong.valueOf(Double.valueOf(items[0]), Double.valueOf(items[1]), NonSI.DEGREE_ANGLE));
-            steerPoint.setVelocity(new DecimalMeasure<Velocity>(new BigDecimal(items[4]), NonSI.KNOT));
-            steerPoint.setAltitude(Altitude.valueOf(Double.valueOf(items[2]), NonSI.FOOT));
+            steerPoint.setLatLong(LatLong.valueOf(Double.valueOf(items[LATITUDE_INDEX]), //
+                    Double.valueOf(items[LONGITUDE_INDEX]), NonSI.DEGREE_ANGLE));
+            steerPoint.setVelocity(new DecimalMeasure<Velocity>(new BigDecimal(items[VELOCITY_INDEX]), NonSI.KNOT));
+            steerPoint.setAltitude(Altitude.valueOf(Double.valueOf(items[ALTITUDE_INDEX]), NonSI.FOOT));
 
             steerPointList.add(steerPoint);
         }
@@ -61,7 +70,8 @@ public class GeographicUtils {
     /**
      *
      * @param latLong
-     * @return
+     *            the LatLong.
+     * @return the formatted latitude.
      */
     public static String getFormattedLatitude(final LatLong latLong) {
         return decimalToDMS(latLong.latitudeValue(NonSI.DEGREE_ANGLE), true);
@@ -87,7 +97,8 @@ public class GeographicUtils {
     /**
      *
      * @param latLong
-     * @return
+     *            the LatLong.
+     * @return the formatted longitude.
      */
     public static String getFormattedLongitude(final LatLong latLong) {
         return decimalToDMS(latLong.longitudeValue(NonSI.DEGREE_ANGLE), false);

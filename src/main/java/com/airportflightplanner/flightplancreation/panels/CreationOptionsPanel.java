@@ -22,151 +22,157 @@ import com.jgoodies.forms.layout.RowSpec;
  *
  */
 public class CreationOptionsPanel extends AbstractCommonPanel {
-  /** The logger of this class. */
-  /**
-   *
-   */
-  private static final long                         serialVersionUID = -2692513903084994308L;
-//  /** */
-//  private JComboBox<String>                         routeSelector;
-//  /** */
-//  private final PresentationModel<FligthPlanReader> currentFlightPlan;
-  /** */
-  protected GoogleMapPane                           googleMap;
+    /** The logger of this class. */
+    /**
+     *
+     */
+    private static final long serialVersionUID = -2692513903084994308L;
+    // /** */
+    // private JComboBox<String> routeSelector;
+    // /** */
+    // private final PresentationModel<FligthPlanReader> currentFlightPlan;
+    /** */
+    protected GoogleMapPane   googleMap;
 
-  /**
-   * @param currentFlightPlan
-   *
-   */
-  public CreationOptionsPanel(final PresentationModel<FligthPlanReader> currentFlightPlan) {
-//    this.currentFlightPlan = currentFlightPlan;
-    build();
-  }
+    /**
+     * @param currentFlightPlan
+     *
+     */
+    public CreationOptionsPanel(final PresentationModel<FligthPlanReader> currentFlightPlan) {
+        // this.currentFlightPlan = currentFlightPlan;
+        constructPanel();
+    }
 
-  @Override
-  protected void build() {
-    super.build();
-    setLayout(new FormLayout(new ColumnSpec[] { FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(
-        "pref:grow"), FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("pref:grow"),
-        FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("pref:grow"),
-        FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("pref:grow"),
-        FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("pref:grow"),
-        FormSpecs.RELATED_GAP_COLSPEC, }, new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC,
-            FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.PREF_ROWSPEC, }));
+    @Override
+    protected void build() {
+        setLayout(new FormLayout(new ColumnSpec[] { //
+                FormSpecs.RELATED_GAP_COLSPEC, //
+                ColumnSpec.decode("pref:grow"), //
+                FormSpecs.RELATED_GAP_COLSPEC, //
+                ColumnSpec.decode("pref:grow"), //
+                FormSpecs.RELATED_GAP_COLSPEC, //
+                ColumnSpec.decode("pref:grow"), //
+                FormSpecs.RELATED_GAP_COLSPEC, //
+                ColumnSpec.decode("pref:grow"), //
+                FormSpecs.RELATED_GAP_COLSPEC, //
+                ColumnSpec.decode("pref:grow"), //
+                FormSpecs.RELATED_GAP_COLSPEC, }, //
+                new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, //
+                        FormSpecs.PREF_ROWSPEC,
+                        FormSpecs.RELATED_GAP_ROWSPEC, //
+                        FormSpecs.PREF_ROWSPEC, }));
 
-    setBorder(new TitledBorder(null, FlightPlanCreationPanelMessages.OPTIONS_LABEL));
+        setBorder(new TitledBorder(null, FlightPlanCreationPanelMessages.OPTIONS_LABEL));
 
-    final JCheckBox chckbxNewCheckBox = new JCheckBox(
-        FlightPlanCreationPanelMessages.DEPATURETYPE_LABEL);
-    add(chckbxNewCheckBox, "2, 2, 3, 1");
+        final JCheckBox chckbxNewCheckBox = new JCheckBox(FlightPlanCreationPanelMessages.DEPATURETYPE_LABEL);
+        add(chckbxNewCheckBox, "2, 2, 3, 1");
 
-    final JCheckBox chckbxNewCheckBox_2 = new JCheckBox(
-        FlightPlanCreationPanelMessages.LANDINGLIGHT_LABEL);
-    add(chckbxNewCheckBox_2, "6, 2, 3, 1");
+        final JCheckBox chckbxNewCheckBox_2 = new JCheckBox(FlightPlanCreationPanelMessages.LANDINGLIGHT_LABEL);
+        add(chckbxNewCheckBox_2, "6, 2, 3, 1");
 
-    final JCheckBox chckbxNewCheckBox_4 = new JCheckBox("New check box");
-    add(chckbxNewCheckBox_4, "10, 2");
+        final JCheckBox chckbxNewCheckBox_4 = new JCheckBox("New check box");
+        add(chckbxNewCheckBox_4, "10, 2");
 
-    final JCheckBox chckbxNewCheckBox_1 = new JCheckBox("New check box");
-    add(chckbxNewCheckBox_1, "2, 4, 3, 1");
+        final JCheckBox chckbxNewCheckBox_1 = new JCheckBox("New check box");
+        add(chckbxNewCheckBox_1, "2, 4, 3, 1");
 
-    final JCheckBox chckbxNewCheckBox_3 = new JCheckBox("New check box");
-    add(chckbxNewCheckBox_3, "6, 4, 3, 1");
+        final JCheckBox chckbxNewCheckBox_3 = new JCheckBox("New check box");
+        add(chckbxNewCheckBox_3, "6, 4, 3, 1");
 
-  }
-  //
-  // /**
-  // *
-  // * @return
-  // */
-  // private JComboBox<String> createRouteSelectorCombo() {
-  // routeSelector = new JComboBox<>();
-  // routeSelector.addItemListener(new ItemListener() {
-  //
-  // /** */
-  // @Override
-  // public void itemStateChanged(final ItemEvent arg0) {
-  // // TODO Auto-generated method stub
-  //
-  // }
-  // });
-  //
-  // return routeSelector;
-  // }
-  //
-  // /**
-  // *
-  // * @return
-  // */
-  // private JComboBox<String> createRouteSelectorCombo() {
-  // routeSelector = new JComboBox<>();
-  // routeSelector.addItemListener(new ItemListener() {
-  //
-  // /** */
-  // @Override
-  // public void itemStateChanged(final ItemEvent arg0) {
-  // // TODO Auto-generated method stub
-  //
-  // }
-  // });
-  //
-  // return routeSelector;
-  // }
-  //
-  // /**
-  // *
-  // * @return
-  // */
-  // private JComboBox<String> createRouteSelectorCombo() {
-  // routeSelector = new JComboBox<>();
-  // routeSelector.addItemListener(new ItemListener() {
-  //
-  // /** */
-  // @Override
-  // public void itemStateChanged(final ItemEvent arg0) {
-  // // TODO Auto-generated method stub
-  //
-  // }
-  // });
-  //
-  // return routeSelector;
-  // }
-  //
-  // /**
-  // *
-  // * @return
-  // */
-  // private JComboBox<String> createRouteSelectorCombo() {
-  // routeSelector = new JComboBox<>();
-  // routeSelector.addItemListener(new ItemListener() {
-  //
-  // /** */
-  // @Override
-  // public void itemStateChanged(final ItemEvent arg0) {
-  // // TODO Auto-generated method stub
-  //
-  // }
-  // });
-  //
-  // return routeSelector;
-  // }
-  //
-  // /**
-  // *
-  // * @return
-  // */
-  // private JComboBox<String> createRouteSelectorCombo() {
-  // routeSelector = new JComboBox<>();
-  // routeSelector.addItemListener(new ItemListener() {
-  //
-  // /** */
-  // @Override
-  // public void itemStateChanged(final ItemEvent arg0) {
-  // // TODO Auto-generated method stub
-  //
-  // }
-  // });
-  //
-  // return routeSelector;
-  // }
+    }
+    //
+    // /**
+    // *
+    // * @return
+    // */
+    // private JComboBox<String> createRouteSelectorCombo() {
+    // routeSelector = new JComboBox<>();
+    // routeSelector.addItemListener(new ItemListener() {
+    //
+    // /** */
+    // @Override
+    // public void itemStateChanged(final ItemEvent arg0) {
+    // // TODO Auto-generated method stub
+    //
+    // }
+    // });
+    //
+    // return routeSelector;
+    // }
+    //
+    // /**
+    // *
+    // * @return
+    // */
+    // private JComboBox<String> createRouteSelectorCombo() {
+    // routeSelector = new JComboBox<>();
+    // routeSelector.addItemListener(new ItemListener() {
+    //
+    // /** */
+    // @Override
+    // public void itemStateChanged(final ItemEvent arg0) {
+    // // TODO Auto-generated method stub
+    //
+    // }
+    // });
+    //
+    // return routeSelector;
+    // }
+    //
+    // /**
+    // *
+    // * @return
+    // */
+    // private JComboBox<String> createRouteSelectorCombo() {
+    // routeSelector = new JComboBox<>();
+    // routeSelector.addItemListener(new ItemListener() {
+    //
+    // /** */
+    // @Override
+    // public void itemStateChanged(final ItemEvent arg0) {
+    // // TODO Auto-generated method stub
+    //
+    // }
+    // });
+    //
+    // return routeSelector;
+    // }
+    //
+    // /**
+    // *
+    // * @return
+    // */
+    // private JComboBox<String> createRouteSelectorCombo() {
+    // routeSelector = new JComboBox<>();
+    // routeSelector.addItemListener(new ItemListener() {
+    //
+    // /** */
+    // @Override
+    // public void itemStateChanged(final ItemEvent arg0) {
+    // // TODO Auto-generated method stub
+    //
+    // }
+    // });
+    //
+    // return routeSelector;
+    // }
+    //
+    // /**
+    // *
+    // * @return
+    // */
+    // private JComboBox<String> createRouteSelectorCombo() {
+    // routeSelector = new JComboBox<>();
+    // routeSelector.addItemListener(new ItemListener() {
+    //
+    // /** */
+    // @Override
+    // public void itemStateChanged(final ItemEvent arg0) {
+    // // TODO Auto-generated method stub
+    //
+    // }
+    // });
+    //
+    // return routeSelector;
+    // }
 }

@@ -19,13 +19,13 @@ public interface FlightPlanCollectionReader {
      * @param value
      * @return
      */
-    public FligthPlanReader getFlightPlanByIndex(final int value);
+    FligthPlanReader getFlightPlanByIndex(final int value);
 
     /**
      *
      * @return
      */
-    public int getFlightPlanCollectionSize();
+    int getFlightPlanCollectionSize();
 
     /**
      *

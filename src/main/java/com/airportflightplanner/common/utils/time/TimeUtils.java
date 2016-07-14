@@ -35,17 +35,17 @@ public class TimeUtils {
     /** */
     public static final PeriodFormatter   PERIOD_DISPLAYER            =                                                                        //
             new PeriodFormatterBuilder().minimumPrintedDigits(2).appendHours().appendSeparator(":")                                            //
-                    .minimumPrintedDigits(2).printZeroAlways().appendMinutes().toFormatter();
+            .minimumPrintedDigits(2).printZeroAlways().appendMinutes().toFormatter();
 
     /** */
     public static final PeriodFormatter   FLIGHTPLAN_PERIOD_DISPLAYER =                                                                        //
             new PeriodFormatterBuilder().appendHours().appendSuffix(" h ", " h ").                                                             //
-                    printZeroRarelyLast().appendMinutes().appendSuffix(" m", " m").toFormatter();
+            printZeroRarelyLast().appendMinutes().appendSuffix(" m", " m").toFormatter();
 
     /** */
     public static final DateTimeFormatter TIME_DISPLAYER              =                                                                        //
             new DateTimeFormatterBuilder().appendHourOfDay(2).appendLiteral(":").                                                              //
-                    appendMinuteOfHour(2).toFormatter();
+            appendMinuteOfHour(2).toFormatter();
 
     /**
      *
@@ -53,8 +53,8 @@ public class TimeUtils {
      * @return
      */
     public static LocalTime convertUtcToCurrentTimeZone(final LocalTime utcTime) {
-        DateTime currentDt = utcTime.toDateTimeToday(DateTimeZone.UTC);
-        LocalTime current = currentDt.toDateTime(CURRENT_TIMEZONE).toLocalTime();
+        final DateTime currentDt = utcTime.toDateTimeToday(DateTimeZone.UTC);
+        final LocalTime current = currentDt.toDateTime(CURRENT_TIMEZONE).toLocalTime();
         return current;
     }
 
@@ -65,9 +65,9 @@ public class TimeUtils {
      */
     public static LocalTime convertUtcToCurrentTimeZone(final String utcTimeString) {
         try {
-            LocalTime utcTime = getLocalTime(utcTimeString);
+            final LocalTime utcTime = getLocalTime(utcTimeString);
             return convertUtcToCurrentTimeZone(utcTime);
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             LOGGER.info("Time format not valid");
         }
         return null;
@@ -82,8 +82,8 @@ public class TimeUtils {
      */
     private static LocalTime calculateByTimeAndDuration(final String origin, final String duration, final boolean isAdded) {
         if (isMatch(duration)) {
-            LocalTime originLocalTime = getLocalTime(origin);
-            Period durationLocalTime = Period.parse(duration, PERIOD_DISPLAYER);
+            final LocalTime originLocalTime = getLocalTime(origin);
+            final Period durationLocalTime = Period.parse(duration, PERIOD_DISPLAYER);
             if (null != originLocalTime) {
                 if (isAdded) {
                     return originLocalTime.plus(durationLocalTime);
@@ -100,7 +100,7 @@ public class TimeUtils {
      * @return
      */
     private static boolean isMatch(final String value) {
-        Matcher m = PATTERN.matcher(value);
+        final Matcher m = PATTERN.matcher(value);
         return m.matches();
     }
 
@@ -131,9 +131,9 @@ public class TimeUtils {
      * @return
      */
     public static String getDuration(final String origin, final String end) {
-        LocalTime originLocalTime = getLocalTime(origin);
-        LocalTime endLocalTime = getLocalTime(end);
-        if ((null != originLocalTime) && (null != endLocalTime)) {
+        final LocalTime originLocalTime = getLocalTime(origin);
+        final LocalTime endLocalTime = getLocalTime(end);
+        if (null != originLocalTime && null != endLocalTime) {
             return Period.fieldDifference(originLocalTime, endLocalTime).toString(PERIOD_DISPLAYER);
         }
         if (LOGGER.isDebugEnabled()) {

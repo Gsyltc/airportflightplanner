@@ -290,7 +290,7 @@ public class FligthPlanModel extends Model implements FligthPlanWriter {
     @Override
     public void setArrivalType(final ArrivalType value) {
         final ArrivalType oldValue = getArrivalType();
-        if ((null != value) && !value.equals(oldValue)) {
+        if (null != value && !value.equals(oldValue)) {
             arrivalType = value;
             firePropertyChange(FligthPlanProperties.ARRIVAL_TYPE, oldValue, arrivalType);
         }
@@ -329,7 +329,7 @@ public class FligthPlanModel extends Model implements FligthPlanWriter {
     @Override
     public void setDepartureType(final DepartureType value) {
         final DepartureType oldValue = getDepartureType();
-        if ((null != value) && !value.equals(oldValue)) {
+        if (null != value && !value.equals(oldValue)) {
             departureType = value;
             firePropertyChange(FligthPlanProperties.DEPARTURE_TYPE, oldValue, departureType);
         }
@@ -342,7 +342,7 @@ public class FligthPlanModel extends Model implements FligthPlanWriter {
     @Override
     public void setDuration(final Period value) {
         final Period oldValue = getDuration();
-        if ((null != value) && !value.equals(oldValue)) {
+        if (null != value && !value.equals(oldValue)) {
             duration = value;
             firePropertyChange(FligthPlanProperties.DURATION, oldValue, duration);
         }
@@ -355,7 +355,7 @@ public class FligthPlanModel extends Model implements FligthPlanWriter {
     @Override
     public void setEndTime(final LocalTime value) {
         final LocalTime oldValue = getEndTime();
-        if ((null != value) && !value.equals(oldValue)) {
+        if (null != value && !value.equals(oldValue)) {
             endTime = value;
             firePropertyChange(FligthPlanProperties.END_TIME, oldValue, endTime);
         }
@@ -368,7 +368,7 @@ public class FligthPlanModel extends Model implements FligthPlanWriter {
     @Override
     public void setFlightToCompletion(final Boolean value) {
         final Boolean oldValue = isFlightToCompletion();
-        if ((null != value) && !value.equals(oldValue)) {
+        if (null != value && !value.equals(oldValue)) {
             isFlightToCompletion = value;
             firePropertyChange(FligthPlanProperties.FLIGHT_TO_COMPLETION, oldValue, isFlightToCompletion);
         }
@@ -381,7 +381,7 @@ public class FligthPlanModel extends Model implements FligthPlanWriter {
     @Override
     public void setFlighType(final FlightType value) {
         final FlightType oldValue = getFlightType();
-        if ((null != value) && !value.equals(oldValue)) {
+        if (null != value && !value.equals(oldValue)) {
             flightType = value;
             firePropertyChange(FligthPlanProperties.FLIGHT_TYPE, oldValue, flightType);
         }
@@ -394,7 +394,7 @@ public class FligthPlanModel extends Model implements FligthPlanWriter {
     @Override
     public void setLandingLightAltitude(final Altitude value) {
         final Altitude oldValue = getLandingLightAltitude();
-        if ((null != value) && !value.equals(oldValue)) {
+        if (null != value && !value.equals(oldValue)) {
             landingLightAltitude = value;
             firePropertyChange(FligthPlanProperties.LANDING_LIGHT_ALTITUDE, oldValue, landingLightAltitude);
         }
@@ -420,7 +420,7 @@ public class FligthPlanModel extends Model implements FligthPlanWriter {
     @Override
     public void setStartDays(final Set<StartDays> value) {
         final Set<StartDays> oldValue = getStartDays();
-        if ((null != value) && !value.equals(oldValue)) {
+        if (null != value && !value.equals(oldValue)) {
             startDays = value;
             firePropertyChange(FligthPlanProperties.START_DAYS, oldValue, startDays);
         }
@@ -434,7 +434,7 @@ public class FligthPlanModel extends Model implements FligthPlanWriter {
     @Override
     public void setStartTime(final LocalTime value) {
         final LocalTime oldValue = getStartTime();
-        if ((null != value) && !value.equals(oldValue)) {
+        if (null != value && !value.equals(oldValue)) {
             startTime = value;
             firePropertyChange(FligthPlanProperties.START_TIME, oldValue, startTime);
         }
@@ -447,7 +447,7 @@ public class FligthPlanModel extends Model implements FligthPlanWriter {
     @Override
     public void setSteerPoints(final List<String> value) {
         final List<String> oldValue = getSteerPoints();
-        if ((null != value) && !value.equals(oldValue)) {
+        if (null != value && !value.equals(oldValue)) {
             steerPoints = value;
             firePropertyChange(FligthPlanProperties.STEERPOINTS_MAP, oldValue, steerPoints);
         }

@@ -39,7 +39,7 @@ public class CreationStartDaysPanel extends AbstractCommonPanel {
      */
     public CreationStartDaysPanel(final PresentationModel<FligthPlanReader> newCurrentFlightPlan) {
         currentFlightPlan = newCurrentFlightPlan;
-        super.build();
+        constructPanel();
     }
 
     /**
@@ -48,7 +48,6 @@ public class CreationStartDaysPanel extends AbstractCommonPanel {
      */
     @Override
     protected void build() {
-        super.build();
         final FormLayout formLayout = new FormLayout(new ColumnSpec[] { //
                 FormSpecs.RELATED_GAP_COLSPEC, //
                 ColumnSpec.decode("center:default:grow"), //

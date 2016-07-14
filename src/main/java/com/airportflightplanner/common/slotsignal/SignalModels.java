@@ -23,7 +23,7 @@ public final class SignalModels {
     /**
      *
      */
-    private static final Map<String, Set<Slot<?>>> SLOTS   = new ConcurrentHashMap<String, Set<Slot<?>>>();
+    private static final Map<String, Set<SelectionSlot<?>>> SLOTS   = new ConcurrentHashMap<String, Set<SelectionSlot<?>>>();
 
     /**
      * Protect constructor.
@@ -54,9 +54,9 @@ public final class SignalModels {
     public static void attachSlots(final String topicName) {
         final Signal signal = SIGNALS.get(topicName);
         if (null != signal) {
-            final Set<Slot<?>> slotsSet = SLOTS.get(topicName);
+            final Set<SelectionSlot<?>> slotsSet = SLOTS.get(topicName);
             if (null != slotsSet) {
-                for (final Slot<?> slot : slotsSet) {
+                for (final SelectionSlot<?> slot : slotsSet) {
                     signal.addObserver(slot);
                 }
             }
@@ -69,12 +69,12 @@ public final class SignalModels {
      * @param slot
      *            the slot to add.
      */
-    public static void addSlot(final Slot<?> slot) {
+    public static void addSlot(final SelectionSlot<?> slot) {
         final String topic = slot.getTopicName();
         if (SLOTS.containsKey(topic)) {
             SLOTS.get(topic).add(slot);
         } else {
-            final HashSet<Slot<?>> slotsSet = new HashSet<Slot<?>>();
+            final HashSet<SelectionSlot<?>> slotsSet = new HashSet<SelectionSlot<?>>();
             slotsSet.add(slot);
             SLOTS.put(topic, slotsSet);
         }

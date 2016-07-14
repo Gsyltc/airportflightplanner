@@ -60,8 +60,8 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
      *
      */
     public CreationFlightInfosPanel(final PresentationModel<FligthPlanReader> newCurrentFlightPlan) {
-        this.currentFlightPlan = newCurrentFlightPlan;
-        build();
+        currentFlightPlan = newCurrentFlightPlan;
+        constructPanel();
     }
 
     /**
@@ -70,7 +70,6 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
      */
     @Override
     protected void build() {
-        super.build();
         final FormLayout formLayout = new FormLayout(new ColumnSpec[] { //
                 FormSpecs.RELATED_GAP_COLSPEC, //
                 ColumnSpec.decode("center:default:grow"), //
@@ -223,7 +222,7 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
             @Override
             public void propertyChange(final PropertyChangeEvent evt) {
                 refreshData(evt.getPropertyName());
-                if ((null != evt.getNewValue())) {
+                if (null != evt.getNewValue()) {
                     component.setSelectedItem(evt.getNewValue());
                 } else {
                     component.setSelectedIndex(NO_SELECTION);
@@ -278,7 +277,7 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
             @Override
             public void propertyChange(final PropertyChangeEvent evt) {
                 refreshData(evt.getPropertyName());
-                if ((null != evt.getNewValue())) {
+                if (null != evt.getNewValue()) {
                     component.setSelectedItem(evt.getNewValue());
                 } else {
                     component.setSelectedIndex(NO_SELECTION);

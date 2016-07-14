@@ -29,8 +29,8 @@ public class AircraftFileReader {
     public void init() {
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(CommonProperties.AIRCRAFT_DIRECTORY)) {
             for (final Path path : stream) {
-                Path fileName = path.getFileName();
-                if ((null != fileName) && fileName.toString().endsWith("txt") && !(fileName.toString().contains("BASE"))) {
+                final Path fileName = path.getFileName();
+                if (null != fileName && fileName.toString().endsWith("txt") && !fileName.toString().contains("BASE")) {
                     final String ariCraftTmp = fileName.toString().replace(".txt", "");
                     AircraftTypeAdapter.addLivery(ariCraftTmp);
                 }

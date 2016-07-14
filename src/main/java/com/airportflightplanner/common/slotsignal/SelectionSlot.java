@@ -16,7 +16,7 @@ import com.airportflightplanner.common.slotsignal.api.SlotReceiver;
  * @param <E>
  *
  */
-public class Slot<E extends Object> implements Observer {
+public class SelectionSlot<E extends Object> implements Observer {
     /** */
     private final String       topicName;
     /** */
@@ -25,17 +25,17 @@ public class Slot<E extends Object> implements Observer {
     private SlotAction<E>      slotAction;
 
     /**
-     * A slot can listen an event fire by a signal
+     * A slot can listen an event fire by a signal.
      *
-     * @param topicName
-     *            define the topic to listen
-     * @param receiver
+     * @param newTopicName
+     *            define the topic to listen.
+     * @param newReceiver
      *            the receiver is the object with the action to run when a
-     *            signal is received
+     *            signal is received.
      */
-    public Slot(final String topicName, final SlotReceiver receiver) {
-        this.topicName = topicName;
-        this.receiver = receiver;
+    public SelectionSlot(final String newTopicName, final SlotReceiver newReceiver) {
+        this.topicName = newTopicName;
+        this.receiver = newReceiver;
         SignalModels.addSlot(this);
     }
 

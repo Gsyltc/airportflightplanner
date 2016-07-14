@@ -36,15 +36,15 @@ public class MainPanel extends FormDebugPanel {
     private final FlighPlanCollectionModel flighPlanCollectionModel;
 
     /**
-     * 3
+     * Main Panel.
      *
-     * @param flighPlanCollectionModel
-     *
+     * @param newlighPlanCollectionModel
+     *            Collection Model.
      */
-    public MainPanel(final FlighPlanCollectionModel flighPlanCollectionModel) {
-      setPaintRows(false);
-      setPaintInBackground(false);
-        this.flighPlanCollectionModel = flighPlanCollectionModel;
+    public MainPanel(final FlighPlanCollectionModel newlighPlanCollectionModel) {
+        setPaintRows(false);
+        setPaintInBackground(false);
+        flighPlanCollectionModel = newlighPlanCollectionModel;
         buildPanel();
     }
 
@@ -53,24 +53,24 @@ public class MainPanel extends FormDebugPanel {
      */
     private void buildPanel() {
         // Set Layout
-        setLayout(new FormLayout(new ColumnSpec[] {
-            FormSpecs.RELATED_GAP_COLSPEC,
-            ColumnSpec.decode("pref:grow"),
-            FormSpecs.RELATED_GAP_COLSPEC,
-            ColumnSpec.decode("right:pref"),
-            FormSpecs.RELATED_GAP_COLSPEC,},
-          new RowSpec[] {
-            FormSpecs.RELATED_GAP_ROWSPEC,
-            FormSpecs.DEFAULT_ROWSPEC,
-            FormSpecs.RELATED_GAP_ROWSPEC,}));
+        setLayout(new FormLayout(new ColumnSpec[] { //
+                FormSpecs.RELATED_GAP_COLSPEC, //
+                ColumnSpec.decode("pref:grow"), //
+                FormSpecs.RELATED_GAP_COLSPEC, //
+                ColumnSpec.decode("right:pref"), //
+                FormSpecs.RELATED_GAP_COLSPEC, }, //
+                new RowSpec[] { //
+                        FormSpecs.RELATED_GAP_ROWSPEC, //
+                        FormSpecs.DEFAULT_ROWSPEC, //
+                        FormSpecs.RELATED_GAP_ROWSPEC, }));
 
         // Create Panel
-        FlightPlanCreationPanel createPanel = createFlightPlanCreationPanel();
-        FlightPlanVisualiazationPanel fpVisuPanel = createFlightPlanVisualiazationPanel();
-        WaypointEditionPanel wpEditionPanel = createWaypointEditionPanel();
+        final FlightPlanCreationPanel createPanel = createFlightPlanCreationPanel();
+        final FlightPlanVisualiazationPanel fpVisuPanel = createFlightPlanVisualiazationPanel();
+        final WaypointEditionPanel wpEditionPanel = createWaypointEditionPanel();
 
         // Create TabbedPanel
-        JTabbedPane tabbedPane = new JTabbedPane(SwingConstants.TOP);
+        final JTabbedPane tabbedPane = new JTabbedPane(SwingConstants.TOP);
         tabbedPane.add(MainPanelMessages.CREATE, createPanel);
         tabbedPane.add(MainPanelMessages.MODIFY, wpEditionPanel);
         tabbedPane.setSelectedIndex(FIRST_TAB);
@@ -83,28 +83,28 @@ public class MainPanel extends FormDebugPanel {
 
     /**
      *
-     * @return
+     * @return the panel.
      */
     private WaypointEditionPanel createWaypointEditionPanel() {
-        WaypointEditionPanel panel = new WaypointEditionPanel();
+        final WaypointEditionPanel panel = new WaypointEditionPanel();
         return panel;
     }
 
     /**
      *
-     * @return
+     * @return the panel.
      */
     private FlightPlanVisualiazationPanel createFlightPlanVisualiazationPanel() {
-        FlightPlanVisualiazationPanel panel = new FlightPlanVisualiazationPanel(flighPlanCollectionModel);
+        final FlightPlanVisualiazationPanel panel = new FlightPlanVisualiazationPanel(flighPlanCollectionModel);
         return panel;
     }
 
     /**
      *
-     * @return
+     * @return the panel.
      */
     private FlightPlanCreationPanel createFlightPlanCreationPanel() {
-        FlightPlanCreationPanel panel = new FlightPlanCreationPanel();
+        final FlightPlanCreationPanel panel = new FlightPlanCreationPanel();
         return panel;
     }
 }

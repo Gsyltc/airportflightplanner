@@ -8,11 +8,17 @@ package com.airportflightplanner.common.api.flightplancollection.flightplan;
  * @author Goubaud Sylvain
  *
  */
-public interface FligthPlanCollectionProperties {
+public final class FligthPlanCollectionProperties {
 
     /** */
     public static final String FLIGHT_PLANS    = "flightPlansMap";
     /** */
     public static final String CURRENT_AIRPORT = "curentAirport";
 
+    /**
+     * Protected constructor.
+     */
+    private FligthPlanCollectionProperties() {
+        //
+    }
 }

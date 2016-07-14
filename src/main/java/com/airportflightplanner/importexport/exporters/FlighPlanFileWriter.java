@@ -21,7 +21,7 @@ import org.joda.time.format.DateTimeFormatterBuilder;
 
 import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
 import com.airportflightplanner.common.slotsignal.AbstractSlotReceiver;
-import com.airportflightplanner.common.slotsignal.Slot;
+import com.airportflightplanner.common.slotsignal.SelectionSlot;
 import com.airportflightplanner.common.slotsignal.TopicName;
 import com.airportflightplanner.common.slotsignal.api.SlotAction;
 import com.airportflightplanner.common.types.ArrivalType;
@@ -52,11 +52,11 @@ public class FlighPlanFileWriter extends AbstractSlotReceiver {
      */
     protected final void writeFlightPlans(final FligthPlanReader flightPlan) {
         if (null != flightPlan) {
-            String flightPlanFileName = flightPlan.getDepartureAirport() + "/" + flightPlan.getStartTime().toString(WRITER_FORMATTER) + "_" + //
+            final String flightPlanFileName = flightPlan.getDepartureAirport() + "/" + flightPlan.getStartTime().toString(WRITER_FORMATTER) + "_" + //
                     flightPlan.getDepartureAirport() + "TEST_" + flightPlan.getArrivalAirport() + "_" + //
                     flightPlan.getAircraftType() + ".txt";
 
-            Path fileName = CommonProperties.ROUTES_DIRECTORY.resolve(flightPlanFileName);
+            final Path fileName = CommonProperties.ROUTES_DIRECTORY.resolve(flightPlanFileName);
             if (null != fileName) {
 
                 try (Writer fileWriter = new OutputStreamWriter(new FileOutputStream(fileName.toFile()), StandardCharsets.UTF_8)) {
@@ -101,7 +101,7 @@ public class FlighPlanFileWriter extends AbstractSlotReceiver {
                     fileWriter.write(System.lineSeparator());
 
                     // STARTCALLSIGN
-                    if ((null != flightPlan.getCallSign()) && !flightPlan.getCallSign().isEmpty()) {
+                    if (null != flightPlan.getCallSign() && !flightPlan.getCallSign().isEmpty()) {
                         fileWriter.write(FlightPlanInformationTypes.STARTCALLSIGN.name());
                         fileWriter.write(System.lineSeparator());
                         fileWriter.write(flightPlan.getCallSign());
@@ -115,7 +115,7 @@ public class FlighPlanFileWriter extends AbstractSlotReceiver {
                     if (!flightPlan.getStartDays().isEmpty()) {
                         fileWriter.write(FlightPlanInformationTypes.STARTDAYS.name());
                         fileWriter.write(System.lineSeparator());
-                        for (StartDays day : flightPlan.getStartDays()) {
+                        for (final StartDays day : flightPlan.getStartDays()) {
                             fileWriter.write(StartDays.getIndex(day) + " ");
                         }
                         fileWriter.write(System.lineSeparator());
@@ -127,7 +127,7 @@ public class FlighPlanFileWriter extends AbstractSlotReceiver {
                     // STARTSTEERPOINTS
                     fileWriter.write(FlightPlanInformationTypes.STARTSTEERPOINTS.name());
                     fileWriter.write(System.lineSeparator());
-                    for (String steerPoint : flightPlan.getSteerPoints()) {
+                    for (final String steerPoint : flightPlan.getSteerPoints()) {
                         fileWriter.write(steerPoint);
                         fileWriter.write(System.lineSeparator());
                     }
@@ -163,7 +163,7 @@ public class FlighPlanFileWriter extends AbstractSlotReceiver {
                     }
 
                     // STARTALTERNATEAIRPORT
-                    if ((null != flightPlan.getAlternateAirport()) && !flightPlan.getAlternateAirport().isEmpty()) {
+                    if (null != flightPlan.getAlternateAirport() && !flightPlan.getAlternateAirport().isEmpty()) {
                         fileWriter.write(FlightPlanInformationTypes.STARTALTERNATEAIRPORT.name());
                         fileWriter.write(System.lineSeparator());
                         fileWriter.write(flightPlan.getAlternateAirport());
@@ -206,7 +206,7 @@ public class FlighPlanFileWriter extends AbstractSlotReceiver {
                         fileWriter.write(System.lineSeparator());
                     }
 
-                } catch (IOException e) {
+                } catch (final IOException e) {
                     if (LOGGER.isErrorEnabled()) {
                         LOGGER.error("Error while writing files", e);
                     }
@@ -221,7 +221,7 @@ public class FlighPlanFileWriter extends AbstractSlotReceiver {
      */
     @Override
     public final void attachSlotAction() {
-        Slot<FligthPlanReader> airportSlot = new Slot<FligthPlanReader>(TopicName.WRITE_FLIGHT_PLAN, this);
+        final SelectionSlot<FligthPlanReader> airportSlot = new SelectionSlot<FligthPlanReader>(TopicName.WRITE_FLIGHT_PLAN, this);
         airportSlot.setSlotAction(new SlotAction<FligthPlanReader>() {
             /**
              *

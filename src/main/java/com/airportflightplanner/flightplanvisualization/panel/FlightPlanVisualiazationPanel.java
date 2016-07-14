@@ -24,7 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
 import com.airportflightplanner.common.model.FlighPlanCollectionModel;
 import com.airportflightplanner.common.slotsignal.Signal;
-import com.airportflightplanner.common.slotsignal.Slot;
+import com.airportflightplanner.common.slotsignal.SelectionSlot;
 import com.airportflightplanner.common.slotsignal.TopicName;
 import com.airportflightplanner.common.slotsignal.api.SlotAction;
 import com.airportflightplanner.common.visualelement.AbstractCommonPanel;
@@ -68,10 +68,10 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
      *
      */
     public FlightPlanVisualiazationPanel(final FlighPlanCollectionModel newFlightPlanColltionModel) {
-        this.flightPlansCollection = newFlightPlanColltionModel;
+        flightPlansCollection = newFlightPlanColltionModel;
         presenter = new FlightPlanVisualizationPresenter(newFlightPlanColltionModel);
         newFlightPlanColltionModel.addFligfhtPlanModelListener(presenter.getListModel());
-        build();
+        constructPanel();
     }
 
     /**
@@ -79,7 +79,6 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
      */
     @Override
     protected final void build() {
-        super.build();
         setLayout(new FormLayout(new ColumnSpec[] { FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("3dlu:grow"), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
                 ColumnSpec.decode("pref:grow"), //
@@ -97,7 +96,7 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
         add(new CurrentAirportPanel(flightPlansCollection), "2, 2, 3, 1, fill, fill");
         add(new DaysSelectionPanel(), "2, 4, 3, 1, fill, fill");
         add(createFlightVisualizationPanel(), "2, 6, 3, 1");
-        add(new SteerPointdPanel(), "2, 8, 3, 1");
+        add(new SteerPointPanel(), "2, 8, 3, 1");
 
     }
 
@@ -106,7 +105,7 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
      *
      */
     private JScrollPane createFlightVisualizationPanel() {
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        final DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 
         table = new JTable(presenter.getTableAdapter());
@@ -121,11 +120,11 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
             public void valueChanged(final ListSelectionEvent e) {
                 FligthPlanReader flightPlan = null;
                 if (e.getValueIsAdjusting()) {
-                    ListSelectionModel lsm = (ListSelectionModel) e.getSource();
+                    final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 
                     if (!lsm.isSelectionEmpty()) {
-                        int minIndex = lsm.getMinSelectionIndex();
-                        int maxIndex = lsm.getMaxSelectionIndex();
+                        final int minIndex = lsm.getMinSelectionIndex();
+                        final int maxIndex = lsm.getMaxSelectionIndex();
                         for (int i = minIndex; i <= maxIndex; i++) {
                             if (lsm.isSelectedIndex(i)) {
                                 flightPlan = flightPlansCollection.getFlightPlanByIndex(i);
@@ -137,15 +136,15 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
             }
         });
 
-        TableRowSorter<TableModel> sorter = new TableRowSorter<>(table.getModel());
+        final TableRowSorter<TableModel> sorter = new TableRowSorter<>(table.getModel());
         table.setRowSorter(sorter);
-        List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+        final List<RowSorter.SortKey> sortKeys = new ArrayList<>();
         sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
 
         sorter.setSortKeys(sortKeys);
         sorter.sort();
 
-        JScrollPane scrollPane = new JScrollPane();
+        final JScrollPane scrollPane = new JScrollPane();
         scrollPane.setViewportView(table);
         return scrollPane;
     }
@@ -156,12 +155,15 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
      */
     @Override
     public final void attachSlotAction() {
-        Slot<String> slot = new Slot<String>(TopicName.UPDATE_AIRPORT_TOPIC, this);
+        final SelectionSlot<String> slot = new SelectionSlot<String>(TopicName.UPDATE_AIRPORT_TOPIC, this);
         slot.setSlotAction(new SlotAction<String>() {
-
+            /**
+             *
+             * {@inheritDoc}
+             */
             @Override
             public void doAction(final String object) {
-
+                // TODO
             }
         });
 

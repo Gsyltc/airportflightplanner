@@ -31,7 +31,7 @@ public class CreationFlightInfosCompagnieCellRenderer implements ListCellRendere
             final int index, final boolean isSelected, final boolean cellHasFocus) {
         final JLabel renderer = (JLabel) defaultRenderer.getListCellRendererComponent(//
                 list, value, index, isSelected, cellHasFocus);
-        if ((null != value) && !value.equals("XXXXXXXXXXXXXXXXXXXX")) {
+        if (null != value && !value.equals("XXXXXXXXXXXXXXXXXXXX")) {
             renderer.setText(Internationalizer.getI18String(value));
         }
 

@@ -23,7 +23,7 @@ import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
 import com.airportflightplanner.common.api.steerpoints.SteerPointReader;
 import com.airportflightplanner.common.model.SteerPointsCollectionModel;
 import com.airportflightplanner.common.slotsignal.Signal;
-import com.airportflightplanner.common.slotsignal.Slot;
+import com.airportflightplanner.common.slotsignal.SelectionSlot;
 import com.airportflightplanner.common.slotsignal.TopicName;
 import com.airportflightplanner.common.slotsignal.api.SlotAction;
 import com.airportflightplanner.common.utils.geographics.GeographicUtils;
@@ -35,17 +35,17 @@ import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
 /**
- * @author DCNS
+ * @author Goubaud Sylvain
  *
  */
-public class SteerPointdPanel extends AbstractCommonPanel {
+public class SteerPointPanel extends AbstractCommonPanel {
     /**
-    *
-    */
+     *
+     */
     @Autowired(required = true)
     protected final SteerPointsCollectionModel steerPointsCollectionModel = new SteerPointsCollectionModel();
     /**
-     * <
+     *
      */
     private final SteerPointsPresenter         presenter;
     /** */
@@ -54,65 +54,63 @@ public class SteerPointdPanel extends AbstractCommonPanel {
     protected Signal                           signal;
 
     /**
-    *
-    */
+     *
+     */
     private static final long                  serialVersionUID           = -6354635338489926005L;
-
-    /**
-    *
-    */
 
     /**
      *
      */
-    public SteerPointdPanel() {
+
+    /**
+     *
+     */
+    public SteerPointPanel() {
         presenter = new SteerPointsPresenter(steerPointsCollectionModel);
         steerPointsCollectionModel.addSteerPointsListModelListener(presenter.getListModel());
-        build();
+        constructPanel();
     }
 
     /**
-    *
-    */
+     *
+     */
     @Override
     protected void build() {
-        super.build();
-        setLayout(new FormLayout(new ColumnSpec[] {
-            FormSpecs.RELATED_GAP_COLSPEC,
-            ColumnSpec.decode("3dlu:grow"),
-            FormSpecs.RELATED_GAP_COLSPEC,
-            ColumnSpec.decode("pref:grow"),
-            FormSpecs.RELATED_GAP_COLSPEC,},
-          new RowSpec[] {
-            FormSpecs.RELATED_GAP_ROWSPEC,
-            FormSpecs.DEFAULT_ROWSPEC,
-            FormSpecs.RELATED_GAP_ROWSPEC,}));
+        setLayout(new FormLayout(new ColumnSpec[] { //
+                FormSpecs.RELATED_GAP_COLSPEC, //
+                ColumnSpec.decode("3dlu:grow"), //
+                FormSpecs.RELATED_GAP_COLSPEC, //
+                ColumnSpec.decode("pref:grow"), //
+                FormSpecs.RELATED_GAP_COLSPEC, }, //
+                new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, //
+                        FormSpecs.DEFAULT_ROWSPEC, //
+                        FormSpecs.RELATED_GAP_ROWSPEC, }));
 
         add(createSteerPointsPanel(), "2, 2, 3, 1, fill, top");
 
     }
 
     /**
-     * @return
+     * @return SteerPoint Panel.
      *
      */
     private JScrollPane createSteerPointsPanel() {
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        final DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 
         table = new JTable(presenter.getTableAdapter());
         table.setColumnSelectionAllowed(true);
         table.setDefaultRenderer(String.class, centerRenderer);
 
-        TableRowSorter<TableModel> sorter = new TableRowSorter<>(table.getModel());
+        final TableRowSorter<TableModel> sorter = new TableRowSorter<>(table.getModel());
         table.setRowSorter(sorter);
-        List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+        final List<RowSorter.SortKey> sortKeys = new ArrayList<>();
         sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
 
         sorter.setSortKeys(sortKeys);
         sorter.sort();
 
-        JScrollPane scrollPane = new JScrollPane();
+        final JScrollPane scrollPane = new JScrollPane();
         scrollPane.setViewportView(table);
         return scrollPane;
     }
@@ -122,8 +120,8 @@ public class SteerPointdPanel extends AbstractCommonPanel {
      * {@inheritDoc}
      */
     @Override
-    public  final void attachSlotAction() {
-        Slot<FligthPlanReader> slot = new Slot<FligthPlanReader>(TopicName.FLIGHTPLAN_TABLE_SELECTED, this);
+    public final void attachSlotAction() {
+        final SelectionSlot<FligthPlanReader> slot = new SelectionSlot<FligthPlanReader>(TopicName.FLIGHTPLAN_TABLE_SELECTED, this);
         slot.setSlotAction(new SlotAction<FligthPlanReader>() {
             /**
              *
@@ -133,7 +131,7 @@ public class SteerPointdPanel extends AbstractCommonPanel {
             public void doAction(final FligthPlanReader flightPlanReader) {
                 steerPointsCollectionModel.getListModel().clear();
                 if (null != flightPlanReader) {
-                    List<SteerPointReader> steerPoints = GeographicUtils.getSteerPoints(flightPlanReader.getSteerPoints());
+                    final List<SteerPointReader> steerPoints = GeographicUtils.getSteerPoints(flightPlanReader.getSteerPoints());
                     steerPointsCollectionModel.addSteerPoints(steerPoints);
                 }
             }

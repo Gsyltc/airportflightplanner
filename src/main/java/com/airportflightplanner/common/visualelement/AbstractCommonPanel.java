@@ -16,7 +16,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.airportflightplanner.common.slotsignal.Signal;
 import com.airportflightplanner.common.slotsignal.SignalModels;
-import com.airportflightplanner.common.slotsignal.Slot;
+import com.airportflightplanner.common.slotsignal.SelectionSlot;
 import com.airportflightplanner.common.slotsignal.api.SlotReceiver;
 
 /**
@@ -31,7 +31,7 @@ public abstract class AbstractCommonPanel extends JPanel implements SlotReceiver
     /** */
     protected transient Map<String, Signal>       signals          = new ConcurrentHashMap<String, Signal>();
     /** */
-    protected Map<String, Slot<? extends Object>> slots            = new ConcurrentHashMap<String, Slot<? extends Object>>();
+    protected Map<String, SelectionSlot<? extends Object>> slots            = new ConcurrentHashMap<String, SelectionSlot<? extends Object>>();
     /** */
     protected Map<String, ? extends Object>       attributeMap     = new ConcurrentHashMap<String, Object>();
     /** The logger of this class. */
@@ -40,10 +40,16 @@ public abstract class AbstractCommonPanel extends JPanel implements SlotReceiver
     /**
      *
      */
-    protected void build() {
+    protected void constructPanel() {
         attachSignal();
         attachSlotAction();
+        build();
     }
+
+    /**
+     *
+     */
+    protected abstract void build();
 
     /**
      * Method to override. {@inheritDoc}

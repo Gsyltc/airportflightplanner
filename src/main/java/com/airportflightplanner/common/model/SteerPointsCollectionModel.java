@@ -87,10 +87,10 @@ public class SteerPointsCollectionModel extends Model implements SteerPointsColl
      * {@inheritDoc}
      */
     @Override
-    public final  void setCurrentFlightPlan(final FligthPlanReader currentFlightPlan) {
+    public final  void setCurrentFlightPlan(final FligthPlanReader newCurrentFlightPlan) {
         FligthPlanReader oldValue = this.currentFlightPlan;
-        if (!currentFlightPlan.equals(oldValue)) {
-            this.currentFlightPlan = currentFlightPlan;
+        if (!newCurrentFlightPlan.equals(oldValue)) {
+            this.currentFlightPlan = newCurrentFlightPlan;
             firePropertyChange(FligthPlanCollectionProperties.CURRENT_AIRPORT, oldValue, this.currentFlightPlan);
         }
     }

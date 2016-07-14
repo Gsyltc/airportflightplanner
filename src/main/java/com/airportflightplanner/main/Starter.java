@@ -30,22 +30,15 @@ public class Starter {
     /**
      *
      */
-    private static final String                   MAIN_TITLE     = "Airport Flight Planner";
+    private static final String                     MAIN_TITLE     = "Airport Flight Planner";
     /** */
-    protected static ClassPathXmlApplicationContext context;
+    protected static ClassPathXmlApplicationContext context        = new ClassPathXmlApplicationContext("./config/imports.xml");
     /** */
-    private static final int                      MINIMUM_WEIGHT = 1024;
+    private static final int                        MINIMUM_WEIGHT = 1024;
     /** */
-    private static final int                      MINIMUM_HEIGHT = 920;
+    private static final int                        MINIMUM_HEIGHT = 920;
     /** The logger of this class. */
-    protected static final Log                      LOGGER         = LogFactory.getLog(Starter.class);
-
-    /**
-     *
-     */
-    private Starter() {
-        //
-    }
+    private static final Log                        LOGGER         = LogFactory.getLog(Starter.class);
 
     /**
      * Start Application.
@@ -54,8 +47,6 @@ public class Starter {
      *            .
      */
     public static void main(final String[] args) {
-        context = new ClassPathXmlApplicationContext("./config/imports.xml");
-
         EventQueue.invokeLater(new Runnable() {
             /**
              *
@@ -65,7 +56,7 @@ public class Starter {
             public void run() {
                 try {
                     if (context.getBean("id-FlightPlansCollection") instanceof FlighPlanCollectionModel) {
-                        final FlighPlanCollectionModel model = (FlighPlanCollectionModel) getContext().getBean("id-FlightPlansCollection");
+                        final FlighPlanCollectionModel model = (FlighPlanCollectionModel) context.getBean("id-FlightPlansCollection");
                         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                         final JMenuBar menu = new JMenuBar();
                         menu.add(new JMenu("Fichiers"));
@@ -84,8 +75,8 @@ public class Starter {
                         ClassNotFoundException | //
                         InstantiationException | //
                         IllegalAccessException e) {
-                    if (LOGGER.isErrorEnabled()) {
-                        LOGGER.error("Look and feel error : ", e);
+                    if (getLogger().isErrorEnabled()) {
+                        getLogger().error("Look and feel error : ", e);
                     }
                 }
             }
@@ -94,10 +85,9 @@ public class Starter {
     }
 
     /**
-     *
-     * @return application context.
+     * @return the logger
      */
-    public static ClassPathXmlApplicationContext getContext() {
-        return context;
+    protected static Log getLogger() {
+        return LOGGER;
     }
 }

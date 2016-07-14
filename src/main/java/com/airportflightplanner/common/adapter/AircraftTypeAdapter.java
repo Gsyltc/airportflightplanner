@@ -6,7 +6,6 @@
 
 package com.airportflightplanner.common.adapter;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -39,11 +38,12 @@ public final class AircraftTypeAdapter {
      * @return List of liveries for the company.
      */
     public static List<String> getAircraftLiveriesByClassCpie(final String classCpie) {
+        final List<String> result = Collections.emptyList();
         final AircraftsLiveriesMapper mapper = AIRCRAFT_CLASS_CIE.get(getAircraftClass(classCpie));
         if (null != mapper) {
-            return new ArrayList<String>(mapper.getLiveriesByCpie(getAircraftCie(classCpie)));
+            result.addAll(mapper.getLiveriesByCpie(getAircraftCie(classCpie)));
         }
-        return Collections.emptyList();
+        return result;
     }
 
     /**
@@ -95,12 +95,15 @@ public final class AircraftTypeAdapter {
      */
     public static String getAircraftCie(final String airCraftType) {
         final String[] splitTmp = airCraftType.split(" +");
+        String result = "";
 
         final String[] splitAirCraft = splitTmp[0].split("_");
-        if (splitAirCraft.length > 1) {
-            return splitAirCraft[1];
+
+        final boolean hasCpie = splitAirCraft.length > 1;
+        if (hasCpie) {
+            result = splitAirCraft[1];
         }
-        return "";
+        return result;
     }
 
     /**
@@ -136,11 +139,12 @@ public final class AircraftTypeAdapter {
      * @return List of the companies.
      */
     public static List<String> getAircraftCompaniesByClass(final String aircraftClass) {
+        final List<String> result = Collections.emptyList();
         final AircraftsLiveriesMapper mapper = AIRCRAFT_CLASS_CIE.get(aircraftClass);
         if (null != mapper) {
-            return new ArrayList<String>(mapper.getCompagnies());
+            result.addAll(mapper.getCompagnies());
         }
-        return Collections.emptyList();
+        return result;
     }
 
 }

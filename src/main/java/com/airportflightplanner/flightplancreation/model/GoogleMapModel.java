@@ -38,8 +38,8 @@ public class GoogleMapModel extends Model implements GoogleMapWriter {
      */
     @Override
     public void setEncodedPolyline(final EncodedPolyline polyline) {
-        EncodedPolyline oldValue = this.polyline;
-        if ((null != polyline) && !polyline.equals(this.polyline)) {
+        final EncodedPolyline oldValue = this.polyline;
+        if (null != polyline && !polyline.equals(this.polyline)) {
             this.polyline = polyline;
             firePropertyChange(GoogleMapModelProperties.POLYLINE, oldValue, this.polyline);
         }
@@ -51,8 +51,8 @@ public class GoogleMapModel extends Model implements GoogleMapWriter {
      */
     @Override
     public void setMarkers(final List<SteerPointReader> specificSteerPoint) {
-        List<SteerPointReader> oldValue = this.specificSteerPoint;
-        if ((null != specificSteerPoint) && !specificSteerPoint.equals(this.specificSteerPoint)) {
+        final List<SteerPointReader> oldValue = this.specificSteerPoint;
+        if (null != specificSteerPoint && !specificSteerPoint.equals(this.specificSteerPoint)) {
             this.specificSteerPoint = specificSteerPoint;
             firePropertyChange(GoogleMapModelProperties.STEERPOINTS, oldValue, this.specificSteerPoint);
         }
@@ -91,8 +91,8 @@ public class GoogleMapModel extends Model implements GoogleMapWriter {
      */
     @Override
     public List<SteerPointReader> getNamedMarker() {
-        List<SteerPointReader> namedMarkers = new ArrayList<SteerPointReader>();
-        for (SteerPointReader steerPointReader : specificSteerPoint) {
+        final List<SteerPointReader> namedMarkers = new ArrayList<SteerPointReader>();
+        for (final SteerPointReader steerPointReader : specificSteerPoint) {
             if (!steerPointReader.getName().isEmpty()) {
                 namedMarkers.add(steerPointReader);
             }
