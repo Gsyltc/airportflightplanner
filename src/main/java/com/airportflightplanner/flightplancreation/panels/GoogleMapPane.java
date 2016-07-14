@@ -91,19 +91,20 @@ public class GoogleMapPane extends JEditorPane {
     }
 
     /**
-     * Fixer le zoom
+     * Fixer le zoom.
      *
      * @param zoom
-     *            valeur de 0 à 21
+     *            valeur de 0 a 21
      */
     public void setZoom(final int zoom) {
         this.zoomFactor = String.valueOf(zoom);
     }
 
     /**
-     * Fixer le type de vue
+     * Fixer le type de vue.
      *
      * @param roadMap
+     *            the roadMap.
      */
     public void setRoadmap(final MapType roadMap) {
         this.roadmap = roadMap;
