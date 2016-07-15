@@ -8,6 +8,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/com.puppycrawl.tools/checkstyle -->
+        <dependency>
+            <groupId>com.puppycrawl.tools</groupId>
+            <artifactId>checkstyle</artifactId>
+            <version>7.0</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/org.codehaus.javancss/javancss -->
         <dependency>
             <groupId>org.codehaus.javancss</groupId>
@@ -76,7 +82,7 @@
             <artifactId>jgoodies-binding</artifactId>
             <version>2.13.0</version>
         </dependency>
-         <dependency>
+        <dependency>
             <groupId>com.jgoodies</groupId>
             <artifactId>jgoodies-validation</artifactId>
             <version>2.5.1</version>
@@ -106,6 +112,12 @@
     <description>Create, delete or modify flightplan for World Traffic 2.0 (X-Plane 10)</description>
     <build>
         <plugins>
+            <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-checkstyle-plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.17</version>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -138,6 +150,19 @@
     </build>
     <reporting>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.17</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/geodesy/**/*.java</exclude>
+                    </excludes>
+                    <failOnViolation>false</failOnViolation>
+                    <headerFile>tools/rules/checkstyle./header</headerFile>
+
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>findbugs-maven-plugin</artifactId>
