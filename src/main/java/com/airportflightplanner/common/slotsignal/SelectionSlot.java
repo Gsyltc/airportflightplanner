@@ -22,7 +22,7 @@ public class SelectionSlot<E extends Object> implements Observer {
     /** */
     private final SlotReceiver receiver;
     /** */
-    private SlotAction<E>      slotAction;
+    private transient SlotAction<E>      slotAction;
 
     /**
      * A slot can listen an event fire by a signal.

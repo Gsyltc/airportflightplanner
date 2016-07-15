@@ -8,7 +8,7 @@ package com.airportflightplanner.common.api.steerpoints;
  * @author Goubaud Sylvain
  *
  */
-public interface SteerPointProperties {
+public final class SteerPointProperties {
 
     /** */
     public static final String LAT_LONG = "latlong";
@@ -18,4 +18,11 @@ public interface SteerPointProperties {
     public static final String VELOCITY = "velocity";
     /** */
     public static final String NAME     = "name";
+
+    /**
+     * Protected constructor.
+     */
+    private SteerPointProperties() {
+        //
+    }
 }

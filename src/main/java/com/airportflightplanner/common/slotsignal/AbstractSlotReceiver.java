@@ -7,13 +7,18 @@ package com.airportflightplanner.common.slotsignal;
 
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.airportflightplanner.common.slotsignal.api.SlotReceiver;
 
 /**
  * @author Goubaud Sylvain
  *
  */
-public class AbstractSlotReceiver implements SlotReceiver {
+public abstract class AbstractSlotReceiver implements SlotReceiver {
+    /** The logger of this class. */
+    private static final Log LOGGER = LogFactory.getLog(AbstractSlotReceiver.class);
 
     /**
      *
@@ -29,8 +34,9 @@ public class AbstractSlotReceiver implements SlotReceiver {
      */
     @Override
     public void attachSlotAction() {
-        // To Ovverride if needed
-
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("DEBUG : Attach Slot Action - " + getClass().getSimpleName());
+        }
     }
 
     /**
@@ -39,8 +45,9 @@ public class AbstractSlotReceiver implements SlotReceiver {
      */
     @Override
     public void attachSignal() {
-        // To Ovverride if needed
-
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("DEBUG : Attach Signal - " + getClass().getSimpleName());
+        }
     }
 
     /**
@@ -50,7 +57,9 @@ public class AbstractSlotReceiver implements SlotReceiver {
      *            List of Slots to attach
      */
     public void setSlots(final List<SelectionSlot<? extends Object>> slots) {
-        // To override if needed
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("DEBUG : Set Slot - " + getClass().getSimpleName());
+        }
     }
 
 }

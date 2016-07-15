@@ -15,42 +15,42 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class Signal extends Observable {
 
-  /** */
-  private final String     topicName;
+    /** */
+    private final String              topicName;
+    /** */
+    private final List<SelectionSlot<?>> slotList = new CopyOnWriteArrayList<SelectionSlot<?>>();
 
-  private final List<SelectionSlot> slotList = new CopyOnWriteArrayList<SelectionSlot>();
+    /**
+     *
+     * @param topicName
+     */
+    public Signal(final String topicName) {
+        this.topicName = topicName;
+    }
 
-  /**
-   *
-   * @param topicName
-   */
-  public Signal(final String topicName) {
-    this.topicName = topicName;
-  }
+    /**
+     *
+     * @return
+     */
+    String getTopicName() {
+        return topicName;
+    }
 
-  /**
-   *
-   * @return
-   */
-  String getTopicName() {
-    return topicName;
-  }
+    /**
+     *
+     * @param object
+     */
+    public void fireSignal(final Object object) {
+        setChanged();
+        notifyObservers(object);
+    }
 
-  /**
-   *
-   * @param object
-   */
-  public void fireSignal(final Object object) {
-    setChanged();
-    notifyObservers(object);
-  }
-
-  /**
-   *
-   * @param slot
-   */
-  public void createSignal(final SelectionSlot slot) {
-    slotList.add(slot);
-    addObserver(slot);
-  }
+    /**
+     *
+     * @param slot
+     */
+    public void createSignal(final SelectionSlot<?> slot) {
+        slotList.add(slot);
+        addObserver(slot);
+    }
 }

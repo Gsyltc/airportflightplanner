@@ -12,12 +12,6 @@ import java.nio.file.Paths;
  *
  */
 public final class CommonProperties {
-    /**
-     *
-     */
-    private CommonProperties() {
-        //
-    }
 
     /** */
     public static final Path   ROUTES_DIRECTORY      = Paths.get(PropertiesUtils.getPropertyByName("Application.xplane.directory") +   //
@@ -38,6 +32,13 @@ public final class CommonProperties {
 
     /** */
     public static final String DEFAULT_AIRPORT       = "Application.xplane.default.airport";
+
+    /**
+     *
+     */
+    private CommonProperties() {
+        //
+    }
 
     /**
      *

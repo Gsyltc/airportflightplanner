@@ -17,7 +17,7 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 public class Internationalizer {
 
     /** */
-    private static ResourceBundleMessageSource resourceBundleMessageSource = new ResourceBundleMessageSource();
+    private static ResourceBundleMessageSource bundleMessageSource = new ResourceBundleMessageSource();
 
     /**
      * Get the internationalized String form properties files
@@ -28,7 +28,7 @@ public class Internationalizer {
     public static String getI18String(final String key) {
         String message = "";
         try {
-            message = resourceBundleMessageSource.getMessage(key, null, Locale.getDefault());
+            message = bundleMessageSource.getMessage(key, null, Locale.getDefault());
         } catch (NoSuchMessageException e) {
             message = key + AbstractMessages.UNKNOWN;
         }
@@ -45,6 +45,6 @@ public class Internationalizer {
         for (int i = 0; i < bundles.size(); i++) {
             bundlesArrays[i] = bundles.get(i);
         }
-        resourceBundleMessageSource.setBasenames(bundlesArrays);
+        bundleMessageSource.setBasenames(bundlesArrays);
     }
 }

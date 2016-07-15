@@ -9,7 +9,7 @@ package com.airportflightplanner.common.utils.internationalization;
  *
  */
 public abstract class AbstractMessages {
-
+    /** */
     private static final String PREFIX  = AbstractMessages.class.getSimpleName() + ".";
     /** */
     public static final String  LABEL   = ".label";
@@ -24,5 +24,4 @@ public abstract class AbstractMessages {
     public static String format(final String key) {
         return Internationalizer.getI18String(key);
     }
-
 }

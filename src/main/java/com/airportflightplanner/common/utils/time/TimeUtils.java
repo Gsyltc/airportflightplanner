@@ -22,7 +22,7 @@ import org.joda.time.format.PeriodFormatterBuilder;
  * @author Goubaud Sylvain
  *
  */
-public class TimeUtils {
+public final class TimeUtils {
     /** The logger of this class. */
     private static final Log              LOGGER                      = LogFactory.getLog(TimeUtils.class);
 
@@ -46,6 +46,13 @@ public class TimeUtils {
     public static final DateTimeFormatter TIME_DISPLAYER              =                                                                        //
             new DateTimeFormatterBuilder().appendHourOfDay(2).appendLiteral(":").                                                              //
             appendMinuteOfHour(2).toFormatter();
+
+    /**
+     * Protected Constructor.
+     */
+    private TimeUtils(){
+        //
+    }
 
     /**
      *

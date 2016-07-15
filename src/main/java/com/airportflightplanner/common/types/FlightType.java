@@ -11,8 +11,13 @@ import com.airportflightplanner.common.utils.internationalization.Internationali
  *
  */
 public enum FlightType {
-    CIVILIAN(0), MILITARY(1);
-
+    /** */
+    CIVILIAN(0),
+    /** */
+    MILITARY(1);
+    /**
+     *
+     */
     private static final String PREFIX = "FlightType.";
     /** */
     private int                 value;
@@ -31,7 +36,7 @@ public enum FlightType {
      * @return
      */
     public static FlightType valueOf(final int typeIndex) {
-        for (FlightType type : FlightType.values()) {
+        for (final FlightType type : FlightType.values()) {
             if (type.ordinal() == typeIndex) {
                 return type;
             }
