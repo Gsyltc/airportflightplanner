@@ -4,18 +4,13 @@
          name="pmd-level-4"
          xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
    <description>PMD Plugin preferences rule set level 4</description>
-   <exclude-pattern>*geodesy*</exclude-pattern>
+   <exclude-pattern>org.gavaghan.geodesy/**</exclude-pattern>
    <rule ref="rulesets/java/unnecessary.xml/UselessParentheses"/>
    <rule ref="rulesets/java/strings.xml/StringBufferInstantiationWithChar"/>
    <rule ref="rulesets/java/strictexception.xml/DoNotThrowExceptionInFinally"/>
    <rule ref="rulesets/java/naming.xml/BooleanGetMethodName"/>
    <rule ref="rulesets/java/naming.xml/ShortClassName"/>
    <rule ref="rulesets/java/naming.xml/GenericsNaming"/>
-   <rule ref="rulesets/java/j2ee.xml/MDBAndSessionBeanNamingConvention"/>
-   <rule ref="rulesets/java/j2ee.xml/RemoteSessionInterfaceNamingConvention"/>
-   <rule ref="rulesets/java/j2ee.xml/LocalInterfaceSessionNamingConvention"/>
-   <rule ref="rulesets/java/j2ee.xml/LocalHomeNamingConvention"/>
-   <rule ref="rulesets/java/j2ee.xml/RemoteInterfaceNamingConvention"/>
    <rule ref="rulesets/java/imports.xml/DuplicateImports"/>
    <rule ref="rulesets/java/imports.xml/DontImportJavaLang"/>
    <rule ref="rulesets/java/imports.xml/UnusedImports"/>

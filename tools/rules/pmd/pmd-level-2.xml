@@ -4,7 +4,7 @@
          name="pmd-level-2"
          xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
    <description>PMD Plugin preferences rule set level 2</description>
-   <exclude-pattern>*geodesy*</exclude-pattern>
+   <exclude-pattern>org.gavaghan.geodesy/**</exclude-pattern>
    <rule ref="rulesets/java/strings.xml/StringInstantiation"/>
    <rule ref="rulesets/java/strictexception.xml/AvoidLosingExceptionInformation"/>
    <rule ref="rulesets/java/naming.xml/SuspiciousEqualsMethodName"/>
@@ -25,12 +25,6 @@
    <rule ref="rulesets/java/controversial.xml/AvoidUsingNativeCode"/>
    <rule ref="rulesets/java/controversial.xml/DoNotCallGarbageCollectionExplicitly"/>
    <rule ref="rulesets/java/clone.xml/ProperCloneImplementation"/>
-   <rule ref="rulesets/vm/basic.xml/AvoidReassigningParameters"/>
-   <rule ref="rulesets/vm/basic.xml/EmptyIfStmt"/>
-   <rule ref="rulesets/vm/basic.xml/EmptyForeachStmt"/>
-   <rule ref="rulesets/vm/basic.xml/UnusedMacroParameter"/>
-   <rule ref="rulesets/vm/basic.xml/NoInlineJavaScript"/>
-   <rule ref="rulesets/vm/basic.xml/NoInlineStyles"/>
    <rule ref="rulesets/java/basic.xml/BooleanInstantiation"/>
    <rule ref="rulesets/java/basic.xml/BrokenNullCheck"/>
    <rule ref="rulesets/java/basic.xml/AvoidMultipleUnaryOperators"/>

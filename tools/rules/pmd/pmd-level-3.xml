@@ -4,7 +4,7 @@
          name="pmd-level-3"
          xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
    <description>PMD Plugin preferences rule set level 3</description>
-   <exclude-pattern>*geodesy*</exclude-pattern>
+   <exclude-pattern>org.gavaghan.geodesy/**</exclude-pattern>
    <rule ref="rulesets/xsl/xpath.xml/UseConcatOnce"/>
    <rule ref="rulesets/xsl/xpath.xml/AvoidAxisNavigation"/>
    <rule ref="rulesets/java/unusedcode.xml/UnusedPrivateField"/>
@@ -19,9 +19,6 @@
    <rule ref="rulesets/java/unnecessary.xml/UselessOperationOnImmutable"/>
    <rule ref="rulesets/java/unnecessary.xml/UnusedNullCheckInEquals"/>
    <rule ref="rulesets/java/unnecessary.xml/UselessQualifiedThis"/>
-   <rule ref="rulesets/apex/style.xml/MethodWithSameNameAsEnclosingClass"/>
-   <rule ref="rulesets/apex/style.xml/AvoidLogicInTrigger"/>
-   <rule ref="rulesets/apex/style.xml/AvoidGlobalModifier"/>
    <rule ref="rulesets/java/strings.xml/AvoidDuplicateLiterals"/>
    <rule ref="rulesets/java/strings.xml/StringToString"/>
    <rule ref="rulesets/java/strings.xml/InefficientStringBuffering"/>
@@ -46,8 +43,6 @@
    <rule ref="rulesets/java/strictexception.xml/AvoidCatchingGenericException"/>
    <rule ref="rulesets/java/sunsecure.xml/MethodReturnsInternalArray"/>
    <rule ref="rulesets/java/sunsecure.xml/ArrayIsStoredDirectly"/>
-   <rule ref="rulesets/apex/performance.xml/AvoidSoqlInLoops"/>
-   <rule ref="rulesets/apex/performance.xml/AvoidDmlStatementsInLoops"/>
    <rule ref="rulesets/java/optimizations.xml/LocalVariableCouldBeFinal"/>
    <rule ref="rulesets/java/optimizations.xml/MethodArgumentCouldBeFinal"/>
    <rule ref="rulesets/java/optimizations.xml/AvoidInstantiatingObjectsInLoops"/>
@@ -185,15 +180,6 @@
    <rule ref="rulesets/java/controversial.xml/AvoidLiteralsInIfCondition"/>
    <rule ref="rulesets/java/controversial.xml/UseObjectForClearerAPI"/>
    <rule ref="rulesets/java/controversial.xml/UseConcurrentHashMap"/>
-   <rule ref="rulesets/apex/complexity.xml/AvoidDeeplyNestedIfStmts"/>
-   <rule ref="rulesets/apex/complexity.xml/ExcessiveParameterList"/>
-   <rule ref="rulesets/apex/complexity.xml/ExcessiveClassLength"/>
-   <rule ref="rulesets/apex/complexity.xml/NcssMethodCount"/>
-   <rule ref="rulesets/apex/complexity.xml/NcssTypeCount"/>
-   <rule ref="rulesets/apex/complexity.xml/NcssConstructorCount"/>
-   <rule ref="rulesets/apex/complexity.xml/StdCyclomaticComplexity"/>
-   <rule ref="rulesets/apex/complexity.xml/TooManyFields"/>
-   <rule ref="rulesets/apex/complexity.xml/ExcessivePublicCount"/>
    <rule ref="rulesets/java/comments.xml/CommentRequired"/>
    <rule ref="rulesets/java/comments.xml/CommentSize"/>
    <rule ref="rulesets/java/comments.xml/CommentContent"/>
@@ -205,7 +191,7 @@
    <rule ref="rulesets/java/codesize.xml/CyclomaticComplexity"/>
    <rule ref="rulesets/java/codesize.xml/StdCyclomaticComplexity">
       <properties>
-         <property name="reportLevel" value="20"/>
+         <property name="reportLevel" value="15"/>
       </properties>
    </rule>
    <rule ref="rulesets/java/codesize.xml/ModifiedCyclomaticComplexity"/>
