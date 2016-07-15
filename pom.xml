@@ -4,33 +4,23 @@
     <artifactId>airportflightplanner</artifactId>
     <version>0.0.2-SNAPSHOT</version>
     <name>AirportFlightPlanner</name>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/org.codehaus.javancss/javancss -->
+        <!-- https://mvnrepository.com/artifact/net.sourceforge.pmd/pmd-java -->
         <dependency>
-            <groupId>org.codehaus.javancss</groupId>
-            <artifactId>javancss</artifactId>
-            <version>33.54</version>
+            <groupId>net.sourceforge.pmd</groupId>
+            <artifactId>pmd-java</artifactId>
+            <version>5.4.1</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.puppycrawl.tools/checkstyle -->
+        <!-- <dependency> -->
+        <!-- <groupId>com.puppycrawl.tools</groupId> -->
+        <!-- <artifactId>checkstyle</artifactId> -->
+        <!-- <version>6.19</version> -->
+        <!-- </dependency> -->
         <dependency>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>findbugs-maven-plugin</artifactId>
             <version>3.0.4</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/net.sourceforge.pmd/pmd-java -->
-        <!-- https://mvnrepository.com/artifact/net.sourceforge.pmd/pmd-core -->
-        <dependency>
-            <groupId>net.sourceforge.pmd</groupId>
-            <artifactId>pmd-core</artifactId>
-            <version>5.5.0</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/net.sourceforge.pmd/pmd-java8 -->
-        <dependency>
-            <groupId>net.sourceforge.pmd</groupId>
-            <artifactId>pmd-java8</artifactId>
-            <version>5.5.0</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.google.maps/google-maps-services -->
         <dependency>
@@ -113,79 +103,17 @@
         </dependencies>
     </dependencyManagement>
     <description>Create, delete or modify flightplan for World Traffic 2.0 (X-Plane 10)</description>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.5.1</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>net.sourceforge.pmd</groupId>
-                <artifactId>pmd-java8</artifactId>
-                <version>5.5.0</version>
-            </plugin>
-        </plugins>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>javancss-maven-plugin</artifactId>
-                    <version>2.1</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>findbugs-maven-plugin</artifactId>
-                    <version>3.0.4</version>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-    </build>
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>findbugs-maven-plugin</artifactId>
-                <version>3.0.4</version>
-                <configuration>
-                    <xmlOutput>true</xmlOutput>
-                    <xmlOutputDirectory>target/reports/findbugs</xmlOutputDirectory>
-                    <!-- <excludeFilterFile>tools/rules/findbugs/findbugs-exclude.xml</excludeFilterFile> -->
-                    <!-- <includeFilterFile>tools/rules/findbugs/findbugs-include.xml</includeFilterFile> -->
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-pmd-plugin</artifactId>
-                <configuration>
-                    <failOnViolation>false</failOnViolation>
-                    <targetDirectory>target/reports/pmd</targetDirectory>
-                    <rulesets>
-                        <ruleset>tools/rules/pmd/pmd-level-1.xml</ruleset>
-                        <ruleset>tools/rules/pmd/pmd-level-2.xml</ruleset>
-                        <ruleset>tools/rules/pmd/pmd-level-3.xml</ruleset>
-                        <ruleset>tools/rules/pmd/pmd-level-4.xml</ruleset>
-                        <ruleset>tools/rules/pmd/pmd-level-5.xml</ruleset>
-                    </rulesets>
-                    <excludes>
-                        <exclude>**/geodesy/**/*.java</exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>javancss-maven-plugin</artifactId>
-                <version>2.1</version>
-                <configuration>
-                    <excludes>
-                        <exclude>**/geodesy/**/*.java</exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-        </plugins>
-    </reporting>
+     <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.5.1</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
