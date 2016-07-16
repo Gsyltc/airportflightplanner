@@ -181,6 +181,13 @@
                     <failsOnError>false</failsOnError>
                     <headerLocation>${basedir}/tools/rules/checkstyle/header.checkstyle</headerLocation>
                 </configuration>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>checkstyle</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>

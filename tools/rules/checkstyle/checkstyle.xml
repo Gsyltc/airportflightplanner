@@ -7,7 +7,11 @@
     <property name="severity" value="warning" />
     <property name="fileExtensions" value="java, properties, xml" />
     <module name="TreeWalker">
+<<<<<<< HEAD
         <!-- <module name="JavadocMethod" /> -->
+=======
+        <module name="JavadocMethod" />
+>>>>>>> refs/remotes/origin/dev_phase_2_Creation
         <module name="JavadocType" />
         <module name="JavadocVariable" />
         <module name="JavadocStyle" />
