@@ -25,7 +25,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.airportflightplanner.common.api.adapter.CommonAdapter;
-import com.airportflightplanner.common.model.FlighPlanCollectionModel;
+import com.airportflightplanner.common.models.FlighPlanCollectionModel;
 import com.airportflightplanner.main.visualelements.MainPanel;
 
 /**

@@ -80,8 +80,7 @@ public class SteerPointsListModel extends AbstractListModel<SteerPointReader> im
      */
     @Override
     public final SteerPointReader getElementAt(final int index) {
-        final SteerPointReader elementAt = list.get(index);
-        return elementAt;
+        return list.get(index);
     }
 
     /**

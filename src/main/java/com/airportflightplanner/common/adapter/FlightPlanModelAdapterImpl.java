@@ -16,7 +16,7 @@ import org.joda.time.Period;
 import org.jscience.geography.coordinates.Altitude;
 
 import com.airportflightplanner.common.api.adapter.FlightPlanModelAdapter;
-import com.airportflightplanner.common.model.FligthPlanModel;
+import com.airportflightplanner.common.models.FligthPlanModel;
 import com.airportflightplanner.common.types.ArrivalType;
 import com.airportflightplanner.common.types.DepartureType;
 import com.airportflightplanner.common.types.FlightPlanInformationTypes;
@@ -39,7 +39,7 @@ public class FlightPlanModelAdapterImpl implements FlightPlanModelAdapter {
     /** */
     private static final int NUMBER_ONE  = 1;
     /** */
-    private String           name        = "";
+    private transient  String           name        = "";
 
     /**
      *

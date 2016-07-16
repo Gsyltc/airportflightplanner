@@ -11,7 +11,7 @@ import javax.swing.SwingConstants;
 
 import com.airportflightplanner.common.api.adapter.CommonAdapter;
 import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
-import com.airportflightplanner.common.model.FlighPlanCollectionModel;
+import com.airportflightplanner.common.models.FlighPlanCollectionModel;
 import com.airportflightplanner.flightplancreation.FlightPlanCreationPanel;
 import com.airportflightplanner.flightplanvisualization.panel.FlightPlanVisualiazationPanel;
 import com.airportflightplanner.main.visualelements.messages.MainPanelMessages;
@@ -38,21 +38,21 @@ public class MainPanel extends FormDebugPanel {
      */
     private static final int                 FIRST_TAB        = 0;
     /** */
-    private final FlighPlanCollectionModel   flighPlanCollectionModel;
+    private transient final FlighPlanCollectionModel   flighPlanCollectionModel;
     /** */
-    private final Map<String, CommonAdapter> adapters;
+    private transient  final Map<String, CommonAdapter> adapters;
 
     /**
      * Main Panel.
      *
-     * @param newlighPlanCollectionModel
+     * @param fpCollectionModel
      *            Collection Model.
      * @param adapters
      */
-    public MainPanel(final FlighPlanCollectionModel newlighPlanCollectionModel, final Map<String, CommonAdapter> adapters) {
+    public MainPanel(final FlighPlanCollectionModel fpCollectionModel, final Map<String, CommonAdapter> adapters) {
         setPaintRows(false);
         setPaintInBackground(false);
-        flighPlanCollectionModel = newlighPlanCollectionModel;
+        flighPlanCollectionModel = fpCollectionModel;
         this.adapters = adapters;
         buildPanel();
     }

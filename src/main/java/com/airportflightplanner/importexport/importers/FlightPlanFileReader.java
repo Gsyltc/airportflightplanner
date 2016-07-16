@@ -30,8 +30,8 @@ import org.apache.commons.logging.LogFactory;
 import com.airportflightplanner.common.api.adapter.FlightPlanModelAdapter;
 import com.airportflightplanner.common.api.flightplan.FligthPlanProperties;
 import com.airportflightplanner.common.api.flightplancollection.flightplan.FligthPlanCollectionProperties;
-import com.airportflightplanner.common.model.FlighPlanCollectionModel;
-import com.airportflightplanner.common.model.FligthPlanModel;
+import com.airportflightplanner.common.models.FlighPlanCollectionModel;
+import com.airportflightplanner.common.models.FligthPlanModel;
 import com.airportflightplanner.common.types.FlightPlanInformationTypes;
 import com.airportflightplanner.common.utils.properties.CommonProperties;
 
@@ -46,9 +46,9 @@ public class FlightPlanFileReader {
     /**
      *
      */
-    private FlightPlanModelAdapter   flightPlanModelAdapter;
+    private  transient FlightPlanModelAdapter   flightPlanModelAdapter;
     /** */
-    private FlighPlanCollectionModel flighPlanCollectionModel;
+    private  transient FlighPlanCollectionModel flighPlanCollectionModel;
 
     /**
      *
@@ -98,10 +98,10 @@ public class FlightPlanFileReader {
                         }
                     });
 
-                    try (InputStream in = Files.newInputStream(path); //
-                            BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {
-                        String line = null;
-                        while ((line = reader.readLine()) != null) {
+                    try (InputStream inputStream = Files.newInputStream(path); //
+                            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+                        String line =  reader.readLine();
+                        while (line != null) {
                             if (line.startsWith("START")) {
                                 final FlightPlanInformationTypes informationsType = FlightPlanInformationTypes.valueOf(line);
                                 switch (informationsType) {

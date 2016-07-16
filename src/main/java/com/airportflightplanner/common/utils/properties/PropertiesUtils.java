@@ -32,7 +32,7 @@ public class PropertiesUtils extends AbstractSlotReceiver {
     /** */
     private static final String           USER_CONFIG_PATH      = "config/";
     /** */
-    private List<String>                  fileNames;
+    private transient List<String>                  fileNames;
     /** */
     private static Properties             userProperties        = new Properties();
     /** */

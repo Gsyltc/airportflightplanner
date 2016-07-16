@@ -30,25 +30,28 @@ public abstract class AbstractCommonPanel extends JPanel implements SlotReceiver
     /**
      *
      */
-    private final List<PresentationModel<?>>               presenters            = new CopyOnWriteArrayList<PresentationModel<?>>();
+    private transient final List<PresentationModel<?>>     presenters                      = new CopyOnWriteArrayList<PresentationModel<?>>();
     /**
      *
      */
-    private static final long                              serialVersionUID      = -9041291520151245877L;
+    private static final long                              serialVersionUID                = -9041291520151245877L;
     /** */
-    protected transient Map<String, Signal>                signals               = new ConcurrentHashMap<String, Signal>();
+    protected transient Map<String, Signal>                signals                         = new ConcurrentHashMap<String, Signal>();
     /** */
-    protected Map<String, SelectionSlot<? extends Object>> slots                 = new ConcurrentHashMap<String, SelectionSlot<? extends Object>>();
+    protected Map<String, SelectionSlot<? extends Object>> slots                           = new ConcurrentHashMap<String, SelectionSlot<? extends Object>>();
     /** */
-    protected Map<String, ? extends Object>                attributeMap          = new ConcurrentHashMap<String, Object>();
+    protected Map<String, ? extends Object>                attributeMap                    = new ConcurrentHashMap<String, Object>();
     /** */
     private CommonAdapter                                  adapter;
     /** The logger of this class. */
-    private static final Log                               LOGGER                = LogFactory.getLog(AbstractCommonPanel.class);
+    private static final Log                               LOGGER                          = LogFactory.getLog(AbstractCommonPanel.class);
     /** */
-    protected static final int                             FIRST_PRESENTER       = 0;
+    protected static final int                             FIRST_PRESENTER                 = 0;
     /** */
-    protected static final String                          COLLUMNSPEC_PREF_GROW = "pref:grow";
+    protected static final String                          PREF_GROW           = "pref:grow";
+
+    /** */
+    protected static final String                          CENTER_DEFAULT_GROW = "center:default:grow";
 
     /**
      *
@@ -56,19 +59,22 @@ public abstract class AbstractCommonPanel extends JPanel implements SlotReceiver
      *            Presentation Models list for the panel.
      */
     protected AbstractCommonPanel(final PresentationModel<?>... presentationModels) {
+        super();
         if (null != presentationModels) {
             for (final PresentationModel<?> presentationModel : presentationModels) {
                 presenters.add(presentationModel);
             }
         }
-        attachSignal();
-        attachSlotAction();
+
     }
 
     /**
      *
      */
-    public abstract void build();
+    public void build() {
+        attachSignal();
+        attachSlotAction();
+    }
 
     /**
      * Method to override.

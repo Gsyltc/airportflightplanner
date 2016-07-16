@@ -50,7 +50,7 @@ public class FlightPlanCreationPanel extends AbstractCommonPanel {
     /** */
     protected transient GoogleMapPane  googleMap;
     /** */
-    private Map<String, CommonAdapter> adapters;
+    private transient Map<String, CommonAdapter> adapters;
     /** */
     private static final int           GOOGLE_PRESENTER_INDEX = 1;
 
@@ -99,13 +99,14 @@ public class FlightPlanCreationPanel extends AbstractCommonPanel {
      */
     @Override
     public final void build() {
+        super.build();
         setLayout(new FormLayout(new ColumnSpec[] { //
-                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(COLLUMNSPEC_PREF_GROW), //
-                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(COLLUMNSPEC_PREF_GROW), //
-                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(COLLUMNSPEC_PREF_GROW), //
-                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(COLLUMNSPEC_PREF_GROW), //
-                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(COLLUMNSPEC_PREF_GROW), //
-                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(COLLUMNSPEC_PREF_GROW), //
+                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(PREF_GROW), //
+                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(PREF_GROW), //
+                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(PREF_GROW), //
+                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(PREF_GROW), //
+                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(PREF_GROW), //
+                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(PREF_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, }, new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, //

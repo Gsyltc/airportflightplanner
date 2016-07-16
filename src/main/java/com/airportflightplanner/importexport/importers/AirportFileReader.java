@@ -1,6 +1,11 @@
-/* @(#)FlightPlanLoader.java
+/*
+ * @(#)AirportFileReader.java
  *
- * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
+ * Goubaud Sylvain - 2016.
+ *
+ * This code may be freely used and modified on any personal or professional
+ * project.  It comes with no warranty.
+ *
  */
 package com.airportflightplanner.importexport.importers;
 
@@ -32,13 +37,13 @@ public class AirportFileReader {
      */
     public void init() {
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(CommonProperties.ROUTES_DIRECTORY)) {
-            for (Path path : stream) {
-                Path fileName = path.getFileName();
+            for (final Path path : stream) {
+                final Path fileName = path.getFileName();
                 if (null != fileName) {
                     AIRPORTS.add(fileName.toString());
                 }
             }
-        } catch (IOException e) {
+        } catch (final IOException e) {
             LOGGER.error("Error while reading Flght plans", e);
         }
     }

@@ -10,7 +10,7 @@ import java.awt.event.ItemListener;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 
-import com.airportflightplanner.common.model.FlighPlanCollectionModel;
+import com.airportflightplanner.common.models.FlighPlanCollectionModel;
 import com.airportflightplanner.common.slotsignal.Signal;
 import com.airportflightplanner.common.slotsignal.TopicName;
 import com.airportflightplanner.common.utils.properties.CommonProperties;
@@ -38,7 +38,7 @@ public class CurrentAirportPanel extends AbstractCommonPanel {
     /**
      *
      */
-    protected final FlighPlanCollectionModel flightPlansCollection;
+    protected transient final FlighPlanCollectionModel flightPlansCollection;
 
     /**
      * @param fpcm
@@ -46,6 +46,7 @@ public class CurrentAirportPanel extends AbstractCommonPanel {
      *
      */
     public CurrentAirportPanel(final FlighPlanCollectionModel fpcm) {
+        super();
         flightPlansCollection = fpcm;
     }
 
@@ -55,14 +56,15 @@ public class CurrentAirportPanel extends AbstractCommonPanel {
      */
     @Override
     public final void build() {
+        super.build();
         setLayout(new FormLayout(new ColumnSpec[] { //
-                ColumnSpec.decode(COLLUMNSPEC_PREF_GROW), //
+                ColumnSpec.decode(PREF_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode(COLLUMNSPEC_PREF_GROW), //
+                ColumnSpec.decode(PREF_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode(COLLUMNSPEC_PREF_GROW), //
+                ColumnSpec.decode(PREF_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode(COLLUMNSPEC_PREF_GROW), }, //
+                ColumnSpec.decode(PREF_GROW), }, //
                 new RowSpec[] { FormSpecs.PREF_ROWSPEC, }));
 
         final JLabel airportLabel = DefaultComponentFactory.getInstance().createLabel(FlightPlanVisualizationMessages.AIRPORT);
@@ -92,9 +94,9 @@ public class CurrentAirportPanel extends AbstractCommonPanel {
              * {@inheritDoc}
              */
             @Override
-            public void itemStateChanged(final ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    final String currentAirport = e.getItem().toString();
+            public void itemStateChanged(final ItemEvent event) {
+                if (event.getStateChange() == ItemEvent.SELECTED) {
+                    final String currentAirport = event.getItem().toString();
                     flightPlansCollection.setCurrentAirport(currentAirport);
                     final Signal signal = findSignal(TopicName.UPDATE_AIRPORT_TOPIC);
                     signal.fireSignal(currentAirport);

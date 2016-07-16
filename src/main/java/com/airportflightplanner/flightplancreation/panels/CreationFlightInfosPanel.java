@@ -47,11 +47,11 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
     /**
      *
      */
-    private static final long     serialVersionUID         = -2692513903084994308L;
+    private static final long  serialVersionUID         = -2692513903084994308L;
     /** */
-    protected static final int    NO_SELECTION             = -1;
+    protected static final int NO_SELECTION             = -1;
     /** */
-    private static final int      FL_INFOS_PRESENTER_INDEX = 1;
+    private static final int   FL_INFOS_PRESENTER_INDEX = 1;
 
     /**
      * @param newCurrentFlightPlan
@@ -67,20 +67,21 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
      */
     @Override
     public void build() {
+        super.build();
         final FormLayout formLayout = new FormLayout(new ColumnSpec[] { //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode("center:default:grow"), //
+                ColumnSpec.decode(CENTER_DEFAULT_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode("center:default:grow"), //
+                ColumnSpec.decode(CENTER_DEFAULT_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode("center:default:grow"), //
+                ColumnSpec.decode(CENTER_DEFAULT_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode("center:default:grow"), //
-                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("center:default:grow"), //
+                ColumnSpec.decode(CENTER_DEFAULT_GROW), //
+                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(CENTER_DEFAULT_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode("center:default:grow"), //
+                ColumnSpec.decode(CENTER_DEFAULT_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode("center:default:grow"), //
+                ColumnSpec.decode(CENTER_DEFAULT_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, }, //
                 new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC, ///
@@ -142,7 +143,7 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
                     final String aircraftType = ((FligthPlanReader) evt.getNewValue()).getAircraftType();
                     final FlighInfosModel bean = (FlighInfosModel) getPresenter(FL_INFOS_PRESENTER_INDEX).getBean();
 
-                    final String aircraftClass =AircraftDecoder.getAircraftClass(aircraftType);
+                    final String aircraftClass = AircraftDecoder.getAircraftClass(aircraftType);
                     bean.setAircraftClass(aircraftClass);
                     bean.setAircraftCie(AircraftDecoder.getAircraftCie(aircraftType));
                     bean.setAircraftLivery(aircraftType);
@@ -191,9 +192,9 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
              * {@inheritDoc}
              */
             @Override
-            public void actionPerformed(final ActionEvent e) {
-                if (e.getSource() instanceof JComboBox) {
-                    bean.setAircraftClass((String) ((JComboBox<?>) e.getSource()).getSelectedItem());
+            public void actionPerformed(final ActionEvent event) {
+                if (event.getSource() instanceof JComboBox) {
+                    bean.setAircraftClass((String) ((JComboBox<?>) event.getSource()).getSelectedItem());
                 }
             }
         });
@@ -220,10 +221,11 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
             @Override
             public void propertyChange(final PropertyChangeEvent evt) {
                 refreshData(evt.getPropertyName());
-                if (null != evt.getNewValue()) {
-                    component.setSelectedItem(evt.getNewValue());
-                } else {
+                if (null == evt.getNewValue()) {
                     component.setSelectedIndex(NO_SELECTION);
+                } else {
+
+                    component.setSelectedItem(evt.getNewValue());
                 }
             }
         });
@@ -245,10 +247,10 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
              * {@inheritDoc}
              */
             @Override
-            public void actionPerformed(final ActionEvent e) {
-                final String livery = (String) ((JComboBox<?>) e.getSource()).getSelectedItem();
+            public void actionPerformed(final ActionEvent event) {
+                final String livery = (String) ((JComboBox<?>) event.getSource()).getSelectedItem();
                 if (null != livery) {
-                    bean.setAircraftLivery((String) ((JComboBox<?>) e.getSource()).getSelectedItem());
+                    bean.setAircraftLivery((String) ((JComboBox<?>) event.getSource()).getSelectedItem());
                 }
             }
         });
@@ -275,10 +277,10 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
             @Override
             public void propertyChange(final PropertyChangeEvent evt) {
                 refreshData(evt.getPropertyName());
-                if (null != evt.getNewValue()) {
-                    component.setSelectedItem(evt.getNewValue());
-                } else {
+                if (null == evt.getNewValue()) {
                     component.setSelectedIndex(NO_SELECTION);
+                } else {
+                    component.setSelectedItem(evt.getNewValue());
                 }
             }
         });
@@ -290,9 +292,9 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
              * {@inheritDoc}
              */
             @Override
-            public void actionPerformed(final ActionEvent e) {
-                if (e.getSource() instanceof JComboBox) {
-                    bean.setAircraftCie((String) ((JComboBox<?>) e.getSource()).getSelectedItem());
+            public void actionPerformed(final ActionEvent event) {
+                if (event.getSource() instanceof JComboBox) {
+                    bean.setAircraftCie((String) ((JComboBox<?>) event.getSource()).getSelectedItem());
                 }
             }
         });

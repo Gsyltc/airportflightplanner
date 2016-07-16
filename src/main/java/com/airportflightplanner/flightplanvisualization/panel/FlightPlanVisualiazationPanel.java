@@ -25,7 +25,7 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
-import com.airportflightplanner.common.model.FlighPlanCollectionModel;
+import com.airportflightplanner.common.models.FlighPlanCollectionModel;
 import com.airportflightplanner.common.slotsignal.SelectionSlot;
 import com.airportflightplanner.common.slotsignal.Signal;
 import com.airportflightplanner.common.slotsignal.TopicName;
@@ -67,10 +67,6 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
     public FlightPlanVisualiazationPanel(final FlighPlanCollectionModel newFPCollectionModel) {
         super(new FlightPlanVisualizationPresenter(newFPCollectionModel));
         flightPlansCollection = newFPCollectionModel;
-        //        final FlightPlanVisualizationPresenter presenter = new FlightPlanVisualizationPresenter(newFPCollectionModel);
-        //        newFlightPlanColltionModel.addFligfhtPlanModelListener(//
-        //                ((FlightPlanCollectionReader) presenters.get(FlightPlanVisualizationPresenter.class.getSimpleName())).getListModel());
-        // constructPanel();
     }
 
     /**
@@ -78,6 +74,7 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
      */
     @Override
     public final void build() {
+        super.build();
         setLayout(new FormLayout(new ColumnSpec[] { FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("3dlu:grow"), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
                 ColumnSpec.decode("pref:grow"), //
@@ -149,10 +146,10 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
              * {@inheritDoc}
              */
             @Override
-            public void valueChanged(final ListSelectionEvent e) {
+            public void valueChanged(final ListSelectionEvent event) {
                 FligthPlanReader flightPlan = null;
-                if (e.getValueIsAdjusting()) {
-                    final ListSelectionModel lsm = (ListSelectionModel) e.getSource();
+                if (event.getValueIsAdjusting()) {
+                    final ListSelectionModel lsm = (ListSelectionModel) event.getSource();
 
                     if (!lsm.isSelectionEmpty()) {
                         final int minIndex = lsm.getMinSelectionIndex();

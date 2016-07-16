@@ -16,15 +16,16 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Signal extends Observable {
 
     /** */
-    private final String              topicName;
+    private final String                 topicName;
     /** */
-    private final List<SelectionSlot<?>> slotList = new CopyOnWriteArrayList<SelectionSlot<?>>();
+    private transient final List<SelectionSlot<?>> slotList = new CopyOnWriteArrayList<SelectionSlot<?>>();
 
     /**
      *
      * @param topicName
      */
     public Signal(final String topicName) {
+        super();
         this.topicName = topicName;
     }
 
@@ -32,7 +33,7 @@ public class Signal extends Observable {
      *
      * @return
      */
-    String getTopicName() {
+    public String getTopicName() {
         return topicName;
     }
 

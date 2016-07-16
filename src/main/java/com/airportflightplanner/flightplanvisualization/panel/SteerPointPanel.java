@@ -17,11 +17,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
 import com.airportflightplanner.common.api.steerpoints.SteerPointReader;
-import com.airportflightplanner.common.model.SteerPointsCollectionModel;
+import com.airportflightplanner.common.models.SteerPointsCollectionModel;
 import com.airportflightplanner.common.slotsignal.SelectionSlot;
 import com.airportflightplanner.common.slotsignal.Signal;
 import com.airportflightplanner.common.slotsignal.TopicName;
@@ -42,21 +40,12 @@ public class SteerPointPanel extends AbstractCommonPanel {
     /**
      *
      */
-    @Autowired(required = true)
-    protected final SteerPointsCollectionModel steerPointsCollectionModel = new SteerPointsCollectionModel();
-    /**
-     *
-     */
-    private final SteerPointsPresenter         presenter;
-    /** */
-    private JTable                             table;
-    /** */
-    protected Signal                           signal;
+    protected Signal          signal;
 
     /**
      *
      */
-    private static final long                  serialVersionUID           = -6354635338489926005L;
+    private static final long serialVersionUID = -6354635338489926005L;
 
     /**
      *
@@ -66,8 +55,7 @@ public class SteerPointPanel extends AbstractCommonPanel {
      *
      */
     public SteerPointPanel() {
-        presenter = new SteerPointsPresenter(steerPointsCollectionModel);
-        steerPointsCollectionModel.addSteerPointsListModelListener(presenter.getListModel());
+        super(new SteerPointsPresenter(new SteerPointsCollectionModel()));
     }
 
     /**
@@ -75,17 +63,22 @@ public class SteerPointPanel extends AbstractCommonPanel {
      */
     @Override
     public void build() {
+        super.build();
         setLayout(new FormLayout(new ColumnSpec[] { //
                 FormSpecs.RELATED_GAP_COLSPEC, //
                 ColumnSpec.decode("3dlu:grow"), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode(COLLUMNSPEC_PREF_GROW), //
+                ColumnSpec.decode(PREF_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, }, //
                 new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.DEFAULT_ROWSPEC, //
                         FormSpecs.RELATED_GAP_ROWSPEC, }));
 
         add(createSteerPointsPanel(), "2, 2, 3, 1, fill, top");
+
+        final SteerPointsPresenter presenter = (SteerPointsPresenter) getPresenter(FIRST_PRESENTER);
+        final SteerPointsCollectionModel model = presenter.getBean();
+        model.addSteerPointsListModelListener(presenter.getListModel());
 
     }
 
@@ -96,8 +89,8 @@ public class SteerPointPanel extends AbstractCommonPanel {
     private JScrollPane createSteerPointsPanel() {
         final DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-
-        table = new JTable(presenter.getTableAdapter());
+        final SteerPointsPresenter presenter = (SteerPointsPresenter) getPresenter(FIRST_PRESENTER);
+        final JTable table = new JTable(presenter.getTableAdapter());
         table.setColumnSelectionAllowed(true);
         table.setDefaultRenderer(String.class, centerRenderer);
 
@@ -121,6 +114,8 @@ public class SteerPointPanel extends AbstractCommonPanel {
     @Override
     public final void attachSlotAction() {
         final SelectionSlot<FligthPlanReader> slot = new SelectionSlot<FligthPlanReader>(TopicName.FLIGHTPLAN_TABLE_SELECTED, this);
+        final SteerPointsPresenter presenter = (SteerPointsPresenter) getPresenter(FIRST_PRESENTER);
+        final SteerPointsCollectionModel steerPointsModel = presenter.getBean();
         slot.setSlotAction(new SlotAction<FligthPlanReader>() {
             /**
              *
@@ -128,10 +123,10 @@ public class SteerPointPanel extends AbstractCommonPanel {
              */
             @Override
             public void doAction(final FligthPlanReader flightPlanReader) {
-                steerPointsCollectionModel.getListModel().clear();
+                steerPointsModel.getListModel().clear();
                 if (null != flightPlanReader) {
                     final List<SteerPointReader> steerPoints = GeographicUtils.getSteerPoints(flightPlanReader.getSteerPoints());
-                    steerPointsCollectionModel.addSteerPoints(steerPoints);
+                    steerPointsModel.addSteerPoints(steerPoints);
                 }
             }
         });

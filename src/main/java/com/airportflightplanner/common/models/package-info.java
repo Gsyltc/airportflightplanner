@@ -11,4 +11,4 @@
  * @author Goubaud Sylvain
  *
  */
-package com.airportflightplanner.common.model;
+package com.airportflightplanner.common.models;

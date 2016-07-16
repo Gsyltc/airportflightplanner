@@ -45,20 +45,21 @@ public class CreationStartDaysPanel extends AbstractCommonPanel {
      */
     @Override
     public void build() {
+        super.build();
         final FormLayout formLayout = new FormLayout(new ColumnSpec[] { //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode("center:default:grow"), //
+                ColumnSpec.decode(CENTER_DEFAULT_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode("center:default:grow"), //
+                ColumnSpec.decode(CENTER_DEFAULT_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode("center:default:grow"), //
+                ColumnSpec.decode(CENTER_DEFAULT_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode("center:default:grow"), //
-                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("center:default:grow"), //
+                ColumnSpec.decode(CENTER_DEFAULT_GROW), //
+                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(CENTER_DEFAULT_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode("center:default:grow"), //
+                ColumnSpec.decode(CENTER_DEFAULT_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode("center:default:grow"), //
+                ColumnSpec.decode(CENTER_DEFAULT_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, }, //
                 new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC, ///

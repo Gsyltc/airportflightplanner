@@ -80,8 +80,7 @@ public class FlightPlanVisualizationListModel extends AbstractListModel<FligthPl
      */
     @Override
     public final FligthPlanReader getElementAt(final int index) {
-        final FligthPlanReader elementAt = list.get(index);
-        return elementAt;
+        return list.get(index);
     }
 
     /**
