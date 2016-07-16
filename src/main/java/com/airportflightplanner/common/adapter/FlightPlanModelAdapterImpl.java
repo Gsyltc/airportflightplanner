@@ -162,7 +162,7 @@ public class FlightPlanModelAdapterImpl implements FlightPlanModelAdapter {
      * {@inheritDoc}
      */
     @Override
-    public void setName(final String name) {
+    public void setAdapterName(final String name) {
         this.name = name;
     }
 

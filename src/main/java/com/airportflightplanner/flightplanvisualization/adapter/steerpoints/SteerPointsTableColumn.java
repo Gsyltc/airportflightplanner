@@ -1,6 +1,11 @@
-/* @(#)FlightPlanTableColumn.java
+/*
+ * @(#)SteerPointsTableColumn.java
  *
- * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
+ * Goubaud Sylvain - 2016.
+ *
+ * This code may be freely used and modified on any personal or professional
+ * project.  It comes with no warranty.
+ *
  */
 package com.airportflightplanner.flightplanvisualization.adapter.steerpoints;
 
@@ -31,7 +36,7 @@ public enum SteerPointsTableColumn {
      * @return
      */
     public static SteerPointsTableColumn valueOf(final int columnNumber) {
-        for (SteerPointsTableColumn iterable_element : SteerPointsTableColumn.values()) {
+        for (final SteerPointsTableColumn iterable_element : SteerPointsTableColumn.values()) {
             if (iterable_element.ordinal() == columnNumber) {
                 return iterable_element;
             }

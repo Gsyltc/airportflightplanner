@@ -1,6 +1,10 @@
-/* @(#)GoogleMapAdapterImpl.java
+/*
+ * @(#)GoogleMapProcessor.java
  *
- * 2016 Goubaud Sylvain.
+ * Goubaud Sylvain - 2016.
+ *
+ * This code may be freely used and modified on any personal or professional
+ * project.  It comes with no warranty.
  *
  */
 package com.airportflightplanner.flightplancreation.processor;
@@ -30,10 +34,10 @@ public class GoogleMapProcessor {
      * @return
      */
     public static String getEncodedRoad(final GoogleMapReader mapReader) {
-        StringBuilder sb = new StringBuilder();
+        final StringBuilder sb = new StringBuilder();
         sb.append(mapReader.getEncodePolyline().getEncodedPath())//
-                .append(START_MARKER + getFormattedCoordinates(mapReader.getStartMarker()))//
-                .append(END_MARKER + getFormattedCoordinates(mapReader.getEndMarker()));
+        .append(START_MARKER + getFormattedCoordinates(mapReader.getStartMarker()))//
+        .append(END_MARKER + getFormattedCoordinates(mapReader.getEndMarker()));
         return sb.toString();
     }
 

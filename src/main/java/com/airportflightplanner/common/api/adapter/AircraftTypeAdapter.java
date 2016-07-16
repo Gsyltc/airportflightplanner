@@ -43,33 +43,6 @@ public interface AircraftTypeAdapter extends CommonAdapter{
      */
     SortedSet<String> getAircraftClasses();
 
-    //    /**
-    //     * Get the aircraft class.
-    //     *
-    //     * @param airCraftType
-    //     *            Aircraft type (like CLASS_CPIE_LIV).
-    //     * @return the aircraft class.
-    //     */
-    //    String getAircraftClass(final String airCraftType);
-    //
-    //    /**
-    //     *
-    //     * @param airCraftType
-    //     *            Aircraft type (like CLASS_CPIE_LIV).
-    //     * @return the aircraft company.
-    //     */
-    //    String getAircraftCie(final String airCraftType);
-    //
-    //    /**
-    //     *
-    //     * @param airCraftClass
-    //     *            Aircraft class.
-    //     * @param airCraftType
-    //     *            Air craft company.
-    //     * @return aircraft livery.
-    //     */
-    //    String getAircraftLivery(final String airCraftClass, final String airCraftType);
-
     /**
      * Get the list of aircraft company by aircraft type.
      *

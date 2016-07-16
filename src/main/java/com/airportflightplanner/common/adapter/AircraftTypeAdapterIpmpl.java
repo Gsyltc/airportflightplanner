@@ -1,6 +1,10 @@
-/* @(#)AircraftTypeModel.java
+/*
+ * @(#)AircraftTypeAdapterIpmpl.java
  *
- * 2016 Goubaud Sylvain.
+ * Goubaud Sylvain - 2016.
+ *
+ * This code may be freely used and modified on any personal or professional
+ * project.  It comes with no warranty.
  *
  */
 
@@ -24,10 +28,10 @@ import com.airportflightplanner.common.utils.aircraft.AircraftDecoder;
  */
 public final class AircraftTypeAdapterIpmpl implements AircraftTypeAdapter {
     /** */
-    private static final Map<String, AircraftsLiveriesMapper> AIRCRAFT_CLASS_CIE = //
+    private static final Map<String, AircraftsLiveriesMapper> AIRCRAFT_CLASS_CIE =   //
             new ConcurrentHashMap<String, AircraftsLiveriesMapper>();
     /** */
-    private String                                            name;
+    private String                                            adapterName;
 
     /**
      *
@@ -35,10 +39,12 @@ public final class AircraftTypeAdapterIpmpl implements AircraftTypeAdapter {
      */
     @Override
     public List<String> getAircraftLiveriesByClassCpie(final String classCpie) {
-        final List<String> result =new ArrayList<String>();
+        final List<String> result = new ArrayList<String>();
         final AircraftsLiveriesMapper mapper = AIRCRAFT_CLASS_CIE.get(AircraftDecoder.getAircraftClass(classCpie));
         if (null != mapper) {
-            result.addAll(mapper.getLiveriesByCpie(AircraftDecoder.getAircraftCie(classCpie)));
+            final String company = AircraftDecoder.getAircraftCie(classCpie);
+            final SortedSet<String> liveries = mapper.getLiveriesByCpie(company);
+            result.addAll(liveries);
         }
         return result;
     }
@@ -97,7 +103,7 @@ public final class AircraftTypeAdapterIpmpl implements AircraftTypeAdapter {
      */
     @Override
     public String getAdapterName() {
-        return name;
+        return adapterName;
     }
 
     /**
@@ -105,8 +111,8 @@ public final class AircraftTypeAdapterIpmpl implements AircraftTypeAdapter {
      * {@inheritDoc}
      */
     @Override
-    public void setName(final String name) {
-        this.name = name;
+    public void setAdapterName(final String name) {
+        adapterName = name;
     }
 
 }

@@ -1,6 +1,10 @@
-/* @(#)StartDays.java
+/*
+ * @(#)StartDays.java
  *
- * 2016 Goubaud Sylvain.
+ * Goubaud Sylvain - 2016.
+ *
+ * This code may be freely used and modified on any personal or professional
+ * project.  It comes with no warranty.
  *
  */
 package com.airportflightplanner.common.types;
@@ -32,7 +36,7 @@ public enum StartDays {
      * @return
      */
     public static StartDays valueOf(final int typeIndex) {
-        for (StartDays day : StartDays.values()) {
+        for (final StartDays day : StartDays.values()) {
             if (day.ordinal() == typeIndex) {
                 return day;
             }
