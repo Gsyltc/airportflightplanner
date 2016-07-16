@@ -41,14 +41,14 @@ import com.airportflightplanner.common.utils.properties.CommonProperties;
  */
 public class FlightPlanFileReader {
     /** The logger of this class. */
-    private static final Log         LOGGER = LogFactory.getLog(FlightPlanFileReader.class);
+    private static final Log                   LOGGER = LogFactory.getLog(FlightPlanFileReader.class);
 
     /**
      *
      */
-    private  transient FlightPlanModelAdapter   flightPlanModelAdapter;
+    private transient FlightPlanModelAdapter   flightPlanModelAdapter;
     /** */
-    private  transient FlighPlanCollectionModel flighPlanCollectionModel;
+    private transient FlighPlanCollectionModel flighPlanCollectionModel;
 
     /**
      *
@@ -100,7 +100,7 @@ public class FlightPlanFileReader {
 
                     try (InputStream inputStream = Files.newInputStream(path); //
                             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
-                        String line =  reader.readLine();
+                        String line = reader.readLine();
                         while (line != null) {
                             if (line.startsWith("START")) {
                                 final FlightPlanInformationTypes informationsType = FlightPlanInformationTypes.valueOf(line);
@@ -203,6 +203,9 @@ public class FlightPlanFileReader {
                                 default:
                                     break;
                                 }
+                                line = reader.readLine();
+                            } else {
+                                line = reader.readLine();
                             }
                         }
                     }

@@ -16,8 +16,15 @@ import com.airportflightplanner.common.utils.internationalization.Internationali
  *
  */
 public enum SteerPointsTableColumn {
-    LATITUDE(0), LONGITUDE(1), VELOCITY(2), ALTITUDE(3);
-
+    /** */
+    LATITUDE(0),
+    /** */
+    LONGITUDE(1),
+    /** */
+    VELOCITY(2),
+    /** */
+    ALTITUDE(3);
+    /** */
     private static final String PREFIX = "SteerPointsTableColumn.";
     /** */
     private int                 value;
@@ -39,7 +46,7 @@ public enum SteerPointsTableColumn {
         SteerPointsTableColumn result = null;
         for (final SteerPointsTableColumn iterable_element : SteerPointsTableColumn.values()) {
             if (iterable_element.ordinal() == columnNumber) {
-                result= iterable_element;
+                result = iterable_element;
             }
         }
         return result;

@@ -77,7 +77,7 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
         super.build();
         setLayout(new FormLayout(new ColumnSpec[] { FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("3dlu:grow"), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode("pref:grow"), //
+                ColumnSpec.decode(PREF_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, }, //
                 new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC, //
@@ -93,10 +93,6 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
         add(createDaysSelectionPanel(), "2, 4, 3, 1, fill, fill");
         add(createFlightScrollPane(), "2, 6, 3, 1");
         add(createSteerPointPanel(), "2, 8, 3, 1");
-
-        final FlightPlanVisualizationPresenter presenter = (FlightPlanVisualizationPresenter) getPresenter(FIRST_PRESENTER);
-        flightPlansCollection.addFligfhtPlanModelListener(presenter.getListModel());
-
     }
 
     /**
@@ -104,7 +100,8 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
      * @return
      */
     private CurrentAirportPanel createCurrentAirportPanel() {
-        final CurrentAirportPanel panel = new CurrentAirportPanel(flightPlansCollection);
+        final CurrentAirportPanel panel = new CurrentAirportPanel(flightPlansCollection, //
+                (FlightPlanVisualizationPresenter) getPresenter(FIRST_PRESENTER));
         panel.build();
         return panel;
     }

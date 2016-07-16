@@ -16,6 +16,7 @@ import com.airportflightplanner.common.slotsignal.TopicName;
 import com.airportflightplanner.common.utils.properties.CommonProperties;
 import com.airportflightplanner.common.visualelement.AbstractCommonPanel;
 import com.airportflightplanner.flightplanvisualization.messages.FlightPlanVisualizationMessages;
+import com.airportflightplanner.flightplanvisualization.presenter.flightplan.FlightPlanVisualizationPresenter;
 import com.airportflightplanner.importexport.importers.AirportFileReader;
 import com.jgoodies.binding.adapter.ComboBoxAdapter;
 import com.jgoodies.binding.value.ValueHolder;
@@ -34,7 +35,7 @@ public class CurrentAirportPanel extends AbstractCommonPanel {
     /**
      *
      */
-    private static final long                serialVersionUID = -8872582029412974363L;
+    private static final long                          serialVersionUID = -8872582029412974363L;
     /**
      *
      */
@@ -43,11 +44,14 @@ public class CurrentAirportPanel extends AbstractCommonPanel {
     /**
      * @param fpcm
      *            the flighplan collection model.
+     * @param flightPlanVisualizationPresenter
      *
      */
-    public CurrentAirportPanel(final FlighPlanCollectionModel fpcm) {
-        super();
+    public CurrentAirportPanel(final FlighPlanCollectionModel fpcm, final FlightPlanVisualizationPresenter flightPlanVisualizationPresenter) {
+        super(flightPlanVisualizationPresenter);
         flightPlansCollection = fpcm;
+        flightPlansCollection.addFligfhtPlanModelListener(flightPlansCollection.getListModel());
+
     }
 
     /**
@@ -68,7 +72,7 @@ public class CurrentAirportPanel extends AbstractCommonPanel {
                 new RowSpec[] { FormSpecs.PREF_ROWSPEC, }));
 
         final JLabel airportLabel = DefaultComponentFactory.getInstance().createLabel(FlightPlanVisualizationMessages.AIRPORT);
-
+        //
         add(airportLabel, "1, 1, right, default");
 
         final JLabel timeLabel = DefaultComponentFactory.getInstance().createLabel(FlightPlanVisualizationMessages.TIME);

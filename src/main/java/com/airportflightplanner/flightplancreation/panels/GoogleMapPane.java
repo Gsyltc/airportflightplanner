@@ -36,7 +36,7 @@ public class GoogleMapPane extends JEditorPane {
     /** */
     private transient String                                  zoomFactor       = CommonProperties.getPropertyValue(CommonProperties.GOOGLE_ZOOM_FACTOR);
     /** */
-    private transient final String                            apiKey           = CommonProperties.getPropertyValue(CommonProperties.GOOGLE_KEY);
+    private final String                            apiKey           = CommonProperties.getPropertyValue(CommonProperties.GOOGLE_KEY);
     /** */
     private transient MapType                                 roadmap          =                                                                           //
             MapType.valueOf(CommonProperties.getPropertyValue(CommonProperties.GOOGLE_MAPTYPE));

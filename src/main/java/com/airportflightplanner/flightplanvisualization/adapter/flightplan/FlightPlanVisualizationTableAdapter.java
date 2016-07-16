@@ -124,9 +124,9 @@ public class FlightPlanVisualizationTableAdapter extends AbstractTableAdapter<Fl
         default:
             break;
         }
-        if (null == result) {
-            throw new IllegalArgumentException();
-        }
+        //        if (null == result) {
+        //            throw new IllegalArgumentException();
+        //        }
         return result;
     }
 

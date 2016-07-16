@@ -28,8 +28,6 @@ import com.airportflightplanner.common.slotsignal.api.SlotAction;
  */
 public class PropertiesUtils extends AbstractSlotReceiver {
     /** */
-    // private transient String fileName = "application.properties";
-    /** */
     private static final String           USER_CONFIG_PATH      = "config/";
     /** */
     private transient List<String>                  fileNames;
@@ -86,9 +84,11 @@ public class PropertiesUtils extends AbstractSlotReceiver {
                 result = properties.getProperty(key);
                 break;
             }
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("Error while loading properties. Property " + key + " not found");
-            }
+
+        }
+
+        if (result.isEmpty() && LOGGER.isErrorEnabled()) {
+            LOGGER.error("Error while loading properties. Property " + key + " not found");
         }
 
         return result;

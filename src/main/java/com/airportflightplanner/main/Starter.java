@@ -73,6 +73,7 @@ public class Starter {
                         final JFrame mainFrame = new JFrame(MAIN_TITLE);
                         mainFrame.setJMenuBar(menu);
                         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
                         mainFrame.getContentPane().add(new MainPanel(model, adapters), BorderLayout.CENTER);
                         mainFrame.setMinimumSize(new Dimension(MINIMUM_WEIGHT, MINIMUM_HEIGHT));
                         mainFrame.pack();

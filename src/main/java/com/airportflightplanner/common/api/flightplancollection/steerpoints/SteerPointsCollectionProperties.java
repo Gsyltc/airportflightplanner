@@ -13,7 +13,7 @@ public final class SteerPointsCollectionProperties {
     /** */
     public static final String STEERPOINTS_MAP = "steerPointsMap";
     /** */
-    public static final String CURRENT_AIRPORT = "curentFlightPlan";
+    public static final String CURRENT_FP = "curentFlightPlan";
 
     /**
      * Protected constructor.

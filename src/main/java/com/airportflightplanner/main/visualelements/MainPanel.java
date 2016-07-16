@@ -38,15 +38,15 @@ public class MainPanel extends FormDebugPanel {
     /**
      *
      */
-    private static final long                serialVersionUID = -1014619836487219532L;
+    private static final long                          serialVersionUID = -1014619836487219532L;
     /**
      *
      */
-    private static final int                 FIRST_TAB        = 0;
+    private static final int                           FIRST_TAB        = 0;
     /** */
     private transient final FlighPlanCollectionModel   flighPlanCollectionModel;
     /** */
-    private transient  final Map<String, CommonAdapter> adapters;
+    private transient final Map<String, CommonAdapter> adapters;
 
     /**
      * Main Panel.
@@ -81,9 +81,9 @@ public class MainPanel extends FormDebugPanel {
 
         // Create Panel
         final FlightPlanCreationPanel createPanel = createFlightPlanCreationPanel();
-
+        //
         final FlightPlanVisualiazationPanel fpVisuPanel = createFlightPlanVisualiazationPanel();
-
+        //
         final WaypointEditionPanel wpEditionPanel = createWaypointEditionPanel();
 
         // Create TabbedPanel
@@ -91,7 +91,7 @@ public class MainPanel extends FormDebugPanel {
         tabbedPane.add(MainPanelMessages.CREATE, createPanel);
         tabbedPane.add(MainPanelMessages.MODIFY, wpEditionPanel);
         tabbedPane.setSelectedIndex(FIRST_TAB);
-
+        //
         // Add component to main panel
         add(fpVisuPanel, "2, 2, fill, fill");
         add(tabbedPane, "4, 2, center, fill");

@@ -16,8 +16,21 @@ import com.airportflightplanner.common.utils.internationalization.Internationali
  *
  */
 public enum FlightPlanVisualisationTableColumn {
-    START_AIRPORT(0), DEPARTURE_TIME(1), ARRIVAL_TIME(2), AIRCRAFT_TYPE(3), COMPANY(4), DEST_AIRPORT(5), DURATION(6);
-
+    /** */
+    START_AIRPORT(0),
+    /** */
+    DEPARTURE_TIME(1),
+    /** */
+    ARRIVAL_TIME(2),
+    /** */
+    AIRCRAFT_TYPE(3),
+    /** */
+    COMPANY(4),
+    /** */
+    DEST_AIRPORT(5),
+    /** */
+    DURATION(6);
+    /** */
     private static final String PREFIX = "FlightPlanVisualisationTableColumn.";
     /** */
     private int                 value;
