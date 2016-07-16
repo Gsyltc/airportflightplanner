@@ -1,6 +1,11 @@
-/* @(#)ArrivalType.java
+/*
+ * @(#)ArrivalType.java
  *
- * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
+ * Goubaud Sylvain - 2016.
+ *
+ * This code may be freely used and modified on any personal or professional
+ * project.  It comes with no warranty.
+ *
  */
 package com.airportflightplanner.common.types;
 
@@ -31,7 +36,7 @@ public enum ArrivalType {
      * @return
      */
     public static ArrivalType valueOf(final int typeIndex) {
-        for (ArrivalType type : ArrivalType.values()) {
+        for (final ArrivalType type : ArrivalType.values()) {
             if (type.ordinal() == typeIndex) {
                 return type;
             }

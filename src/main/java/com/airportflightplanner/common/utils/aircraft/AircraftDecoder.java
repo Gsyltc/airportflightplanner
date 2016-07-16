@@ -29,7 +29,7 @@ package com.airportflightplanner.common.utils.aircraft;
  * @author Goubaud Sylvain
  *
  */
-public class AircraftDecoder {
+public final class AircraftDecoder {
     /**
      * Protected constructor.
      */

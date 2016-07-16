@@ -1,6 +1,11 @@
-/* @(#)DepartureType.java
+/*
+ * @(#)DepartureType.java
  *
- * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
+ * Goubaud Sylvain - 2016.
+ *
+ * This code may be freely used and modified on any personal or professional
+ * project.  It comes with no warranty.
+ *
  */
 package com.airportflightplanner.common.types;
 
@@ -31,7 +36,7 @@ public enum DepartureType {
      * @return
      */
     public static DepartureType valueOf(final int typeIndex) {
-        for (DepartureType type : DepartureType.values()) {
+        for (final DepartureType type : DepartureType.values()) {
             if (type.ordinal() == typeIndex) {
                 return type;
             }

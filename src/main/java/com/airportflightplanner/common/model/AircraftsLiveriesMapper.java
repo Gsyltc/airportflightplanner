@@ -69,4 +69,11 @@ public class AircraftsLiveriesMapper {
     public final SortedSet<String> getCompagnies() {
         return Collections.unmodifiableSortedSet(new TreeSet<String>(liveriesMap.keySet()));
     }
+
+    /**
+     * @return the aircraftType
+     */
+    public String getAircraftType() {
+        return aircraftType;
+    }
 }

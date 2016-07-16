@@ -1,6 +1,11 @@
-/* @(#)FlightPlanLoader.java
+/*
+ * @(#)FlightPlanFileReader.java
  *
- * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
+ * Goubaud Sylvain - 2016.
+ *
+ * This code may be freely used and modified on any personal or professional
+ * project.  It comes with no warranty.
+ *
  */
 package com.airportflightplanner.importexport.importers;
 
@@ -39,8 +44,8 @@ public class FlightPlanFileReader {
     private static final Log         LOGGER = LogFactory.getLog(FlightPlanFileReader.class);
 
     /**
-    *
-    */
+     *
+     */
     private FlightPlanModelAdapter   flightPlanModelAdapter;
     /** */
     private FlighPlanCollectionModel flighPlanCollectionModel;
@@ -70,10 +75,10 @@ public class FlightPlanFileReader {
     protected void loadFlightPlans(final String currentAirport) {
         flighPlanCollectionModel.getListModel().clear();
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(CommonProperties.ROUTES_DIRECTORY.resolve(currentAirport), "*.{txt}")) {
-            for (Path path : stream) {
-                Path fileName = path.getFileName();
+            for (final Path path : stream) {
+                final Path fileName = path.getFileName();
                 if (null != fileName) {
-                    FligthPlanModel newFlightPlan = new FligthPlanModel();
+                    final FligthPlanModel newFlightPlan = new FligthPlanModel();
                     newFlightPlan.setFileName(fileName.toString().replace("*.txt", ""));
                     // Attach listener for flight time
                     newFlightPlan.addPropertyChangeListener(FligthPlanProperties.DURATION, new PropertyChangeListener() {
@@ -98,7 +103,7 @@ public class FlightPlanFileReader {
                         String line = null;
                         while ((line = reader.readLine()) != null) {
                             if (line.startsWith("START")) {
-                                FlightPlanInformationTypes informationsType = FlightPlanInformationTypes.valueOf(line);
+                                final FlightPlanInformationTypes informationsType = FlightPlanInformationTypes.valueOf(line);
                                 switch (informationsType) {
                                 case STARTTIME:
                                     line = reader.readLine();
@@ -186,7 +191,7 @@ public class FlightPlanFileReader {
                                     break;
 
                                 case STARTSTEERPOINTS:
-                                    List<String> steerpoints = new ArrayList<String>();
+                                    final List<String> steerpoints = new ArrayList<String>();
                                     line = reader.readLine();
                                     while (!FlightPlanInformationTypes.ENDSTEERPOINTS.name().equals(line)) {
                                         steerpoints.add(line);
@@ -205,7 +210,7 @@ public class FlightPlanFileReader {
                     flighPlanCollectionModel.addFlightPlan(newFlightPlan);
                 }
             }
-        } catch (IOException e) {
+        } catch (final IOException e) {
             LOGGER.error("Error while reading Flght plans", e);
         }
     }

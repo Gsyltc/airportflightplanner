@@ -15,13 +15,15 @@
     <rule ref="rulesets/java/unnecessary.xml" />
     <rule ref="rulesets/java/strings.xml" />
     <rule ref="rulesets/java/sunsecure.xml" />
-    <rule ref="rulesets/java/optimizations.xml" />
+    <rule ref="rulesets/java/optimizations.xml">
+        <exclude name="AvoidInstantiatingObjectsInLoops" />
+    </rule>
     <rule ref="rulesets/java/migrating.xml" />
     <rule ref="rulesets/java/javabeans.xml" />
     <rule ref="rulesets/java/logging-java.xml" />
     <rule ref="rulesets/java/imports.xml" />
     <rule ref="rulesets/java/finalizers.xml" />
     <rule ref="rulesets/java/empty.xml" />
-       <rule ref="rulesets/java/coupling.xml"/>
-    
+    <rule ref="rulesets/java/coupling.xml" />
+
 </ruleset>
