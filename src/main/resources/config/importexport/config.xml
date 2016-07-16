@@ -8,7 +8,9 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     <!-- Readers -->
     <bean id="id-AirportFileReader" class="com.airportflightplanner.importexport.importers.AirportFileReader" init-method="init" />
 
-    <bean id="id-AircraftFileReader" class="com.airportflightplanner.importexport.importers.AircraftFileReader" init-method="init" />
+    <bean id="id-AircraftFileReader" class="com.airportflightplanner.importexport.importers.AircraftFileReader" init-method="init">
+        <property name="adapter" ref="id-AircraftTypeAdapter" />
+    </bean>
 
     <bean id="id-FlightPlanFileReader" class="com.airportflightplanner.importexport.importers.FlightPlanFileReader" init-method="init">
         <property name="flightPlanModelAdapter" ref="id-FlightPlanModelAdapter" />

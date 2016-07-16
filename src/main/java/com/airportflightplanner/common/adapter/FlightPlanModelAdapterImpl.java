@@ -38,6 +38,8 @@ public class FlightPlanModelAdapterImpl implements FlightPlanModelAdapter {
     private static final int NUMBER_ZERO = 0;
     /** */
     private static final int NUMBER_ONE  = 1;
+    /** */
+    private String           name        = "";
 
     /**
      *
@@ -146,6 +148,22 @@ public class FlightPlanModelAdapterImpl implements FlightPlanModelAdapter {
         default:
             break;
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getAdapterName() {
+        return name;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setName(final String name) {
+        this.name = name;
     }
 
 }

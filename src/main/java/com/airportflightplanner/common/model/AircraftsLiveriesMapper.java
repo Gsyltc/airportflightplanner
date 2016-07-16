@@ -11,7 +11,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.airportflightplanner.common.adapter.AircraftTypeAdapter;
+import com.airportflightplanner.common.utils.aircraft.AircraftDecoder;
 
 /**
  * @author Goubaud Sylvain
@@ -20,6 +20,16 @@ import com.airportflightplanner.common.adapter.AircraftTypeAdapter;
 public class AircraftsLiveriesMapper {
     /** */
     private transient final Map<String, SortedSet<String>> liveriesMap = new ConcurrentHashMap<String, SortedSet<String>>();
+    /** */
+    private final String                                   aircraftType;
+
+    /**
+     * @param newAircraftCie
+     *            The companie.
+     */
+    public AircraftsLiveriesMapper(final String newAircraftType) {
+        aircraftType = newAircraftType;
+    }
 
     /**
      *
@@ -27,14 +37,14 @@ public class AircraftsLiveriesMapper {
      *            aircraft type.
      */
     public final void addLivery(final String airCraftType) {
-        final String cpie = AircraftTypeAdapter.getAircraftCie(airCraftType);
-        if (liveriesMap.containsKey(cpie)) {
-            final SortedSet<String> liveries = liveriesMap.get(cpie);
+        final String company = AircraftDecoder.getAircraftCie(airCraftType);
+        if (liveriesMap.containsKey(company)) {
+            final SortedSet<String> liveries = liveriesMap.get(company);
             liveries.add(airCraftType);
         } else {
             final SortedSet<String> liveries = new TreeSet<String>();
             liveries.add(airCraftType);
-            liveriesMap.put(cpie, liveries);
+            liveriesMap.put(company, liveries);
         }
     }
 
@@ -52,13 +62,11 @@ public class AircraftsLiveriesMapper {
         return result;
     }
 
-    /**
+    /*
      *
      * @return list of companies.
      */
     public final SortedSet<String> getCompagnies() {
-        final SortedSet<String> sortedSet = new TreeSet<>(liveriesMap.keySet());
-        return Collections.unmodifiableSortedSet(sortedSet);
+        return Collections.unmodifiableSortedSet(new TreeSet<String>(liveriesMap.keySet()));
     }
-
 }

@@ -4,21 +4,26 @@
  */
 package com.airportflightplanner.main.visualelements.panels;
 
-import com.jgoodies.forms.debug.FormDebugPanel;
+import com.airportflightplanner.common.visualelement.AbstractCommonPanel;
 
 /**
  * @author Goubaud Sylvain
  *
  */
-public class WaypointEditionPanel extends FormDebugPanel {
+public class WaypointEditionPanel extends AbstractCommonPanel {
 
     /**
      *
      */
     private static final long serialVersionUID = 6378943645259250488L;
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void build() {
+        // TODO Auto-generated method stub
+
+    }
+
 }
-
-
-
-

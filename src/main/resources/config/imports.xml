@@ -4,6 +4,7 @@ http://www.springframework.org/schema/lang http://www.springframework.org/schema
 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 
+    <import resource="./adapters/adapters.xml" />
     <import resource="./application/config.xml" />
     <import resource="./internationalization/config.xml" />
     <import resource="./importexport/config.xml" />

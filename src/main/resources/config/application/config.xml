@@ -6,7 +6,10 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 
     <bean id="id-PropertiesLoader" class="com.airportflightplanner.common.utils.properties.PropertiesUtils" init-method="init">
         <property name="propertiesFile">
-            <value>application.properties</value>
+            <util:list>
+                <value>application.properties</value>
+                <value>com/airportflightplanner/common/utils/geographics/googleKey.properties</value>
+            </util:list>
         </property>
     </bean>
 

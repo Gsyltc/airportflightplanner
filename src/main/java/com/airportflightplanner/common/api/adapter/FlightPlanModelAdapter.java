@@ -14,7 +14,7 @@ import com.airportflightplanner.common.types.FlightPlanInformationTypes;
  * @author Goubaud Sylvain
  *
  */
-public interface FlightPlanModelAdapter {
+public interface FlightPlanModelAdapter extends CommonAdapter{
 
     /**
      * Construct a route for the flight plan.

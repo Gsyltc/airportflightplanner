@@ -23,15 +23,15 @@ public class SteerPointModel extends Model implements SteerPointWriter {
     /**
      *
      */
-    private static final long serialVersionUID = 2802706994676346658L;
+    private static final long        serialVersionUID = 2802706994676346658L;
     /** */
-    LatLong                   latLong;
+    private LatLong                  latLong;
     /** */
-    private DecimalMeasure<Velocity>          velocity;
+    private DecimalMeasure<Velocity> velocity;
     /** */
-    private Altitude          altitude;
+    private Altitude                 altitude;
     /** */
-    private String            name             = "";
+    private String                   name             = "";
 
     /**
      *
@@ -75,9 +75,9 @@ public class SteerPointModel extends Model implements SteerPointWriter {
      */
     @Override
     public void setLatLong(final LatLong value) {
-        LatLong oldValue = this.latLong;
+        final LatLong oldValue = latLong;
         if (!value.equals(oldValue)) {
-            this.latLong = value;
+            latLong = value;
             firePropertyChange(SteerPointProperties.LAT_LONG, oldValue, latLong);
         }
     }
@@ -88,9 +88,9 @@ public class SteerPointModel extends Model implements SteerPointWriter {
      */
     @Override
     public void setVelocity(final DecimalMeasure<Velocity> decimalMeasure) {
-        DecimalMeasure<Velocity> oldValue = this.velocity;
+        final DecimalMeasure<Velocity> oldValue = velocity;
         if (!decimalMeasure.equals(oldValue)) {
-            this.velocity = decimalMeasure;
+            velocity = decimalMeasure;
             firePropertyChange(SteerPointProperties.VELOCITY, oldValue, velocity);
         }
     }
@@ -101,9 +101,9 @@ public class SteerPointModel extends Model implements SteerPointWriter {
      */
     @Override
     public void setAltitude(final Altitude value) {
-        Altitude oldValue = this.altitude;
+        final Altitude oldValue = altitude;
         if (!value.equals(oldValue)) {
-            this.altitude = value;
+            altitude = value;
             firePropertyChange(SteerPointProperties.VELOCITY, oldValue, altitude);
         }
     }
@@ -114,9 +114,9 @@ public class SteerPointModel extends Model implements SteerPointWriter {
      */
     @Override
     public void setName(final String value) {
-        String oldValue = this.name;
+        final String oldValue = name;
         if (!value.equals(oldValue)) {
-            this.name = value;
+            name = value;
             firePropertyChange(SteerPointProperties.NAME, oldValue, name);
         }
     }

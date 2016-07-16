@@ -24,33 +24,33 @@ import org.joda.time.format.PeriodFormatterBuilder;
  */
 public final class TimeUtils {
     /** The logger of this class. */
-    private static final Log              LOGGER                      = LogFactory.getLog(TimeUtils.class);
+    private static final Log              LOGGER              = LogFactory.getLog(TimeUtils.class);
 
     /** */
-    private static final DateTimeZone     CURRENT_TIMEZONE            = DateTimeZone.getDefault();
+    private static final DateTimeZone     CURRENT_TIMEZONE    = DateTimeZone.getDefault();
 
     /** */
-    public static final Pattern           PATTERN                     = Pattern.compile("^([0-2]|[0-1][0-9]|2[0-3])((:[0-9])|(:[0-5][0-9]))?");
+    public static final Pattern           PATTERN             = Pattern.compile("^([0-2]|[0-1][0-9]|2[0-3])((:[0-9])|(:[0-5][0-9]))?");
 
     /** */
-    public static final PeriodFormatter   PERIOD_DISPLAYER            =                                                                        //
-            new PeriodFormatterBuilder().minimumPrintedDigits(2).appendHours().appendSeparator(":")                                            //
+    public static final PeriodFormatter   PERIOD_DISPLAYER    =                                                                        //
+            new PeriodFormatterBuilder().minimumPrintedDigits(2).appendHours().appendSeparator(":")                                    //
             .minimumPrintedDigits(2).printZeroAlways().appendMinutes().toFormatter();
 
     /** */
-    public static final PeriodFormatter   FLIGHTPLAN_PERIOD_DISPLAYER =                                                                        //
-            new PeriodFormatterBuilder().appendHours().appendSuffix(" h ", " h ").                                                             //
+    public static final PeriodFormatter   FP_PERIOD_DISPLAYER =                                                                        //
+            new PeriodFormatterBuilder().appendHours().appendSuffix(" h ", " h ").                                                     //
             printZeroRarelyLast().appendMinutes().appendSuffix(" m", " m").toFormatter();
 
     /** */
-    public static final DateTimeFormatter TIME_DISPLAYER              =                                                                        //
-            new DateTimeFormatterBuilder().appendHourOfDay(2).appendLiteral(":").                                                              //
+    public static final DateTimeFormatter TIME_DISPLAYER      =                                                                        //
+            new DateTimeFormatterBuilder().appendHourOfDay(2).appendLiteral(":").                                                      //
             appendMinuteOfHour(2).toFormatter();
 
     /**
      * Protected Constructor.
      */
-    private TimeUtils(){
+    private TimeUtils() {
         //
     }
 
@@ -61,8 +61,7 @@ public final class TimeUtils {
      */
     public static LocalTime convertUtcToCurrentTimeZone(final LocalTime utcTime) {
         final DateTime currentDt = utcTime.toDateTimeToday(DateTimeZone.UTC);
-        final LocalTime current = currentDt.toDateTime(CURRENT_TIMEZONE).toLocalTime();
-        return current;
+        return currentDt.toDateTime(CURRENT_TIMEZONE).toLocalTime();
     }
 
     /**
@@ -71,13 +70,14 @@ public final class TimeUtils {
      * @return
      */
     public static LocalTime convertUtcToCurrentTimeZone(final String utcTimeString) {
+        LocalTime result = null;
         try {
             final LocalTime utcTime = getLocalTime(utcTimeString);
-            return convertUtcToCurrentTimeZone(utcTime);
+            result = convertUtcToCurrentTimeZone(utcTime);
         } catch (final IllegalArgumentException e) {
             LOGGER.info("Time format not valid");
         }
-        return null;
+        return result;
     }
 
     /**
@@ -88,17 +88,19 @@ public final class TimeUtils {
      * @return
      */
     private static LocalTime calculateByTimeAndDuration(final String origin, final String duration, final boolean isAdded) {
+        LocalTime result = null;
         if (isMatch(duration)) {
             final LocalTime originLocalTime = getLocalTime(origin);
             final Period durationLocalTime = Period.parse(duration, PERIOD_DISPLAYER);
             if (null != originLocalTime) {
                 if (isAdded) {
-                    return originLocalTime.plus(durationLocalTime);
+                    result = originLocalTime.plus(durationLocalTime);
+                } else {
+                    result = originLocalTime.minus(durationLocalTime);
                 }
-                return originLocalTime.minus(durationLocalTime);
             }
         }
-        return null;
+        return result;
     }
 
     /**
@@ -107,8 +109,8 @@ public final class TimeUtils {
      * @return
      */
     private static boolean isMatch(final String value) {
-        final Matcher m = PATTERN.matcher(value);
-        return m.matches();
+        final Matcher matcher = PATTERN.matcher(value);
+        return matcher.matches();
     }
 
     /**
@@ -138,15 +140,16 @@ public final class TimeUtils {
      * @return
      */
     public static String getDuration(final String origin, final String end) {
+        String result = "";
         final LocalTime originLocalTime = getLocalTime(origin);
         final LocalTime endLocalTime = getLocalTime(end);
         if (null != originLocalTime && null != endLocalTime) {
-            return Period.fieldDifference(originLocalTime, endLocalTime).toString(PERIOD_DISPLAYER);
+            result = Period.fieldDifference(originLocalTime, endLocalTime).toString(PERIOD_DISPLAYER);
         }
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Error while calculating duration");
         }
-        return null;
+        return result;
     }
 
     /**
@@ -155,9 +158,10 @@ public final class TimeUtils {
      * @return
      */
     public static LocalTime getLocalTime(final String dateString) {
+        LocalTime result = null;
         if (isMatch(dateString)) {
-            return LocalTime.parse(dateString);
+            result = LocalTime.parse(dateString);
         }
-        return null;
+        return result;
     }
 }

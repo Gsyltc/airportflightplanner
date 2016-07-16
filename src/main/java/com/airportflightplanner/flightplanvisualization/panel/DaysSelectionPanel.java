@@ -5,9 +5,9 @@
 package com.airportflightplanner.flightplanvisualization.panel;
 
 import javax.swing.JCheckBox;
-import javax.swing.JPanel;
 
 import com.airportflightplanner.common.types.StartDays;
+import com.airportflightplanner.common.visualelement.AbstractCommonPanel;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
@@ -17,7 +17,7 @@ import com.jgoodies.forms.layout.RowSpec;
  * @author Goubaud Sylvain
  *
  */
-public class DaysSelectionPanel extends JPanel {
+public class DaysSelectionPanel extends AbstractCommonPanel {
     /**
      *
      */
@@ -27,6 +27,14 @@ public class DaysSelectionPanel extends JPanel {
      *
      */
     public DaysSelectionPanel() {
+
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void build() {
         setLayout(new FormLayout(new ColumnSpec[] { FormSpecs.DEFAULT_COLSPEC, //
                 FormSpecs.RELATED_GAP_COLSPEC, //
                 FormSpecs.DEFAULT_COLSPEC, //

@@ -47,7 +47,6 @@ public class CurrentAirportPanel extends AbstractCommonPanel {
      */
     public CurrentAirportPanel(final FlighPlanCollectionModel fpcm) {
         flightPlansCollection = fpcm;
-        constructPanel();
     }
 
     /**
@@ -55,15 +54,15 @@ public class CurrentAirportPanel extends AbstractCommonPanel {
      * {@inheritDoc}
      */
     @Override
-    protected final void build() {
+    public final void build() {
         setLayout(new FormLayout(new ColumnSpec[] { //
-                ColumnSpec.decode("pref:grow"), //
+                ColumnSpec.decode(COLLUMNSPEC_PREF_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode("pref:grow"), //
+                ColumnSpec.decode(COLLUMNSPEC_PREF_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode("pref:grow"), //
+                ColumnSpec.decode(COLLUMNSPEC_PREF_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode("pref:grow"), }, //
+                ColumnSpec.decode(COLLUMNSPEC_PREF_GROW), }, //
                 new RowSpec[] { FormSpecs.PREF_ROWSPEC, }));
 
         final JLabel airportLabel = DefaultComponentFactory.getInstance().createLabel(FlightPlanVisualizationMessages.AIRPORT);

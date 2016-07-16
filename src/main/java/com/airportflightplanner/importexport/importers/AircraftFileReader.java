@@ -12,7 +12,7 @@ import java.nio.file.Path;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.airportflightplanner.common.adapter.AircraftTypeAdapter;
+import com.airportflightplanner.common.api.adapter.AircraftTypeAdapter;
 import com.airportflightplanner.common.utils.properties.CommonProperties;
 
 /**
@@ -21,7 +21,9 @@ import com.airportflightplanner.common.utils.properties.CommonProperties;
  */
 public class AircraftFileReader {
     /** The logger of this class. */
-    private static final Log LOGGER = LogFactory.getLog(AircraftFileReader.class);
+    private static final Log    LOGGER = LogFactory.getLog(AircraftFileReader.class);
+
+    private AircraftTypeAdapter adapter;
 
     /**
      *
@@ -32,11 +34,19 @@ public class AircraftFileReader {
                 final Path fileName = path.getFileName();
                 if (null != fileName && fileName.toString().endsWith("txt") && !fileName.toString().contains("BASE")) {
                     final String ariCraftTmp = fileName.toString().replace(".txt", "");
-                    AircraftTypeAdapter.addLivery(ariCraftTmp);
+                    adapter.addLivery(ariCraftTmp);
                 }
             }
         } catch (final IOException e) {
             LOGGER.error("Error while reading Flght plans", e);
         }
+    }
+
+    /**
+     * @param adapter
+     *            the adapter to set
+     */
+    public void setAdapter(final AircraftTypeAdapter adapter) {
+        this.adapter = adapter;
     }
 }

@@ -28,11 +28,11 @@ import com.airportflightplanner.common.slotsignal.api.SlotAction;
  */
 public class PropertiesUtils extends AbstractSlotReceiver {
     /** */
-    private transient String              fileName              = "application.properties";
+    // private transient String fileName = "application.properties";
     /** */
-    private transient static final String USER_CONFIG_PATH      = "config/";
+    private static final String           USER_CONFIG_PATH      = "config/";
     /** */
-    private transient static final String SYSTEM_CONFIG_PATH    = "com/airportflightplanner/common/utils/properties/";
+    private List<String>                  fileNames;
     /** */
     private static Properties             userProperties        = new Properties();
     /** */
@@ -43,13 +43,6 @@ public class PropertiesUtils extends AbstractSlotReceiver {
     /** The logger of this class. */
     private static final Log              LOGGER                = LogFactory.getLog(PropertiesUtils.class);
 
-    // /**
-    // *
-    // */
-    // public PropertiesUtils() {
-    // super();
-    // }
-
     /**
      *
      */
@@ -59,34 +52,26 @@ public class PropertiesUtils extends AbstractSlotReceiver {
         PROPERTIES.add(userProperties);
         PROPERTIES.add(applicationProperties);
 
-        final File configFile = new File(USER_CONFIG_PATH + fileName);
-        if (configFile.exists()) {
-            try (InputStream fileInputStream = new FileInputStream(USER_CONFIG_PATH + fileName)) {
-                userProperties.load(fileInputStream);
-            } catch (final IOException e) {
-                if (LOGGER.isErrorEnabled()) {
-                    LOGGER.error("Error while loading the current configuration file", e);
+        for (final String fileName : fileNames) {
+            final File configFile = new File(USER_CONFIG_PATH + fileName);
+            if (configFile.exists()) {
+                try (InputStream fileInputStream = new FileInputStream(USER_CONFIG_PATH + fileName)) {
+                    userProperties.load(fileInputStream);
+                } catch (final IOException e) {
+                    if (LOGGER.isErrorEnabled()) {
+                        LOGGER.error("Error while loading the current configuration file", e);
+                    }
                 }
-            }
-        } else {
-
-            try (InputStream defaultInputStream = getClass().getClassLoader().getResourceAsStream(fileName)) {
-                userProperties.load(defaultInputStream);
-            } catch (final IOException e) {
-                if (LOGGER.isErrorEnabled()) {
-                    LOGGER.error("Error while loading the default configuration file", e);
+            } else {
+                try (InputStream defaultInputStream = getClass().getClassLoader().getResourceAsStream(fileName)) {
+                    applicationProperties.load(defaultInputStream);
+                } catch (final IOException e) {
+                    if (LOGGER.isErrorEnabled()) {
+                        LOGGER.error("Error while loading the default configuration file", e);
+                    }
                 }
             }
         }
-
-        try (InputStream defaultInputStream = getClass().getClassLoader().getResourceAsStream(SYSTEM_CONFIG_PATH + fileName)) {
-            applicationProperties.load(defaultInputStream);
-        } catch (final IOException e) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("Error while loading the default configuration file", e);
-            }
-        }
-
     }
 
     /**
@@ -101,11 +86,11 @@ public class PropertiesUtils extends AbstractSlotReceiver {
                 result = properties.getProperty(key);
                 break;
             }
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("Error while loading properties. Property " + key + " not found");
+            }
         }
 
-        if (LOGGER.isErrorEnabled()) {
-            LOGGER.error("Error while loading properties. Property " + key + " not found");
-        }
         return result;
     }
 
@@ -122,17 +107,18 @@ public class PropertiesUtils extends AbstractSlotReceiver {
 
     /**
      *
-     * @param fileName
+     * @param fileNames
+     *            List of resources files.
      */
-    public void setPropertiesFile(final String fileName) {
-        this.fileName = fileName;
+    public void setPropertiesFile(final List<String> fileNames) {
+        this.fileNames = fileNames;
     }
 
     /**
-     *
+     * Update the user properties fles.
      */
     protected void updateProperties() {
-        final File file = new File(USER_CONFIG_PATH + fileName);
+        final File file = new File(USER_CONFIG_PATH + "application.properties");
         try (FileOutputStream propertiesStream = new FileOutputStream(file)) {
             userProperties.store(propertiesStream, "");
         } catch (final IOException e) {

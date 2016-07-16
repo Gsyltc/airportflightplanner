@@ -22,8 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
 import com.airportflightplanner.common.api.steerpoints.SteerPointReader;
 import com.airportflightplanner.common.model.SteerPointsCollectionModel;
-import com.airportflightplanner.common.slotsignal.Signal;
 import com.airportflightplanner.common.slotsignal.SelectionSlot;
+import com.airportflightplanner.common.slotsignal.Signal;
 import com.airportflightplanner.common.slotsignal.TopicName;
 import com.airportflightplanner.common.slotsignal.api.SlotAction;
 import com.airportflightplanner.common.utils.geographics.GeographicUtils;
@@ -68,19 +68,18 @@ public class SteerPointPanel extends AbstractCommonPanel {
     public SteerPointPanel() {
         presenter = new SteerPointsPresenter(steerPointsCollectionModel);
         steerPointsCollectionModel.addSteerPointsListModelListener(presenter.getListModel());
-        constructPanel();
     }
 
     /**
      *
      */
     @Override
-    protected void build() {
+    public void build() {
         setLayout(new FormLayout(new ColumnSpec[] { //
                 FormSpecs.RELATED_GAP_COLSPEC, //
                 ColumnSpec.decode("3dlu:grow"), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode("pref:grow"), //
+                ColumnSpec.decode(COLLUMNSPEC_PREF_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, }, //
                 new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.DEFAULT_ROWSPEC, //

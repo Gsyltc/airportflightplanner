@@ -28,9 +28,7 @@ public class CreationStartDaysPanel extends AbstractCommonPanel {
     /**
      *
      */
-    private static final long                                   serialVersionUID = -3484253740768601903L;
-    /** */
-    private final transient PresentationModel<FligthPlanReader> currentFlightPlan;
+    private static final long serialVersionUID         = -3484253740768601903L;
 
     /**
      * @param newCurrentFlightPlan
@@ -38,8 +36,7 @@ public class CreationStartDaysPanel extends AbstractCommonPanel {
      *
      */
     public CreationStartDaysPanel(final PresentationModel<FligthPlanReader> newCurrentFlightPlan) {
-        currentFlightPlan = newCurrentFlightPlan;
-        constructPanel();
+        super(newCurrentFlightPlan);
     }
 
     /**
@@ -47,7 +44,7 @@ public class CreationStartDaysPanel extends AbstractCommonPanel {
      * {@inheritDoc}
      */
     @Override
-    protected void build() {
+    public void build() {
         final FormLayout formLayout = new FormLayout(new ColumnSpec[] { //
                 FormSpecs.RELATED_GAP_COLSPEC, //
                 ColumnSpec.decode("center:default:grow"), //
@@ -96,7 +93,7 @@ public class CreationStartDaysPanel extends AbstractCommonPanel {
         final JCheckBox chckbxNewCheckBox_6 = new JCheckBox(StartDays.SUNDAY.toString());
         add(chckbxNewCheckBox_6, "14, 2");
 
-        currentFlightPlan.addPropertyChangeListener(new PropertyChangeListener() {
+        getPresenter(FIRST_PRESENTER).addPropertyChangeListener(new PropertyChangeListener() {
             /**
              *
              * {@inheritDoc}

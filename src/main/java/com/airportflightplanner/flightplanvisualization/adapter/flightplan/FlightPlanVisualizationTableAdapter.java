@@ -102,7 +102,7 @@ public class FlightPlanVisualizationTableAdapter extends AbstractTableAdapter<Fl
 
         case DURATION:
             if (null != flightPlan.getDuration()) {
-                return flightPlan.getDuration().toString(TimeUtils.FLIGHTPLAN_PERIOD_DISPLAYER);
+                return flightPlan.getDuration().toString(TimeUtils.FP_PERIOD_DISPLAYER);
             }
             return "";
 

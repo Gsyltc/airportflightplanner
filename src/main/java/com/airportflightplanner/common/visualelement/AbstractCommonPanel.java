@@ -8,16 +8,19 @@ package com.airportflightplanner.common.visualelement;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.JPanel;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.airportflightplanner.common.api.adapter.CommonAdapter;
+import com.airportflightplanner.common.slotsignal.SelectionSlot;
 import com.airportflightplanner.common.slotsignal.Signal;
 import com.airportflightplanner.common.slotsignal.SignalModels;
-import com.airportflightplanner.common.slotsignal.SelectionSlot;
 import com.airportflightplanner.common.slotsignal.api.SlotReceiver;
+import com.jgoodies.binding.PresentationModel;
 
 /**
  * @author Goubaud Sylvain
@@ -27,29 +30,57 @@ public abstract class AbstractCommonPanel extends JPanel implements SlotReceiver
     /**
      *
      */
-    private static final long                     serialVersionUID = -9041291520151245877L;
-    /** */
-    protected transient Map<String, Signal>       signals          = new ConcurrentHashMap<String, Signal>();
-    /** */
-    protected Map<String, SelectionSlot<? extends Object>> slots            = new ConcurrentHashMap<String, SelectionSlot<? extends Object>>();
-    /** */
-    protected Map<String, ? extends Object>       attributeMap     = new ConcurrentHashMap<String, Object>();
-    /** The logger of this class. */
-    private static final Log                      LOGGER           = LogFactory.getLog(AbstractCommonPanel.class);
-
+    private final List<PresentationModel<?>>               presenters            = new CopyOnWriteArrayList<PresentationModel<?>>();
     /**
      *
      */
-    protected void constructPanel() {
+    private static final long                              serialVersionUID      = -9041291520151245877L;
+    /** */
+    protected transient Map<String, Signal>                signals               = new ConcurrentHashMap<String, Signal>();
+    /** */
+    protected Map<String, SelectionSlot<? extends Object>> slots                 = new ConcurrentHashMap<String, SelectionSlot<? extends Object>>();
+    /** */
+    protected Map<String, ? extends Object>                attributeMap          = new ConcurrentHashMap<String, Object>();
+    /** */
+    private CommonAdapter                                  adapter;
+    /** The logger of this class. */
+    private static final Log                               LOGGER                = LogFactory.getLog(AbstractCommonPanel.class);
+    /** */
+    protected static final int                             FIRST_PRESENTER       = 0;
+    /** */
+    protected static final String                          COLLUMNSPEC_PREF_GROW = "pref:grow";
+
+    /**
+     *
+     * @param presentationModels
+     *            Presentation Models list for the panel.
+     */
+    protected AbstractCommonPanel(final PresentationModel<?>... presentationModels) {
+        if (null != presentationModels) {
+            for (final PresentationModel<?> presentationModel : presentationModels) {
+                presenters.add(presentationModel);
+            }
+        }
         attachSignal();
         attachSlotAction();
-        build();
     }
 
     /**
      *
      */
-    protected abstract void build();
+    public abstract void build();
+
+    /**
+     * Method to override.
+     *
+     * @param adapter
+     */
+    public void setAdapter(final CommonAdapter adapter) {
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("DEBUG : set Adapter :" + adapter.getAdapterName());
+        }
+        this.adapter = adapter;
+    }
 
     /**
      * Method to override. {@inheritDoc}
@@ -104,4 +135,21 @@ public abstract class AbstractCommonPanel extends JPanel implements SlotReceiver
     public final Signal findSignal(final String topicName) {
         return signals.get(topicName);
     }
+
+    /**
+     * @param flInfosPresenterIndex
+     *            Index of the presenter to return.
+     * @return The presenter.
+     */
+    protected PresentationModel<?> getPresenter(final int flInfosPresenterIndex) {
+        return presenters.get(flInfosPresenterIndex);
+    }
+
+    /**
+     * @return the adapter
+     */
+    public CommonAdapter getAdapter() {
+        return adapter;
+    }
+
 }

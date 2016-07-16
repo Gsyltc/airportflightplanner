@@ -4,14 +4,19 @@
  */
 package com.airportflightplanner.main.visualelements;
 
+import java.util.Map;
+
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 
+import com.airportflightplanner.common.api.adapter.CommonAdapter;
+import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
 import com.airportflightplanner.common.model.FlighPlanCollectionModel;
 import com.airportflightplanner.flightplancreation.FlightPlanCreationPanel;
 import com.airportflightplanner.flightplanvisualization.panel.FlightPlanVisualiazationPanel;
 import com.airportflightplanner.main.visualelements.messages.MainPanelMessages;
 import com.airportflightplanner.main.visualelements.panels.WaypointEditionPanel;
+import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.forms.debug.FormDebugPanel;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
@@ -27,24 +32,28 @@ public class MainPanel extends FormDebugPanel {
     /**
      *
      */
-    private static final long              serialVersionUID = -1014619836487219532L;
+    private static final long                serialVersionUID = -1014619836487219532L;
     /**
      *
      */
-    private static final int               FIRST_TAB        = 0;
+    private static final int                 FIRST_TAB        = 0;
     /** */
-    private final FlighPlanCollectionModel flighPlanCollectionModel;
+    private final FlighPlanCollectionModel   flighPlanCollectionModel;
+    /** */
+    private final Map<String, CommonAdapter> adapters;
 
     /**
      * Main Panel.
      *
      * @param newlighPlanCollectionModel
      *            Collection Model.
+     * @param adapters
      */
-    public MainPanel(final FlighPlanCollectionModel newlighPlanCollectionModel) {
+    public MainPanel(final FlighPlanCollectionModel newlighPlanCollectionModel, final Map<String, CommonAdapter> adapters) {
         setPaintRows(false);
         setPaintInBackground(false);
         flighPlanCollectionModel = newlighPlanCollectionModel;
+        this.adapters = adapters;
         buildPanel();
     }
 
@@ -66,7 +75,9 @@ public class MainPanel extends FormDebugPanel {
 
         // Create Panel
         final FlightPlanCreationPanel createPanel = createFlightPlanCreationPanel();
+
         final FlightPlanVisualiazationPanel fpVisuPanel = createFlightPlanVisualiazationPanel();
+
         final WaypointEditionPanel wpEditionPanel = createWaypointEditionPanel();
 
         // Create TabbedPanel
@@ -87,6 +98,7 @@ public class MainPanel extends FormDebugPanel {
      */
     private WaypointEditionPanel createWaypointEditionPanel() {
         final WaypointEditionPanel panel = new WaypointEditionPanel();
+        panel.build();
         return panel;
     }
 
@@ -96,6 +108,7 @@ public class MainPanel extends FormDebugPanel {
      */
     private FlightPlanVisualiazationPanel createFlightPlanVisualiazationPanel() {
         final FlightPlanVisualiazationPanel panel = new FlightPlanVisualiazationPanel(flighPlanCollectionModel);
+        panel.build();
         return panel;
     }
 
@@ -104,7 +117,9 @@ public class MainPanel extends FormDebugPanel {
      * @return the panel.
      */
     private FlightPlanCreationPanel createFlightPlanCreationPanel() {
-        final FlightPlanCreationPanel panel = new FlightPlanCreationPanel();
+        final FlightPlanCreationPanel panel = new FlightPlanCreationPanel(new PresentationModel<FligthPlanReader>((FligthPlanReader) null));
+        panel.setAdapters(adapters);
+        panel.build();
         return panel;
     }
 }

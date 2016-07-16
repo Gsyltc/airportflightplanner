@@ -30,21 +30,16 @@ public class CreationRoutePanel extends AbstractCommonPanel {
     /**
      *
      */
-    private static final long                         serialVersionUID = -2692513903084994308L;
+    private static final long         serialVersionUID = -2692513903084994308L;
     /** */
-    private JComboBox<String>                         routeSelector;
-    /** */
-    private final PresentationModel<FligthPlanReader> currentFlightPlan;
-    /** */
-    protected GoogleMapPane                           googleMap;
+    protected transient GoogleMapPane googleMap;
 
     /**
      * @param currentFlightPlan
      *
      */
     public CreationRoutePanel(final PresentationModel<FligthPlanReader> currentFlightPlan) {
-        this.currentFlightPlan = currentFlightPlan;
-        constructPanel();
+        super(currentFlightPlan);
     }
 
     /**
@@ -52,20 +47,20 @@ public class CreationRoutePanel extends AbstractCommonPanel {
      * {@inheritDoc}
      */
     @Override
-    protected void build() {
+    public void build() {
         setLayout(new FormLayout(new ColumnSpec[] { //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode("pref:grow"), //
+                ColumnSpec.decode(COLLUMNSPEC_PREF_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode("pref:grow"), //
+                ColumnSpec.decode(COLLUMNSPEC_PREF_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode("pref:grow"), //
+                ColumnSpec.decode(COLLUMNSPEC_PREF_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode("pref:grow"), //
+                ColumnSpec.decode(COLLUMNSPEC_PREF_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode("pref:grow"), //
+                ColumnSpec.decode(COLLUMNSPEC_PREF_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode("pref:grow"), //
+                ColumnSpec.decode(COLLUMNSPEC_PREF_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, }, //
                 new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC, //
@@ -86,10 +81,12 @@ public class CreationRoutePanel extends AbstractCommonPanel {
      * @return
      */
     private JComboBox<String> createRouteSelectorCombo() {
-        routeSelector = new JComboBox<>();
+        final JComboBox<String> routeSelector = new JComboBox<>();
         routeSelector.addItemListener(new ItemListener() {
-
-            /** */
+            /**
+             *
+             * {@inheritDoc}
+             */
             @Override
             public void itemStateChanged(final ItemEvent arg0) {
                 // TODO Auto-generated method stub
