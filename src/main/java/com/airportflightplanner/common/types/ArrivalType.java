@@ -36,12 +36,13 @@ public enum ArrivalType {
      * @return
      */
     public static ArrivalType valueOf(final int typeIndex) {
+        ArrivalType result = null;
         for (final ArrivalType type : ArrivalType.values()) {
             if (type.ordinal() == typeIndex) {
-                return type;
+                result= type;
             }
         }
-        return null;
+        return result;
     }
 
     /**

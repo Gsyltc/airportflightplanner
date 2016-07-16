@@ -36,12 +36,13 @@ public enum SteerPointsTableColumn {
      * @return
      */
     public static SteerPointsTableColumn valueOf(final int columnNumber) {
+        SteerPointsTableColumn result = null;
         for (final SteerPointsTableColumn iterable_element : SteerPointsTableColumn.values()) {
             if (iterable_element.ordinal() == columnNumber) {
-                return iterable_element;
+                result= iterable_element;
             }
         }
-        return null;
+        return result;
     }
 
     /**

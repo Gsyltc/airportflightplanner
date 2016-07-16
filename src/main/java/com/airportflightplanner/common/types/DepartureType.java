@@ -36,12 +36,13 @@ public enum DepartureType {
      * @return
      */
     public static DepartureType valueOf(final int typeIndex) {
+        DepartureType result = null;
         for (final DepartureType type : DepartureType.values()) {
             if (type.ordinal() == typeIndex) {
-                return type;
+                result= type;
             }
         }
-        return null;
+        return result;
     }
 
     /**

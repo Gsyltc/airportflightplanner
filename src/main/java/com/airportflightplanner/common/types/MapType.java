@@ -36,12 +36,13 @@ public enum MapType {
      * @return
      */
     public static MapType valueOf(final int typeIndex) {
+        MapType result = null;
         for (final MapType type : MapType.values()) {
             if (type.ordinal() == typeIndex) {
-                return type;
+                result= type;
             }
         }
-        return null;
+        return result;
     }
 
     /**

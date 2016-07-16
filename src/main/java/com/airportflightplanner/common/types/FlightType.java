@@ -36,12 +36,13 @@ public enum FlightType {
      * @return
      */
     public static FlightType valueOf(final int typeIndex) {
+        FlightType result = null;
         for (final FlightType type : FlightType.values()) {
             if (type.ordinal() == typeIndex) {
-                return type;
+                result= type;
             }
         }
-        return null;
+        return result;
     }
 
     /**

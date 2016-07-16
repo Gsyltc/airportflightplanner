@@ -36,12 +36,13 @@ public enum StartDays {
      * @return
      */
     public static StartDays valueOf(final int typeIndex) {
+        StartDays result = null;
         for (final StartDays day : StartDays.values()) {
             if (day.ordinal() == typeIndex) {
-                return day;
+                result= day;
             }
         }
-        return null;
+        return result;
     }
 
     /**

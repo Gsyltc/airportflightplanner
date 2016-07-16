@@ -36,12 +36,13 @@ public enum FlightPlanVisualisationTableColumn {
      * @return
      */
     public static FlightPlanVisualisationTableColumn valueOf(final int columnNumber) {
+        FlightPlanVisualisationTableColumn result = null;
         for (final FlightPlanVisualisationTableColumn iterable_element : FlightPlanVisualisationTableColumn.values()) {
             if (iterable_element.ordinal() == columnNumber) {
-                return iterable_element;
+                result = iterable_element;
             }
         }
-        return null;
+        return result;
     }
 
     /**
