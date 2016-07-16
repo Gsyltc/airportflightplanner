@@ -24,13 +24,13 @@ public class GoogleMapModel extends Model implements GoogleMapWriter {
     /**
      *
      */
-    private static final long      serialVersionUID = 2127934258581088787L;
+    private static final long                serialVersionUID = 2127934258581088787L;
     /** */
-    private static final int       FIRST_STERRPOINT = 0;
+    private static final int                 FIRST_STERRPOINT = 0;
     /** */
     private transient EncodedPolyline        polyline;
     /** */
-    private List<SteerPointReader> specificSteerPoint;
+    private transient List<SteerPointReader> specificSteerPoint;
 
     /**
      *
