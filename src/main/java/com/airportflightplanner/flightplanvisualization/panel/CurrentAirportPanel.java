@@ -44,11 +44,13 @@ public class CurrentAirportPanel extends AbstractCommonPanel {
     /**
      * @param fpcm
      *            the flighplan collection model.
-     * @param flightPlanVisualizationPresenter
+     * @param fpVizuPresenter
+     *            The flight plan visualization presenter
      *
      */
-    public CurrentAirportPanel(final FlighPlanCollectionModel fpcm, final FlightPlanVisualizationPresenter flightPlanVisualizationPresenter) {
-        super(flightPlanVisualizationPresenter);
+    public CurrentAirportPanel(final FlighPlanCollectionModel fpcm, //
+            final FlightPlanVisualizationPresenter fpVizuPresenter) {
+        super(fpVizuPresenter);
         flightPlansCollection = fpcm;
         flightPlansCollection.addFligfhtPlanModelListener(flightPlansCollection.getListModel());
 
