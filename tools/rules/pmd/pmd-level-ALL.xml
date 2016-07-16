@@ -20,6 +20,11 @@
 
     <rule ref="rulesets/java/strictexception.xml" />
     <rule ref="rulesets/java/comments.xml" />
+    <rule ref="rulesets/java/comments.xml/CommentSize">
+        <properties>
+            <property name="maxLines" value="10" />
+        </properties>
+    </rule>
 
     <rule ref="rulesets/java/codesize.xml" />
     <rule ref="rulesets/java/codesize.xml/StdCyclomaticComplexity">

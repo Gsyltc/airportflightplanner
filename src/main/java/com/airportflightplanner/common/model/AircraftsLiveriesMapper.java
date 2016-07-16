@@ -1,6 +1,10 @@
-/* @(#)AircraftsLiveriesMapper.java
+/*
+ * @(#)AircraftsLiveriesMapper.java
  *
- * 2016 Goubaud Sylvain.
+ * Goubaud Sylvain - 2016.
+ *
+ * This code may be freely used and modified on any personal or professional
+ * project.  It comes with no warranty.
  *
  */
 package com.airportflightplanner.common.model;
@@ -62,9 +66,9 @@ public class AircraftsLiveriesMapper {
         return result;
     }
 
-    /*
+    /**
      *
-     * @return list of companies.
+     * @return the list of the companies.
      */
     public final SortedSet<String> getCompagnies() {
         return Collections.unmodifiableSortedSet(new TreeSet<String>(liveriesMap.keySet()));

@@ -31,43 +31,43 @@ public class FligthPlanModel extends Model implements FligthPlanWriter {
     /**
      *
      */
-    private static final long serialVersionUID     = 9068391147414760708L;
+    private static final long    serialVersionUID     = 9068391147414760708L;
     /** */
-    private String            aircraftCie          = "";
+    private String               aircraftCie          = "";
     /** */
-    private String            aircraftType         = "";
+    private String               aircraftType         = "";
     /** */
-    private String            alternateAirport     = "";
+    private String               alternateAirport     = "";
     /** */
-    private String            arrivalAirport       = "";
+    private String               arrivalAirport       = "";
     /** */
-    private ArrivalType       arrivalType          = ArrivalType.STRAIGHT_IN_APPROCH;
+    private ArrivalType          arrivalType          = ArrivalType.STRAIGHT_IN_APPROCH;
     /** */
-    private String            callSign             = "";
+    private String               callSign             = "";
     /** */
-    private String            departureAirport     = "";
+    private String               departureAirport     = "";
     /** */
-    private DepartureType     departureType        = DepartureType.NORMAL;
+    private DepartureType        departureType        = DepartureType.NORMAL;
     /** */
-    private Period            duration;
+    private Period               duration;
     /** */
-    private LocalTime         endTime;
+    private LocalTime            endTime;
     /** */
-    private FlightType        flightType           = FlightType.CIVILIAN;
+    private transient FlightType flightType           = FlightType.CIVILIAN;
     /** */
-    private Boolean           isFlightToCompletion = false;
+    private transient Boolean              flightToCompletion = false;
     /** */
-    private Altitude          landingLightAltitude = Altitude.valueOf(0.0, SI.METER);
+    private Altitude             landingLightAltitude = Altitude.valueOf(0.0, SI.METER);
     /** */
-    private String            name;
+    private String               name;
     /** */
-    private Set<StartDays>    startDays            = new HashSet<StartDays>();
+    private Set<StartDays>       startDays            = new HashSet<StartDays>();
     /** */
-    private LocalTime         startTime;
+    private LocalTime            startTime;
     /** */
-    private List<String>      steerPoints          = new CopyOnWriteArrayList<String>();
+    private List<String>         steerPoints          = new CopyOnWriteArrayList<String>();
     /** */
-    private String            fileName             = "";
+    private String               fileName             = "";
 
     /**
      *
@@ -219,7 +219,7 @@ public class FligthPlanModel extends Model implements FligthPlanWriter {
      */
     @Override
     public Boolean isFlightToCompletion() {
-        return isFlightToCompletion;
+        return flightToCompletion;
     }
 
     /**
@@ -369,8 +369,8 @@ public class FligthPlanModel extends Model implements FligthPlanWriter {
     public void setFlightToCompletion(final Boolean value) {
         final Boolean oldValue = isFlightToCompletion();
         if (null != value && !value.equals(oldValue)) {
-            isFlightToCompletion = value;
-            firePropertyChange(FligthPlanProperties.FLIGHT_TO_COMPLETION, oldValue, isFlightToCompletion);
+            flightToCompletion = value;
+            firePropertyChange(FligthPlanProperties.FLIGHT_TO_COMPLETION, oldValue, flightToCompletion);
         }
     }
 
