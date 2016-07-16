@@ -18,7 +18,6 @@
         <exclude name="DataflowAnomalyAnalysis" />
     </rule>
 
-
     <rule ref="rulesets/java/strictexception.xml" />
     <rule ref="rulesets/java/comments.xml" />
 
@@ -35,7 +34,6 @@
     <rule ref="rulesets/java/unnecessary.xml" />
     <rule ref="rulesets/java/strings.xml" />
     <rule ref="rulesets/java/sunsecure.xml" />
-
     <rule ref="rulesets/java/optimizations.xml">
         <exclude name="AvoidInstantiatingObjectsInLoops" />
     </rule>

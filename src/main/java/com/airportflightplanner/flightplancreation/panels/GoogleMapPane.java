@@ -1,6 +1,10 @@
-/* @(#)GoogleEditorPane.java
+/*
+ * @(#)GoogleMapPane.java
  *
- * 2016 Goubaud Sylvain.
+ * Goubaud Sylvain - 2016.
+ *
+ * This code may be freely used and modified on any personal or professional
+ * project.  It comes with no warranty.
  *
  */
 package com.airportflightplanner.flightplancreation.panels;
@@ -28,30 +32,32 @@ public class GoogleMapPane extends JEditorPane {
     /**
      *
      */
-    private static final long                       serialVersionUID = -3128841669458527858L;
+    private static final long                                 serialVersionUID = -3128841669458527858L;
     /** */
-    private String                                  zoomFactor       = CommonProperties.getPropertyValue(CommonProperties.GOOGLE_ZOOM_FACTOR);
+    private transient String                                  zoomFactor       = CommonProperties.getPropertyValue(CommonProperties.GOOGLE_ZOOM_FACTOR);
     /** */
-    private final String                            apiKey           = CommonProperties.getPropertyValue(CommonProperties.GOOGLE_KEY);
+    private transient final String                            apiKey           = CommonProperties.getPropertyValue(CommonProperties.GOOGLE_KEY);
     /** */
-    private MapType                                 roadmap          =                                                                           //
+    private transient MapType                                 roadmap          =                                                                           //
             MapType.valueOf(CommonProperties.getPropertyValue(CommonProperties.GOOGLE_MAPTYPE));
     /** */
-    private final String                            polylineColor    = CommonProperties.getPropertyValue(CommonProperties.GOOGLE_POLYLINE_COLOR);
+    private transient final String                            polylineColor    = CommonProperties.getPropertyValue(CommonProperties.GOOGLE_POLYLINE_COLOR);
     /** */
-    private final String                            polylineWeigth   = CommonProperties.getPropertyValue(CommonProperties.GOOGLE_POLYLINE_WIDTH);
+    private transient final String                            polylineWeigth   = CommonProperties.getPropertyValue(CommonProperties.GOOGLE_POLYLINE_WIDTH);
     /** */
-    private static final int                        DEFAULT_SIZE     = 400;
+    private static final int                                  DEFAULT_SIZE     = 400;
     /** */
-    private int                                     mapWidth         = DEFAULT_SIZE;
+    private transient int                                     mapWidth         = DEFAULT_SIZE;
     /** */
-    private int                                     mapHeight        = DEFAULT_SIZE;
+    private transient int                                     mapHeight        = DEFAULT_SIZE;
     /** */
-    private final PresentationModel<GoogleMapModel> googleMapModel;
+    private transient final PresentationModel<GoogleMapModel> googleMapModel;
     /** */
-    HTMLEditorKit                                   kit              = new HTMLEditorKit();
+    private transient final HTMLEditorKit                     kit              = new HTMLEditorKit();
     /** */
-    HTMLDocument                                    htmlDoc          = (HTMLDocument) kit.createDefaultDocument();
+    private transient final HTMLDocument                      htmlDoc          = (HTMLDocument) kit.createDefaultDocument();
+    /** */
+    private static final int                                  INIT_CAPACITY    = 250;
 
     /**
      * Constructeur: initialisation du EditorKit
@@ -59,6 +65,7 @@ public class GoogleMapPane extends JEditorPane {
      * @param googleMapModel
      */
     public GoogleMapPane(final PresentationModel<GoogleMapModel> googleMapModel) {
+        super();
         this.googleMapModel = googleMapModel;
         googleMapModel.addBeanPropertyChangeListener(GoogleMapModelProperties.POLYLINE, new PropertyChangeListener() {
             /**
@@ -78,16 +85,17 @@ public class GoogleMapPane extends JEditorPane {
      *
      */
     private void build() {
-        this.setEditable(false);
-        this.setContentType("text/html");
-        this.setEditorKit(kit);
-        this.setDocument(htmlDoc);
-        String html = "<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'>";
-        html += "<html><head></head><body>";
-        html += "<img width=" + mapWidth + " height=" + mapHeight + " src='file:" + //
-                getClass().getClassLoader().getResource("images/default.jpg").getPath() + "'>";
-        html += "</body></html>";
-        this.setText(html);
+        setEditable(false);
+        setContentType("text/html");
+        setEditorKit(kit);
+        setDocument(htmlDoc);
+        final StringBuilder html = new StringBuilder(INIT_CAPACITY);
+        html.append("<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'><html><head></head><body><img width=") //
+        .append(mapWidth).append(" height=") //
+        .append(mapHeight).append(" src='file:") //
+        .append(getClass().getClassLoader().getResource("images/default.jpg").getPath()) //
+        .append("'></body></html>");
+        setText(html.toString());
     }
 
     /**
@@ -97,7 +105,7 @@ public class GoogleMapPane extends JEditorPane {
      *            valeur de 0 a 21
      */
     public void setZoom(final int zoom) {
-        this.zoomFactor = String.valueOf(zoom);
+        zoomFactor = String.valueOf(zoom);
     }
 
     /**
@@ -107,31 +115,32 @@ public class GoogleMapPane extends JEditorPane {
      *            the roadMap.
      */
     public void setRoadmap(final MapType roadMap) {
-        this.roadmap = roadMap;
+        roadmap = roadMap;
     }
 
     /**
      *
      */
     protected void updateMap() {
-        if (this.apiKey.isEmpty()) {
+        if (apiKey.isEmpty()) {
             throw new IllegalArgumentException("Developper API Key not set !!!!");
         }
+        final StringBuffer uri = new StringBuffer().append("http://maps.googleapis.com/maps/api/staticmap?&path=color:") //
+                .append(polylineColor).append("|weight:") //
+                .append(polylineWeigth).append("|geodesic:true") //
+                .append(GoogleMapProcessor.getEncodedRoad(googleMapModel.getBean())) //
+                .append("&size=").append(mapWidth).append('x').append(mapHeight) //
+                .append("&maptype=").append(roadmap.name().toLowerCase()) //
+                .append("&sensor=false") //
+                .append("&zoom").append(zoomFactor) //
+                .append("&key=").append(apiKey); //
 
-        String url = "http://maps.googleapis.com/maps/api/staticmap?";
-        url += "&path=color:" + polylineColor + "|weight:" + polylineWeigth + "|geodesic:true";
-        url += GoogleMapProcessor.getEncodedRoad(googleMapModel.getBean());
-        url += "&size=" + mapWidth + "x" + mapHeight;
-        url += "&maptype=" + this.roadmap.name().toLowerCase();
-        url += "&sensor=false";
-        url += "&zoom" + this.zoomFactor;
-        url += "&key=" + this.apiKey;
-
-        String html = "<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'>";
-        html += "<html><head></head><body>";
-        html += "<img width=" + mapWidth + " height=" + mapHeight + " src='" + url + "'>";
-        html += "</body></html>";
-        this.setText(html);
+        final StringBuilder html = new StringBuilder(INIT_CAPACITY);
+        html.append("<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'><html><head></head><body><img width=") //
+        .append(mapWidth).append(" height=") //
+        .append(mapHeight).append(" src='") //
+        .append(uri.toString()).append("'></body></html>");
+        setText(html.toString());
     }
 
     /**
@@ -139,7 +148,7 @@ public class GoogleMapPane extends JEditorPane {
      * @param bounds
      */
     public void setDimension(final Rectangle bounds) {
-        this.mapWidth = (int) bounds.getWidth();
-        this.mapHeight = (int) bounds.getHeight();
+        mapWidth = (int) bounds.getWidth();
+        mapHeight = (int) bounds.getHeight();
     }
 }

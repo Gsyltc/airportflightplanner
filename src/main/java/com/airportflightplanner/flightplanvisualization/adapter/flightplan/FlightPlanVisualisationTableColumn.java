@@ -1,6 +1,11 @@
-/* @(#)FlightPlanTableColumn.java
+/*
+ * @(#)FlightPlanVisualisationTableColumn.java
  *
- * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
+ * Goubaud Sylvain - 2016.
+ *
+ * This code may be freely used and modified on any personal or professional
+ * project.  It comes with no warranty.
+ *
  */
 package com.airportflightplanner.flightplanvisualization.adapter.flightplan;
 
@@ -31,7 +36,7 @@ public enum FlightPlanVisualisationTableColumn {
      * @return
      */
     public static FlightPlanVisualisationTableColumn valueOf(final int columnNumber) {
-        for (FlightPlanVisualisationTableColumn iterable_element : FlightPlanVisualisationTableColumn.values()) {
+        for (final FlightPlanVisualisationTableColumn iterable_element : FlightPlanVisualisationTableColumn.values()) {
             if (iterable_element.ordinal() == columnNumber) {
                 return iterable_element;
             }
