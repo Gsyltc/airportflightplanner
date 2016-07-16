@@ -32,7 +32,7 @@ public class Starter {
      */
     private static final String                     MAIN_TITLE     = "Airport Flight Planner";
     /** */
-    protected static ClassPathXmlApplicationContext context        = new ClassPathXmlApplicationContext("./config/imports.xml");
+    protected final static ClassPathXmlApplicationContext CONTEXT        = new ClassPathXmlApplicationContext("./config/imports.xml");
     /** */
     private static final int                        MINIMUM_WEIGHT = 1024;
     /** */
@@ -55,8 +55,8 @@ public class Starter {
             @Override
             public void run() {
                 try {
-                    if (context.getBean("id-FlightPlansCollection") instanceof FlighPlanCollectionModel) {
-                        final FlighPlanCollectionModel model = (FlighPlanCollectionModel) context.getBean("id-FlightPlansCollection");
+                    if (CONTEXT.getBean("id-FlightPlansCollection") instanceof FlighPlanCollectionModel) {
+                        final FlighPlanCollectionModel model = (FlighPlanCollectionModel) CONTEXT.getBean("id-FlightPlansCollection");
                         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                         final JMenuBar menu = new JMenuBar();
                         menu.add(new JMenu("Fichiers"));
