@@ -48,19 +48,20 @@ public class CreationRoutePanel extends AbstractCommonPanel {
      */
     @Override
     public void build() {
+        super.build();
         setLayout(new FormLayout(new ColumnSpec[] { //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode(COLLUMNSPEC_PREF_GROW), //
+                ColumnSpec.decode(PREF_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode(COLLUMNSPEC_PREF_GROW), //
+                ColumnSpec.decode(PREF_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode(COLLUMNSPEC_PREF_GROW), //
+                ColumnSpec.decode(PREF_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode(COLLUMNSPEC_PREF_GROW), //
+                ColumnSpec.decode(PREF_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode(COLLUMNSPEC_PREF_GROW), //
+                ColumnSpec.decode(PREF_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode(COLLUMNSPEC_PREF_GROW), //
+                ColumnSpec.decode(PREF_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, }, //
                 new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC, //

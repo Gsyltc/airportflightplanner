@@ -19,7 +19,7 @@ import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.airportflightplanner.common.api.adapter.AircraftTypeAdapter;
-import com.airportflightplanner.common.model.AircraftsLiveriesMapper;
+import com.airportflightplanner.common.models.AircraftsLiveriesMapper;
 import com.airportflightplanner.common.utils.aircraft.AircraftDecoder;
 
 /**

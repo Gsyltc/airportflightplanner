@@ -4,9 +4,7 @@
  */
 package com.airportflightplanner.flightplanvisualization.presenter.steerpoints;
 
-import javax.swing.ListModel;
-
-import com.airportflightplanner.common.model.SteerPointsCollectionModel;
+import com.airportflightplanner.common.models.SteerPointsCollectionModel;
 import com.airportflightplanner.flightplanvisualization.adapter.steerpoints.SteerPointsTableAdapter;
 import com.jgoodies.binding.PresentationModel;
 
@@ -18,20 +16,21 @@ public class SteerPointsPresenter extends PresentationModel<SteerPointsCollectio
     /**
      *
      */
-    private static final long      serialVersionUID = 2003878398284031619L;
+    private static final long                 serialVersionUID = 2003878398284031619L;
     /** */
-    private SteerPointsTableAdapter tableAdapter;
+    private transient SteerPointsTableAdapter tableAdapter;
 
     /**
      *
      * @param bean
      */
     public SteerPointsPresenter(final SteerPointsCollectionModel bean) {
-        setBean(bean);
+        super(bean);
     }
 
     /**
      * Get the table adapter for the flight plan visualization panel
+     *
      * @return
      */
     public SteerPointsTableAdapter getTableAdapter() {
@@ -43,16 +42,13 @@ public class SteerPointsPresenter extends PresentationModel<SteerPointsCollectio
 
     /**
      * Get the list model
+     *
      * @return
      */
     public SteerPointsListModel getListModel() {
-        if (null == tableAdapter){
+        if (null == tableAdapter) {
             getTableAdapter();
         }
-        ListModel<?> model = tableAdapter.getListModel();
-        if (model instanceof SteerPointsListModel) {
-            return (SteerPointsListModel) model;
-        }
-        return null;
+        return (SteerPointsListModel) tableAdapter.getListModel();
     }
 }

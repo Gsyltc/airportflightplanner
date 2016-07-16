@@ -23,18 +23,13 @@ public class DaysSelectionPanel extends AbstractCommonPanel {
      */
     private static final long serialVersionUID = 3382772953500242522L;
 
-    /**
-     *
-     */
-    public DaysSelectionPanel() {
-
-    }
 
     /**
      *
      */
     @Override
     public void build() {
+        super.build();
         setLayout(new FormLayout(new ColumnSpec[] { FormSpecs.DEFAULT_COLSPEC, //
                 FormSpecs.RELATED_GAP_COLSPEC, //
                 FormSpecs.DEFAULT_COLSPEC, //

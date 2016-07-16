@@ -138,12 +138,13 @@ public class CreationTimePanel extends AbstractCommonPanel {
      */
     @Override
     public void build() {
+        super.build();
         setLayout(new FormLayout(new ColumnSpec[] { //
-                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(COLLUMNSPEC_PREF_GROW), //
-                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(COLLUMNSPEC_PREF_GROW), //
-                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(COLLUMNSPEC_PREF_GROW), //
-                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(COLLUMNSPEC_PREF_GROW), //
-                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(COLLUMNSPEC_PREF_GROW), //
+                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(PREF_GROW), //
+                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(PREF_GROW), //
+                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(PREF_GROW), //
+                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(PREF_GROW), //
+                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(PREF_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
                 ColumnSpec.decode("pref:grow"), //
                 FormSpecs.RELATED_GAP_COLSPEC, }, //

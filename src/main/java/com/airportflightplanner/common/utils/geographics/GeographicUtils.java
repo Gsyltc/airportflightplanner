@@ -24,7 +24,7 @@ import org.jscience.geography.coordinates.Altitude;
 import org.jscience.geography.coordinates.LatLong;
 
 import com.airportflightplanner.common.api.steerpoints.SteerPointReader;
-import com.airportflightplanner.common.model.SteerPointModel;
+import com.airportflightplanner.common.models.SteerPointModel;
 import com.airportflightplanner.common.types.GeographicFormatter;
 import com.google.maps.model.EncodedPolyline;
 
@@ -43,6 +43,10 @@ public class GeographicUtils {
     private static final int    ALTITUDE_INDEX  = 2;
     /** */
     private static final int    VELOCITY_INDEX  = 4;
+    /** */
+    private static final String SOUTH           = "S";
+    /** */
+    private static final String WEST            = "W";
 
     /**
      *
@@ -88,7 +92,7 @@ public class GeographicUtils {
         final StringBuilder stringBuilder = new StringBuilder();
         for (final SteerPointReader steerPointReader : steerPoints) {
             stringBuilder.append(ROUTE_SEPARATOR).append(steerPointReader.getLatLong().latitudeValue(NonSI.DEGREE_ANGLE))//
-            .append(",")//
+            .append(',')//
             .append(steerPointReader.getLatLong().longitudeValue(NonSI.DEGREE_ANGLE));
         }
         return new EncodedPolyline(stringBuilder.toString());
@@ -208,7 +212,7 @@ public class GeographicUtils {
         double latOrLon = 0;
         double signe = 1.0;
 
-        if (hemOUmeridien.equals("W") || hemOUmeridien.equals("S")) {
+        if (WEST.equals(hemOUmeridien) || SOUTH.equals(hemOUmeridien)) {
             signe = -1.0;
         }
         latOrLon = signe * (Math.floor(degres) + Math.floor(minutes) / 60.0 + secondes / 3600.0);

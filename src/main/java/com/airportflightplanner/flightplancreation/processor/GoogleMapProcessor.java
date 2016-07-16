@@ -20,7 +20,7 @@ import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPa
  * @author DCNS
  *
  */
-public class GoogleMapProcessor {
+public final class GoogleMapProcessor {
     /** */
     private static final String MARKER_PREFIX = "&markers=color:";
     /** */
@@ -29,18 +29,24 @@ public class GoogleMapProcessor {
     private static final String END_MARKER    = MARKER_PREFIX + "green%7Clabel:" + FlightPlanCreationPanelMessages.MARKER_END + "%7C";
 
     /**
+     * Protected constructor.
+     */
+    private GoogleMapProcessor() {
+        //
+    }
+
+    /**
      *
      * @param mapReader
      * @return
      */
     public static String getEncodedRoad(final GoogleMapReader mapReader) {
-        final StringBuilder sb = new StringBuilder();
-        sb.append(mapReader.getEncodePolyline().getEncodedPath())//
+        final StringBuilder sbuilder = new StringBuilder();
+        sbuilder.append(mapReader.getEncodePolyline().getEncodedPath())//
         .append(START_MARKER + getFormattedCoordinates(mapReader.getStartMarker()))//
         .append(END_MARKER + getFormattedCoordinates(mapReader.getEndMarker()));
-        return sb.toString();
+        return sbuilder.toString();
     }
-
 
     /**
      *

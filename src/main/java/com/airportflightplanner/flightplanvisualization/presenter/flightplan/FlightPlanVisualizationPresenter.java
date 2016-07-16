@@ -11,7 +11,7 @@ package com.airportflightplanner.flightplanvisualization.presenter.flightplan;
 
 import javax.swing.ListModel;
 
-import com.airportflightplanner.common.model.FlighPlanCollectionModel;
+import com.airportflightplanner.common.models.FlighPlanCollectionModel;
 import com.airportflightplanner.flightplanvisualization.adapter.flightplan.FlightPlanVisualizationTableAdapter;
 import com.jgoodies.binding.PresentationModel;
 
@@ -23,9 +23,9 @@ public class FlightPlanVisualizationPresenter extends PresentationModel<FlighPla
     /**
      *
      */
-    private static final long                   serialVersionUID = 2003878398284031619L;
+    private static final long                             serialVersionUID = 2003878398284031619L;
     /** */
-    private FlightPlanVisualizationTableAdapter tableAdapter;
+    private transient FlightPlanVisualizationTableAdapter tableAdapter;
 
     /**
      *
@@ -33,7 +33,7 @@ public class FlightPlanVisualizationPresenter extends PresentationModel<FlighPla
      *            the bean for presenter.
      */
     public FlightPlanVisualizationPresenter(final FlighPlanCollectionModel bean) {
-        setBean(bean);
+        super(bean);
     }
 
     /**

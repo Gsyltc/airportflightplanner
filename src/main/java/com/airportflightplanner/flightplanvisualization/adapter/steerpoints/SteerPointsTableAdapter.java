@@ -40,15 +40,14 @@ public class SteerPointsTableAdapter extends AbstractTableAdapter<FlightPlanColl
      *            List model for the steerpoint.
      */
     public SteerPointsTableAdapter(final SteerPointsListModel listModel) {
-        setListModel(listModel);
-
+        super(listModel);
         listModel.addListDataListener(new ListDataListener() {
             /**
              *
              * {@inheritDoc}
              */
             @Override
-            public void intervalRemoved(final ListDataEvent e) {
+            public void intervalRemoved(final ListDataEvent event) {
                 //
             }
 
@@ -57,7 +56,7 @@ public class SteerPointsTableAdapter extends AbstractTableAdapter<FlightPlanColl
              * {@inheritDoc}
              */
             @Override
-            public void intervalAdded(final ListDataEvent e) {
+            public void intervalAdded(final ListDataEvent event) {
                 //
             }
 
@@ -66,7 +65,7 @@ public class SteerPointsTableAdapter extends AbstractTableAdapter<FlightPlanColl
              * {@inheritDoc}
              */
             @Override
-            public void contentsChanged(final ListDataEvent e) {
+            public void contentsChanged(final ListDataEvent event) {
                 fireTableDataChanged();
 
             }
@@ -79,25 +78,33 @@ public class SteerPointsTableAdapter extends AbstractTableAdapter<FlightPlanColl
      */
     @Override
     public Object getValueAt(final int row, final int column) {
+        Object result = null;
         final SteerPointsTableColumn fpColumn = SteerPointsTableColumn.valueOf(column);
         final SteerPointReader steerpoint = (SteerPointReader) getListModel().getElementAt(row);
         switch (fpColumn) {
         case LATITUDE:
-            return GeographicUtils.getFormattedLatitude(steerpoint.getLatLong());
+            result = GeographicUtils.getFormattedLatitude(steerpoint.getLatLong());
+            break;
 
         case LONGITUDE:
-            return GeographicUtils.getFormattedLongitude(steerpoint.getLatLong());
+            result = GeographicUtils.getFormattedLongitude(steerpoint.getLatLong());
+            break;
 
         case ALTITUDE:
-            return MessageFormat.format(GeographicFormatter.ALTITUDE_FOOT, new Object[] { steerpoint.getAltitude().longValue(NonSI.FOOT) });
+            result = MessageFormat.format(GeographicFormatter.ALTITUDE_FOOT, new Object[] { steerpoint.getAltitude().longValue(NonSI.FOOT) });
+            break;
 
         case VELOCITY:
-            return MessageFormat.format(GeographicFormatter.VELOCITY_KNOT, new Object[] { steerpoint.getVelocity().getValue() });
+            result = MessageFormat.format(GeographicFormatter.VELOCITY_KNOT, new Object[] { steerpoint.getVelocity().getValue() });
+            break;
 
         default:
             break;
         }
-        throw new IllegalArgumentException();
+        if (null == result) {
+            throw new IllegalArgumentException();
+        }
+        return result;
     }
 
     /**
@@ -125,23 +132,32 @@ public class SteerPointsTableAdapter extends AbstractTableAdapter<FlightPlanColl
      */
     @Override
     public Class<?> getColumnClass(final int columnIndex) {
+        Class<?> result = null;
         final SteerPointsTableColumn fpColumn = SteerPointsTableColumn.valueOf(columnIndex);
         switch (fpColumn) {
         case LATITUDE:
-            return String.class;
+            result = String.class;
+            break;
 
         case LONGITUDE:
-            return String.class;
+            result = String.class;
+            break;
 
         case ALTITUDE:
-            return String.class;
+            result = String.class;
+            break;
 
         case VELOCITY:
-            return Velocity.class;
+            result = Velocity.class;
+            break;
 
         default:
             break;
         }
-        throw new IllegalArgumentException();
+        if (null == result) {
+            throw new IllegalArgumentException();
+        }
+
+        return result;
     }
 }

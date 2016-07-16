@@ -2,7 +2,7 @@
  *
  * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
  */
-package com.airportflightplanner.common.model;
+package com.airportflightplanner.common.models;
 
 import java.util.ArrayList;
 import java.util.List;
