@@ -8,7 +8,7 @@ package com.airportflightplanner.common.api.flightplan;
  * @author Goubaud Sylvain
  *
  */
-public final class FligthPlanProperties {
+public final class FlightPlanProperties {
     /** */
     public static final String STEERPOINTS_MAP        = "steerPoints";
     /** */
@@ -49,7 +49,7 @@ public final class FligthPlanProperties {
     /**
      * Protected constructor.
      */
-    private FligthPlanProperties() {
+    private FlightPlanProperties() {
         //
     }
 

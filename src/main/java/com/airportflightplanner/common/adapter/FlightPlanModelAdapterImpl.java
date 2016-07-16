@@ -22,7 +22,7 @@ import org.joda.time.Period;
 import org.jscience.geography.coordinates.Altitude;
 
 import com.airportflightplanner.common.api.adapter.FlightPlanModelAdapter;
-import com.airportflightplanner.common.models.FligthPlanModel;
+import com.airportflightplanner.common.models.FlightPlanModel;
 import com.airportflightplanner.common.types.ArrivalType;
 import com.airportflightplanner.common.types.DepartureType;
 import com.airportflightplanner.common.types.FlightPlanInformationTypes;
@@ -45,14 +45,14 @@ public class FlightPlanModelAdapterImpl implements FlightPlanModelAdapter {
     /** */
     private static final int NUMBER_ONE  = 1;
     /** */
-    private transient  String           name        = "";
+    private  String           adapterName        = "";
 
     /**
      *
      * {@inheritDoc}
      */
     @Override
-    public final void addSteerpoints(final FligthPlanModel newFlightPlan, final List<String> steerpoints) {
+    public final void addSteerpoints(final FlightPlanModel newFlightPlan, final List<String> steerpoints) {
         newFlightPlan.setSteerPoints(steerpoints);
 
         // calculate Flight Time
@@ -65,7 +65,7 @@ public class FlightPlanModelAdapterImpl implements FlightPlanModelAdapter {
      * {@inheritDoc}
      */
     @Override
-    public final void updateFlightPlan(final FligthPlanModel newFlightPlan, final FlightPlanInformationTypes informationsType, final String line) {
+    public final void updateFlightPlan(final FlightPlanModel newFlightPlan, final FlightPlanInformationTypes informationsType, final String line) {
         switch (informationsType) {
         case START_FLY_TO_COMPLETION:
             newFlightPlan.setFlightToCompletion(Boolean.valueOf(line));
@@ -122,7 +122,7 @@ public class FlightPlanModelAdapterImpl implements FlightPlanModelAdapter {
 
         case STARTFLIGHTTYPE:
             try {
-                newFlightPlan.setFlighType(FlightType.valueOf(Integer.parseInt(line)));
+                newFlightPlan.setFlightType(FlightType.valueOf(Integer.parseInt(line)));
             } catch (final NumberFormatException e) {
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Error while reading start flight type");
@@ -161,7 +161,7 @@ public class FlightPlanModelAdapterImpl implements FlightPlanModelAdapter {
      */
     @Override
     public String getAdapterName() {
-        return name;
+        return adapterName;
     }
 
     /**
@@ -169,7 +169,7 @@ public class FlightPlanModelAdapterImpl implements FlightPlanModelAdapter {
      */
     @Override
     public void setAdapterName(final String name) {
-        this.name = name;
+        adapterName = name;
     }
 
 }

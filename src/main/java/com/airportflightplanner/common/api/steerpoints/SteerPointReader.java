@@ -4,6 +4,8 @@
  */
 package com.airportflightplanner.common.api.steerpoints;
 
+import java.io.Serializable;
+
 import javax.measure.DecimalMeasure;
 import javax.measure.quantity.Velocity;
 
@@ -14,7 +16,7 @@ import org.jscience.geography.coordinates.LatLong;
  * @author Goubaud Sylvain
  *
  */
-public interface SteerPointReader {
+public interface SteerPointReader extends Serializable {
     /**
      *
      * @return

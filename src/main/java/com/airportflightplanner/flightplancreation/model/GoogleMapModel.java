@@ -6,6 +6,7 @@
 package com.airportflightplanner.flightplancreation.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.jscience.geography.coordinates.LatLong;
@@ -24,13 +25,13 @@ public class GoogleMapModel extends Model implements GoogleMapWriter {
     /**
      *
      */
-    private static final long                serialVersionUID = 2127934258581088787L;
+    private static final long         serialVersionUID = 2127934258581088787L;
     /** */
-    private static final int                 FIRST_STERRPOINT = 0;
+    private static final int          FIRST_STERRPOINT = 0;
     /** */
-    private transient EncodedPolyline        polyline;
+    private transient EncodedPolyline encodedPolyline;
     /** */
-    private transient List<SteerPointReader> specificSteerPoint;
+    private List<SteerPointReader>    specificSteerPoint;
 
     /**
      *
@@ -38,10 +39,10 @@ public class GoogleMapModel extends Model implements GoogleMapWriter {
      */
     @Override
     public void setEncodedPolyline(final EncodedPolyline polyline) {
-        final EncodedPolyline oldValue = this.polyline;
-        if (null != polyline && !polyline.equals(this.polyline)) {
-            this.polyline = polyline;
-            firePropertyChange(GoogleMapModelProperties.POLYLINE, oldValue, this.polyline);
+        final EncodedPolyline oldValue = encodedPolyline;
+        if (null != polyline && !polyline.equals(encodedPolyline)) {
+            encodedPolyline = polyline;
+            firePropertyChange(GoogleMapModelProperties.POLYLINE, oldValue, encodedPolyline);
         }
     }
 
@@ -51,9 +52,9 @@ public class GoogleMapModel extends Model implements GoogleMapWriter {
      */
     @Override
     public void setMarkers(final List<SteerPointReader> specificSteerPoint) {
-        final List<SteerPointReader> oldValue = this.specificSteerPoint;
+        final List<SteerPointReader> oldValue = getSpecificSteerPoint();
         if (null != specificSteerPoint && !specificSteerPoint.equals(this.specificSteerPoint)) {
-            this.specificSteerPoint = specificSteerPoint;
+            setSpecificSteerPoint(specificSteerPoint);
             firePropertyChange(GoogleMapModelProperties.STEERPOINTS, oldValue, this.specificSteerPoint);
         }
     }
@@ -63,8 +64,8 @@ public class GoogleMapModel extends Model implements GoogleMapWriter {
      * {@inheritDoc}
      */
     @Override
-    public EncodedPolyline getEncodePolyline() {
-        return polyline;
+    public EncodedPolyline getEncodedPolyline() {
+        return encodedPolyline;
     }
 
     /**
@@ -73,7 +74,7 @@ public class GoogleMapModel extends Model implements GoogleMapWriter {
      */
     @Override
     public LatLong getStartMarker() {
-        return specificSteerPoint.get(FIRST_STERRPOINT).getLatLong();
+        return getSpecificSteerPoint().get(FIRST_STERRPOINT).getLatLong();
     }
 
     /**
@@ -82,7 +83,7 @@ public class GoogleMapModel extends Model implements GoogleMapWriter {
      */
     @Override
     public LatLong getEndMarker() {
-        return specificSteerPoint.get(specificSteerPoint.size() - 1).getLatLong();
+        return getSpecificSteerPoint().get(specificSteerPoint.size() - 1).getLatLong();
     }
 
     /**
@@ -92,7 +93,7 @@ public class GoogleMapModel extends Model implements GoogleMapWriter {
     @Override
     public List<SteerPointReader> getNamedMarker() {
         final List<SteerPointReader> namedMarkers = new ArrayList<SteerPointReader>();
-        for (final SteerPointReader steerPointReader : specificSteerPoint) {
+        for (final SteerPointReader steerPointReader : getSpecificSteerPoint()) {
             if (!steerPointReader.getName().isEmpty()) {
                 namedMarkers.add(steerPointReader);
             }
@@ -100,4 +101,18 @@ public class GoogleMapModel extends Model implements GoogleMapWriter {
         return namedMarkers;
     }
 
+    /**
+     * @return the specificSteerPoint
+     */
+    private List<SteerPointReader> getSpecificSteerPoint() {
+        return Collections.unmodifiableList(specificSteerPoint);
+    }
+
+    /**
+     * @param specificSteerPoint
+     *            the specificSteerPoint to set
+     */
+    private void setSpecificSteerPoint(final List<SteerPointReader> specificSteerPoint) {
+        this.specificSteerPoint = specificSteerPoint;
+    }
 }

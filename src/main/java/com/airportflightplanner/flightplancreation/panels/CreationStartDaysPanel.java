@@ -10,7 +10,7 @@ import java.beans.PropertyChangeListener;
 import javax.swing.JCheckBox;
 import javax.swing.border.TitledBorder;
 
-import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
+import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
 import com.airportflightplanner.common.types.StartDays;
 import com.airportflightplanner.common.visualelement.AbstractCommonPanel;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
@@ -35,7 +35,7 @@ public class CreationStartDaysPanel extends AbstractCommonPanel {
      *            flightplan.
      *
      */
-    public CreationStartDaysPanel(final PresentationModel<FligthPlanReader> newCurrentFlightPlan) {
+    public CreationStartDaysPanel(final PresentationModel<FlightPlanReader> newCurrentFlightPlan) {
         super(newCurrentFlightPlan);
     }
 
@@ -101,17 +101,7 @@ public class CreationStartDaysPanel extends AbstractCommonPanel {
              */
             @Override
             public void propertyChange(final PropertyChangeEvent evt) {
-                // if (evt.getNewValue() instanceof FligthPlanReader) {
-                // final String aircraftType = ((FligthPlanReader)
-                // evt.getNewValue()).getAircraftType();
-                // final FlighInfosModel bean = presenterInfoModel.getBean();
                 //
-                // final String aircraftClass =
-                // AircraftTypeAdapter.getAircraftClass(aircraftType);
-                // bean.setAircraftClass(aircraftClass);
-                // bean.setAircraftCie(AircraftTypeAdapter.getAircraftCie(aircraftType));
-                // bean.setAircraftLivery(aircraftType);
-                // }
             }
         });
 

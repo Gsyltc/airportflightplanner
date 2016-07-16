@@ -22,7 +22,7 @@ public interface GoogleMapReader {
      *
      * @return
      */
-    EncodedPolyline getEncodePolyline();
+    EncodedPolyline getEncodedPolyline();
 
     /**
      *

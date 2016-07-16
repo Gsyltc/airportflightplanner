@@ -4,6 +4,7 @@
  */
 package com.airportflightplanner.common.api.flightplan;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
@@ -20,7 +21,7 @@ import com.airportflightplanner.common.types.StartDays;
  * @author Goubaud Sylvain
  *
  */
-public interface FligthPlanReader {
+public interface FlightPlanReader extends Serializable{
     /**
      *
      * @return

@@ -23,11 +23,11 @@ import com.airportflightplanner.common.slotsignal.api.SlotReceiver;
  */
 public class SelectionSlot<E extends Object> implements Observer {
     /** */
-    private final String            topicName;
+    private final String       topicName;
     /** */
-    private final SlotReceiver      receiver;
+    private final SlotReceiver receiver;
     /** */
-    private transient SlotAction<E> slotAction;
+    private SlotAction<E>      slotAction;
 
     /**
      * A slot can listen an event fire by a signal.
@@ -63,7 +63,7 @@ public class SelectionSlot<E extends Object> implements Observer {
     }
 
     /**
-     * Return the topic name of the slot
+     * Return the topic name of the slot.
      *
      * @return the topis
      */
@@ -72,13 +72,21 @@ public class SelectionSlot<E extends Object> implements Observer {
     }
 
     /**
-     * Define the action for the slot
+     * Define the action for the slot.
      *
      * @param newSlotAction
      */
     public void setSlotAction(final SlotAction<E> newSlotAction) {
         this.slotAction = newSlotAction;
+    }
 
+    /**
+     * Return the action.
+     *
+     * @return the slotAction
+     */
+    public SlotAction<E> getSlotAction() {
+        return slotAction;
     }
 
 }

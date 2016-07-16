@@ -17,7 +17,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
+import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
 import com.airportflightplanner.common.api.steerpoints.SteerPointReader;
 import com.airportflightplanner.common.models.SteerPointsCollectionModel;
 import com.airportflightplanner.common.slotsignal.SelectionSlot;
@@ -113,17 +113,17 @@ public class SteerPointPanel extends AbstractCommonPanel {
      */
     @Override
     public final void attachSlotAction() {
-        final SelectionSlot<FligthPlanReader> slot = new SelectionSlot<FligthPlanReader>(TopicName.FLIGHTPLAN_TABLE_SELECTED, this);
+        final SelectionSlot<FlightPlanReader> slot = new SelectionSlot<FlightPlanReader>(TopicName.FLIGHTPLAN_TABLE_SELECTED, this);
         final SteerPointsPresenter presenter = (SteerPointsPresenter) getPresenter(FIRST_PRESENTER);
         final SteerPointsCollectionModel steerPointsModel = presenter.getBean();
-        slot.setSlotAction(new SlotAction<FligthPlanReader>() {
+        slot.setSlotAction(new SlotAction<FlightPlanReader>() {
             /**
              *
              * {@inheritDoc}
              */
             @Override
-            public void doAction(final FligthPlanReader flightPlanReader) {
-                steerPointsModel.getListModel().clear();
+            public void doAction(final FlightPlanReader flightPlanReader) {
+                steerPointsModel.getSteerPointsListModel().clear();
                 if (null != flightPlanReader) {
                     final List<SteerPointReader> steerPoints = GeographicUtils.getSteerPoints(flightPlanReader.getSteerPoints());
                     steerPointsModel.addSteerPoints(steerPoints);

@@ -16,9 +16,9 @@ public class SteerPointsPresenter extends PresentationModel<SteerPointsCollectio
     /**
      *
      */
-    private static final long                 serialVersionUID = 2003878398284031619L;
+    private static final long       serialVersionUID = 2003878398284031619L;
     /** */
-    private transient SteerPointsTableAdapter tableAdapter;
+    private SteerPointsTableAdapter tableAdapter;
 
     /**
      *
@@ -35,7 +35,7 @@ public class SteerPointsPresenter extends PresentationModel<SteerPointsCollectio
      */
     public SteerPointsTableAdapter getTableAdapter() {
         if (null == tableAdapter) {
-            tableAdapter = new SteerPointsTableAdapter(getBean().getListModel());
+            setTableAdapter(new SteerPointsTableAdapter(getBean().getSteerPointsListModel()));
         }
         return tableAdapter;
     }
@@ -49,6 +49,14 @@ public class SteerPointsPresenter extends PresentationModel<SteerPointsCollectio
         if (null == tableAdapter) {
             getTableAdapter();
         }
-        return (SteerPointsListModel) tableAdapter.getListModel();
+        return (SteerPointsListModel) getTableAdapter().getListModel();
+    }
+
+    /**
+     * @param tableAdapter
+     *            the tableAdapter to set
+     */
+    private void setTableAdapter(final SteerPointsTableAdapter tableAdapter) {
+        this.tableAdapter = tableAdapter;
     }
 }

@@ -8,7 +8,7 @@ package com.airportflightplanner.flightplancreation.panels;
 import javax.swing.JCheckBox;
 import javax.swing.border.TitledBorder;
 
-import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
+import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
 import com.airportflightplanner.common.visualelement.AbstractCommonPanel;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
 import com.jgoodies.binding.PresentationModel;
@@ -31,7 +31,7 @@ public class CreationOptionsPanel extends AbstractCommonPanel {
      * @param currentFlightPlan
      *
      */
-    public CreationOptionsPanel(final PresentationModel<FligthPlanReader> currentFlightPlan) {
+    public CreationOptionsPanel(final PresentationModel<FlightPlanReader> currentFlightPlan) {
         super(currentFlightPlan);
     }
 

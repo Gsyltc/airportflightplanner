@@ -13,7 +13,7 @@ package com.airportflightplanner.flightplanvisualization.adapter.flightplan;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
-import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
+import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
 import com.airportflightplanner.common.api.flightplancollection.flightplan.FlightPlanCollectionReader;
 import com.airportflightplanner.common.utils.time.TimeUtils;
 import com.airportflightplanner.flightplanvisualization.presenter.flightplan.FlightPlanVisualizationListModel;
@@ -49,7 +49,7 @@ public class FlightPlanVisualizationTableAdapter extends AbstractTableAdapter<Fl
         listModel.addListDataListener(new ListDataListener() {
             /**
              *
-             * @param e
+             * {@inheritDoc}
              */
             @Override
             public void intervalRemoved(final ListDataEvent event) {
@@ -58,7 +58,7 @@ public class FlightPlanVisualizationTableAdapter extends AbstractTableAdapter<Fl
 
             /**
              *
-             * @param e
+             * {@inheritDoc}
              */
             @Override
             public void intervalAdded(final ListDataEvent event) {
@@ -85,7 +85,7 @@ public class FlightPlanVisualizationTableAdapter extends AbstractTableAdapter<Fl
     public Object getValueAt(final int row, final int column) {
         Object result = null;
         final FlightPlanVisualisationTableColumn fpColumn = FlightPlanVisualisationTableColumn.valueOf(column);
-        final FligthPlanReader flightPlan = (FligthPlanReader) getListModel().getElementAt(row);
+        final FlightPlanReader flightPlan = (FlightPlanReader) getListModel().getElementAt(row);
         switch (fpColumn) {
         case START_AIRPORT:
             result = flightPlan.getDepartureAirport();
@@ -124,9 +124,9 @@ public class FlightPlanVisualizationTableAdapter extends AbstractTableAdapter<Fl
         default:
             break;
         }
-        //        if (null == result) {
-        //            throw new IllegalArgumentException();
-        //        }
+        // if (null == result) {
+        // throw new IllegalArgumentException();
+        // }
         return result;
     }
 

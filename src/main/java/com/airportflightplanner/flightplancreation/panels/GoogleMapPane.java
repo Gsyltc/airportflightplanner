@@ -28,17 +28,17 @@ import com.jgoodies.binding.PresentationModel;
  * @author DCNS
  *
  */
-public class GoogleMapPane extends JEditorPane {
+public class GoogleMapPane extends JEditorPane  {
     /**
      *
      */
     private static final long                                 serialVersionUID = -3128841669458527858L;
     /** */
-    private transient String                                  zoomFactor       = CommonProperties.getPropertyValue(CommonProperties.GOOGLE_ZOOM_FACTOR);
+    private String                                            zoomFactor       = CommonProperties.getPropertyValue(CommonProperties.GOOGLE_ZOOM_FACTOR);
     /** */
     private transient final String                            apiKey           = CommonProperties.getPropertyValue(CommonProperties.GOOGLE_KEY);
     /** */
-    private transient MapType                                 roadmap          =                                                                           //
+    private MapType                                           roadmap          =                                                                           //
             MapType.valueOf(CommonProperties.getPropertyValue(CommonProperties.GOOGLE_MAPTYPE));
     /** */
     private transient final String                            polylineColor    = CommonProperties.getPropertyValue(CommonProperties.GOOGLE_POLYLINE_COLOR);
@@ -104,8 +104,15 @@ public class GoogleMapPane extends JEditorPane {
      * @param zoom
      *            valeur de 0 a 21
      */
-    public void setZoom(final int zoom) {
+    public void setZoomFactor(final int zoom) {
         zoomFactor = String.valueOf(zoom);
+    }
+
+    /**
+     * @return the zoomFactor
+     */
+    public String getZoomFactor() {
+        return zoomFactor;
     }
 
     /**
@@ -116,6 +123,13 @@ public class GoogleMapPane extends JEditorPane {
      */
     public void setRoadmap(final MapType roadMap) {
         roadmap = roadMap;
+    }
+
+    /**
+     * @return the roadmap
+     */
+    public MapType getRoadmap() {
+        return roadmap;
     }
 
     /**

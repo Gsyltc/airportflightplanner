@@ -12,7 +12,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.border.TitledBorder;
 
-import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
+import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
 import com.airportflightplanner.common.visualelement.AbstractCommonPanel;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
 import com.jgoodies.binding.PresentationModel;
@@ -32,13 +32,13 @@ public class CreationRoutePanel extends AbstractCommonPanel {
      */
     private static final long         serialVersionUID = -2692513903084994308L;
     /** */
-    protected transient GoogleMapPane googleMap;
+    protected  GoogleMapPane googleMap;
 
     /**
      * @param currentFlightPlan
      *
      */
-    public CreationRoutePanel(final PresentationModel<FligthPlanReader> currentFlightPlan) {
+    public CreationRoutePanel(final PresentationModel<FlightPlanReader> currentFlightPlan) {
         super(currentFlightPlan);
     }
 

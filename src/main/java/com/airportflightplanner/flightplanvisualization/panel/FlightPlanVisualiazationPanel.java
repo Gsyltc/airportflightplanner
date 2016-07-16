@@ -24,7 +24,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
+import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
 import com.airportflightplanner.common.models.FlighPlanCollectionModel;
 import com.airportflightplanner.common.slotsignal.SelectionSlot;
 import com.airportflightplanner.common.slotsignal.Signal;
@@ -46,14 +46,14 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
     /**
      *
      */
-    protected transient final FlighPlanCollectionModel flightPlansCollection;
+    protected final FlighPlanCollectionModel flightPlansCollection;
     /** */
     protected transient Signal                         signal;
 
     /**
      *
      */
-    private static final long                          serialVersionUID = -6354635338489926005L;
+    private static final long                serialVersionUID = -6354635338489926005L;
 
     /**
      *
@@ -100,7 +100,7 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
      * @return
      */
     private CurrentAirportPanel createCurrentAirportPanel() {
-        final CurrentAirportPanel panel = new CurrentAirportPanel(flightPlansCollection, //
+        final CurrentAirportPanel panel = new CurrentAirportPanel(getFlightPlansCollection(), //
                 (FlightPlanVisualizationPresenter) getPresenter(FIRST_PRESENTER));
         panel.build();
         return panel;
@@ -144,7 +144,7 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
              */
             @Override
             public void valueChanged(final ListSelectionEvent event) {
-                FligthPlanReader flightPlan = null;
+                FlightPlanReader flightPlan = null;
                 if (event.getValueIsAdjusting()) {
                     final ListSelectionModel lsm = (ListSelectionModel) event.getSource();
 
@@ -153,7 +153,7 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
                         final int maxIndex = lsm.getMaxSelectionIndex();
                         for (int i = minIndex; i <= maxIndex; i++) {
                             if (lsm.isSelectedIndex(i)) {
-                                flightPlan = flightPlansCollection.getFlightPlanByIndex(i);
+                                flightPlan = getFlightPlansCollection().getFlightPlanByIndex(i);
                             }
                         }
                     }
@@ -205,4 +205,10 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
         createSignal(TopicName.FLIGHTPLAN_TABLE_SELECTED, signal);
     }
 
+    /**
+     * @return the flightPlansCollection
+     */
+    private FlighPlanCollectionModel getFlightPlansCollection() {
+        return flightPlansCollection;
+    }
 }

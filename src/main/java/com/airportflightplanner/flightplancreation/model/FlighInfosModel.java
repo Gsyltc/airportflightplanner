@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.airportflightplanner.flightplancreation.api.model.flightinfos.FlightInfosWriter;
-import com.airportflightplanner.flightplancreation.api.model.flightinfos.FligthInfosProperties;
+import com.airportflightplanner.flightplancreation.api.model.flightinfos.FlightInfosProperties;
 import com.jgoodies.binding.beans.Model;
 
 /**
@@ -85,7 +85,7 @@ public class FlighInfosModel extends Model implements FlightInfosWriter {
     final String oldValue = getAircraftCie();
     if (null != value && !value.equals(oldValue)) {
       aircraftCie = value;
-      firePropertyChange(FligthInfosProperties.AIRCRAFT_CIE, oldValue, aircraftCie);
+      firePropertyChange(FlightInfosProperties.AIRCRAFT_CIE, oldValue, aircraftCie);
     }
   }
 
@@ -98,7 +98,7 @@ public class FlighInfosModel extends Model implements FlightInfosWriter {
     final String oldValue = getAircraftClass();
     if (null != value && !value.equals(oldValue)) {
       aircraftClass = value;
-      firePropertyChange(FligthInfosProperties.AIRCRAFT_CLASS, oldValue, aircraftClass);
+      firePropertyChange(FlightInfosProperties.AIRCRAFT_CLASS, oldValue, aircraftClass);
     }
   }
 
@@ -111,7 +111,7 @@ public class FlighInfosModel extends Model implements FlightInfosWriter {
     final String oldValue = getAircraftLivery();
     if (null != value && !value.equals(oldValue)) {
       aircraftLivery = value;
-      firePropertyChange(FligthInfosProperties.AIRCRAFT_LIVERY, oldValue, aircraftLivery);
+      firePropertyChange(FlightInfosProperties.AIRCRAFT_LIVERY, oldValue, aircraftLivery);
     }
   }
 
@@ -124,7 +124,7 @@ public class FlighInfosModel extends Model implements FlightInfosWriter {
     final List<String> oldValue = getLiveries();
     if (!value.equals(oldValue)) {
       liveries = value;
-      firePropertyChange(FligthInfosProperties.LIVERIES, oldValue, liveries);
+      firePropertyChange(FlightInfosProperties.LIVERIES, oldValue, liveries);
     }
   }
 
@@ -137,7 +137,7 @@ public class FlighInfosModel extends Model implements FlightInfosWriter {
     final List<String> oldValue = getCompanies();
     if (!value.equals(oldValue)) {
       companies = value;
-      firePropertyChange(FligthInfosProperties.COMPANIES, oldValue, companies);
+      firePropertyChange(FlightInfosProperties.COMPANIES, oldValue, companies);
     }
   }
 }

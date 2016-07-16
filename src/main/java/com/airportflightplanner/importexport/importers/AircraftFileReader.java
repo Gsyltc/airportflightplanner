@@ -28,7 +28,7 @@ public class AircraftFileReader {
     /** The logger of this class. */
     private static final Log              LOGGER = LogFactory.getLog(AircraftFileReader.class);
     /** */
-    private transient AircraftTypeAdapter adapter;
+    private  AircraftTypeAdapter adapter;
 
     /**
      *
@@ -39,7 +39,7 @@ public class AircraftFileReader {
                 final Path fileName = path.getFileName();
                 if (null != fileName && fileName.toString().endsWith("txt") && !fileName.toString().contains("BASE")) {
                     final String ariCraftTmp = fileName.toString().replace(".txt", "");
-                    adapter.addLivery(ariCraftTmp);
+                    getAdapter().addLivery(ariCraftTmp);
                 }
             }
         } catch (final IOException e) {
@@ -53,5 +53,12 @@ public class AircraftFileReader {
      */
     public void setAdapter(final AircraftTypeAdapter adapter) {
         this.adapter = adapter;
+    }
+
+    /**
+     * @return the adapter
+     */
+    private AircraftTypeAdapter getAdapter() {
+        return adapter;
     }
 }

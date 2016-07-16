@@ -1,5 +1,5 @@
 /*
- * @(#)FligthPlanModel.java
+ * @(#)FlightPlanModel.java
  *
  * Goubaud Sylvain - 2016.
  *
@@ -21,8 +21,8 @@ import org.joda.time.LocalTime;
 import org.joda.time.Period;
 import org.jscience.geography.coordinates.Altitude;
 
-import com.airportflightplanner.common.api.flightplan.FligthPlanProperties;
-import com.airportflightplanner.common.api.flightplan.FligthPlanWriter;
+import com.airportflightplanner.common.api.flightplan.FlightPlanProperties;
+import com.airportflightplanner.common.api.flightplan.FlightPlanWriter;
 import com.airportflightplanner.common.types.ArrivalType;
 import com.airportflightplanner.common.types.DepartureType;
 import com.airportflightplanner.common.types.FlightType;
@@ -33,47 +33,47 @@ import com.jgoodies.binding.beans.Model;
  * @author Goubaud Sylvain
  *
  */
-public class FligthPlanModel extends Model implements FligthPlanWriter {
+public class FlightPlanModel extends Model implements FlightPlanWriter {
     /**
      *
      */
-    private static final long    serialVersionUID     = 9068391147414760708L;
+    private static final long serialVersionUID     = 9068391147414760708L;
     /** */
-    private String               aircraftCie          = "";
+    private String            aircraftCie          = "";
     /** */
-    private String               aircraftType         = "";
+    private String            aircraftType         = "";
     /** */
-    private String               alternateAirport     = "";
+    private String            alternateAirport     = "";
     /** */
-    private String               arrivalAirport       = "";
+    private String            arrivalAirport       = "";
     /** */
-    private ArrivalType          arrivalType          = ArrivalType.STRAIGHT_IN_APPROCH;
+    private ArrivalType       arrivalType          = ArrivalType.STRAIGHT_IN_APPROCH;
     /** */
-    private String               callSign             = "";
+    private String            callSign             = "";
     /** */
-    private String               departureAirport     = "";
+    private String            departureAirport     = "";
     /** */
-    private DepartureType        departureType        = DepartureType.NORMAL;
+    private DepartureType     departureType        = DepartureType.NORMAL;
     /** */
-    private Period               duration;
+    private Period            duration;
     /** */
-    private LocalTime            endTime;
+    private LocalTime         endTime;
     /** */
-    private transient FlightType flightType           = FlightType.CIVILIAN;
+    private FlightType        flightType           = FlightType.CIVILIAN;
     /** */
-    private transient Boolean              flightToCompletion = false;
+    private Boolean           isFightToCompletion = false;
     /** */
-    private Altitude             landingLightAltitude = Altitude.valueOf(0.0, SI.METER);
+    private Altitude          landingLightAltitude = Altitude.valueOf(0.0, SI.METER);
     /** */
-    private String               name;
+    private String            name;
     /** */
-    private Set<StartDays>       startDays            = new HashSet<StartDays>();
+    private Set<StartDays>    startDays            = new HashSet<StartDays>();
     /** */
-    private LocalTime            startTime;
+    private LocalTime         startTime;
     /** */
-    private List<String>         steerPoints          = new CopyOnWriteArrayList<String>();
+    private List<String>      steerPoints          = new CopyOnWriteArrayList<String>();
     /** */
-    private String               fileName             = "";
+    private String            fileName             = "";
 
     /**
      *
@@ -225,8 +225,9 @@ public class FligthPlanModel extends Model implements FligthPlanWriter {
      */
     @Override
     public Boolean isFlightToCompletion() {
-        return flightToCompletion;
+        return isFightToCompletion;
     }
+
 
     /**
      *
@@ -246,7 +247,7 @@ public class FligthPlanModel extends Model implements FligthPlanWriter {
         final String oldValue = getAircraftCie();
         if (!value.equals(oldValue)) {
             aircraftCie = value;
-            firePropertyChange(FligthPlanProperties.AIRCRAFT_CIE, oldValue, aircraftCie);
+            firePropertyChange(FlightPlanProperties.AIRCRAFT_CIE, oldValue, aircraftCie);
         }
     }
 
@@ -259,7 +260,7 @@ public class FligthPlanModel extends Model implements FligthPlanWriter {
         final String oldValue = getAircraftType();
         if (!value.equals(oldValue)) {
             aircraftType = value;
-            firePropertyChange(FligthPlanProperties.AIRCRAFT_TYPE, oldValue, aircraftType);
+            firePropertyChange(FlightPlanProperties.AIRCRAFT_TYPE, oldValue, aircraftType);
         }
     }
 
@@ -272,7 +273,7 @@ public class FligthPlanModel extends Model implements FligthPlanWriter {
         final String oldValue = getAlternateAirport();
         if (!value.equals(oldValue)) {
             alternateAirport = value;
-            firePropertyChange(FligthPlanProperties.ALTERNATE_AIRPORT, oldValue, alternateAirport);
+            firePropertyChange(FlightPlanProperties.ALTERNATE_AIRPORT, oldValue, alternateAirport);
         }
     }
 
@@ -285,7 +286,7 @@ public class FligthPlanModel extends Model implements FligthPlanWriter {
         final String oldValue = getArrivalAirport();
         if (!value.equals(oldValue)) {
             arrivalAirport = value;
-            firePropertyChange(FligthPlanProperties.ARRIVAL_AIRPORT, oldValue, arrivalAirport);
+            firePropertyChange(FlightPlanProperties.ARRIVAL_AIRPORT, oldValue, arrivalAirport);
         }
     }
 
@@ -298,7 +299,7 @@ public class FligthPlanModel extends Model implements FligthPlanWriter {
         final ArrivalType oldValue = getArrivalType();
         if (null != value && !value.equals(oldValue)) {
             arrivalType = value;
-            firePropertyChange(FligthPlanProperties.ARRIVAL_TYPE, oldValue, arrivalType);
+            firePropertyChange(FlightPlanProperties.ARRIVAL_TYPE, oldValue, arrivalType);
         }
     }
 
@@ -311,7 +312,7 @@ public class FligthPlanModel extends Model implements FligthPlanWriter {
         final String oldValue = getCallSign();
         if (!value.equals(oldValue)) {
             callSign = value;
-            firePropertyChange(FligthPlanProperties.CALLSIGN, oldValue, callSign);
+            firePropertyChange(FlightPlanProperties.CALLSIGN, oldValue, callSign);
         }
     }
 
@@ -324,7 +325,7 @@ public class FligthPlanModel extends Model implements FligthPlanWriter {
         final String oldValue = getDepartureAirport();
         if (!value.equals(oldValue)) {
             departureAirport = value;
-            firePropertyChange(FligthPlanProperties.DEPARTURE_AIRPORT, oldValue, departureAirport);
+            firePropertyChange(FlightPlanProperties.DEPARTURE_AIRPORT, oldValue, departureAirport);
         }
     }
 
@@ -337,7 +338,7 @@ public class FligthPlanModel extends Model implements FligthPlanWriter {
         final DepartureType oldValue = getDepartureType();
         if (null != value && !value.equals(oldValue)) {
             departureType = value;
-            firePropertyChange(FligthPlanProperties.DEPARTURE_TYPE, oldValue, departureType);
+            firePropertyChange(FlightPlanProperties.DEPARTURE_TYPE, oldValue, departureType);
         }
     }
 
@@ -350,7 +351,7 @@ public class FligthPlanModel extends Model implements FligthPlanWriter {
         final Period oldValue = getDuration();
         if (null != value && !value.equals(oldValue)) {
             duration = value;
-            firePropertyChange(FligthPlanProperties.DURATION, oldValue, duration);
+            firePropertyChange(FlightPlanProperties.DURATION, oldValue, duration);
         }
     }
 
@@ -363,7 +364,7 @@ public class FligthPlanModel extends Model implements FligthPlanWriter {
         final LocalTime oldValue = getEndTime();
         if (null != value && !value.equals(oldValue)) {
             endTime = value;
-            firePropertyChange(FligthPlanProperties.END_TIME, oldValue, endTime);
+            firePropertyChange(FlightPlanProperties.END_TIME, oldValue, endTime);
         }
     }
 
@@ -375,8 +376,8 @@ public class FligthPlanModel extends Model implements FligthPlanWriter {
     public void setFlightToCompletion(final Boolean value) {
         final Boolean oldValue = isFlightToCompletion();
         if (null != value && !value.equals(oldValue)) {
-            flightToCompletion = value;
-            firePropertyChange(FligthPlanProperties.FLIGHT_TO_COMPLETION, oldValue, flightToCompletion);
+            isFightToCompletion = value;
+            firePropertyChange(FlightPlanProperties.FLIGHT_TO_COMPLETION, oldValue, isFightToCompletion);
         }
     }
 
@@ -385,11 +386,11 @@ public class FligthPlanModel extends Model implements FligthPlanWriter {
      * {@inheritDoc}
      */
     @Override
-    public void setFlighType(final FlightType value) {
+    public void setFlightType(final FlightType value) {
         final FlightType oldValue = getFlightType();
         if (null != value && !value.equals(oldValue)) {
             flightType = value;
-            firePropertyChange(FligthPlanProperties.FLIGHT_TYPE, oldValue, flightType);
+            firePropertyChange(FlightPlanProperties.FLIGHT_TYPE, oldValue, flightType);
         }
     }
 
@@ -402,7 +403,7 @@ public class FligthPlanModel extends Model implements FligthPlanWriter {
         final Altitude oldValue = getLandingLightAltitude();
         if (null != value && !value.equals(oldValue)) {
             landingLightAltitude = value;
-            firePropertyChange(FligthPlanProperties.LANDING_LIGHT_ALTITUDE, oldValue, landingLightAltitude);
+            firePropertyChange(FlightPlanProperties.LANDING_LIGHT_ALTITUDE, oldValue, landingLightAltitude);
         }
     }
 
@@ -415,7 +416,7 @@ public class FligthPlanModel extends Model implements FligthPlanWriter {
         final String oldValue = getName();
         if (!value.equals(oldValue)) {
             name = value;
-            firePropertyChange(FligthPlanProperties.NAME, oldValue, name);
+            firePropertyChange(FlightPlanProperties.NAME, oldValue, name);
         }
     }
 
@@ -428,7 +429,7 @@ public class FligthPlanModel extends Model implements FligthPlanWriter {
         final Set<StartDays> oldValue = getStartDays();
         if (null != value && !value.equals(oldValue)) {
             startDays = value;
-            firePropertyChange(FligthPlanProperties.START_DAYS, oldValue, startDays);
+            firePropertyChange(FlightPlanProperties.START_DAYS, oldValue, startDays);
         }
 
     }
@@ -442,7 +443,7 @@ public class FligthPlanModel extends Model implements FligthPlanWriter {
         final LocalTime oldValue = getStartTime();
         if (null != value && !value.equals(oldValue)) {
             startTime = value;
-            firePropertyChange(FligthPlanProperties.START_TIME, oldValue, startTime);
+            firePropertyChange(FlightPlanProperties.START_TIME, oldValue, startTime);
         }
     }
 
@@ -455,7 +456,7 @@ public class FligthPlanModel extends Model implements FligthPlanWriter {
         final List<String> oldValue = getSteerPoints();
         if (null != value && !value.equals(oldValue)) {
             steerPoints = value;
-            firePropertyChange(FligthPlanProperties.STEERPOINTS_MAP, oldValue, steerPoints);
+            firePropertyChange(FlightPlanProperties.STEERPOINTS_MAP, oldValue, steerPoints);
         }
     }
 
@@ -468,7 +469,7 @@ public class FligthPlanModel extends Model implements FligthPlanWriter {
         final String oldValue = getFileName();
         if (!value.equals(oldValue)) {
             fileName = value;
-            firePropertyChange(FligthPlanProperties.FILENAME, oldValue, fileName);
+            firePropertyChange(FlightPlanProperties.FILENAME, oldValue, fileName);
         }
     }
 }

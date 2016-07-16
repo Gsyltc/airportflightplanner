@@ -25,7 +25,7 @@ public class FlightPlanVisualizationPresenter extends PresentationModel<FlighPla
      */
     private static final long                             serialVersionUID = 2003878398284031619L;
     /** */
-    private transient FlightPlanVisualizationTableAdapter tableAdapter;
+    private  FlightPlanVisualizationTableAdapter tableAdapter;
 
     /**
      *
@@ -43,7 +43,7 @@ public class FlightPlanVisualizationPresenter extends PresentationModel<FlighPla
      */
     public FlightPlanVisualizationTableAdapter getTableAdapter() {
         if (null == tableAdapter) {
-            tableAdapter = new FlightPlanVisualizationTableAdapter(getBean().getListModel());
+            setTableAdapter(new FlightPlanVisualizationTableAdapter(getBean().getFlightPlanListModel()));
         }
         return tableAdapter;
     }
@@ -63,5 +63,12 @@ public class FlightPlanVisualizationPresenter extends PresentationModel<FlighPla
             result = (FlightPlanVisualizationListModel) model;
         }
         return result;
+    }
+
+    /**
+     * @param tableAdapter the tableAdapter to set
+     */
+    private void setTableAdapter(final FlightPlanVisualizationTableAdapter tableAdapter) {
+        this.tableAdapter = tableAdapter;
     }
 }

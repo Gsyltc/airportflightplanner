@@ -5,7 +5,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 
     <bean id="id-PropertiesLoader" class="com.airportflightplanner.common.utils.properties.PropertiesUtils" init-method="init">
-        <property name="propertiesFile">
+        <property name="fileNames">
             <util:list>
                 <value>application.properties</value>
                 <value>com/airportflightplanner/common/utils/geographics/googleKey.properties</value>

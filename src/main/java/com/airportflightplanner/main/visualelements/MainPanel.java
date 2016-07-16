@@ -16,7 +16,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 
 import com.airportflightplanner.common.api.adapter.CommonAdapter;
-import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
+import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
 import com.airportflightplanner.common.models.FlighPlanCollectionModel;
 import com.airportflightplanner.flightplancreation.FlightPlanCreationPanel;
 import com.airportflightplanner.flightplanvisualization.panel.FlightPlanVisualiazationPanel;
@@ -38,15 +38,15 @@ public class MainPanel extends FormDebugPanel {
     /**
      *
      */
-    private static final long                          serialVersionUID = -1014619836487219532L;
+    private static final long                serialVersionUID = -1014619836487219532L;
     /**
      *
      */
-    private static final int                           FIRST_TAB        = 0;
+    private static final int                 FIRST_TAB        = 0;
     /** */
-    private transient final FlighPlanCollectionModel   flighPlanCollectionModel;
+    private final FlighPlanCollectionModel   flighPlanCollectionModel;
     /** */
-    private transient final Map<String, CommonAdapter> adapters;
+    private final Map<String, CommonAdapter> adapters;
 
     /**
      * Main Panel.
@@ -113,7 +113,7 @@ public class MainPanel extends FormDebugPanel {
      * @return the panel.
      */
     private FlightPlanVisualiazationPanel createFlightPlanVisualiazationPanel() {
-        final FlightPlanVisualiazationPanel panel = new FlightPlanVisualiazationPanel(flighPlanCollectionModel);
+        final FlightPlanVisualiazationPanel panel = new FlightPlanVisualiazationPanel(getFlighPlanCollectionModel());
         panel.build();
         return panel;
     }
@@ -123,9 +123,23 @@ public class MainPanel extends FormDebugPanel {
      * @return the panel.
      */
     private FlightPlanCreationPanel createFlightPlanCreationPanel() {
-        final FlightPlanCreationPanel panel = new FlightPlanCreationPanel(new PresentationModel<FligthPlanReader>((FligthPlanReader) null));
-        panel.setAdapters(adapters);
+        final FlightPlanCreationPanel panel = new FlightPlanCreationPanel(new PresentationModel<FlightPlanReader>((FlightPlanReader) null));
+        panel.setAdapters(getAdapters());
         panel.build();
         return panel;
+    }
+
+    /**
+     * @return the adapters
+     */
+    private Map<String, CommonAdapter> getAdapters() {
+        return adapters;
+    }
+
+    /**
+     * @return the flighPlanCollectionModel
+     */
+    private FlighPlanCollectionModel getFlighPlanCollectionModel() {
+        return flighPlanCollectionModel;
     }
 }

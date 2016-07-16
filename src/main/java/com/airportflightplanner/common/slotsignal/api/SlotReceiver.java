@@ -5,11 +5,13 @@
  */
 package com.airportflightplanner.common.slotsignal.api;
 
+import java.io.Serializable;
+
 /**
  * @author Goubaud Sylvain
  *
  */
-public interface SlotReceiver {
+public interface SlotReceiver extends Serializable{
 
     /**
      *

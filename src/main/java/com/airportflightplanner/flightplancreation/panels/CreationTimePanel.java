@@ -26,8 +26,8 @@ import javax.swing.border.TitledBorder;
 import org.joda.time.LocalTime;
 import org.joda.time.Period;
 
-import com.airportflightplanner.common.api.flightplan.FligthPlanProperties;
-import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
+import com.airportflightplanner.common.api.flightplan.FlightPlanProperties;
+import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
 import com.airportflightplanner.common.utils.time.TimeUtils;
 import com.airportflightplanner.common.visualelement.AbstractCommonPanel;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
@@ -66,7 +66,7 @@ public class CreationTimePanel extends AbstractCommonPanel {
     protected static class KeyTypingListener implements KeyListener {
 
         /** */
-        private transient final JTextField textField;
+        private   transient final JTextField textField;
 
         /**
          * @param textField
@@ -134,7 +134,7 @@ public class CreationTimePanel extends AbstractCommonPanel {
      * @param newCcurrentFlightPlan
      *            Flightplan.
      */
-    public CreationTimePanel(final PresentationModel<FligthPlanReader> newCcurrentFlightPlan) {
+    public CreationTimePanel(final PresentationModel<FlightPlanReader> newCcurrentFlightPlan) {
         super(newCcurrentFlightPlan);
     }
 
@@ -182,7 +182,7 @@ public class CreationTimePanel extends AbstractCommonPanel {
      */
     private JTextField createEndTextField() {
         final PresentationModel<?> presenter = getPresenter(FIRST_PRESENTER);
-        final BufferedValueModel model = presenter.getBufferedModel(FligthPlanProperties.END_TIME);
+        final BufferedValueModel model = presenter.getBufferedModel(FlightPlanProperties.END_TIME);
         endTextField = BasicComponentFactory.createTextField(model);
 
         model.addPropertyChangeListener(new PropertyChangeListener() {
@@ -239,7 +239,7 @@ public class CreationTimePanel extends AbstractCommonPanel {
      */
     private JTextField createStartTextField() {
         final PresentationModel<?> presenter = getPresenter(FIRST_PRESENTER);
-        final BufferedValueModel model = presenter.getBufferedModel(FligthPlanProperties.START_TIME);
+        final BufferedValueModel model = presenter.getBufferedModel(FlightPlanProperties.START_TIME);
         startTextField = BasicComponentFactory.createTextField(model);
 
         model.addPropertyChangeListener(new PropertyChangeListener() {
@@ -294,7 +294,7 @@ public class CreationTimePanel extends AbstractCommonPanel {
      */
     private JTextField createTimeTextField() {
         final PresentationModel<?> presenter = getPresenter(FIRST_PRESENTER);
-        final BufferedValueModel model = presenter.getBufferedModel(FligthPlanProperties.DURATION);
+        final BufferedValueModel model = presenter.getBufferedModel(FlightPlanProperties.DURATION);
         timeTextField = BasicComponentFactory.createTextField(model);
 
         model.addPropertyChangeListener(new PropertyChangeListener() {
@@ -361,11 +361,11 @@ public class CreationTimePanel extends AbstractCommonPanel {
         case START:
             if (isTimeEmpty) {
                 if (!isEndEmpty) {
-                    presenter.setBufferedValue(FligthPlanProperties.DURATION, //
+                    presenter.setBufferedValue(FlightPlanProperties.DURATION, //
                             TimeUtils.getDuration(startTextField.getText(), endTextField.getText()));
                 }
             } else {
-                presenter.setBufferedValue(FligthPlanProperties.END_TIME, //
+                presenter.setBufferedValue(FlightPlanProperties.END_TIME, //
                         TimeUtils.getEndTime(startTextField.getText(), timeTextField.getText()));
             }
             break;
@@ -373,11 +373,11 @@ public class CreationTimePanel extends AbstractCommonPanel {
         case END:
             if (isTimeEmpty) {
                 if (!isStartEmpty) {
-                    presenter.setBufferedValue(FligthPlanProperties.DURATION, //
+                    presenter.setBufferedValue(FlightPlanProperties.DURATION, //
                             TimeUtils.getDuration(startTextField.getText(), endTextField.getText()));
                 }
             } else {
-                presenter.setBufferedValue(FligthPlanProperties.START_TIME, //
+                presenter.setBufferedValue(FlightPlanProperties.START_TIME, //
                         TimeUtils.getStartTime(endTextField.getText(), timeTextField.getText()));
 
             }
@@ -386,18 +386,18 @@ public class CreationTimePanel extends AbstractCommonPanel {
         case TIME:
             if (isTimeEmpty) {
                 if (!isStartEmpty && isEndEmpty) {
-                    presenter.setBufferedValue(FligthPlanProperties.DURATION, //
+                    presenter.setBufferedValue(FlightPlanProperties.DURATION, //
                             TimeUtils.getDuration(startTextField.getText(), endTextField.getText()));
                 }
             } else {
                 if (isStartEmpty) {
-                    presenter.setBufferedValue(FligthPlanProperties.START_TIME, //
+                    presenter.setBufferedValue(FlightPlanProperties.START_TIME, //
                             TimeUtils.getStartTime(endTextField.getText(), timeTextField.getText()));
                 } else {
                     if (isEndEmpty) {
                         endTextField.setText("TO EMPTY 2");
                     } else {
-                        presenter.setBufferedValue(FligthPlanProperties.END_TIME, //
+                        presenter.setBufferedValue(FlightPlanProperties.END_TIME, //
                                 TimeUtils.getEndTime(startTextField.getText(), timeTextField.getText()));
                     }
                 }

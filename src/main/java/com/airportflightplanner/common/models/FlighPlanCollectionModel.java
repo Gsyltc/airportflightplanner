@@ -9,9 +9,9 @@ import java.util.List;
 
 import javax.swing.SwingUtilities;
 
-import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
+import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
 import com.airportflightplanner.common.api.flightplancollection.flightplan.FlightPlanCollectionWriter;
-import com.airportflightplanner.common.api.flightplancollection.flightplan.FligthPlanCollectionProperties;
+import com.airportflightplanner.common.api.flightplancollection.flightplan.FlightPlanCollectionProperties;
 import com.airportflightplanner.flightplanvisualization.api.FlightPlanVisualizationListModelListener;
 import com.airportflightplanner.flightplanvisualization.presenter.flightplan.FlightPlanVisualizationListModel;
 import com.jgoodies.binding.beans.Model;
@@ -27,9 +27,10 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
      */
     private static final long                                    serialVersionUID    = -3596872287379176646L;
     /** */
-    protected transient final FlightPlanVisualizationListModel             flightPlanListModel = new FlightPlanVisualizationListModel();
+    protected final FlightPlanVisualizationListModel             flightPlanListModel = new FlightPlanVisualizationListModel();
+
     /** */
-    private transient final List<FlightPlanVisualizationListModelListener> listeners           = new ArrayList<FlightPlanVisualizationListModelListener>();
+    private final List<FlightPlanVisualizationListModelListener> listeners           = new ArrayList<FlightPlanVisualizationListModelListener>();
     /** */
     private String                                               currentAirport      = "";
 
@@ -38,9 +39,9 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
      * {@inheritDoc}
      */
     @Override
-    public final  void addFlightPlan(final FligthPlanReader value) {
+    public final void addFlightPlan(final FlightPlanReader value) {
         if (null != value) {
-            for (final FlightPlanVisualizationListModelListener listener : listeners) {
+            for (final FlightPlanVisualizationListModelListener listener : getListeners()) {
                 listener.addFlightPlan(value);
             }
             commitChange();
@@ -52,9 +53,9 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
      * {@inheritDoc}
      */
     @Override
-    public final  void removeFlightPlan(final FligthPlanReader value) {
+    public final void removeFlightPlan(final FlightPlanReader value) {
         if (null != value) {
-            for (final FlightPlanVisualizationListModelListener listener : listeners) {
+            for (final FlightPlanVisualizationListModelListener listener : getListeners()) {
                 listener.removeFlightPlan(value);
             }
             commitChange();
@@ -66,7 +67,7 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
      * {@inheritDoc}
      */
     @Override
-    public final  FligthPlanReader getFlightPlanByIndex(final int value) {
+    public final FlightPlanReader getFlightPlanByIndex(final int value) {
         return flightPlanListModel.getElementAt(value);
     }
 
@@ -75,7 +76,7 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
      * {@inheritDoc}
      */
     @Override
-    public final  int getFlightPlanCollectionSize() {
+    public final int getFlightPlanCollectionSize() {
         return flightPlanListModel.getSize();
     }
 
@@ -84,11 +85,11 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
      * {@inheritDoc}
      */
     @Override
-    public  final void setCurrentAirport(final String value) {
+    public final void setCurrentAirport(final String value) {
         final String oldValue = currentAirport;
         if (!value.equals(oldValue)) {
             currentAirport = value;
-            firePropertyChange(FligthPlanCollectionProperties.CURRENT_AIRPORT, oldValue, currentAirport);
+            firePropertyChange(FlightPlanCollectionProperties.CURRENT_AIRPORT, oldValue, currentAirport);
         }
     }
 
@@ -97,7 +98,7 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
      * {@inheritDoc}
      */
     @Override
-    public  final String getCurrentAirport() {
+    public final String getCurrentAirport() {
         return currentAirport;
     }
 
@@ -106,7 +107,7 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
      */
     private void commitChange() {
         if (SwingUtilities.isEventDispatchThread()) {
-            firePropertyChange(FligthPlanCollectionProperties.FLIGHT_PLANS, null, flightPlanListModel);
+            firePropertyChange(FlightPlanCollectionProperties.FLIGHT_PLANS, null, flightPlanListModel);
         } else {
             SwingUtilities.invokeLater(new Runnable() {
                 /**
@@ -115,7 +116,7 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
                  */
                 @Override
                 public void run() {
-                    firePropertyChange(FligthPlanCollectionProperties.FLIGHT_PLANS, null, flightPlanListModel);
+                    firePropertyChange(FlightPlanCollectionProperties.FLIGHT_PLANS, null, flightPlanListModel);
                 }
             });
         }
@@ -126,7 +127,7 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
      * {@inheritDoc}
      */
     @Override
-    public  final FlightPlanVisualizationListModel getListModel() {
+    public final FlightPlanVisualizationListModel getFlightPlanListModel() {
         return flightPlanListModel;
     }
 
@@ -135,8 +136,8 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
      * {@inheritDoc}
      */
     @Override
-    public  final void addFligfhtPlanModelListener(final FlightPlanVisualizationListModelListener listener) {
-        listeners.add(listener);
+    public final void addFligfhtPlanModelListener(final FlightPlanVisualizationListModelListener listener) {
+        getListeners().add(listener);
     }
 
     /**
@@ -144,8 +145,16 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
      * {@inheritDoc}
      */
     @Override
-    public  final void removeFligfhtPlanModelListener(final FlightPlanVisualizationListModelListener listener) {
-        listeners.remove(listener);
+    public final void removeFligfhtPlanModelListener(final FlightPlanVisualizationListModelListener listener) {
+        getListeners().remove(listener);
+    }
+
+    /**
+     *
+     * @return
+     */
+    private List<FlightPlanVisualizationListModelListener> getListeners() {
+        return listeners;
     }
 
 }

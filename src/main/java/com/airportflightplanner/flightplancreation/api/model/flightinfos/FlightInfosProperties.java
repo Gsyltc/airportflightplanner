@@ -1,5 +1,5 @@
 /*
- * @(#)FligthInfosProperties.java
+ * @(#)FlightInfosProperties.java
  *
  * Goubaud Sylvain - 2016.
  *
@@ -7,13 +7,14 @@
  * project.  It comes with no warranty.
  *
  */
+
 package com.airportflightplanner.flightplancreation.api.model.flightinfos;
 
 /**
  * @author Goubaud Sylvain
  *
  */
-public class FligthInfosProperties {
+public class FlightInfosProperties {
     /** */
     public static final String AIRCRAFT_CLASS  = "aircraftClass";
     /** */

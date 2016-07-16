@@ -6,12 +6,13 @@ package com.airportflightplanner.flightplancreation;
 
 import java.awt.Dimension;
 import java.awt.Rectangle;
+import java.util.Collections;
 import java.util.Map;
 
 import javax.swing.JPanel;
 
 import com.airportflightplanner.common.api.adapter.CommonAdapter;
-import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
+import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
 import com.airportflightplanner.common.slotsignal.SelectionSlot;
 import com.airportflightplanner.common.slotsignal.TopicName;
 import com.airportflightplanner.common.slotsignal.api.SlotAction;
@@ -48,16 +49,14 @@ public class FlightPlanCreationPanel extends AbstractCommonPanel {
     /** */
     private static final int           DEFAULT_WIDTH          = 400;
     /** */
-    protected transient GoogleMapPane  googleMap;
-    /** */
-    private transient Map<String, CommonAdapter> adapters;
+    private Map<String, CommonAdapter> adapters;
     /** */
     private static final int           GOOGLE_PRESENTER_INDEX = 1;
 
     /**
      * @param newCurrentFlightPlan
      */
-    public FlightPlanCreationPanel(final PresentationModel<FligthPlanReader> newCurrentFlightPlan) {
+    public FlightPlanCreationPanel(final PresentationModel<FlightPlanReader> newCurrentFlightPlan) {
         super(newCurrentFlightPlan, new PresentationModel<GoogleMapModel>());
     }
 
@@ -68,16 +67,16 @@ public class FlightPlanCreationPanel extends AbstractCommonPanel {
     @Override
     public final void attachSlotAction() {
         final PresentationModel<GoogleMapModel> googlePresenter = (PresentationModel<GoogleMapModel>) getPresenter(GOOGLE_PRESENTER_INDEX);
-        final PresentationModel<FligthPlanReader> fpPresetner = (PresentationModel<FligthPlanReader>) getPresenter(FIRST_PRESENTER);
+        final PresentationModel<FlightPlanReader> fpPresetner = (PresentationModel<FlightPlanReader>) getPresenter(FIRST_PRESENTER);
 
-        final SelectionSlot<FligthPlanReader> slot = new SelectionSlot<FligthPlanReader>(TopicName.FLIGHTPLAN_TABLE_SELECTED, this);
-        slot.setSlotAction(new SlotAction<FligthPlanReader>() {
+        final SelectionSlot<FlightPlanReader> slot = new SelectionSlot<FlightPlanReader>(TopicName.FLIGHTPLAN_TABLE_SELECTED, this);
+        slot.setSlotAction(new SlotAction<FlightPlanReader>() {
             /**
              *
              * {@inheritDoc}
              */
             @Override
-            public void doAction(final FligthPlanReader flightPlanReader) {
+            public void doAction(final FlightPlanReader flightPlanReader) {
                 if (null != flightPlanReader) {
 
                     fpPresetner.triggerFlush();
@@ -117,7 +116,7 @@ public class FlightPlanCreationPanel extends AbstractCommonPanel {
                         FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, }));
 
-        final PresentationModel<FligthPlanReader> fpPresenter = (PresentationModel<FligthPlanReader>) getPresenter(FIRST_PRESENTER);
+        final PresentationModel<FlightPlanReader> fpPresenter = (PresentationModel<FlightPlanReader>) getPresenter(FIRST_PRESENTER);
 
         add(createCreationTimePanel(fpPresenter), "2,2,11,1");
         add(createCreationRoutePanel(fpPresenter), "2,4,11,1");
@@ -136,7 +135,7 @@ public class FlightPlanCreationPanel extends AbstractCommonPanel {
         panel.setMinimumSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 
         final PresentationModel<GoogleMapModel> googlePresenter = (PresentationModel<GoogleMapModel>) getPresenter(GOOGLE_PRESENTER_INDEX);
-        googleMap = new GoogleMapPane(googlePresenter);
+        final GoogleMapPane googleMap = new GoogleMapPane(googlePresenter);
         googleMap.setDimension(new Rectangle(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT));
         googleMap.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         panel.add(googleMap);
@@ -149,7 +148,7 @@ public class FlightPlanCreationPanel extends AbstractCommonPanel {
      * @return
      *
      */
-    public CreationOptionsPanel createCreationOptionsPanel(final PresentationModel<FligthPlanReader> fpPresenter) {
+    public CreationOptionsPanel createCreationOptionsPanel(final PresentationModel<FlightPlanReader> fpPresenter) {
         final CreationOptionsPanel panel = new CreationOptionsPanel(fpPresenter);
         panel.build();
         return panel;
@@ -160,9 +159,9 @@ public class FlightPlanCreationPanel extends AbstractCommonPanel {
      * @return
      *
      */
-    public CreationFlightInfosPanel createCreationFlightInfosPanel(final PresentationModel<FligthPlanReader> fpPresenter) {
+    public CreationFlightInfosPanel createCreationFlightInfosPanel(final PresentationModel<FlightPlanReader> fpPresenter) {
         final CreationFlightInfosPanel panel = new CreationFlightInfosPanel(fpPresenter);
-        panel.setAdapter(adapters.get("AircraftTypeAdapter"));
+        panel.setAdapter(getAdapters().get("AircraftTypeAdapter"));
         panel.build();
         return panel;
     }
@@ -172,7 +171,7 @@ public class FlightPlanCreationPanel extends AbstractCommonPanel {
      * @return
      *
      */
-    public CreationTimePanel createCreationTimePanel(final PresentationModel<FligthPlanReader> fpPresenter) {
+    public CreationTimePanel createCreationTimePanel(final PresentationModel<FlightPlanReader> fpPresenter) {
         final CreationTimePanel panel = new CreationTimePanel(fpPresenter);
         panel.build();
         return panel;
@@ -183,7 +182,7 @@ public class FlightPlanCreationPanel extends AbstractCommonPanel {
      * @return
      *
      */
-    public CreationRoutePanel createCreationRoutePanel(final PresentationModel<FligthPlanReader> fpPresenter) {
+    public CreationRoutePanel createCreationRoutePanel(final PresentationModel<FlightPlanReader> fpPresenter) {
         final CreationRoutePanel panel = new CreationRoutePanel(fpPresenter);
         panel.build();
         return panel;
@@ -194,5 +193,12 @@ public class FlightPlanCreationPanel extends AbstractCommonPanel {
      */
     public void setAdapters(final Map<String, CommonAdapter> adapters) {
         this.adapters = adapters;
+    }
+
+    /**
+     * @return the adapters
+     */
+    public Map<String, CommonAdapter> getAdapters() {
+        return Collections.unmodifiableMap(adapters);
     }
 }

@@ -20,7 +20,7 @@ import com.airportflightplanner.common.types.StartDays;
  * @author Goubaud Sylvain
  *
  */
-public interface FligthPlanWriter extends FligthPlanReader {
+public interface FlightPlanWriter extends FlightPlanReader {
     /**
      *
      * @param value
@@ -91,7 +91,7 @@ public interface FligthPlanWriter extends FligthPlanReader {
      *
      * @param value
      */
-    void setFlighType(FlightType value);
+    void setFlightType(FlightType value);
 
     /**
      *

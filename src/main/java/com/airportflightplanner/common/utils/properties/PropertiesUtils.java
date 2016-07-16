@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -30,7 +31,7 @@ public class PropertiesUtils extends AbstractSlotReceiver {
     /** */
     private static final String           USER_CONFIG_PATH      = "config/";
     /** */
-    private transient List<String>                  fileNames;
+    private List<String>                  fileNames;
     /** */
     private static Properties             userProperties        = new Properties();
     /** */
@@ -50,7 +51,7 @@ public class PropertiesUtils extends AbstractSlotReceiver {
         PROPERTIES.add(userProperties);
         PROPERTIES.add(applicationProperties);
 
-        for (final String fileName : fileNames) {
+        for (final String fileName : getFileNames()) {
             final File configFile = new File(USER_CONFIG_PATH + fileName);
             if (configFile.exists()) {
                 try (InputStream fileInputStream = new FileInputStream(USER_CONFIG_PATH + fileName)) {
@@ -110,8 +111,15 @@ public class PropertiesUtils extends AbstractSlotReceiver {
      * @param fileNames
      *            List of resources files.
      */
-    public void setPropertiesFile(final List<String> fileNames) {
+    public void setFileNames(final List<String> fileNames) {
         this.fileNames = fileNames;
+    }
+
+    /**
+     * @return the fileNames
+     */
+    private List<String> getFileNames() {
+        return Collections.unmodifiableList(fileNames);
     }
 
     /**
@@ -164,15 +172,5 @@ public class PropertiesUtils extends AbstractSlotReceiver {
             }
 
         });
-    }
-
-    /**
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public void attachSignal() {
-        // TODO Auto-generated method stub
-
     }
 }

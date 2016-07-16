@@ -5,6 +5,7 @@
  */
 package com.airportflightplanner.common.visualelement;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -29,23 +30,23 @@ public abstract class AbstractCommonPanel extends FormDebugPanel implements Slot
     /**
      *
      */
-    private transient final List<PresentationModel<?>>     presenters                      = new CopyOnWriteArrayList<PresentationModel<?>>();
+    private final List<PresentationModel<?>>               presenters          = new CopyOnWriteArrayList<PresentationModel<?>>();
     /**
      *
      */
-    private static final long                              serialVersionUID                = -9041291520151245877L;
+    private static final long                              serialVersionUID    = -9041291520151245877L;
     /** */
-    protected transient Map<String, Signal>                signals                         = new ConcurrentHashMap<String, Signal>();
+    private Map<String, Signal>                            signals             = new ConcurrentHashMap<String, Signal>();
     /** */
-    protected Map<String, SelectionSlot<? extends Object>> slots                           = new ConcurrentHashMap<String, SelectionSlot<? extends Object>>();
+    protected Map<String, SelectionSlot<? extends Object>> slots               = new ConcurrentHashMap<String, SelectionSlot<? extends Object>>();
     /** */
-    protected Map<String, ? extends Object>                attributeMap                    = new ConcurrentHashMap<String, Object>();
+    protected Map<String, ? extends Object>                attributeMap        = new ConcurrentHashMap<String, Object>();
     /** */
     private CommonAdapter                                  adapter;
     /** The logger of this class. */
-    private static final Log                               LOGGER                          = LogFactory.getLog(AbstractCommonPanel.class);
+    private static final Log                               LOGGER              = LogFactory.getLog(AbstractCommonPanel.class);
     /** */
-    protected static final int                             FIRST_PRESENTER                 = 0;
+    protected static final int                             FIRST_PRESENTER     = 0;
     /** */
     protected static final String                          PREF_GROW           = "pref:grow";
 
@@ -155,6 +156,30 @@ public abstract class AbstractCommonPanel extends FormDebugPanel implements Slot
      */
     public CommonAdapter getAdapter() {
         return adapter;
+    }
+
+    /**
+     * @return the presenters
+     */
+    public List<PresentationModel<?>> getPresenters() {
+        return Collections.unmodifiableList(presenters);
+    }
+
+    /**
+     * @return the signals
+     */
+    public Map<String, Signal> getSignals() {
+        return Collections.unmodifiableMap(signals);
+    }
+
+    /**
+     * Used for Injection only.
+     *
+     * @param signals
+     *            the signals to set
+     */
+    public void setSignals(final Map<String, Signal> signals) {
+        this.signals = signals;
     }
 
 }

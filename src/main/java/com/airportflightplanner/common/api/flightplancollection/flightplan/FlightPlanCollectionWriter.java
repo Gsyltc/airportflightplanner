@@ -1,10 +1,15 @@
-/* @(#)FlightPlanVisualisationReader.java
+/*
+ * @(#)FlightPlanCollectionWriter.java
  *
- * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
+ * Goubaud Sylvain - 2016.
+ *
+ * This code may be freely used and modified on any personal or professional
+ * project.  It comes with no warranty.
+ *
  */
 package com.airportflightplanner.common.api.flightplancollection.flightplan;
 
-import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
+import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
 import com.airportflightplanner.flightplanvisualization.api.FlightPlanVisualizationListModelListener;
 
 /**
@@ -16,13 +21,13 @@ public interface FlightPlanCollectionWriter extends FlightPlanCollectionReader {
      *
      * @param value
      */
-    void addFlightPlan(FligthPlanReader value);
+    void addFlightPlan(FlightPlanReader value);
 
     /**
      *
      * @param value
      */
-    void removeFlightPlan(FligthPlanReader value);
+    void removeFlightPlan(FlightPlanReader value);
 
     /**
      *

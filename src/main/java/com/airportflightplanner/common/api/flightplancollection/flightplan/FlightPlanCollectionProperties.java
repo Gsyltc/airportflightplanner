@@ -1,6 +1,11 @@
-/* @(#)FlightPlanVisualisationReader.java
+/*
+ * @(#)FlightPlanCollectionProperties.java
  *
- * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
+ * Goubaud Sylvain - 2016.
+ *
+ * This code may be freely used and modified on any personal or professional
+ * project.  It comes with no warranty.
+ *
  */
 package com.airportflightplanner.common.api.flightplancollection.flightplan;
 
@@ -8,7 +13,7 @@ package com.airportflightplanner.common.api.flightplancollection.flightplan;
  * @author Goubaud Sylvain
  *
  */
-public final class FligthPlanCollectionProperties {
+public final class FlightPlanCollectionProperties {
 
     /** */
     public static final String FLIGHT_PLANS    = "flightPlansMap";
@@ -18,7 +23,7 @@ public final class FligthPlanCollectionProperties {
     /**
      * Protected constructor.
      */
-    private FligthPlanCollectionProperties() {
+    private FlightPlanCollectionProperties() {
         //
     }
 }

@@ -10,6 +10,7 @@
 
 package com.airportflightplanner.common.slotsignal;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -23,7 +24,7 @@ public class Signal extends Observable {
     /** */
     private final String                 topicName;
     /** */
-    private transient final List<SelectionSlot<?>> slotList = new CopyOnWriteArrayList<SelectionSlot<?>>();
+    private final List<SelectionSlot<?>> slotList = new CopyOnWriteArrayList<SelectionSlot<?>>();
 
     /**
      *
@@ -58,5 +59,14 @@ public class Signal extends Observable {
     public void createSignal(final SelectionSlot<?> slot) {
         slotList.add(slot);
         addObserver(slot);
+    }
+
+    /**
+     * Return all the slot attached to the signal.
+     *
+     * @return the slotList
+     */
+    public List<SelectionSlot<?>> getSlotList() {
+        return Collections.unmodifiableList(slotList);
     }
 }

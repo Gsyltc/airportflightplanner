@@ -1,6 +1,11 @@
-/* @(#)FlighPlanModel.java
+/*
+ * @(#)SteerPointsCollectionModel.java
  *
- * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
+ * Goubaud Sylvain - 2016.
+ *
+ * This code may be freely used and modified on any personal or professional
+ * project.  It comes with no warranty.
+ *
  */
 package com.airportflightplanner.common.models;
 
@@ -9,8 +14,8 @@ import java.util.List;
 
 import javax.swing.SwingUtilities;
 
-import com.airportflightplanner.common.api.flightplan.FligthPlanReader;
-import com.airportflightplanner.common.api.flightplancollection.flightplan.FligthPlanCollectionProperties;
+import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
+import com.airportflightplanner.common.api.flightplancollection.flightplan.FlightPlanCollectionProperties;
 import com.airportflightplanner.common.api.flightplancollection.steerpoints.SteerPointsCollectionWriter;
 import com.airportflightplanner.common.api.steerpoints.SteerPointReader;
 import com.airportflightplanner.flightplanvisualization.api.SteerPointsListModelListener;
@@ -28,20 +33,20 @@ public class SteerPointsCollectionModel extends Model implements SteerPointsColl
      */
     private static final long                        serialVersionUID     = -3596872287379176646L;
     /** */
-    protected transient final SteerPointsListModel             steerPointsListModel = new SteerPointsListModel();
+    protected final SteerPointsListModel             steerPointsListModel = new SteerPointsListModel();
     /** */
-    private transient final List<SteerPointsListModelListener> listeners            = new ArrayList<SteerPointsListModelListener>();
+    private final List<SteerPointsListModelListener> listeners            = new ArrayList<SteerPointsListModelListener>();
     /** */
-    private FligthPlanReader                         currentFlightPlan;
+    private FlightPlanReader                         currentFlightPlan;
 
     /**
      *
      * {@inheritDoc}
      */
     @Override
-    public final  void addSteerPoints(final List<SteerPointReader> value) {
+    public final void addSteerPoints(final List<SteerPointReader> value) {
         if (null != value) {
-            for (final SteerPointsListModelListener listener : listeners) {
+            for (final SteerPointsListModelListener listener : getListeners()) {
                 for (final SteerPointReader steerPointModel : value) {
                     listener.addSteerPoint(steerPointModel);
                 }
@@ -55,9 +60,9 @@ public class SteerPointsCollectionModel extends Model implements SteerPointsColl
      * {@inheritDoc}
      */
     @Override
-    public final  void removeSteerPoint(final SteerPointReader value) {
+    public final void removeSteerPoint(final SteerPointReader value) {
         if (null != value) {
-            for (final SteerPointsListModelListener listener : listeners) {
+            for (final SteerPointsListModelListener listener : getListeners()) {
                 listener.removeSteerPoint(value);
             }
             commitChange();
@@ -69,7 +74,7 @@ public class SteerPointsCollectionModel extends Model implements SteerPointsColl
      * {@inheritDoc}
      */
     @Override
-    public final  SteerPointReader getSteerPointByIndex(final int value) {
+    public final SteerPointReader getSteerPointByIndex(final int value) {
         return steerPointsListModel.getElementAt(value);
     }
 
@@ -78,7 +83,7 @@ public class SteerPointsCollectionModel extends Model implements SteerPointsColl
      * {@inheritDoc}
      */
     @Override
-    public final  int getSteerPointsCollectionSize() {
+    public final int getSteerPointsCollectionSize() {
         return steerPointsListModel.getSize();
     }
 
@@ -87,11 +92,11 @@ public class SteerPointsCollectionModel extends Model implements SteerPointsColl
      * {@inheritDoc}
      */
     @Override
-    public final  void setCurrentFlightPlan(final FligthPlanReader newCurrentFlightPlan) {
-        final FligthPlanReader oldValue = currentFlightPlan;
+    public final void setCurrentFlightPlan(final FlightPlanReader newCurrentFlightPlan) {
+        final FlightPlanReader oldValue = currentFlightPlan;
         if (!newCurrentFlightPlan.equals(oldValue)) {
             currentFlightPlan = newCurrentFlightPlan;
-            firePropertyChange(FligthPlanCollectionProperties.CURRENT_AIRPORT, oldValue, currentFlightPlan);
+            firePropertyChange(FlightPlanCollectionProperties.CURRENT_AIRPORT, oldValue, currentFlightPlan);
         }
     }
 
@@ -100,7 +105,7 @@ public class SteerPointsCollectionModel extends Model implements SteerPointsColl
      * {@inheritDoc}
      */
     @Override
-    public final  FligthPlanReader getCurrentFlightPlan() {
+    public final FlightPlanReader getCurrentFlightPlan() {
         return currentFlightPlan;
     }
 
@@ -109,7 +114,7 @@ public class SteerPointsCollectionModel extends Model implements SteerPointsColl
      */
     private void commitChange() {
         if (SwingUtilities.isEventDispatchThread()) {
-            firePropertyChange(FligthPlanCollectionProperties.FLIGHT_PLANS, null, steerPointsListModel);
+            firePropertyChange(FlightPlanCollectionProperties.FLIGHT_PLANS, null, steerPointsListModel);
         } else {
             SwingUtilities.invokeLater(new Runnable() {
                 /**
@@ -118,7 +123,7 @@ public class SteerPointsCollectionModel extends Model implements SteerPointsColl
                  */
                 @Override
                 public void run() {
-                    firePropertyChange(FligthPlanCollectionProperties.FLIGHT_PLANS, null, steerPointsListModel);
+                    firePropertyChange(FlightPlanCollectionProperties.FLIGHT_PLANS, null, steerPointsListModel);
                 }
             });
         }
@@ -129,7 +134,7 @@ public class SteerPointsCollectionModel extends Model implements SteerPointsColl
      * {@inheritDoc}
      */
     @Override
-    public  final SteerPointsListModel getListModel() {
+    public final SteerPointsListModel getSteerPointsListModel() {
         return steerPointsListModel;
     }
 
@@ -138,8 +143,8 @@ public class SteerPointsCollectionModel extends Model implements SteerPointsColl
      * {@inheritDoc}
      */
     @Override
-    public final  void addSteerPointsListModelListener(final  SteerPointsListModelListener listener) {
-        listeners.add(listener);
+    public final void addSteerPointsListModelListener(final SteerPointsListModelListener listener) {
+        getListeners().add(listener);
     }
 
     /**
@@ -147,8 +152,15 @@ public class SteerPointsCollectionModel extends Model implements SteerPointsColl
      * {@inheritDoc}
      */
     @Override
-    public final  void removeSteerPointsListModelListener(final  SteerPointsListModelListener listener) {
-        listeners.remove(listener);
+    public final void removeSteerPointsListModelListener(final SteerPointsListModelListener listener) {
+        getListeners().remove(listener);
+    }
+
+    /**
+     * @return the listeners
+     */
+    private List<SteerPointsListModelListener> getListeners() {
+        return listeners;
     }
 
 }

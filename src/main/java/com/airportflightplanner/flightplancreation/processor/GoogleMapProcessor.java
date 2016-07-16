@@ -42,7 +42,7 @@ public final class GoogleMapProcessor {
      */
     public static String getEncodedRoad(final GoogleMapReader mapReader) {
         final StringBuilder sbuilder = new StringBuilder();
-        sbuilder.append(mapReader.getEncodePolyline().getEncodedPath())//
+        sbuilder.append(mapReader.getEncodedPolyline().getEncodedPath())//
         .append(START_MARKER + getFormattedCoordinates(mapReader.getStartMarker()))//
         .append(END_MARKER + getFormattedCoordinates(mapReader.getEndMarker()));
         return sbuilder.toString();

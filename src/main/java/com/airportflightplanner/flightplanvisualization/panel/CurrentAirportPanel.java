@@ -35,11 +35,11 @@ public class CurrentAirportPanel extends AbstractCommonPanel {
     /**
      *
      */
-    private static final long                          serialVersionUID = -8872582029412974363L;
+    private static final long                serialVersionUID = -8872582029412974363L;
     /**
      *
      */
-    protected transient final FlighPlanCollectionModel flightPlansCollection;
+    protected final FlighPlanCollectionModel flightPlansCollection;
 
     /**
      * @param fpcm
@@ -52,7 +52,7 @@ public class CurrentAirportPanel extends AbstractCommonPanel {
             final FlightPlanVisualizationPresenter fpVizuPresenter) {
         super(fpVizuPresenter);
         flightPlansCollection = fpcm;
-        flightPlansCollection.addFligfhtPlanModelListener(flightPlansCollection.getListModel());
+        flightPlansCollection.addFligfhtPlanModelListener(flightPlansCollection.getFlightPlanListModel());
 
     }
 
@@ -74,7 +74,6 @@ public class CurrentAirportPanel extends AbstractCommonPanel {
                 new RowSpec[] { FormSpecs.PREF_ROWSPEC, }));
 
         final JLabel airportLabel = DefaultComponentFactory.getInstance().createLabel(FlightPlanVisualizationMessages.AIRPORT);
-        //
         add(airportLabel, "1, 1, right, default");
 
         final JLabel timeLabel = DefaultComponentFactory.getInstance().createLabel(FlightPlanVisualizationMessages.TIME);
@@ -135,5 +134,12 @@ public class CurrentAirportPanel extends AbstractCommonPanel {
             signal = new Signal(TopicName.UPDATE_AIRPORT_TOPIC);
         }
         createSignal(TopicName.UPDATE_AIRPORT_TOPIC, signal);
+    }
+
+    /**
+     * @return the flightPlansCollection
+     */
+    public FlighPlanCollectionModel getFlightPlansCollection() {
+        return flightPlansCollection;
     }
 }

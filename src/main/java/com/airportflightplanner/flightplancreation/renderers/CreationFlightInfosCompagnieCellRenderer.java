@@ -20,7 +20,7 @@ import com.airportflightplanner.common.utils.internationalization.Internationali
  */
 public class CreationFlightInfosCompagnieCellRenderer implements ListCellRenderer<String> {
     /** */
-    protected transient DefaultListCellRenderer defaultRenderer = new DefaultListCellRenderer();
+    private  transient final  DefaultListCellRenderer defaultRenderer = new DefaultListCellRenderer();
 
     /**
      *

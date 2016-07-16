@@ -23,12 +23,12 @@ import com.airportflightplanner.common.utils.aircraft.AircraftDecoder;
  */
 public class AircraftsLiveriesMapper {
     /** */
-    private transient final Map<String, SortedSet<String>> liveriesMap = new ConcurrentHashMap<String, SortedSet<String>>();
+    private final Map<String, SortedSet<String>> liveriesMap = new ConcurrentHashMap<String, SortedSet<String>>();
     /** */
-    private final String                                   aircraftType;
+    private final String                   aircraftType;
 
     /**
-     * @param newAircraftCie
+     * @param newAircraftType
      *            The companie.
      */
     public AircraftsLiveriesMapper(final String newAircraftType) {
@@ -42,13 +42,13 @@ public class AircraftsLiveriesMapper {
      */
     public final void addLivery(final String airCraftType) {
         final String company = AircraftDecoder.getAircraftCie(airCraftType);
-        if (liveriesMap.containsKey(company)) {
-            final SortedSet<String> liveries = liveriesMap.get(company);
+        if (getLiveriesMap().containsKey(company)) {
+            final SortedSet<String> liveries = getLiveriesMap().get(company);
             liveries.add(airCraftType);
         } else {
             final SortedSet<String> liveries = new TreeSet<String>();
             liveries.add(airCraftType);
-            liveriesMap.put(company, liveries);
+            getLiveriesMap().put(company, liveries);
         }
     }
 
@@ -60,8 +60,8 @@ public class AircraftsLiveriesMapper {
      */
     public final SortedSet<String> getLiveriesByCpie(final String aircraftCie) {
         SortedSet<String> result = Collections.emptySortedSet();
-        if (liveriesMap.containsKey(aircraftCie)) {
-            result = Collections.unmodifiableSortedSet(liveriesMap.get(aircraftCie));
+        if (getLiveriesMap().containsKey(aircraftCie)) {
+            result = Collections.unmodifiableSortedSet(getLiveriesMap().get(aircraftCie));
         }
         return result;
     }
@@ -71,7 +71,7 @@ public class AircraftsLiveriesMapper {
      * @return the list of the companies.
      */
     public final SortedSet<String> getCompagnies() {
-        return Collections.unmodifiableSortedSet(new TreeSet<String>(liveriesMap.keySet()));
+        return Collections.unmodifiableSortedSet(new TreeSet<String>(getLiveriesMap().keySet()));
     }
 
     /**
@@ -79,5 +79,12 @@ public class AircraftsLiveriesMapper {
      */
     public String getAircraftType() {
         return aircraftType;
+    }
+
+    /**
+     * @return the liveriesMap
+     */
+    private Map<String, SortedSet<String>> getLiveriesMap() {
+        return liveriesMap;
     }
 }
