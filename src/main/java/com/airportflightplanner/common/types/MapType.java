@@ -16,8 +16,15 @@ import com.airportflightplanner.common.utils.internationalization.Internationali
  *
  */
 public enum MapType {
-    ROADMAP(0), SATTELITE(1), HYBRID(2), TERRAIN(3);
-
+    /** */
+    ROADMAP(0),
+    /** */
+    SATTELITE(1),
+    /** */
+    HYBRID(2),
+    /** */
+    TERRAIN(3);
+    /** */
     private static final String PREFIX = "arrivaltype.";
     /** */
     private int                 value;
@@ -39,7 +46,7 @@ public enum MapType {
         MapType result = null;
         for (final MapType type : MapType.values()) {
             if (type.ordinal() == typeIndex) {
-                result= type;
+                result = type;
             }
         }
         return result;

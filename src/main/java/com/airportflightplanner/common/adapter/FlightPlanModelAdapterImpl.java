@@ -1,7 +1,13 @@
-/* @(#)FlightPlanModelAdapter.java
+/*
+ * @(#)FlightPlanModelAdapterImpl.java
  *
- * 2016 Goubaud Sylvain
+ * Goubaud Sylvain - 2016.
+ *
+ * This code may be freely used and modified on any personal or professional
+ * project.  It comes with no warranty.
+ *
  */
+
 package com.airportflightplanner.common.adapter;
 
 import java.util.HashSet;

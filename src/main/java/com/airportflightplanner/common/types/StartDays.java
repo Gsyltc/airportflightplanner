@@ -16,8 +16,21 @@ import com.airportflightplanner.common.utils.internationalization.Internationali
  *
  */
 public enum StartDays {
-    MONDAY(0), TUESDAY(1), WEDNESDAY(2), THRUSDAY(3), FRIDAY(4), SATURDAY(5), SUNDAY(6);
-
+    /** */
+    MONDAY(0),
+    /** */
+    TUESDAY(1),
+    /** */
+    WEDNESDAY(2),
+    /** */
+    THRUSDAY(3),
+    /** */
+    FRIDAY(4),
+    /** */
+    SATURDAY(5),
+    /** */
+    SUNDAY(6);
+    /** */
     private static final String PREFIX = "StartDays.";
     /** */
     private int                 value;
@@ -39,7 +52,7 @@ public enum StartDays {
         StartDays result = null;
         for (final StartDays day : StartDays.values()) {
             if (day.ordinal() == typeIndex) {
-                result= day;
+                result = day;
             }
         }
         return result;

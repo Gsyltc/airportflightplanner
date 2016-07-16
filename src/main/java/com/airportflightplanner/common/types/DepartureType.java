@@ -16,8 +16,11 @@ import com.airportflightplanner.common.utils.internationalization.Internationali
  *
  */
 public enum DepartureType {
-    NORMAL(0), VERTICAL(1);
-
+    /** */
+    NORMAL(0),
+    /** */
+    VERTICAL(1);
+    /** */
     private static final String PREFIX = "DepartureType.";
     /** */
     private int                 value;
@@ -39,7 +42,7 @@ public enum DepartureType {
         DepartureType result = null;
         for (final DepartureType type : DepartureType.values()) {
             if (type.ordinal() == typeIndex) {
-                result= type;
+                result = type;
             }
         }
         return result;

@@ -1,6 +1,11 @@
-/* @(#)FlightTypes.java
+/*
+ * @(#)FlightType.java
  *
- * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
+ * Goubaud Sylvain - 2016.
+ *
+ * This code may be freely used and modified on any personal or professional
+ * project.  It comes with no warranty.
+ *
  */
 package com.airportflightplanner.common.types;
 

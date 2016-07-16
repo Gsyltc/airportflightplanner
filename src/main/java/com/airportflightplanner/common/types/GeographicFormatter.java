@@ -1,6 +1,10 @@
-/* @(#)GeographicFormatter.java
+/*
+ * @(#)GeographicFormatter.java
  *
- * 2016 Goubaud Sylvain.
+ * Goubaud Sylvain - 2016.
+ *
+ * This code may be freely used and modified on any personal or professional
+ * project.  It comes with no warranty.
  *
  */
 package com.airportflightplanner.common.types;

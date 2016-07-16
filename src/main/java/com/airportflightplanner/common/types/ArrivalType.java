@@ -16,8 +16,13 @@ import com.airportflightplanner.common.utils.internationalization.Internationali
  *
  */
 public enum ArrivalType {
-    STRAIGHT_IN_APPROCH(0), OVERHEAD_BRAKE(1), LOW_APPROCH(2);
-
+    /** */
+    STRAIGHT_IN_APPROCH(0),
+    /** */
+    OVERHEAD_BRAKE(1),
+    /** */
+    LOW_APPROCH(2);
+    /** */
     private static final String PREFIX = "ArrivalType.";
     /** */
     private int                 value;
@@ -39,7 +44,7 @@ public enum ArrivalType {
         ArrivalType result = null;
         for (final ArrivalType type : ArrivalType.values()) {
             if (type.ordinal() == typeIndex) {
-                result= type;
+                result = type;
             }
         }
         return result;
