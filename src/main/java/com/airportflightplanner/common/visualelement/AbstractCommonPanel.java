@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import javax.swing.JPanel;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -20,13 +22,12 @@ import com.airportflightplanner.common.slotsignal.Signal;
 import com.airportflightplanner.common.slotsignal.SignalModels;
 import com.airportflightplanner.common.slotsignal.api.SlotReceiver;
 import com.jgoodies.binding.PresentationModel;
-import com.jgoodies.forms.debug.FormDebugPanel;
 
 /**
  * @author Goubaud Sylvain
  *
  */
-public abstract class AbstractCommonPanel extends FormDebugPanel implements SlotReceiver {
+public abstract class AbstractCommonPanel extends JPanel implements SlotReceiver {
     /**
      *
      */
