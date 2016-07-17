@@ -26,7 +26,7 @@ public class DaysSelectionPanel extends AbstractCommonPanel {
     /**
      *
      */
-    private static final long serialVersionUID     = 3382772953500242522L;
+    private static final long        serialVersionUID = 3382772953500242522L;
     /** */
     private static final int  DAYS_PRESENTER       = AbstractCommonPanel.FIRST_PRESENTER;
 
@@ -119,7 +119,7 @@ public class DaysSelectionPanel extends AbstractCommonPanel {
      * @return
      */
     private JCheckBox createMondayCb(final PresentationModel<DaysSelectionModel> dayPresenter) {
-        final ValueModel value = dayPresenter.getModel(DaySelectionProperties.MONDAY);
+        final ValueModel value =  dayPresenter.getModel(DaySelectionProperties.MONDAY);
         final JCheckBox checkBox = BasicComponentFactory.createCheckBox(value, StartDays.MONDAY.toString());
         checkBox.setEnabled(false);
         return checkBox;
@@ -131,7 +131,7 @@ public class DaysSelectionPanel extends AbstractCommonPanel {
      * @return
      */
     private JCheckBox createTuesdayCb(final PresentationModel<DaysSelectionModel> dayPresenter) {
-        final ValueModel value = dayPresenter.getModel(DaySelectionProperties.TUESDAY);
+        final ValueModel value =  dayPresenter.getModel(DaySelectionProperties.TUESDAY);
         final JCheckBox checkBox = BasicComponentFactory.createCheckBox(value, StartDays.TUESDAY.toString());
         checkBox.setEnabled(false);
         return checkBox;
@@ -143,7 +143,7 @@ public class DaysSelectionPanel extends AbstractCommonPanel {
      * @return
      */
     private JCheckBox createWednesdayCb(final PresentationModel<DaysSelectionModel> dayPresenter) {
-        final ValueModel value = dayPresenter.getModel(DaySelectionProperties.WEDNESDAY);
+        final ValueModel value =  dayPresenter.getModel(DaySelectionProperties.WEDNESDAY);
         final JCheckBox checkBox = BasicComponentFactory.createCheckBox(value, StartDays.WEDNESDAY.toString());
         checkBox.setEnabled(false);
         return checkBox;
@@ -155,7 +155,7 @@ public class DaysSelectionPanel extends AbstractCommonPanel {
      * @return
      */
     private JCheckBox createThrusdayCb(final PresentationModel<DaysSelectionModel> dayPresenter) {
-        final ValueModel value = dayPresenter.getModel(DaySelectionProperties.THRUSDAY);
+        final ValueModel value =  dayPresenter.getModel(DaySelectionProperties.THRUSDAY);
         final JCheckBox checkBox = BasicComponentFactory.createCheckBox(value, StartDays.THRUSDAY.toString());
         checkBox.setEnabled(false);
         return checkBox;
