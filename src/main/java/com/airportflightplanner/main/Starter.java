@@ -66,7 +66,6 @@ public class Starter {
             public void run() {
                 try {
                     if (CONTEXT.getBean("id-FlightPlansCollection") instanceof FlighPlanCollectionModel) {
-                        final FlighPlanCollectionModel model = (FlighPlanCollectionModel) CONTEXT.getBean("id-FlightPlansCollection");
                         final Map<String, CommonAdapter> adapters = (Map<String, CommonAdapter>) CONTEXT.getBean("id-Adapters");
                         final Map<BeanNames, Model> beansMap = (Map<BeanNames, Model>) CONTEXT.getBean("id-FlightPlanModels");
                         beansMap.put(BeanNames.CURRENT_FP_MODEL, new FlightPlanModel());

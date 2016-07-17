@@ -11,7 +11,6 @@
 package com.airportflightplanner.main.visualelements;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
@@ -47,7 +46,7 @@ public class MainPanel extends FormDebugPanel {
     private final Map<String, CommonAdapter> adapters;
 
     /** */
-    private static Map<BeanNames, Model>     beansMap         = new ConcurrentHashMap<BeanNames, Model>();
+    private final Map<BeanNames, Model>            beansMap;
 
     /**
      * Main Panel.
@@ -142,5 +141,13 @@ public class MainPanel extends FormDebugPanel {
      */
     private Map<String, CommonAdapter> getAdapters() {
         return adapters;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Map<BeanNames, Model> getBeansMap() {
+        return beansMap;
     }
 }
