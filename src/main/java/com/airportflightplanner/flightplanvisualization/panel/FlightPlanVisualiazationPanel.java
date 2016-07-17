@@ -25,6 +25,7 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
+import com.airportflightplanner.common.models.daysselection.DaysSelectionModel;
 import com.airportflightplanner.common.models.flightplans.FlighPlanCollectionModel;
 import com.airportflightplanner.common.slotsignal.SelectionSlot;
 import com.airportflightplanner.common.slotsignal.Signal;
@@ -32,7 +33,9 @@ import com.airportflightplanner.common.slotsignal.TopicName;
 import com.airportflightplanner.common.slotsignal.api.SlotAction;
 import com.airportflightplanner.common.visualelement.AbstractCommonPanel;
 import com.airportflightplanner.flightplanvisualization.presenter.flightplan.FlightPlanVisualizationPresenter;
+import com.airportflightplanner.flightplanvisualization.presenter.steerpoints.SteerPointsPresenter;
 import com.jgoodies.binding.PresentationModel;
+import com.jgoodies.binding.beans.Model;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
@@ -46,14 +49,24 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
     /**
      *
      */
-    protected final FlighPlanCollectionModel flightPlansCollection;
+    // protected final FlighPlanCollectionModel flightPlansCollection;
     /** */
-    protected transient Signal               signal;
+    protected transient Signal       signal;
+    /** */
+    private FlighPlanCollectionModel fpCollection;
+    /** */
+    private static final int         FP_PRESENTER                = AbstractCommonPanel.FIRST_PRESENTER;
+    /** */
+    private static final int         STEERPOINTS_PRESENTER_INDEX = 1;
+    /** */
+    private static final int         CURRENT_FP_PRESENTER        = 2;
+    /** */
+    private static final int         DAYS_SELECT_PRESENTER       = 3;
 
     /**
      *
      */
-    private static final long                serialVersionUID = -6354635338489926005L;
+    private static final long        serialVersionUID            = -6354635338489926005L;
 
     /**
      *
@@ -62,11 +75,18 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
     /**
      * @param newFPCollectionModel
      *            the Flightplan collection model.
+     * @param steerpointsModel
+     * @param currentFp
+     * @param daysSelectionModel
      *
      */
-    public FlightPlanVisualiazationPanel(final FlighPlanCollectionModel newFPCollectionModel) {
-        super(new FlightPlanVisualizationPresenter(newFPCollectionModel));
-        flightPlansCollection = newFPCollectionModel;
+    public FlightPlanVisualiazationPanel(final Model newFPCollectionModel, //
+            final Model steerpointsModel, final Model currentFp, final Model daysSelectionModel) {
+        super(new FlightPlanVisualizationPresenter(newFPCollectionModel), //
+                new SteerPointsPresenter(steerpointsModel), //
+                new PresentationModel<FlightPlanReader>((FlightPlanReader) currentFp), //
+                new PresentationModel<DaysSelectionModel>((DaysSelectionModel) daysSelectionModel));
+
     }
 
     /**
@@ -89,6 +109,9 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
                         FormSpecs.PREF_ROWSPEC, //
                         FormSpecs.RELATED_GAP_ROWSPEC, }));
 
+        final FlightPlanVisualizationPresenter presenter = (FlightPlanVisualizationPresenter) getPresenter(FP_PRESENTER);
+        fpCollection = presenter.getBean();
+
         add(createCurrentAirportPanel(), "2, 2, 3, 1, fill, fill");
         add(createDaysSelectionPanel(), "2, 4, 3, 1, fill, fill");
         add(createFlightScrollPane(), "2, 6, 3, 1");
@@ -100,8 +123,8 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
      * @return
      */
     private CurrentAirportPanel createCurrentAirportPanel() {
-        final CurrentAirportPanel panel = new CurrentAirportPanel(getFlightPlansCollection(), //
-                (FlightPlanVisualizationPresenter) getPresenter(FIRST_PRESENTER));
+        final CurrentAirportPanel panel = new CurrentAirportPanel(getFpCollection(), //
+                (FlightPlanVisualizationPresenter) getPresenter(FP_PRESENTER));
         panel.build();
         return panel;
     }
@@ -111,8 +134,7 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
      * @return
      */
     private DaysSelectionPanel createDaysSelectionPanel() {
-        final DaysSelectionPanel panel = new DaysSelectionPanel( //
-                (FlightPlanVisualizationPresenter) getPresenter(FIRST_PRESENTER));
+        final DaysSelectionPanel panel = new DaysSelectionPanel((PresentationModel<DaysSelectionModel>) getPresenter(DAYS_SELECT_PRESENTER));
         panel.build();
         return panel;
     }
@@ -122,7 +144,8 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
      * @return
      */
     private SteerPointPanel createSteerPointPanel() {
-        final SteerPointPanel panel = new SteerPointPanel();
+        final SteerPointsPresenter presenter = (SteerPointsPresenter) getPresenter(STEERPOINTS_PRESENTER_INDEX);
+        final SteerPointPanel panel = new SteerPointPanel(presenter);
         panel.build();
         return panel;
     }
@@ -134,7 +157,7 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
     private JScrollPane createFlightScrollPane() {
         final DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        final PresentationModel<?> presenter = getPresenter(FIRST_PRESENTER);
+        final PresentationModel<?> presenter = getPresenter(FP_PRESENTER);
         final JTable table = new JTable(((FlightPlanVisualizationPresenter) presenter).getTableAdapter());
         table.setDefaultRenderer(String.class, centerRenderer);
         table.setFillsViewportHeight(true);
@@ -154,7 +177,7 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
                         final int maxIndex = lsm.getMaxSelectionIndex();
                         for (int i = minIndex; i <= maxIndex; i++) {
                             if (lsm.isSelectedIndex(i)) {
-                                flightPlan = getFlightPlansCollection().getFlightPlanByIndex(i);
+                                flightPlan = getFpCollection().getFlightPlanByIndex(i);
                             }
                         }
                     }
@@ -182,15 +205,18 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
      */
     @Override
     public final void attachSlotAction() {
-        final SelectionSlot<String> slot = new SelectionSlot<String>(TopicName.UPDATE_AIRPORT_TOPIC, this);
-        slot.setSlotAction(new SlotAction<String>() {
+
+        final SelectionSlot<FlightPlanReader> slot = new SelectionSlot<FlightPlanReader>(TopicName.FLIGHTPLAN_TABLE_SELECTED, this);
+        slot.setSlotAction(new SlotAction<FlightPlanReader>() {
             /**
              *
              * {@inheritDoc}
              */
             @Override
-            public void doAction(final String object) {
-                // TODO
+            public void doAction(final FlightPlanReader bean) {
+                final PresentationModel<FlightPlanReader> fpPresenter = (PresentationModel<FlightPlanReader>) getPresenter(CURRENT_FP_PRESENTER);
+                fpPresenter.triggerFlush();
+                fpPresenter.setBean(bean);
             }
         });
 
@@ -207,9 +233,9 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
     }
 
     /**
-     * @return the flightPlansCollection
+     * @return the fpCollection
      */
-    private FlighPlanCollectionModel getFlightPlansCollection() {
-        return flightPlansCollection;
+    protected FlighPlanCollectionModel getFpCollection() {
+        return fpCollection;
     }
 }

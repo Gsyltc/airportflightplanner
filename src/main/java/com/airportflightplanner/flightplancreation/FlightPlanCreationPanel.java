@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 
 import com.airportflightplanner.common.api.adapter.CommonAdapter;
 import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
+import com.airportflightplanner.common.models.daysselection.DaysSelectionModel;
 import com.airportflightplanner.common.slotsignal.SelectionSlot;
 import com.airportflightplanner.common.slotsignal.TopicName;
 import com.airportflightplanner.common.slotsignal.api.SlotAction;
@@ -27,6 +28,7 @@ import com.airportflightplanner.flightplancreation.panels.CreationTimePanel;
 import com.airportflightplanner.flightplancreation.panels.GoogleMapPane;
 import com.google.maps.model.EncodedPolyline;
 import com.jgoodies.binding.PresentationModel;
+import com.jgoodies.binding.beans.Model;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
@@ -50,14 +52,20 @@ public class FlightPlanCreationPanel extends AbstractCommonPanel {
     private static final int           DEFAULT_WIDTH          = 400;
     /** */
     private Map<String, CommonAdapter> adapters;
+
+    /** */
+    private static final int           FP_PRESENTER           = AbstractCommonPanel.FIRST_PRESENTER;
     /** */
     private static final int           GOOGLE_PRESENTER_INDEX = 1;
 
     /**
-     * @param newCurrentFlightPlan
+     * @param currentFpBean
+     * @param daySelection
      */
-    public FlightPlanCreationPanel(final PresentationModel<FlightPlanReader> newCurrentFlightPlan) {
-        super(newCurrentFlightPlan, new PresentationModel<GoogleMapModel>());
+    public FlightPlanCreationPanel(final Model currentFpBean, final Model daySelection) {
+        super(new PresentationModel<FlightPlanReader>((FlightPlanReader) currentFpBean), //
+                new PresentationModel<GoogleMapModel>(new GoogleMapModel()), //
+                new PresentationModel<DaysSelectionModel>((DaysSelectionModel) daySelection));
     }
 
     /**
@@ -66,10 +74,14 @@ public class FlightPlanCreationPanel extends AbstractCommonPanel {
      */
     @Override
     public final void attachSlotAction() {
-        final PresentationModel<GoogleMapModel> googlePresenter = (PresentationModel<GoogleMapModel>) getPresenter(GOOGLE_PRESENTER_INDEX);
-        final PresentationModel<FlightPlanReader> fpPresetner = (PresentationModel<FlightPlanReader>) getPresenter(FIRST_PRESENTER);
+        final PresentationModel<GoogleMapModel> googlePresenter = (PresentationModel<GoogleMapModel>) //
+                getPresenter(GOOGLE_PRESENTER_INDEX);
 
-        final SelectionSlot<FlightPlanReader> slot = new SelectionSlot<FlightPlanReader>(TopicName.FLIGHTPLAN_TABLE_SELECTED, this);
+        final PresentationModel<FlightPlanReader> fpPresetner = (PresentationModel<FlightPlanReader>) //
+                getPresenter(FP_PRESENTER);
+
+        final SelectionSlot<FlightPlanReader> slot = new SelectionSlot<FlightPlanReader>( //
+                TopicName.FLIGHTPLAN_TABLE_SELECTED, this);
         slot.setSlotAction(new SlotAction<FlightPlanReader>() {
             /**
              *
@@ -116,8 +128,9 @@ public class FlightPlanCreationPanel extends AbstractCommonPanel {
                         FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, }));
 
-        final PresentationModel<FlightPlanReader> fpPresenter = (PresentationModel<FlightPlanReader>) getPresenter(FIRST_PRESENTER);
-
+        final PresentationModel<FlightPlanReader> fpPresenter = (PresentationModel<FlightPlanReader>) //
+                getPresenter(FP_PRESENTER);
+        fpPresenter.getBean();
         add(createCreationTimePanel(fpPresenter), "2,2,11,1");
         add(createCreationRoutePanel(fpPresenter), "2,4,11,1");
         add(createCreationFlightInfosPanel(fpPresenter), "2,6,11,1");
@@ -134,7 +147,8 @@ public class FlightPlanCreationPanel extends AbstractCommonPanel {
         panel.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         panel.setMinimumSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 
-        final PresentationModel<GoogleMapModel> googlePresenter = (PresentationModel<GoogleMapModel>) getPresenter(GOOGLE_PRESENTER_INDEX);
+        final PresentationModel<GoogleMapModel> googlePresenter = (PresentationModel<GoogleMapModel>) //
+                getPresenter(GOOGLE_PRESENTER_INDEX);
         final GoogleMapPane googleMap = new GoogleMapPane(googlePresenter);
         googleMap.setDimension(new Rectangle(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT));
         googleMap.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);

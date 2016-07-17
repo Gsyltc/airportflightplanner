@@ -6,13 +6,19 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     <util:map id="id-Adapters">
         <entry key="AircraftTypeAdapter" value-ref="id-AircraftTypeAdapter" />
         <entry key="FlightPlanModelAdapter" value-ref="id-FlightPlanModelAdapter" />
+        <entry key="StartDaysAdapter" value-ref="id-StartDaysAdapter" />
     </util:map>
 
     <bean id="id-AircraftTypeAdapter" class="com.airportflightplanner.common.adapter.AircraftTypeAdapterIpmpl">
         <property name="adapterName" value="AircraftTypeAdapter" />
     </bean>
+
     <bean id="id-FlightPlanModelAdapter" class="com.airportflightplanner.common.adapter.FlightPlanModelAdapterImpl">
         <property name="adapterName" value="FlightPlanModelAdapter" />
     </bean>
-
+    
+    <bean id="id-StartDaysAdapter" class="com.airportflightplanner.common.adapter.StartDaysAdapterImpl">
+        <property name="adapterName" value="" />
+        <property name="model" ref="id-DaySelectionModel" />
+    </bean>
 </beans>

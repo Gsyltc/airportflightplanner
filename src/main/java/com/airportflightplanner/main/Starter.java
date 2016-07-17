@@ -26,7 +26,10 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.airportflightplanner.common.api.adapter.CommonAdapter;
 import com.airportflightplanner.common.models.flightplans.FlighPlanCollectionModel;
+import com.airportflightplanner.common.models.flightplans.FlightPlanModel;
+import com.airportflightplanner.common.types.BeanNames;
 import com.airportflightplanner.main.visualelements.MainPanel;
+import com.jgoodies.binding.beans.Model;
 
 /**
  *
@@ -65,6 +68,9 @@ public class Starter {
                     if (CONTEXT.getBean("id-FlightPlansCollection") instanceof FlighPlanCollectionModel) {
                         final FlighPlanCollectionModel model = (FlighPlanCollectionModel) CONTEXT.getBean("id-FlightPlansCollection");
                         final Map<String, CommonAdapter> adapters = (Map<String, CommonAdapter>) CONTEXT.getBean("id-Adapters");
+                        final Map<BeanNames, Model> beansMap = (Map<BeanNames, Model>) CONTEXT.getBean("id-FlightPlanModels");
+                        beansMap.put(BeanNames.CURRENT_FP_MODEL, new FlightPlanModel());
+
                         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                         final JMenuBar menu = new JMenuBar();
                         menu.add(new JMenu("Fichiers"));
@@ -74,7 +80,7 @@ public class Starter {
                         mainFrame.setJMenuBar(menu);
                         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-                        mainFrame.getContentPane().add(new MainPanel(model, adapters), BorderLayout.CENTER);
+                        mainFrame.getContentPane().add(new MainPanel(beansMap, adapters), BorderLayout.CENTER);
                         mainFrame.setMinimumSize(new Dimension(MINIMUM_WEIGHT, MINIMUM_HEIGHT));
                         mainFrame.pack();
                         mainFrame.setVisible(true);

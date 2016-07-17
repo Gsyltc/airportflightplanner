@@ -10,7 +10,6 @@ import com.airportflightplanner.common.api.dayselection.bean.DaySelectionPropert
 import com.airportflightplanner.common.models.daysselection.DaysSelectionModel;
 import com.airportflightplanner.common.types.StartDays;
 import com.airportflightplanner.common.visualelement.AbstractCommonPanel;
-import com.airportflightplanner.flightplanvisualization.presenter.flightplan.FlightPlanVisualizationPresenter;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.adapter.BasicComponentFactory;
 import com.jgoodies.binding.value.ValueModel;
@@ -27,15 +26,16 @@ public class DaysSelectionPanel extends AbstractCommonPanel {
     /**
      *
      */
-    private static final long        serialVersionUID = 3382772953500242522L;
+    private static final long serialVersionUID     = 3382772953500242522L;
     /** */
-    private static final int         DAYS_PRESENTER   = 1;
+    private static final int  DAYS_PRESENTER       = AbstractCommonPanel.FIRST_PRESENTER;
 
     /**
      * @param presenter
+     *
      */
-    public DaysSelectionPanel(final FlightPlanVisualizationPresenter presenter) {
-        super(presenter, new PresentationModel<DaysSelectionModel>());
+    public DaysSelectionPanel(final PresentationModel<DaysSelectionModel> presenter) {
+        super(presenter);
     }
 
     /**
@@ -62,7 +62,6 @@ public class DaysSelectionPanel extends AbstractCommonPanel {
 
         final PresentationModel<DaysSelectionModel> dayPresenter = //
                 (PresentationModel<DaysSelectionModel>) getPresenter(DAYS_PRESENTER);
-        dayPresenter.setBean(new DaysSelectionModel());
 
         add(createMondayCb(dayPresenter), "1, 1");
         add(createTuesdayCb(dayPresenter), "3, 1");
@@ -72,7 +71,47 @@ public class DaysSelectionPanel extends AbstractCommonPanel {
         add(createSaturdayCb(dayPresenter), "11, 1");
         add(createSundayCb(dayPresenter), "13, 1");
 
+        //        validateDays(dayPresenter.getBean());
     }
+
+    //    /**
+    //     * @param daysSelectionModel
+    //     *
+    //     */
+    //    private void validateDays(final DaysSelectionModel daysSelectionModel) {
+    //        final PresentationModel<FlightPlanReader> presentationModel = //
+    //                (PresentationModel<FlightPlanReader>) getPresenter(CURRENT_FP_PRESENTER);
+    //        presentationModel.addPropertyChangeListener(BeanAdapter.PROPERTY_AFTER_BEAN, new PropertyChangeListener() {
+    //            /**
+    //             *
+    //             * {@inheritDoc}
+    //             */
+    //            @Override
+    //            public void propertyChange(final PropertyChangeEvent evt) {
+    //                if (evt.getNewValue() instanceof FlightPlanReader) {
+    //                    final FlightPlanReader fplReader = (FlightPlanReader) evt.getNewValue();
+    //                    final Set<StartDays> startDays = fplReader.getStartDays();
+    //                    if (!startDays.isEmpty()) {
+    //                        daysSelectionModel.setMonday(startDays.contains(StartDays.MONDAY));
+    //                        daysSelectionModel.setTuesday(startDays.contains(StartDays.TUESDAY));
+    //                        daysSelectionModel.setWednesday(startDays.contains(StartDays.WEDNESDAY));
+    //                        daysSelectionModel.setThrusday(startDays.contains(StartDays.THRUSDAY));
+    //                        daysSelectionModel.setFriday(startDays.contains(StartDays.FRIDAY));
+    //                        daysSelectionModel.setSaturday(startDays.contains(StartDays.SATURDAY));
+    //                        daysSelectionModel.setSunday(startDays.contains(StartDays.SUNDAY));
+    //                    } else {
+    //                        daysSelectionModel.setMonday(true);
+    //                        daysSelectionModel.setTuesday(true);
+    //                        daysSelectionModel.setWednesday(true);
+    //                        daysSelectionModel.setThrusday(true);
+    //                        daysSelectionModel.setFriday(true);
+    //                        daysSelectionModel.setSaturday(true);
+    //                        daysSelectionModel.setSunday(true);
+    //                    }
+    //                }
+    //            }
+    //        });
+    //    }
 
     /**
      *
@@ -157,5 +196,4 @@ public class DaysSelectionPanel extends AbstractCommonPanel {
         checkBox.setEnabled(false);
         return checkBox;
     }
-
 }

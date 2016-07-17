@@ -19,6 +19,7 @@ import javax.swing.table.TableRowSorter;
 
 import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
 import com.airportflightplanner.common.api.steerpoints.bean.SteerPointReader;
+import com.airportflightplanner.common.api.steerpoints.collection.SteerPointsCollectionReader;
 import com.airportflightplanner.common.models.steerpoints.SteerPointsCollectionModel;
 import com.airportflightplanner.common.slotsignal.SelectionSlot;
 import com.airportflightplanner.common.slotsignal.Signal;
@@ -52,10 +53,11 @@ public class SteerPointPanel extends AbstractCommonPanel {
      */
 
     /**
+     * @param presenter
      *
      */
-    public SteerPointPanel() {
-        super(new SteerPointsPresenter(new SteerPointsCollectionModel()));
+    public SteerPointPanel(final SteerPointsPresenter presenter) {
+        super(presenter);
     }
 
     /**
@@ -77,8 +79,8 @@ public class SteerPointPanel extends AbstractCommonPanel {
         add(createSteerPointsPanel(), "2, 2, 3, 1, fill, top");
 
         final SteerPointsPresenter presenter = (SteerPointsPresenter) getPresenter(FIRST_PRESENTER);
-        final SteerPointsCollectionModel model = presenter.getBean();
-        model.addSteerPointsListModelListener(presenter.getListModel());
+        final SteerPointsCollectionReader reader = presenter.getBean();
+        reader.addSteerPointsListModelListener(presenter.getListModel());
 
     }
 

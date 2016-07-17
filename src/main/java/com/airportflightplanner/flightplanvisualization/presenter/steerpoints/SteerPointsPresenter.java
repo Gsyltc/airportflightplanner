@@ -7,6 +7,7 @@ package com.airportflightplanner.flightplanvisualization.presenter.steerpoints;
 import com.airportflightplanner.common.models.steerpoints.SteerPointsCollectionModel;
 import com.airportflightplanner.flightplanvisualization.adapter.steerpoints.SteerPointsTableAdapter;
 import com.jgoodies.binding.PresentationModel;
+import com.jgoodies.binding.beans.Model;
 
 /**
  * @author Goubaud Sylvain
@@ -24,8 +25,8 @@ public class SteerPointsPresenter extends PresentationModel<SteerPointsCollectio
      *
      * @param bean
      */
-    public SteerPointsPresenter(final SteerPointsCollectionModel bean) {
-        super(bean);
+    public SteerPointsPresenter(final Model bean) {
+        super((SteerPointsCollectionModel) bean);
     }
 
     /**

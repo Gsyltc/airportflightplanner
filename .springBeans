@@ -8,9 +8,9 @@
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
 		<config>src/main/resources/config/imports.xml</config>
-		<config>src/main/resources/config/models/flightplanmodel.xml</config>
 		<config>src/main/resources/config/application/config.xml</config>
 		<config>src/main/resources/config/internationalization/config.xml</config>
+		<config>src/main/resources/config/models/flightplans/flightplanmodel.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>
@@ -23,7 +23,7 @@
 				<config>src/main/resources/config/application/config.xml</config>
 				<config>src/main/resources/config/imports.xml</config>
 				<config>src/main/resources/config/internationalization/config.xml</config>
-				<config>src/main/resources/config/models/flightplanmodel.xml</config>
+				<config>src/main/resources/config/models/flightplans/flightplanmodel.xml</config>
 			</configs>
 			<profiles>
 			</profiles>

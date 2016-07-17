@@ -8,6 +8,7 @@ import java.text.MessageFormat;
 
 import javax.measure.quantity.Velocity;
 import javax.measure.unit.NonSI;
+import javax.swing.ListModel;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
@@ -15,7 +16,6 @@ import com.airportflightplanner.common.api.flightplan.collection.FlightPlanColle
 import com.airportflightplanner.common.api.steerpoints.bean.SteerPointReader;
 import com.airportflightplanner.common.types.GeographicFormatter;
 import com.airportflightplanner.common.utils.geographics.GeographicUtils;
-import com.airportflightplanner.flightplanvisualization.presenter.steerpoints.SteerPointsListModel;
 import com.jgoodies.binding.adapter.AbstractTableAdapter;
 
 /**
@@ -39,7 +39,7 @@ public class SteerPointsTableAdapter extends AbstractTableAdapter<FlightPlanColl
      * @param listModel
      *            List model for the steerpoint.
      */
-    public SteerPointsTableAdapter(final SteerPointsListModel listModel) {
+    public SteerPointsTableAdapter(final ListModel<SteerPointReader> listModel) {
         super(listModel);
         listModel.addListDataListener(new ListDataListener() {
             /**

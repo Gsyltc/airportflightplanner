@@ -8,6 +8,7 @@ import javax.swing.ListModel;
 
 import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
 import com.airportflightplanner.common.api.steerpoints.bean.SteerPointReader;
+import com.airportflightplanner.flightplanvisualization.api.SteerPointsListModelListener;
 
 /**
  * @author Goubaud Sylvain
@@ -39,5 +40,17 @@ public interface SteerPointsCollectionReader {
      * @return
      */
     FlightPlanReader getCurrentFlightPlan();
+
+    /**
+     *
+     * @param listener
+     */
+    void addSteerPointsListModelListener(SteerPointsListModelListener listener);
+
+    /**
+     *
+     * @param listener
+     */
+    void removeSteerPointsListModelListener(SteerPointsListModelListener listener);
 
 }

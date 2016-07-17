@@ -11,18 +11,18 @@
 package com.airportflightplanner.main.visualelements;
 
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 
 import com.airportflightplanner.common.api.adapter.CommonAdapter;
-import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
-import com.airportflightplanner.common.models.flightplans.FlighPlanCollectionModel;
+import com.airportflightplanner.common.types.BeanNames;
 import com.airportflightplanner.flightplancreation.FlightPlanCreationPanel;
 import com.airportflightplanner.flightplanvisualization.panel.FlightPlanVisualiazationPanel;
 import com.airportflightplanner.main.visualelements.messages.MainPanelMessages;
 import com.airportflightplanner.main.visualelements.panels.WaypointEditionPanel;
-import com.jgoodies.binding.PresentationModel;
+import com.jgoodies.binding.beans.Model;
 import com.jgoodies.forms.debug.FormDebugPanel;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
@@ -44,21 +44,22 @@ public class MainPanel extends FormDebugPanel {
      */
     private static final int                 FIRST_TAB        = 0;
     /** */
-    private final FlighPlanCollectionModel   flighPlanCollectionModel;
-    /** */
     private final Map<String, CommonAdapter> adapters;
+
+    /** */
+    private static Map<BeanNames, Model>     beansMap         = new ConcurrentHashMap<BeanNames, Model>();
 
     /**
      * Main Panel.
      *
-     * @param fpCollectionModel
-     *            Collection Model.
+     * @param beans
+     *            Map of Models.
      * @param adapters
      */
-    public MainPanel(final FlighPlanCollectionModel fpCollectionModel, final Map<String, CommonAdapter> adapters) {
+    public MainPanel(final Map<BeanNames, Model> beans, final Map<String, CommonAdapter> adapters) {
         setPaintRows(false);
         setPaintInBackground(false);
-        flighPlanCollectionModel = fpCollectionModel;
+        beansMap = beans;
         this.adapters = adapters;
         buildPanel();
     }
@@ -67,6 +68,7 @@ public class MainPanel extends FormDebugPanel {
      *
      */
     private void buildPanel() {
+
         // Set Layout
         setLayout(new FormLayout(new ColumnSpec[] { //
                 FormSpecs.RELATED_GAP_COLSPEC, //
@@ -113,7 +115,11 @@ public class MainPanel extends FormDebugPanel {
      * @return the panel.
      */
     private FlightPlanVisualiazationPanel createFlightPlanVisualiazationPanel() {
-        final FlightPlanVisualiazationPanel panel = new FlightPlanVisualiazationPanel(getFlighPlanCollectionModel());
+        final FlightPlanVisualiazationPanel panel = new FlightPlanVisualiazationPanel( //
+                beansMap.get(BeanNames.FP_COLLECTION_MODEL), //
+                beansMap.get(BeanNames.STEERPOINT_MODEL), //
+                beansMap.get(BeanNames.CURRENT_FP_MODEL), //
+                beansMap.get(BeanNames.DAYS_MODEL));
         panel.build();
         return panel;
     }
@@ -123,7 +129,9 @@ public class MainPanel extends FormDebugPanel {
      * @return the panel.
      */
     private FlightPlanCreationPanel createFlightPlanCreationPanel() {
-        final FlightPlanCreationPanel panel = new FlightPlanCreationPanel(new PresentationModel<FlightPlanReader>((FlightPlanReader) null));
+        final FlightPlanCreationPanel panel = new FlightPlanCreationPanel(//
+                beansMap.get(BeanNames.CURRENT_FP_MODEL), //
+                beansMap.get(BeanNames.DAYS_MODEL));
         panel.setAdapters(getAdapters());
         panel.build();
         return panel;
@@ -134,12 +142,5 @@ public class MainPanel extends FormDebugPanel {
      */
     private Map<String, CommonAdapter> getAdapters() {
         return adapters;
-    }
-
-    /**
-     * @return the flighPlanCollectionModel
-     */
-    private FlighPlanCollectionModel getFlighPlanCollectionModel() {
-        return flighPlanCollectionModel;
     }
 }

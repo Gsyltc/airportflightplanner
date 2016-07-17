@@ -19,6 +19,10 @@ import com.jgoodies.binding.beans.Model;
  *
  */
 public class DaysSelectionModel extends Model implements DaySelectionWriter {
+    /**
+     *
+     */
+    private static final long serialVersionUID = -7084632243706540232L;
     /** */
     private boolean monday;
     /** */

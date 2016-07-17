@@ -14,6 +14,7 @@ import javax.swing.ListModel;
 import com.airportflightplanner.common.models.flightplans.FlighPlanCollectionModel;
 import com.airportflightplanner.flightplanvisualization.adapter.flightplan.FlightPlanVisualizationTableAdapter;
 import com.jgoodies.binding.PresentationModel;
+import com.jgoodies.binding.beans.Model;
 
 /**
  * @author Goubaud Sylvain
@@ -32,8 +33,8 @@ public class FlightPlanVisualizationPresenter extends PresentationModel<FlighPla
      * @param bean
      *            the bean for presenter.
      */
-    public FlightPlanVisualizationPresenter(final FlighPlanCollectionModel bean) {
-        super(bean);
+    public FlightPlanVisualizationPresenter(final Model bean) {
+        super((FlighPlanCollectionModel) bean);
     }
 
     /**
