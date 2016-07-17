@@ -2,7 +2,7 @@
  *
  * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
  */
-package com.airportflightplanner.common.api.steerpoints;
+package com.airportflightplanner.common.api.steerpoints.bean;
 
 /**
  * @author Goubaud Sylvain

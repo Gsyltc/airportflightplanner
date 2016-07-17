@@ -10,7 +10,7 @@ import java.awt.event.ItemListener;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 
-import com.airportflightplanner.common.models.FlighPlanCollectionModel;
+import com.airportflightplanner.common.models.flightplans.FlighPlanCollectionModel;
 import com.airportflightplanner.common.slotsignal.Signal;
 import com.airportflightplanner.common.slotsignal.TopicName;
 import com.airportflightplanner.common.utils.properties.CommonProperties;

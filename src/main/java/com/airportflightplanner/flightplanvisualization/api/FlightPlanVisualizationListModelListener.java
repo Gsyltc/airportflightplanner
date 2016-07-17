@@ -4,7 +4,7 @@
  */
 package com.airportflightplanner.flightplanvisualization.api;
 
-import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
+import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
 
 /**
  * @author Goubaud Sylvain

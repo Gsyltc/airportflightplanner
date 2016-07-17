@@ -29,8 +29,8 @@ import org.gavaghan.geodesy.GlobalPosition;
 import org.jscience.geography.coordinates.Altitude;
 import org.jscience.geography.coordinates.LatLong;
 
-import com.airportflightplanner.common.api.steerpoints.SteerPointReader;
-import com.airportflightplanner.common.models.SteerPointModel;
+import com.airportflightplanner.common.api.steerpoints.bean.SteerPointReader;
+import com.airportflightplanner.common.models.steerpoints.SteerPointModel;
 import com.airportflightplanner.common.types.GeographicFormatter;
 import com.google.maps.model.EncodedPolyline;
 

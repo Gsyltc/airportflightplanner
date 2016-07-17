@@ -2,7 +2,7 @@
  *
  * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
  */
-package com.airportflightplanner.common.models;
+package com.airportflightplanner.common.models.steerpoints;
 
 import javax.measure.DecimalMeasure;
 import javax.measure.quantity.Velocity;
@@ -10,8 +10,8 @@ import javax.measure.quantity.Velocity;
 import org.jscience.geography.coordinates.Altitude;
 import org.jscience.geography.coordinates.LatLong;
 
-import com.airportflightplanner.common.api.steerpoints.SteerPointProperties;
-import com.airportflightplanner.common.api.steerpoints.SteerPointWriter;
+import com.airportflightplanner.common.api.steerpoints.bean.SteerPointProperties;
+import com.airportflightplanner.common.api.steerpoints.bean.SteerPointWriter;
 import com.jgoodies.binding.beans.Model;
 
 /**

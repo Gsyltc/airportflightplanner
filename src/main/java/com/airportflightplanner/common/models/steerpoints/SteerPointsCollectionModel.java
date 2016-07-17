@@ -7,17 +7,17 @@
  * project.  It comes with no warranty.
  *
  */
-package com.airportflightplanner.common.models;
+package com.airportflightplanner.common.models.steerpoints;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.SwingUtilities;
 
-import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
-import com.airportflightplanner.common.api.flightplancollection.flightplan.FlightPlanCollectionProperties;
-import com.airportflightplanner.common.api.flightplancollection.steerpoints.SteerPointsCollectionWriter;
-import com.airportflightplanner.common.api.steerpoints.SteerPointReader;
+import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
+import com.airportflightplanner.common.api.flightplan.collection.FlightPlanCollectionProperties;
+import com.airportflightplanner.common.api.steerpoints.bean.SteerPointReader;
+import com.airportflightplanner.common.api.steerpoints.collection.SteerPointsCollectionWriter;
 import com.airportflightplanner.flightplanvisualization.api.SteerPointsListModelListener;
 import com.airportflightplanner.flightplanvisualization.presenter.steerpoints.SteerPointsListModel;
 import com.jgoodies.binding.beans.Model;

@@ -19,7 +19,7 @@ import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.airportflightplanner.common.api.adapter.AircraftTypeAdapter;
-import com.airportflightplanner.common.models.AircraftsLiveriesMapper;
+import com.airportflightplanner.common.api.adapter.AircraftsLiveriesAdapter;
 import com.airportflightplanner.common.utils.aircraft.AircraftDecoder;
 
 /**
@@ -28,8 +28,8 @@ import com.airportflightplanner.common.utils.aircraft.AircraftDecoder;
  */
 public final class AircraftTypeAdapterIpmpl implements AircraftTypeAdapter {
     /** */
-    private static final Map<String, AircraftsLiveriesMapper> AIRCRAFT_CLASS_CIE =   //
-            new ConcurrentHashMap<String, AircraftsLiveriesMapper>();
+    private static final Map<String, AircraftsLiveriesAdapter> AIRCRAFT_CLASS_CIE =   //
+            new ConcurrentHashMap<String, AircraftsLiveriesAdapter>();
     /** */
     private String                                            adapterName;
 
@@ -40,10 +40,10 @@ public final class AircraftTypeAdapterIpmpl implements AircraftTypeAdapter {
     @Override
     public List<String> getAircraftLiveriesByClassCpie(final String classCpie) {
         final List<String> result = new ArrayList<String>();
-        final AircraftsLiveriesMapper mapper = AIRCRAFT_CLASS_CIE.get(AircraftDecoder.getAircraftClass(classCpie));
-        if (null != mapper) {
+        final AircraftsLiveriesAdapter liveriesAdapter = AIRCRAFT_CLASS_CIE.get(AircraftDecoder.getAircraftClass(classCpie));
+        if (null != liveriesAdapter) {
             final String company = AircraftDecoder.getAircraftCie(classCpie);
-            final SortedSet<String> liveries = mapper.getLiveriesByCpie(company);
+            final SortedSet<String> liveries = liveriesAdapter.getLiveriesByCpie(company);
             result.addAll(liveries);
         }
         return result;
@@ -55,14 +55,14 @@ public final class AircraftTypeAdapterIpmpl implements AircraftTypeAdapter {
      */
     @Override
     public void addLivery(final String airCraftType) {
-        AircraftsLiveriesMapper mapper = AIRCRAFT_CLASS_CIE.get(AircraftDecoder.getAircraftClass(airCraftType));
-        if (null == mapper) {
-            mapper = new AircraftsLiveriesMapper(AircraftDecoder.getAircraftClass(airCraftType));
-            AIRCRAFT_CLASS_CIE.put(AircraftDecoder.getAircraftClass(airCraftType), mapper);
+        AircraftsLiveriesAdapter liveriesAdapter = AIRCRAFT_CLASS_CIE.get(AircraftDecoder.getAircraftClass(airCraftType));
+        if (null == liveriesAdapter) {
+            liveriesAdapter = new AircraftsLiveriesAdapterImpl(AircraftDecoder.getAircraftClass(airCraftType));
+            AIRCRAFT_CLASS_CIE.put(AircraftDecoder.getAircraftClass(airCraftType), liveriesAdapter);
 
         }
 
-        mapper.addLivery(airCraftType);
+        liveriesAdapter.addLivery(airCraftType);
 
     }
 
@@ -91,9 +91,9 @@ public final class AircraftTypeAdapterIpmpl implements AircraftTypeAdapter {
     @Override
     public List<String> getAircraftCompaniesByClass(final String aircraftClass) {
         final List<String> result = new ArrayList<String>();
-        final AircraftsLiveriesMapper mapper = AIRCRAFT_CLASS_CIE.get(aircraftClass);
-        if (null != mapper) {
-            result.addAll(mapper.getCompagnies());
+        final AircraftsLiveriesAdapter liveriesAdapter = AIRCRAFT_CLASS_CIE.get(aircraftClass);
+        if (null != liveriesAdapter) {
+            result.addAll(liveriesAdapter.getCompagnies());
         }
         return result;
     }

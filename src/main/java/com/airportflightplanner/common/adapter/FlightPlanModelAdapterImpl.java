@@ -22,7 +22,7 @@ import org.joda.time.Period;
 import org.jscience.geography.coordinates.Altitude;
 
 import com.airportflightplanner.common.api.adapter.FlightPlanModelAdapter;
-import com.airportflightplanner.common.models.FlightPlanModel;
+import com.airportflightplanner.common.models.flightplans.FlightPlanModel;
 import com.airportflightplanner.common.types.ArrivalType;
 import com.airportflightplanner.common.types.DepartureType;
 import com.airportflightplanner.common.types.FlightPlanInformationTypes;

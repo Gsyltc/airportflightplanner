@@ -4,7 +4,7 @@
  */
 package com.airportflightplanner.flightplanvisualization.api;
 
-import com.airportflightplanner.common.api.steerpoints.SteerPointReader;
+import com.airportflightplanner.common.api.steerpoints.bean.SteerPointReader;
 
 /**
  * @author Goubaud Sylvain

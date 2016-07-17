@@ -8,7 +8,7 @@
  *
  */
 
-package com.airportflightplanner.common.models;
+package com.airportflightplanner.common.models.flightplans;
 
 import java.util.HashSet;
 import java.util.List;
@@ -21,8 +21,8 @@ import org.joda.time.LocalTime;
 import org.joda.time.Period;
 import org.jscience.geography.coordinates.Altitude;
 
-import com.airportflightplanner.common.api.flightplan.FlightPlanProperties;
-import com.airportflightplanner.common.api.flightplan.FlightPlanWriter;
+import com.airportflightplanner.common.api.flightplan.bean.FlightPlanProperties;
+import com.airportflightplanner.common.api.flightplan.bean.FlightPlanWriter;
 import com.airportflightplanner.common.types.ArrivalType;
 import com.airportflightplanner.common.types.DepartureType;
 import com.airportflightplanner.common.types.FlightType;

@@ -23,8 +23,8 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 import com.airportflightplanner.common.api.adapter.AircraftTypeAdapter;
-import com.airportflightplanner.common.api.flightplan.FlightPlanProperties;
-import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
+import com.airportflightplanner.common.api.flightplan.bean.FlightPlanProperties;
+import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
 import com.airportflightplanner.common.types.StartDays;
 import com.airportflightplanner.common.utils.aircraft.AircraftDecoder;
 import com.airportflightplanner.common.visualelement.AbstractCommonPanel;

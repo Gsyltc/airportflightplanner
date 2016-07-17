@@ -4,7 +4,7 @@
  */
 package com.airportflightplanner.flightplanvisualization.presenter.steerpoints;
 
-import com.airportflightplanner.common.models.SteerPointsCollectionModel;
+import com.airportflightplanner.common.models.steerpoints.SteerPointsCollectionModel;
 import com.airportflightplanner.flightplanvisualization.adapter.steerpoints.SteerPointsTableAdapter;
 import com.jgoodies.binding.PresentationModel;
 
