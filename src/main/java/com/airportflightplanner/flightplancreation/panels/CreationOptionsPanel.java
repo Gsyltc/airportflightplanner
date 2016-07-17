@@ -27,9 +27,6 @@ public class CreationOptionsPanel extends AbstractCommonPanel {
     /** */
     protected GoogleMapPane   googleMap;
 
-    /** */
-    private static final int  FP_PRESENTER     = AbstractCommonPanel.FIRST_PRESENTER;
-
     /**
      * @param model
      *

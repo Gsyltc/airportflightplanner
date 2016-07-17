@@ -22,7 +22,7 @@ import com.airportflightplanner.common.types.StartDays;
  */
 public class StartDaysAdapterImpl implements StartDaysAdapter {
     /** */
-    private String                   adapterName;
+    private String             adapterName;
     /** */
     private DaysSelectionModel model;
 
@@ -31,15 +31,7 @@ public class StartDaysAdapterImpl implements StartDaysAdapter {
      */
     @Override
     public void updateStartsDays(final Set<StartDays> startDays) {
-        if (!startDays.isEmpty()) {
-            model.setMonday(startDays.contains(StartDays.MONDAY));
-            model.setTuesday(startDays.contains(StartDays.TUESDAY));
-            model.setWednesday(startDays.contains(StartDays.WEDNESDAY));
-            model.setThrusday(startDays.contains(StartDays.THRUSDAY));
-            model.setFriday(startDays.contains(StartDays.FRIDAY));
-            model.setSaturday(startDays.contains(StartDays.SATURDAY));
-            model.setSunday(startDays.contains(StartDays.SUNDAY));
-        } else {
+        if (startDays.isEmpty()) {
             model.setMonday(true);
             model.setTuesday(true);
             model.setWednesday(true);
@@ -47,6 +39,14 @@ public class StartDaysAdapterImpl implements StartDaysAdapter {
             model.setFriday(true);
             model.setSaturday(true);
             model.setSunday(true);
+        } else {
+            model.setMonday(startDays.contains(StartDays.MONDAY));
+            model.setTuesday(startDays.contains(StartDays.TUESDAY));
+            model.setWednesday(startDays.contains(StartDays.WEDNESDAY));
+            model.setThrusday(startDays.contains(StartDays.THRUSDAY));
+            model.setFriday(startDays.contains(StartDays.FRIDAY));
+            model.setSaturday(startDays.contains(StartDays.SATURDAY));
+            model.setSunday(startDays.contains(StartDays.SUNDAY));
         }
     }
 
@@ -68,10 +68,18 @@ public class StartDaysAdapterImpl implements StartDaysAdapter {
     }
 
     /**
-     * @param model the model to set
+     * @param model
+     *            the model to set
      */
     public void setModel(final DaysSelectionModel model) {
         this.model = model;
     }
 
+    /**
+     *
+     * @return
+     */
+    public DaysSelectionModel getModel() {
+        return model;
+    }
 }

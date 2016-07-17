@@ -46,10 +46,6 @@ import com.jgoodies.forms.layout.RowSpec;
  *
  */
 public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
-    /**
-     *
-     */
-    // protected final FlighPlanCollectionModel flightPlansCollection;
     /** */
     protected transient Signal       signal;
     /** */
@@ -57,7 +53,7 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
     /** */
     private static final int         FP_PRESENTER                = AbstractCommonPanel.FIRST_PRESENTER;
     /** */
-    private static final int         STEERPOINTS_PRESENTER_INDEX = 1;
+    private static final int         SP_PRESENTER_INDEX = 1;
     /** */
     private static final int         CURRENT_FP_PRESENTER        = 2;
     /** */
@@ -110,7 +106,7 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
                         FormSpecs.RELATED_GAP_ROWSPEC, }));
 
         final FlightPlanVisualizationPresenter presenter = (FlightPlanVisualizationPresenter) getPresenter(FP_PRESENTER);
-        fpCollection = presenter.getBean();
+        setFpCollection(presenter.getBean());
 
         add(createCurrentAirportPanel(), "2, 2, 3, 1, fill, fill");
         add(createDaysSelectionPanel(), "2, 4, 3, 1, fill, fill");
@@ -144,7 +140,7 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
      * @return
      */
     private SteerPointPanel createSteerPointPanel() {
-        final SteerPointsPresenter presenter = (SteerPointsPresenter) getPresenter(STEERPOINTS_PRESENTER_INDEX);
+        final SteerPointsPresenter presenter = (SteerPointsPresenter) getPresenter(SP_PRESENTER_INDEX);
         final SteerPointPanel panel = new SteerPointPanel(presenter);
         panel.build();
         return panel;
@@ -237,5 +233,13 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
      */
     protected FlighPlanCollectionModel getFpCollection() {
         return fpCollection;
+    }
+
+    /**
+     *
+     * @param fpCollection
+     */
+    private void setFpCollection(final FlighPlanCollectionModel fpCollection) {
+        this.fpCollection = fpCollection;
     }
 }
