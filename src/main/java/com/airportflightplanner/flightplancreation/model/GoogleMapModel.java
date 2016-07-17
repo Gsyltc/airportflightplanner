@@ -6,7 +6,6 @@
 package com.airportflightplanner.flightplancreation.model;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.jscience.geography.coordinates.LatLong;
@@ -105,7 +104,7 @@ public class GoogleMapModel extends Model implements GoogleMapWriter {
      * @return the specificSteerPoint
      */
     private List<SteerPointReader> getSpecificSteerPoint() {
-        return Collections.unmodifiableList(specificSteerPoint);
+        return specificSteerPoint;
     }
 
     /**
