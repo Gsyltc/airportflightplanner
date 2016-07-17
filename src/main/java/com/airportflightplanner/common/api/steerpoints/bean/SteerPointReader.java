@@ -2,7 +2,9 @@
  *
  * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
  */
-package com.airportflightplanner.common.api.steerpoints;
+package com.airportflightplanner.common.api.steerpoints.bean;
+
+import java.io.Serializable;
 
 import javax.measure.DecimalMeasure;
 import javax.measure.quantity.Velocity;
@@ -14,28 +16,29 @@ import org.jscience.geography.coordinates.LatLong;
  * @author Goubaud Sylvain
  *
  */
-public interface SteerPointWriter extends SteerPointReader {
+public interface SteerPointReader extends Serializable {
     /**
      *
-     * @param value
+     * @return
      */
-    void setLatLong(LatLong value);
+    LatLong getLatLong();
 
     /**
      *
-     * @param value
+     * @return
      */
-    void setVelocity(DecimalMeasure<Velocity> value);
+    DecimalMeasure<Velocity> getVelocity();
 
     /**
      *
-     * @param value
+     * @return
      */
-    void setAltitude(Altitude value);
+    Altitude getAltitude();
 
     /**
      *
-     * @param value
+     * @return
      */
-    void setName(String value);
+    String getName();
+
 }

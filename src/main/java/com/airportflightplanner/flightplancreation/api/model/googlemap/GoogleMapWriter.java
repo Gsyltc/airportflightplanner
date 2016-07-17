@@ -7,7 +7,7 @@ package com.airportflightplanner.flightplancreation.api.model.googlemap;
 
 import java.util.List;
 
-import com.airportflightplanner.common.api.steerpoints.SteerPointReader;
+import com.airportflightplanner.common.api.steerpoints.bean.SteerPointReader;
 import com.google.maps.model.EncodedPolyline;
 
 /**

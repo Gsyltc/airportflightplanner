@@ -2,7 +2,7 @@
  *
  * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
  */
-package com.airportflightplanner.common.api.flightplan;
+package com.airportflightplanner.common.api.flightplan.bean;
 
 import java.io.Serializable;
 import java.util.List;

@@ -46,26 +46,84 @@ public class DaysSelectionPanel extends AbstractCommonPanel {
                 new RowSpec[] { //
                         FormSpecs.PREF_ROWSPEC, })); //
 
-        final JCheckBox monday = new JCheckBox(StartDays.MONDAY.toString());
-        add(monday, "1, 1");
-
-        final JCheckBox tuesday = new JCheckBox(StartDays.TUESDAY.toString());
-        add(tuesday, "3, 1");
-
-        final JCheckBox wednesday = new JCheckBox(StartDays.WEDNESDAY.toString());
-        add(wednesday, "5, 1");
-
-        final JCheckBox thrusday = new JCheckBox(StartDays.THRUSDAY.toString());
-        add(thrusday, "7, 1");
-
-        final JCheckBox fiday = new JCheckBox(StartDays.FRIDAY.toString());
-        add(fiday, "9, 1");
-
-        final JCheckBox saturday = new JCheckBox(StartDays.SATURDAY.toString());
-        add(saturday, "11, 1");
-
-        final JCheckBox sunday = new JCheckBox(StartDays.SUNDAY.toString());
-        add(sunday, "13, 1");
+        add(createMondayCb(), "1, 1");
+        add(createTuesdayCb(), "3, 1");
+        add(createWednesdayCb(), "5, 1");
+        add(createThrusdayCb(), "7, 1");
+        add(createFridayCb(), "9, 1");
+        add(createSaturdayCb(), "11, 1");
+        add(createSundayCb(), "13, 1");
     }
+
+
+    /**
+     *
+     * @return
+     */
+    private JCheckBox createMondayCb(){
+        final JCheckBox checkBox = new JCheckBox(StartDays.MONDAY.toString());
+        checkBox.setEnabled(false);
+        return checkBox;
+    }
+
+    /**
+     *
+     * @return
+     */
+    private JCheckBox createTuesdayCb(){
+        final JCheckBox checkBox = new JCheckBox(StartDays.TUESDAY.toString());
+        checkBox.setEnabled(false);
+        return checkBox;
+    }
+
+    /**
+     *
+     * @return
+     */
+    private JCheckBox createWednesdayCb(){
+        final JCheckBox checkBox = new JCheckBox(StartDays.WEDNESDAY.toString());
+        checkBox.setEnabled(false);
+        return checkBox;
+    }
+
+    /**
+     *
+     * @return
+     */
+    private JCheckBox createThrusdayCb(){
+        final JCheckBox checkBox = new JCheckBox(StartDays.THRUSDAY.toString());
+        checkBox.setEnabled(false);
+        return checkBox;
+    }
+
+    /**
+     *
+     * @return
+     */
+    private JCheckBox createFridayCb(){
+        final JCheckBox checkBox = new JCheckBox(StartDays.FRIDAY.toString());
+        checkBox.setEnabled(false);
+        return checkBox;
+    }
+
+    /**
+     *
+     * @return
+     */
+    private JCheckBox createSaturdayCb(){
+        final JCheckBox checkBox = new JCheckBox(StartDays.SATURDAY.toString());
+        checkBox.setEnabled(false);
+        return checkBox;
+    }
+    /**
+     *
+     * @return
+     */
+    private JCheckBox createSundayCb(){
+        final JCheckBox checkBox = new JCheckBox(StartDays.SUNDAY.toString());
+        checkBox.setEnabled(false);
+        return checkBox;
+    }
+
 
 }

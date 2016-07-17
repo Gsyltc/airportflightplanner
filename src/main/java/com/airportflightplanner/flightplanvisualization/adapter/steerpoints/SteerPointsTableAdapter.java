@@ -11,8 +11,8 @@ import javax.measure.unit.NonSI;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
-import com.airportflightplanner.common.api.flightplancollection.flightplan.FlightPlanCollectionReader;
-import com.airportflightplanner.common.api.steerpoints.SteerPointReader;
+import com.airportflightplanner.common.api.flightplan.collection.FlightPlanCollectionReader;
+import com.airportflightplanner.common.api.steerpoints.bean.SteerPointReader;
 import com.airportflightplanner.common.types.GeographicFormatter;
 import com.airportflightplanner.common.utils.geographics.GeographicUtils;
 import com.airportflightplanner.flightplanvisualization.presenter.steerpoints.SteerPointsListModel;

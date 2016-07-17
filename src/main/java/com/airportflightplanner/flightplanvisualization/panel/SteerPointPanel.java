@@ -17,9 +17,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
-import com.airportflightplanner.common.api.steerpoints.SteerPointReader;
-import com.airportflightplanner.common.models.SteerPointsCollectionModel;
+import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
+import com.airportflightplanner.common.api.steerpoints.bean.SteerPointReader;
+import com.airportflightplanner.common.models.steerpoints.SteerPointsCollectionModel;
 import com.airportflightplanner.common.slotsignal.SelectionSlot;
 import com.airportflightplanner.common.slotsignal.Signal;
 import com.airportflightplanner.common.slotsignal.TopicName;

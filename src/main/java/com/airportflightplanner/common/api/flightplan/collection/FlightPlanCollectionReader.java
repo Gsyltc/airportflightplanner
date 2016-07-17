@@ -7,13 +7,13 @@
  * project.  It comes with no warranty.
  *
  */
-package com.airportflightplanner.common.api.flightplancollection.flightplan;
+package com.airportflightplanner.common.api.flightplan.collection;
 
 import java.io.Serializable;
 
 import javax.swing.ListModel;
 
-import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
+import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
 
 /**
  * @author Goubaud Sylvain

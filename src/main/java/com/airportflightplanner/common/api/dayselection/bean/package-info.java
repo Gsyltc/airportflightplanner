@@ -11,4 +11,4 @@
  * @author Goubaud Sylvain
  *
  */
-package com.airportflightplanner.common.api.flightplancollection.steerpoints;
+package com.airportflightplanner.common.api.dayselection.bean;

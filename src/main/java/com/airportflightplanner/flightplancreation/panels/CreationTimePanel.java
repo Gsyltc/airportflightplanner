@@ -26,8 +26,8 @@ import javax.swing.border.TitledBorder;
 import org.joda.time.LocalTime;
 import org.joda.time.Period;
 
-import com.airportflightplanner.common.api.flightplan.FlightPlanProperties;
-import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
+import com.airportflightplanner.common.api.flightplan.bean.FlightPlanProperties;
+import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
 import com.airportflightplanner.common.utils.time.TimeUtils;
 import com.airportflightplanner.common.visualelement.AbstractCommonPanel;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;

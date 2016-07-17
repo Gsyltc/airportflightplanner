@@ -11,4 +11,4 @@
  * @author Goubaud Sylvain
  *
  */
-package com.airportflightplanner.common.api.flightplancollection.flightplan;
+package com.airportflightplanner.common.api.steerpoints.bean;

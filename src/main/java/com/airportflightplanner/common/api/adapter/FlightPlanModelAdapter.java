@@ -11,7 +11,7 @@ package com.airportflightplanner.common.api.adapter;
 
 import java.util.List;
 
-import com.airportflightplanner.common.models.FlightPlanModel;
+import com.airportflightplanner.common.models.flightplans.FlightPlanModel;
 import com.airportflightplanner.common.types.FlightPlanInformationTypes;
 
 /**

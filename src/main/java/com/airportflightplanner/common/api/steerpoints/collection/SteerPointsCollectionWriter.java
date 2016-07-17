@@ -2,12 +2,12 @@
  *
  * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
  */
-package com.airportflightplanner.common.api.flightplancollection.steerpoints;
+package com.airportflightplanner.common.api.steerpoints.collection;
 
 import java.util.List;
 
-import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
-import com.airportflightplanner.common.api.steerpoints.SteerPointReader;
+import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
+import com.airportflightplanner.common.api.steerpoints.bean.SteerPointReader;
 import com.airportflightplanner.flightplanvisualization.api.SteerPointsListModelListener;
 
 /**

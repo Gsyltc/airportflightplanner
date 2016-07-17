@@ -11,7 +11,7 @@ package com.airportflightplanner.flightplanvisualization.presenter.flightplan;
 
 import javax.swing.ListModel;
 
-import com.airportflightplanner.common.models.FlighPlanCollectionModel;
+import com.airportflightplanner.common.models.flightplans.FlighPlanCollectionModel;
 import com.airportflightplanner.flightplanvisualization.adapter.flightplan.FlightPlanVisualizationTableAdapter;
 import com.jgoodies.binding.PresentationModel;
 

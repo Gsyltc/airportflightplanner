@@ -2,16 +2,16 @@
  *
  * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
  */
-package com.airportflightplanner.common.models;
+package com.airportflightplanner.common.models.flightplans;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.SwingUtilities;
 
-import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
-import com.airportflightplanner.common.api.flightplancollection.flightplan.FlightPlanCollectionWriter;
-import com.airportflightplanner.common.api.flightplancollection.flightplan.FlightPlanCollectionProperties;
+import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
+import com.airportflightplanner.common.api.flightplan.collection.FlightPlanCollectionProperties;
+import com.airportflightplanner.common.api.flightplan.collection.FlightPlanCollectionWriter;
 import com.airportflightplanner.flightplanvisualization.api.FlightPlanVisualizationListModelListener;
 import com.airportflightplanner.flightplanvisualization.presenter.flightplan.FlightPlanVisualizationListModel;
 import com.jgoodies.binding.beans.Model;

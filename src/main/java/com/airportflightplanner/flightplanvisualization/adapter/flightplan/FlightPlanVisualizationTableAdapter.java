@@ -13,8 +13,8 @@ package com.airportflightplanner.flightplanvisualization.adapter.flightplan;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
-import com.airportflightplanner.common.api.flightplan.FlightPlanReader;
-import com.airportflightplanner.common.api.flightplancollection.flightplan.FlightPlanCollectionReader;
+import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
+import com.airportflightplanner.common.api.flightplan.collection.FlightPlanCollectionReader;
 import com.airportflightplanner.common.utils.time.TimeUtils;
 import com.airportflightplanner.flightplanvisualization.presenter.flightplan.FlightPlanVisualizationListModel;
 import com.jgoodies.binding.adapter.AbstractTableAdapter;

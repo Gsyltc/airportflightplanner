@@ -7,7 +7,7 @@
  * project.  It comes with no warranty.
  *
  */
-package com.airportflightplanner.common.api.flightplancollection.flightplan;
+package com.airportflightplanner.common.api.flightplan.collection;
 
 /**
  * @author Goubaud Sylvain

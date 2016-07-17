@@ -28,10 +28,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.airportflightplanner.common.api.adapter.FlightPlanModelAdapter;
-import com.airportflightplanner.common.api.flightplan.FlightPlanProperties;
-import com.airportflightplanner.common.api.flightplancollection.flightplan.FlightPlanCollectionProperties;
-import com.airportflightplanner.common.models.FlighPlanCollectionModel;
-import com.airportflightplanner.common.models.FlightPlanModel;
+import com.airportflightplanner.common.api.flightplan.bean.FlightPlanProperties;
+import com.airportflightplanner.common.api.flightplan.collection.FlightPlanCollectionProperties;
+import com.airportflightplanner.common.models.flightplans.FlighPlanCollectionModel;
+import com.airportflightplanner.common.models.flightplans.FlightPlanModel;
 import com.airportflightplanner.common.types.FlightPlanInformationTypes;
 import com.airportflightplanner.common.utils.properties.CommonProperties;
 
