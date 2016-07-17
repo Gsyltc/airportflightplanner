@@ -48,7 +48,7 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
      */
     protected final FlighPlanCollectionModel flightPlansCollection;
     /** */
-    protected transient Signal                         signal;
+    protected transient Signal               signal;
 
     /**
      *
@@ -111,7 +111,8 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
      * @return
      */
     private DaysSelectionPanel createDaysSelectionPanel() {
-        final DaysSelectionPanel panel = new DaysSelectionPanel();
+        final DaysSelectionPanel panel = new DaysSelectionPanel( //
+                (FlightPlanVisualizationPresenter) getPresenter(FIRST_PRESENTER));
         panel.build();
         return panel;
     }
