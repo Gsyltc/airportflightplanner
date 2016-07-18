@@ -12,6 +12,7 @@ import java.util.Map;
 import javax.swing.JPanel;
 
 import com.airportflightplanner.common.api.adapter.CommonAdapter;
+import com.airportflightplanner.common.api.adapter.StartDaysAdapter;
 import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
 import com.airportflightplanner.common.models.daysselection.DaysSelectionModel;
 import com.airportflightplanner.common.slotsignal.SelectionSlot;
@@ -61,8 +62,9 @@ public class FlightPlanCreationPanel extends AbstractCommonPanel {
     /**
      * @param currentFpBean
      * @param daySelection
+     * @param commonAdapter
      */
-    public FlightPlanCreationPanel(final Model currentFpBean, final Model daySelection) {
+    public FlightPlanCreationPanel(final Model currentFpBean, final Model daySelection, final StartDaysAdapter commonAdapter) {
         super(new PresentationModel<FlightPlanReader>((FlightPlanReader) currentFpBean), //
                 new PresentationModel<GoogleMapModel>(new GoogleMapModel()), //
                 new PresentationModel<DaysSelectionModel>((DaysSelectionModel) daySelection));
