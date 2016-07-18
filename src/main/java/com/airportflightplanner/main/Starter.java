@@ -56,7 +56,7 @@ public class Starter {
      * @param args
      *            .
      */
-    public static void main(final String[] args) {
+    public static void main(final String... args) {
         EventQueue.invokeLater(new Runnable() {
             /**
              *
