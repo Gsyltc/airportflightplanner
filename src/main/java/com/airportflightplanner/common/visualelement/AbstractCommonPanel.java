@@ -43,7 +43,7 @@ public abstract class AbstractCommonPanel extends JPanel implements SlotReceiver
     /** */
     protected Map<String, ? extends Object>                attributeMap        = new ConcurrentHashMap<String, Object>();
     /** */
-    private CommonAdapter                                  adapter;
+    private final Map<String, CommonAdapter>               adapters            = new ConcurrentHashMap<String, CommonAdapter>();
     /** The logger of this class. */
     private static final Log                               LOGGER              = LogFactory.getLog(AbstractCommonPanel.class);
     /** */
@@ -82,11 +82,11 @@ public abstract class AbstractCommonPanel extends JPanel implements SlotReceiver
      *
      * @param adapter
      */
-    public void setAdapter(final CommonAdapter adapter) {
+    public void addAdapter(final CommonAdapter adapter) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("DEBUG : set Adapter :" + adapter.getAdapterName());
         }
-        this.adapter = adapter;
+        this.adapters.put(adapter.getAdapterName(), adapter);
     }
 
     /**
@@ -155,8 +155,16 @@ public abstract class AbstractCommonPanel extends JPanel implements SlotReceiver
     /**
      * @return the adapter
      */
-    public CommonAdapter getAdapter() {
-        return adapter;
+    protected Map<String, CommonAdapter> getAdapters() {
+        return Collections.unmodifiableMap(adapters);
+    }
+
+    /**
+     * @param key
+     * @return
+     */
+    public CommonAdapter getAdapterByName(final String key) {
+        return getAdapters().get(key);
     }
 
     /**

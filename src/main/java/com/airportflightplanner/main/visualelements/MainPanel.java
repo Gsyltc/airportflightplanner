@@ -16,7 +16,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 
 import com.airportflightplanner.common.api.adapter.CommonAdapter;
-import com.airportflightplanner.common.api.adapter.StartDaysAdapter;
 import com.airportflightplanner.common.types.BeanNames;
 import com.airportflightplanner.flightplancreation.FlightPlanCreationPanel;
 import com.airportflightplanner.flightplanvisualization.panel.FlightPlanVisualiazationPanel;
@@ -132,8 +131,7 @@ public class MainPanel extends FormDebugPanel {
     private FlightPlanCreationPanel createFlightPlanCreationPanel() {
         final FlightPlanCreationPanel panel = new FlightPlanCreationPanel(//
                 beansMap.get(BeanNames.CURRENT_FP_MODEL), //
-                beansMap.get(BeanNames.DAYS_MODEL), //
-                (StartDaysAdapter) getAdapterByName(StartDaysAdapter.class.getSimpleName()));
+                beansMap.get(BeanNames.DAYS_MODEL));
         panel.setAdapters(getAdapters());
         panel.build();
         return panel;

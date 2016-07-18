@@ -28,8 +28,8 @@ import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
 import com.airportflightplanner.common.types.StartDays;
 import com.airportflightplanner.common.utils.aircraft.AircraftDecoder;
 import com.airportflightplanner.common.visualelement.AbstractCommonPanel;
-import com.airportflightplanner.flightplancreation.api.model.flightinfos.FlightInfosWriter;
 import com.airportflightplanner.flightplancreation.api.model.flightinfos.FlightInfosProperties;
+import com.airportflightplanner.flightplancreation.api.model.flightinfos.FlightInfosWriter;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
 import com.airportflightplanner.flightplancreation.model.FlighInfosModel;
 import com.airportflightplanner.flightplancreation.renderers.CreationFlightInfosCompagnieCellRenderer;
@@ -175,7 +175,7 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
      * @return
      */
     private JComboBox<String> createAircraftClassComboBox() {
-        final AircraftTypeAdapter adapter = (AircraftTypeAdapter) getAdapter();
+        final AircraftTypeAdapter adapter = (AircraftTypeAdapter) getAdapterByName(AircraftTypeAdapter.class.getSimpleName());
         final Set<String> aircraftClass = adapter.getAircraftClasses();
         final JComboBox<String> component = BasicComponentFactory.createComboBox(new SelectionInList<>(aircraftClass.toArray()));
         final FlighInfosModel bean = (FlighInfosModel) getPresenter(FL_INFOS_PRESENTER_INDEX).getBean();
@@ -311,7 +311,7 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
      *            Property to refresh.
      */
     protected void refreshData(final String propertyName) {
-        final AircraftTypeAdapter adapter = (AircraftTypeAdapter) getAdapter();
+        final AircraftTypeAdapter adapter = (AircraftTypeAdapter) getAdapterByName(AircraftTypeAdapter.class.getSimpleName());
         final FlightInfosWriter bean = (FlighInfosModel) getPresenter(FL_INFOS_PRESENTER_INDEX).getBean();
         switch (propertyName) {
         // La classe a changee, on reset le model des compagnies et des livrees

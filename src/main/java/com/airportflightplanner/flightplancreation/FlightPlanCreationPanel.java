@@ -12,7 +12,6 @@ import java.util.Map;
 import javax.swing.JPanel;
 
 import com.airportflightplanner.common.api.adapter.CommonAdapter;
-import com.airportflightplanner.common.api.adapter.StartDaysAdapter;
 import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
 import com.airportflightplanner.common.models.daysselection.DaysSelectionModel;
 import com.airportflightplanner.common.slotsignal.SelectionSlot;
@@ -62,9 +61,8 @@ public class FlightPlanCreationPanel extends AbstractCommonPanel {
     /**
      * @param currentFpBean
      * @param daySelection
-     * @param commonAdapter
      */
-    public FlightPlanCreationPanel(final Model currentFpBean, final Model daySelection, final StartDaysAdapter commonAdapter) {
+    public FlightPlanCreationPanel(final Model currentFpBean, final Model daySelection) {
         super(new PresentationModel<FlightPlanReader>((FlightPlanReader) currentFpBean), //
                 new PresentationModel<GoogleMapModel>(new GoogleMapModel()), //
                 new PresentationModel<DaysSelectionModel>((DaysSelectionModel) daySelection));
@@ -177,7 +175,8 @@ public class FlightPlanCreationPanel extends AbstractCommonPanel {
      */
     public CreationFlightInfosPanel createCreationFlightInfosPanel(final PresentationModel<FlightPlanReader> fpPresenter) {
         final CreationFlightInfosPanel panel = new CreationFlightInfosPanel(fpPresenter);
-        panel.setAdapter(getAdapters().get("AircraftTypeAdapter"));
+        panel.addAdapter(getAdapters().get("FlightPlanModelAdapter"));
+        panel.addAdapter(getAdapters().get("AircraftTypeAdapter"));
         panel.build();
         return panel;
     }

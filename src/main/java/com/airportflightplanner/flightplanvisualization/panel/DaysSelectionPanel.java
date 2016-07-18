@@ -99,7 +99,7 @@ public class DaysSelectionPanel extends AbstractCommonPanel {
             public void propertyChange(final PropertyChangeEvent evt) {
                 if (evt.getNewValue() instanceof FlightPlanReader) {
                     FlightPlanReader bean = (FlightPlanReader) evt.getNewValue();
-                    StartDaysAdapter adapter = (StartDaysAdapter) getAdapter();
+                    StartDaysAdapter adapter = (StartDaysAdapter) getAdapterByName(StartDaysAdapter.class.getSimpleName());
                     adapter.updateStartsDays(bean.getStartDays());
                 }
             }

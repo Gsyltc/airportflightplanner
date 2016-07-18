@@ -18,7 +18,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     </bean>
     
     <bean id="id-StartDaysAdapter" class="com.airportflightplanner.common.adapter.StartDaysAdapterImpl">
-        <property name="adapterName" value="" />
+        <property name="adapterName" value="StartDaysAdapter" />
         <property name="model" ref="id-DaySelectionModel" />
     </bean>
 </beans>

@@ -137,7 +137,7 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
         final DaysSelectionPanel panel = new DaysSelectionPanel(//
                 (PresentationModel<DaySelectionReader>) getPresenter(DAYS_SELECT_PRESENTER), //
         (PresentationModel<FlightPlanReader>) getPresenter(CURRENT_FP_PRESENTER));
-        panel.setAdapter(adapters.get(StartDaysAdapter.class.getSimpleName()));
+        panel.addAdapter(adapters.get(StartDaysAdapter.class.getSimpleName()));
         panel.build();
         return panel;
     }
