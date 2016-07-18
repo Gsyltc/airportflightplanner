@@ -7,7 +7,7 @@
  * project.  It comes with no warranty.
  *
  */
-package com.airportflightplanner.common.adapter;
+package com.airportflightplanner.common.adapter.impl;
 
 import java.util.Collections;
 import java.util.Map;

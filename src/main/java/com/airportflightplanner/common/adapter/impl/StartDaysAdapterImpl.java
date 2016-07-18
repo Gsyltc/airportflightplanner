@@ -8,12 +8,16 @@
  *
  */
 
-package com.airportflightplanner.common.adapter;
+package com.airportflightplanner.common.adapter.impl;
 
 import java.util.Set;
 
 import com.airportflightplanner.common.api.adapter.StartDaysAdapter;
+import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
 import com.airportflightplanner.common.models.daysselection.DaysSelectionModel;
+import com.airportflightplanner.common.slotsignal.SelectionSlot;
+import com.airportflightplanner.common.slotsignal.TopicName;
+import com.airportflightplanner.common.slotsignal.api.SlotAction;
 import com.airportflightplanner.common.types.StartDays;
 
 /**
@@ -21,6 +25,10 @@ import com.airportflightplanner.common.types.StartDays;
  *
  */
 public class StartDaysAdapterImpl implements StartDaysAdapter {
+    /**
+     *
+     */
+    private static final long  serialVersionUID = 8742702470474381772L;
     /** */
     private String             adapterName;
     /** */
@@ -71,6 +79,7 @@ public class StartDaysAdapterImpl implements StartDaysAdapter {
      * @param model
      *            the model to set
      */
+    @Override
     public void setModel(final DaysSelectionModel model) {
         this.model = model;
     }
@@ -79,7 +88,42 @@ public class StartDaysAdapterImpl implements StartDaysAdapter {
      *
      * @return
      */
+    @Override
     public DaysSelectionModel getModel() {
         return model;
+    }
+
+    /**
+     *
+     */
+    public void init() {
+        attachSlotAction();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void attachSlotAction() {
+        final SelectionSlot<FlightPlanReader> slot = new SelectionSlot<FlightPlanReader>(TopicName.FLIGHTPLAN_TABLE_SELECTED, this);
+        slot.setSlotAction(new SlotAction<FlightPlanReader>() {
+            /**
+             *
+             * {@inheritDoc}
+             */
+            @Override
+            public void doAction(final FlightPlanReader bean) {
+                updateStartsDays(bean.getStartDays());
+            }
+        });
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void attachSignal() {
+        // TODO Auto-generated method stub
+
     }
 }

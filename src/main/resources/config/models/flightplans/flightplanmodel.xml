@@ -5,4 +5,5 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 
     <bean id="id-FlightPlansCollection" class="com.airportflightplanner.common.models.flightplans.FlighPlanCollectionModel" />
 
+    <bean id="id-CurrentFlightPlan" class="com.airportflightplanner.common.models.flightplans.FlightPlanModel" />
 </beans>

@@ -23,5 +23,11 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
             </key>
             <ref bean="id-SteerPointsCollectionModel" />
         </entry>
+                <entry>
+            <key>
+                <util:constant static-field="com.airportflightplanner.common.types.BeanNames.CURRENT_FP_MODEL" />
+            </key>
+            <ref bean="id-CurrentFlightPlan" />
+        </entry>
     </util:map>
 </beans>

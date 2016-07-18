@@ -11,23 +11,22 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import javax.swing.JPanel;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.airportflightplanner.common.api.adapter.CommonAdapter;
+import com.airportflightplanner.common.api.adapter.common.CommonAdapter;
 import com.airportflightplanner.common.slotsignal.SelectionSlot;
 import com.airportflightplanner.common.slotsignal.Signal;
 import com.airportflightplanner.common.slotsignal.SignalModels;
 import com.airportflightplanner.common.slotsignal.api.SlotReceiver;
 import com.jgoodies.binding.PresentationModel;
+import com.jgoodies.forms.debug.FormDebugPanel;
 
 /**
  * @author Goubaud Sylvain
  *
  */
-public abstract class AbstractCommonPanel extends JPanel implements SlotReceiver {
+public abstract class AbstractCommonPanel extends FormDebugPanel implements SlotReceiver {
     /**
      *
      */
@@ -43,7 +42,7 @@ public abstract class AbstractCommonPanel extends JPanel implements SlotReceiver
     /** */
     protected Map<String, ? extends Object>                attributeMap        = new ConcurrentHashMap<String, Object>();
     /** */
-    private final Map<String, CommonAdapter>               adapters            = new ConcurrentHashMap<String, CommonAdapter>();
+    private Map<String, CommonAdapter<?>>                     adapters            = new ConcurrentHashMap<String, CommonAdapter<?>>();
     /** The logger of this class. */
     private static final Log                               LOGGER              = LogFactory.getLog(AbstractCommonPanel.class);
     /** */
@@ -82,11 +81,11 @@ public abstract class AbstractCommonPanel extends JPanel implements SlotReceiver
      *
      * @param adapter
      */
-    public void addAdapter(final CommonAdapter adapter) {
+    public void addAdapter(final CommonAdapter<?> adapter) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("DEBUG : set Adapter :" + adapter.getAdapterName());
         }
-        this.adapters.put(adapter.getAdapterName(), adapter);
+        adapters.put(adapter.getAdapterName(), adapter);
     }
 
     /**
@@ -155,15 +154,23 @@ public abstract class AbstractCommonPanel extends JPanel implements SlotReceiver
     /**
      * @return the adapter
      */
-    protected Map<String, CommonAdapter> getAdapters() {
+    protected Map<String, CommonAdapter<?>> getAdapters() {
         return Collections.unmodifiableMap(adapters);
+    }
+
+    /**
+     * @param adapters
+     *            the adapters to set
+     */
+    public void setAdapters(final Map<String, CommonAdapter<?>> adapters) {
+        this.adapters = adapters;
     }
 
     /**
      * @param key
      * @return
      */
-    public CommonAdapter getAdapterByName(final String key) {
+    public CommonAdapter<?> getAdapterByName(final String key) {
         return getAdapters().get(key);
     }
 

@@ -15,7 +15,7 @@ import com.jgoodies.binding.beans.Model;
  * @author Goubaud Sylvain
  *
  */
-public class FlighInfosModel extends Model implements FlightInfosWriter {
+public class FlightInfosModel extends Model implements FlightInfosWriter {
   /**
    *
    */

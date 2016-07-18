@@ -11,7 +11,7 @@ import java.util.Map;
 
 import javax.swing.JPanel;
 
-import com.airportflightplanner.common.api.adapter.CommonAdapter;
+import com.airportflightplanner.common.api.adapter.common.CommonAdapter;
 import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
 import com.airportflightplanner.common.models.daysselection.DaysSelectionModel;
 import com.airportflightplanner.common.slotsignal.SelectionSlot;
@@ -51,7 +51,7 @@ public class FlightPlanCreationPanel extends AbstractCommonPanel {
     /** */
     private static final int           DEFAULT_WIDTH          = 400;
     /** */
-    private Map<String, CommonAdapter> adapters;
+    private Map<String, CommonAdapter<?>> adapters;
 
     /** */
     private static final int           FP_PRESENTER           = AbstractCommonPanel.FIRST_PRESENTER;
@@ -177,6 +177,7 @@ public class FlightPlanCreationPanel extends AbstractCommonPanel {
         final CreationFlightInfosPanel panel = new CreationFlightInfosPanel(fpPresenter);
         panel.addAdapter(getAdapters().get("FlightPlanModelAdapter"));
         panel.addAdapter(getAdapters().get("AircraftTypeAdapter"));
+        panel.addAdapter(getAdapters().get("StartDaysAdapter"));
         panel.build();
         return panel;
     }
@@ -206,14 +207,16 @@ public class FlightPlanCreationPanel extends AbstractCommonPanel {
     /**
      * @param adapters
      */
-    public void setAdapters(final Map<String, CommonAdapter> adapters) {
+    @Override
+    public void setAdapters(final Map<String, CommonAdapter<?>> adapters) {
         this.adapters = adapters;
     }
 
     /**
      * @return the adapters
      */
-    public Map<String, CommonAdapter> getAdapters() {
+    @Override
+    public Map<String, CommonAdapter<?>> getAdapters() {
         return Collections.unmodifiableMap(adapters);
     }
 }

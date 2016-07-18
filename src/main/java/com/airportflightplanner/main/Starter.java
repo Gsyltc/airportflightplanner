@@ -24,7 +24,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.airportflightplanner.common.api.adapter.CommonAdapter;
+import com.airportflightplanner.common.api.adapter.common.CommonAdapter;
 import com.airportflightplanner.common.models.flightplans.FlighPlanCollectionModel;
 import com.airportflightplanner.common.models.flightplans.FlightPlanModel;
 import com.airportflightplanner.common.types.BeanNames;
@@ -66,7 +66,7 @@ public class Starter {
             public void run() {
                 try {
                     if (CONTEXT.getBean("id-FlightPlansCollection") instanceof FlighPlanCollectionModel) {
-                        final Map<String, CommonAdapter> adapters = (Map<String, CommonAdapter>) CONTEXT.getBean("id-Adapters");
+                        final Map<String, CommonAdapter<?>> adapters = (Map<String, CommonAdapter<?>>) CONTEXT.getBean("id-Adapters");
                         final Map<BeanNames, Model> beansMap = (Map<BeanNames, Model>) CONTEXT.getBean("id-FlightPlanModels");
                         beansMap.put(BeanNames.CURRENT_FP_MODEL, new FlightPlanModel());
 

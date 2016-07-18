@@ -15,7 +15,7 @@ import java.util.Map;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 
-import com.airportflightplanner.common.api.adapter.CommonAdapter;
+import com.airportflightplanner.common.api.adapter.common.CommonAdapter;
 import com.airportflightplanner.common.types.BeanNames;
 import com.airportflightplanner.flightplancreation.FlightPlanCreationPanel;
 import com.airportflightplanner.flightplanvisualization.panel.FlightPlanVisualiazationPanel;
@@ -43,7 +43,7 @@ public class MainPanel extends FormDebugPanel {
      */
     private static final int                 FIRST_TAB        = 0;
     /** */
-    private final Map<String, CommonAdapter> adapters;
+    private final Map<String, CommonAdapter<?>> adapters;
 
     /** */
     private final Map<BeanNames, Model>      beansMap;
@@ -55,7 +55,7 @@ public class MainPanel extends FormDebugPanel {
      *            Map of Models.
      * @param adapters
      */
-    public MainPanel(final Map<BeanNames, Model> beans, final Map<String, CommonAdapter> adapters) {
+    public MainPanel(final Map<BeanNames, Model> beans, final Map<String, CommonAdapter<?>> adapters) {
         setPaintRows(false);
         setPaintInBackground(false);
         beansMap = beans;
@@ -140,7 +140,7 @@ public class MainPanel extends FormDebugPanel {
     /**
      * @return the adapters
      */
-    private Map<String, CommonAdapter> getAdapters() {
+    private Map<String, CommonAdapter<?>> getAdapters() {
         return adapters;
     }
 
@@ -149,7 +149,7 @@ public class MainPanel extends FormDebugPanel {
      * @param name
      * @return
      */
-    private CommonAdapter getAdapterByName(final String name) {
+    private CommonAdapter<?> getAdapterByName(final String name) {
         return adapters.get(name);
     }
 

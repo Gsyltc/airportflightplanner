@@ -13,13 +13,16 @@ package com.airportflightplanner.common.api.adapter;
 
 import java.util.Set;
 
+import com.airportflightplanner.common.api.adapter.common.CommonAdapter;
+import com.airportflightplanner.common.models.daysselection.DaysSelectionModel;
+import com.airportflightplanner.common.slotsignal.api.SlotReceiver;
 import com.airportflightplanner.common.types.StartDays;
 
 /**
  * @author Goubaud Sylvain
  *
  */
-public interface StartDaysAdapter extends CommonAdapter{
+public interface StartDaysAdapter extends CommonAdapter<DaysSelectionModel> , SlotReceiver{
     /**
      *
      * @param startDays

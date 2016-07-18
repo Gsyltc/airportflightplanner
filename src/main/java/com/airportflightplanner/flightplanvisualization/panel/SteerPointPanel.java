@@ -46,7 +46,9 @@ public class SteerPointPanel extends AbstractCommonPanel {
     /**
      *
      */
-    private static final long serialVersionUID = -6354635338489926005L;
+    private static final long serialVersionUID     = -6354635338489926005L;
+    /** */
+    private static final int  STEERPOINT_PRESENTER = AbstractCommonPanel.FIRST_PRESENTER;
 
     /**
      *
@@ -78,7 +80,7 @@ public class SteerPointPanel extends AbstractCommonPanel {
 
         add(createSteerPointsPanel(), "2, 2, 3, 1, fill, top");
 
-        final SteerPointsPresenter presenter = (SteerPointsPresenter) getPresenter(FIRST_PRESENTER);
+        final SteerPointsPresenter presenter = (SteerPointsPresenter) getPresenter(STEERPOINT_PRESENTER);
         final SteerPointsCollectionReader reader = presenter.getBean();
         reader.addSteerPointsListModelListener(presenter.getListModel());
 
@@ -91,12 +93,12 @@ public class SteerPointPanel extends AbstractCommonPanel {
     private JScrollPane createSteerPointsPanel() {
         final DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        final SteerPointsPresenter presenter = (SteerPointsPresenter) getPresenter(FIRST_PRESENTER);
+        final SteerPointsPresenter presenter = (SteerPointsPresenter) getPresenter(STEERPOINT_PRESENTER);
         final JTable table = new JTable(presenter.getTableAdapter());
         table.setColumnSelectionAllowed(true);
         table.setDefaultRenderer(String.class, centerRenderer);
 
-        final TableRowSorter<TableModel> sorter = new TableRowSorter<>(table.getModel());
+        final TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(table.getModel());
         table.setRowSorter(sorter);
         final List<RowSorter.SortKey> sortKeys = new ArrayList<>();
         sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
@@ -116,7 +118,7 @@ public class SteerPointPanel extends AbstractCommonPanel {
     @Override
     public final void attachSlotAction() {
         final SelectionSlot<FlightPlanReader> slot = new SelectionSlot<FlightPlanReader>(TopicName.FLIGHTPLAN_TABLE_SELECTED, this);
-        final SteerPointsPresenter presenter = (SteerPointsPresenter) getPresenter(FIRST_PRESENTER);
+        final SteerPointsPresenter presenter = (SteerPointsPresenter) getPresenter(STEERPOINT_PRESENTER);
         final SteerPointsCollectionModel steerPointsModel = presenter.getBean();
         slot.setSlotAction(new SlotAction<FlightPlanReader>() {
             /**

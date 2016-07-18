@@ -1,6 +1,11 @@
-/* @(#)CurrentAirpotPanel.java
+/*
+ * @(#)CurrentAirportPanel.java
  *
- * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
+ * Goubaud Sylvain - 2016.
+ *
+ * This code may be freely used and modified on any personal or professional
+ * project.  It comes with no warranty.
+ *
  */
 package com.airportflightplanner.flightplanvisualization.panel;
 
@@ -10,6 +15,7 @@ import java.awt.event.ItemListener;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 
+import com.airportflightplanner.common.api.adapter.FlightPlanCollectionAdapter;
 import com.airportflightplanner.common.models.flightplans.FlighPlanCollectionModel;
 import com.airportflightplanner.common.slotsignal.Signal;
 import com.airportflightplanner.common.slotsignal.TopicName;
@@ -35,24 +41,15 @@ public class CurrentAirportPanel extends AbstractCommonPanel {
     /**
      *
      */
-    private static final long                serialVersionUID = -8872582029412974363L;
-    /**
-     *
-     */
-    protected final FlighPlanCollectionModel flightPlansCollection;
+    private static final long serialVersionUID = -8872582029412974363L;
 
     /**
-     * @param fpcm
-     *            the flighplan collection model.
      * @param fpVizuPresenter
      *            The flight plan visualization presenter
      *
      */
-    public CurrentAirportPanel(final FlighPlanCollectionModel fpcm, //
-            final FlightPlanVisualizationPresenter fpVizuPresenter) {
+    public CurrentAirportPanel(final FlightPlanVisualizationPresenter fpVizuPresenter) {
         super(fpVizuPresenter);
-        flightPlansCollection = fpcm;
-        flightPlansCollection.addFligfhtPlanModelListener(flightPlansCollection.getFlightPlanListModel());
 
     }
 
@@ -63,6 +60,12 @@ public class CurrentAirportPanel extends AbstractCommonPanel {
     @Override
     public final void build() {
         super.build();
+
+        final FlightPlanCollectionAdapter adapter = //
+                (FlightPlanCollectionAdapter) getAdapterByName(FlightPlanCollectionAdapter.class.getSimpleName());
+        final FlighPlanCollectionModel model = adapter.getModel();
+        model.addFligfhtPlanModelListener(model.getFlightPlanListModel());
+
         setLayout(new FormLayout(new ColumnSpec[] { //
                 ColumnSpec.decode(PREF_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
@@ -91,8 +94,10 @@ public class CurrentAirportPanel extends AbstractCommonPanel {
         final JComboBox<?> comboBox = new JComboBox<String>();
 
         final ValueModel selectionHolder = new ValueHolder();
-        final ComboBoxAdapter<String> comboBoxAdapter = new ComboBoxAdapter<String>(AirportFileReader.getAirports(), selectionHolder);
+        final ComboBoxAdapter<String> comboBoxAdapter = //
+                new ComboBoxAdapter<String>(AirportFileReader.getAirports(), selectionHolder);
         comboBox.setModel(comboBoxAdapter);
+
         comboBox.addItemListener(new ItemListener() {
             /**
              *
@@ -102,7 +107,9 @@ public class CurrentAirportPanel extends AbstractCommonPanel {
             public void itemStateChanged(final ItemEvent event) {
                 if (event.getStateChange() == ItemEvent.SELECTED) {
                     final String currentAirport = event.getItem().toString();
-                    flightPlansCollection.setCurrentAirport(currentAirport);
+                    final FlightPlanCollectionAdapter adapter = (FlightPlanCollectionAdapter) //
+                            getAdapterByName(FlightPlanCollectionAdapter.class.getSimpleName());
+                    adapter.setCurrentAirport(currentAirport);
                     final Signal signal = findSignal(TopicName.UPDATE_AIRPORT_TOPIC);
                     signal.fireSignal(currentAirport);
                 }
@@ -134,12 +141,5 @@ public class CurrentAirportPanel extends AbstractCommonPanel {
             signal = new Signal(TopicName.UPDATE_AIRPORT_TOPIC);
         }
         createSignal(TopicName.UPDATE_AIRPORT_TOPIC, signal);
-    }
-
-    /**
-     * @return the flightPlansCollection
-     */
-    public FlighPlanCollectionModel getFlightPlansCollection() {
-        return flightPlansCollection;
     }
 }

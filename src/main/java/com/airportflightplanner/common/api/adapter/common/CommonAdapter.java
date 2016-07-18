@@ -8,7 +8,7 @@
  *
  */
 
-package com.airportflightplanner.common.api.adapter;
+package com.airportflightplanner.common.api.adapter.common;
 
 /**
  * @author Goubaud Sylvain
@@ -17,9 +17,11 @@ package com.airportflightplanner.common.api.adapter;
 
 /**
  * @author Goubaud Sylvain
+ * @param <M>
  *
  */
-public interface CommonAdapter {
+public interface CommonAdapter<M> {
+
     /**
      *
      * @return
@@ -29,8 +31,19 @@ public interface CommonAdapter {
     /**
      *
      * @param name
-     * @return
      */
     void setAdapterName(String name);
+
+    /**
+     *
+     * @param model
+     */
+    void setModel(M model);
+
+    /**
+     *
+     * @return
+     */
+    M getModel();
 
 }

@@ -1,20 +1,23 @@
-/* @(#)CreationStartDaysPanel.java
+/* @(#)DaysSlectionPanel.java
  *
- * 2016 Goubaud Sylvain.
+ * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
  */
+
 package com.airportflightplanner.flightplancreation.panels;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import javax.swing.JCheckBox;
-import javax.swing.border.TitledBorder;
 
+import com.airportflightplanner.common.api.dayselection.bean.DaySelectionProperties;
+import com.airportflightplanner.common.api.dayselection.bean.DaySelectionReader;
 import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
+import com.airportflightplanner.common.slotsignal.SelectionSlot;
+import com.airportflightplanner.common.slotsignal.TopicName;
+import com.airportflightplanner.common.slotsignal.api.SlotAction;
 import com.airportflightplanner.common.types.StartDays;
 import com.airportflightplanner.common.visualelement.AbstractCommonPanel;
-import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
 import com.jgoodies.binding.PresentationModel;
+import com.jgoodies.binding.adapter.BasicComponentFactory;
+import com.jgoodies.binding.value.ValueModel;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
@@ -28,82 +31,146 @@ public class CreationStartDaysPanel extends AbstractCommonPanel {
     /**
      *
      */
-    private static final long serialVersionUID         = -3484253740768601903L;
+    private static final long serialVersionUID     = 3382772953500242522L;
+    /** */
+    private static final int  DAYS_PRESENTER       = AbstractCommonPanel.FIRST_PRESENTER;
 
     /**
-     * @param newCurrentFlightPlan
-     *            flightplan.
+     * @param presenter
      *
      */
-    public CreationStartDaysPanel(final PresentationModel<FlightPlanReader> newCurrentFlightPlan) {
-        super(newCurrentFlightPlan);
+    public CreationStartDaysPanel(final PresentationModel<DaySelectionReader> presenter) {
+        super(presenter);
     }
 
     /**
      *
-     * {@inheritDoc}
      */
     @Override
     public void build() {
         super.build();
-        final FormLayout formLayout = new FormLayout(new ColumnSpec[] { //
+        setLayout(new FormLayout(new ColumnSpec[] { FormSpecs.DEFAULT_COLSPEC, //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode(CENTER_DEFAULT_GROW), //
+                FormSpecs.DEFAULT_COLSPEC, //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode(CENTER_DEFAULT_GROW), //
+                FormSpecs.DEFAULT_COLSPEC, //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode(CENTER_DEFAULT_GROW), //
+                FormSpecs.DEFAULT_COLSPEC, //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode(CENTER_DEFAULT_GROW), //
-                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(CENTER_DEFAULT_GROW), //
+                FormSpecs.DEFAULT_COLSPEC, //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode(CENTER_DEFAULT_GROW), //
+                FormSpecs.DEFAULT_COLSPEC, //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode(CENTER_DEFAULT_GROW), //
-                FormSpecs.RELATED_GAP_COLSPEC, }, //
-                new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, //
-                        FormSpecs.PREF_ROWSPEC, ///
-                        FormSpecs.RELATED_GAP_ROWSPEC, //
-                        FormSpecs.PREF_ROWSPEC, //
-                        FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, });
+                FormSpecs.DEFAULT_COLSPEC, }, //
+                new RowSpec[] { //
+                        FormSpecs.PREF_ROWSPEC, })); //
 
-        formLayout.setRowGroups(new int[][] { new int[] { 6, 4, 2 } });
-        formLayout.setColumnGroups(new int[][] { new int[] { 2, 14, 12, 10, 8, 6, 4 } });
-        setLayout(formLayout);
+        final PresentationModel<DaySelectionReader> dayPresenter = //
+                (PresentationModel<DaySelectionReader>) getPresenter(DAYS_PRESENTER);
 
-        setBorder(new TitledBorder(null, FlightPlanCreationPanelMessages.FLIGHT_INFOS_LABEL));
+        add(createMondayCb(dayPresenter), "1, 1");
+        add(createTuesdayCb(dayPresenter), "3, 1");
+        add(createWednesdayCb(dayPresenter), "5, 1");
+        add(createThrusdayCb(dayPresenter), "7, 1");
+        add(createFridayCb(dayPresenter), "9, 1");
+        add(createSaturdayCb(dayPresenter), "11, 1");
+        add(createSundayCb(dayPresenter), "13, 1");
+    }
 
-        final JCheckBox chckbxNewCheckBox = new JCheckBox(StartDays.MONDAY.toString());
-        add(chckbxNewCheckBox, "2, 2");
+    /**
+     *
+     * @param dayPresenter
+     * @return
+     */
+    private JCheckBox createMondayCb(final PresentationModel<DaySelectionReader> dayPresenter) {
+        final ValueModel value = dayPresenter.getBufferedModel(DaySelectionProperties.MONDAY);
+        final JCheckBox checkBox = BasicComponentFactory.createCheckBox(value, StartDays.MONDAY.toString());
+        return checkBox;
+    }
 
-        final JCheckBox chckbxNewCheckBox_1 = new JCheckBox(StartDays.TUESDAY.toString());
-        add(chckbxNewCheckBox_1, "4, 2");
+    /**
+     *
+     * @param dayPresenter
+     * @return
+     */
+    private JCheckBox createTuesdayCb(final PresentationModel<DaySelectionReader> dayPresenter) {
+        final ValueModel value = dayPresenter.getBufferedModel(DaySelectionProperties.TUESDAY);
+        final JCheckBox checkBox = BasicComponentFactory.createCheckBox(value, StartDays.TUESDAY.toString());
+        return checkBox;
+    }
 
-        final JCheckBox chckbxNewCheckBox_2 = new JCheckBox(StartDays.WEDNESDAY.toString());
-        add(chckbxNewCheckBox_2, "6, 2");
+    /**
+     *
+     * @param dayPresenter
+     * @return
+     */
+    private JCheckBox createWednesdayCb(final PresentationModel<DaySelectionReader> dayPresenter) {
+        final ValueModel value = dayPresenter.getBufferedModel(DaySelectionProperties.WEDNESDAY);
+        final JCheckBox checkBox = BasicComponentFactory.createCheckBox(value, StartDays.WEDNESDAY.toString());
+        return checkBox;
+    }
 
-        final JCheckBox chckbxNewCheckBox_3 = new JCheckBox(StartDays.THRUSDAY.toString());
-        add(chckbxNewCheckBox_3, "8, 2");
+    /**
+     *
+     * @param dayPresenter
+     * @return
+     */
+    private JCheckBox createThrusdayCb(final PresentationModel<DaySelectionReader> dayPresenter) {
+        final ValueModel value = dayPresenter.getBufferedModel(DaySelectionProperties.THRUSDAY);
+        final JCheckBox checkBox = BasicComponentFactory.createCheckBox(value, StartDays.THRUSDAY.toString());
+        return checkBox;
+    }
 
-        final JCheckBox chckbxNewCheckBox_4 = new JCheckBox(StartDays.FRIDAY.toString());
-        add(chckbxNewCheckBox_4, "10, 2");
+    /**
+     *
+     * @param dayPresenter
+     * @return
+     */
+    private JCheckBox createFridayCb(final PresentationModel<DaySelectionReader> dayPresenter) {
+        final ValueModel value = dayPresenter.getBufferedModel(DaySelectionProperties.FRIDAY);
+        final JCheckBox checkBox = BasicComponentFactory.createCheckBox(value, StartDays.FRIDAY.toString());
+        return checkBox;
+    }
 
-        final JCheckBox chckbxNewCheckBox_5 = new JCheckBox(StartDays.SATURDAY.toString());
-        add(chckbxNewCheckBox_5, "12, 2");
+    /**
+     *
+     * @param dayPresenter
+     * @return
+     */
+    private JCheckBox createSaturdayCb(final PresentationModel<DaySelectionReader> dayPresenter) {
+        final ValueModel value = dayPresenter.getBufferedModel(DaySelectionProperties.SATURDAY);
+        final JCheckBox checkBox = BasicComponentFactory.createCheckBox(value, StartDays.SATURDAY.toString());
+        return checkBox;
+    }
 
-        final JCheckBox chckbxNewCheckBox_6 = new JCheckBox(StartDays.SUNDAY.toString());
-        add(chckbxNewCheckBox_6, "14, 2");
+    /**
+     *
+     * @param dayPresenter
+     * @return
+     */
+    private JCheckBox createSundayCb(final PresentationModel<DaySelectionReader> dayPresenter) {
+        final ValueModel value = dayPresenter.getBufferedModel(DaySelectionProperties.SUNDAY);
+        final JCheckBox checkBox = BasicComponentFactory.createCheckBox(value, StartDays.SUNDAY.toString());
+        return checkBox;
+    }
 
-        getPresenter(FIRST_PRESENTER).addPropertyChangeListener(new PropertyChangeListener() {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void attachSlotAction() {
+        final SelectionSlot<FlightPlanReader> slot = new SelectionSlot<FlightPlanReader>(TopicName.FLIGHTPLAN_TABLE_SELECTED, this);
+        slot.setSlotAction(new SlotAction<FlightPlanReader>() {
             /**
              *
              * {@inheritDoc}
              */
             @Override
-            public void propertyChange(final PropertyChangeEvent evt) {
-                //
+            public void doAction(final FlightPlanReader bean) {
+                final PresentationModel<DaySelectionReader> dayPresenter = //
+                        (PresentationModel<DaySelectionReader>) getPresenter(DAYS_PRESENTER);
+                dayPresenter.triggerFlush();
             }
         });
-
     }
 }

@@ -8,7 +8,7 @@
  *
  */
 
-package com.airportflightplanner.common.adapter;
+package com.airportflightplanner.common.adapter.impl;
 
 import java.util.HashSet;
 import java.util.List;
@@ -22,7 +22,11 @@ import org.joda.time.Period;
 import org.jscience.geography.coordinates.Altitude;
 
 import com.airportflightplanner.common.api.adapter.FlightPlanModelAdapter;
+import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
 import com.airportflightplanner.common.models.flightplans.FlightPlanModel;
+import com.airportflightplanner.common.slotsignal.SelectionSlot;
+import com.airportflightplanner.common.slotsignal.TopicName;
+import com.airportflightplanner.common.slotsignal.api.SlotAction;
 import com.airportflightplanner.common.types.ArrivalType;
 import com.airportflightplanner.common.types.DepartureType;
 import com.airportflightplanner.common.types.FlightPlanInformationTypes;
@@ -37,27 +41,32 @@ import com.airportflightplanner.common.utils.time.TimeUtils;
  *
  */
 public class FlightPlanModelAdapterImpl implements FlightPlanModelAdapter {
-
+    /**
+     *
+     */
+    private static final long serialVersionUID = 5605981511974415244L;
     /** The logger of this class. */
-    private static final Log LOGGER      = LogFactory.getLog(FlightPlanModelAdapterImpl.class);
+    private static final Log  LOGGER           = LogFactory.getLog(FlightPlanModelAdapterImpl.class);
     /** */
-    private static final int NUMBER_ZERO = 0;
+    private static final int  NUMBER_ZERO      = 0;
     /** */
-    private static final int NUMBER_ONE  = 1;
+    private static final int  NUMBER_ONE       = 1;
     /** */
-    private  String           adapterName        = "";
+    private String            adapterName;
+    /** */
+    private FlightPlanModel   model;
 
     /**
      *
      * {@inheritDoc}
      */
     @Override
-    public final void addSteerpoints(final FlightPlanModel newFlightPlan, final List<String> steerpoints) {
-        newFlightPlan.setSteerPoints(steerpoints);
+    public final void addSteerpoints(final List<String> steerpoints) {
+        model.setSteerPoints(steerpoints);
 
         // calculate Flight Time
         final long result = GeographicUtils.getFlightTime(steerpoints);
-        newFlightPlan.setDuration(new Period(result));
+        model.setDuration(new Period(result));
     }
 
     /**
@@ -65,34 +74,34 @@ public class FlightPlanModelAdapterImpl implements FlightPlanModelAdapter {
      * {@inheritDoc}
      */
     @Override
-    public final void updateFlightPlan(final FlightPlanModel newFlightPlan, final FlightPlanInformationTypes informationsType, final String line) {
+    public final void updateFlightPlan(final FlightPlanInformationTypes informationsType, final String line) {
         switch (informationsType) {
         case START_FLY_TO_COMPLETION:
-            newFlightPlan.setFlightToCompletion(Boolean.valueOf(line));
+            model.setFlightToCompletion(Boolean.valueOf(line));
 
             break;
         case START_LANDING_LIGHT_ALT:
-            newFlightPlan.setLandingLightAltitude(Altitude.valueOf(Double.valueOf(line), NonSI.FOOT));
+            model.setLandingLightAltitude(Altitude.valueOf(Double.valueOf(line), NonSI.FOOT));
             break;
 
         case STARTAIRCRAFT:
             final String[] aircraftType = line.split(" +");
             if (aircraftType.length > NUMBER_ZERO) {
-                newFlightPlan.setAircraftType(aircraftType[0]);
+                model.setAircraftType(aircraftType[0]);
             }
             final String[] splitAirCraft = aircraftType[0].split("_");
             if (splitAirCraft.length > NUMBER_ONE) {
-                newFlightPlan.setAircraftCie(Internationalizer.getI18String(splitAirCraft[1]));
+                model.setAircraftCie(Internationalizer.getI18String(splitAirCraft[1]));
             }
 
             break;
         case STARTALTERNATEAIRPORT:
-            newFlightPlan.setAlternateAirport(line);
+            model.setAlternateAirport(line);
             break;
 
         case STARTARRIVETYPE:
             try {
-                newFlightPlan.setArrivalType(ArrivalType.valueOf(Integer.parseInt(line)));
+                model.setArrivalType(ArrivalType.valueOf(Integer.parseInt(line)));
             } catch (final NumberFormatException e) {
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Error while reading arrival type");
@@ -100,16 +109,16 @@ public class FlightPlanModelAdapterImpl implements FlightPlanModelAdapter {
             }
             break;
         case STARTCALLSIGN:
-            newFlightPlan.setCallSign(line);
+            model.setCallSign(line);
             break;
 
         case STARTDEPAIRPORT:
-            newFlightPlan.setDepartureAirport(line);
+            model.setDepartureAirport(line);
             break;
 
         case STARTDEPARTTYPE:
             try {
-                newFlightPlan.setDepartureType(DepartureType.valueOf(Integer.parseInt(line)));
+                model.setDepartureType(DepartureType.valueOf(Integer.parseInt(line)));
             } catch (final NumberFormatException e) {
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Error while reading departure type");
@@ -117,12 +126,12 @@ public class FlightPlanModelAdapterImpl implements FlightPlanModelAdapter {
             }
             break;
         case STARTDESTAIRPORT:
-            newFlightPlan.setArrivalAirport(line);
+            model.setArrivalAirport(line);
             break;
 
         case STARTFLIGHTTYPE:
             try {
-                newFlightPlan.setFlightType(FlightType.valueOf(Integer.parseInt(line)));
+                model.setFlightType(FlightType.valueOf(Integer.parseInt(line)));
             } catch (final NumberFormatException e) {
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Error while reading start flight type");
@@ -132,7 +141,7 @@ public class FlightPlanModelAdapterImpl implements FlightPlanModelAdapter {
 
         case STARTTIME:
             try {
-                newFlightPlan.setStartTime(TimeUtils.getLocalTime(line));
+                model.setStartTime(TimeUtils.getLocalTime(line));
             } catch (final NumberFormatException e) {
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Error while reading start time");
@@ -148,7 +157,7 @@ public class FlightPlanModelAdapterImpl implements FlightPlanModelAdapter {
                 daysSet.add(StartDays.valueOf(Integer.parseInt(day)));
             }
 
-            newFlightPlan.setStartDays(daysSet);
+            model.setStartDays(daysSet);
             break;
 
         default:
@@ -172,4 +181,53 @@ public class FlightPlanModelAdapterImpl implements FlightPlanModelAdapter {
         adapterName = name;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setModel(final FlightPlanModel model) {
+        this.model = model;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public FlightPlanModel getModel() {
+        return model;
+    }
+
+    /**
+     *
+     */
+    public void init() {
+        attachSlotAction();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void attachSlotAction() {
+        final SelectionSlot<FlightPlanReader> slot = new SelectionSlot<FlightPlanReader>(TopicName.FLIGHTPLAN_TABLE_SELECTED, this);
+        slot.setSlotAction(new SlotAction<FlightPlanReader>() {
+            /**
+             *
+             * {@inheritDoc}
+             */
+            @Override
+            public void doAction(final FlightPlanReader bean) {
+                setModel((FlightPlanModel) bean);
+            }
+        });
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void attachSignal() {
+        // Nothing to do
+
+    }
 }

@@ -13,6 +13,8 @@ package com.airportflightplanner.common.api.adapter;
 import java.util.List;
 import java.util.SortedSet;
 
+import com.airportflightplanner.common.api.adapter.common.CommonAdapter;
+
 /**
  * @author Goubaud Sylvain
  *

@@ -4,12 +4,8 @@
  */
 package com.airportflightplanner.flightplanvisualization.panel;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import javax.swing.JCheckBox;
 
-import com.airportflightplanner.common.api.adapter.StartDaysAdapter;
 import com.airportflightplanner.common.api.dayselection.bean.DaySelectionProperties;
 import com.airportflightplanner.common.api.dayselection.bean.DaySelectionReader;
 import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
@@ -17,7 +13,6 @@ import com.airportflightplanner.common.types.StartDays;
 import com.airportflightplanner.common.visualelement.AbstractCommonPanel;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.adapter.BasicComponentFactory;
-import com.jgoodies.binding.beans.BeanAdapter;
 import com.jgoodies.binding.value.ValueModel;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
@@ -81,30 +76,30 @@ public class DaysSelectionPanel extends AbstractCommonPanel {
         add(createSaturdayCb(dayPresenter), "11, 1");
         add(createSundayCb(dayPresenter), "13, 1");
 
-        validateDays();
+        //        validateDays();
     }
 
-    /**
-     *
-     */
-    private void validateDays() {
-        final PresentationModel<FlightPlanReader> presentationModel = //
-                (PresentationModel<FlightPlanReader>) getPresenter(CURRENT_FP_PRESENTER);
-        presentationModel.addPropertyChangeListener(BeanAdapter.PROPERTY_AFTER_BEAN, new PropertyChangeListener() {
-            /**
-             *
-             * {@inheritDoc}
-             */
-            @Override
-            public void propertyChange(final PropertyChangeEvent evt) {
-                if (evt.getNewValue() instanceof FlightPlanReader) {
-                    FlightPlanReader bean = (FlightPlanReader) evt.getNewValue();
-                    StartDaysAdapter adapter = (StartDaysAdapter) getAdapterByName(StartDaysAdapter.class.getSimpleName());
-                    adapter.updateStartsDays(bean.getStartDays());
-                }
-            }
-        });
-    }
+    //    /**
+    //     *
+    //     */
+    //    private void validateDays() {
+    //        final PresentationModel<FlightPlanReader> presentationModel = //
+    //                (PresentationModel<FlightPlanReader>) getPresenter(CURRENT_FP_PRESENTER);
+    //        presentationModel.addPropertyChangeListener(BeanAdapter.PROPERTY_AFTER_BEAN, new PropertyChangeListener() {
+    //            /**
+    //             *
+    //             * {@inheritDoc}
+    //             */
+    //            @Override
+    //            public void propertyChange(final PropertyChangeEvent evt) {
+    //                if (evt.getNewValue() instanceof FlightPlanReader) {
+    //                    final FlightPlanReader bean = (FlightPlanReader) evt.getNewValue();
+    //                    final StartDaysAdapter adapter = (StartDaysAdapter) getAdapterByName(StartDaysAdapter.class.getSimpleName());
+    //                    adapter.updateStartsDays(bean.getStartDays());
+    //                }
+    //            }
+    //        });
+    //    }
 
     /**
      *

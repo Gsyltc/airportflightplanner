@@ -8,7 +8,7 @@
  *
  */
 
-package com.airportflightplanner.common.adapter;
+package com.airportflightplanner.common.adapter.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,7 +31,7 @@ public final class AircraftTypeAdapterIpmpl implements AircraftTypeAdapter {
     private static final Map<String, AircraftsLiveriesAdapter> AIRCRAFT_CLASS_CIE =   //
             new ConcurrentHashMap<String, AircraftsLiveriesAdapter>();
     /** */
-    private String                                            adapterName;
+    private String                                             adapterName;
 
     /**
      *
@@ -115,4 +115,20 @@ public final class AircraftTypeAdapterIpmpl implements AircraftTypeAdapter {
         adapterName = name;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setModel(final Object model) {
+        // NOT USED
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Object getModel() {
+        // NOT USED
+        return null;
+    }
 }

@@ -7,18 +7,25 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <entry key="AircraftTypeAdapter" value-ref="id-AircraftTypeAdapter" />
         <entry key="FlightPlanModelAdapter" value-ref="id-FlightPlanModelAdapter" />
         <entry key="StartDaysAdapter" value-ref="id-StartDaysAdapter" />
+        <entry key="FlightPlanCollectionAdapter" value-ref="id-FlightPlanCollectionAdapter" />
     </util:map>
 
-    <bean id="id-AircraftTypeAdapter" class="com.airportflightplanner.common.adapter.AircraftTypeAdapterIpmpl">
+    <bean id="id-AircraftTypeAdapter" class="com.airportflightplanner.common.adapter.impl.AircraftTypeAdapterIpmpl">
         <property name="adapterName" value="AircraftTypeAdapter" />
     </bean>
 
-    <bean id="id-FlightPlanModelAdapter" class="com.airportflightplanner.common.adapter.FlightPlanModelAdapterImpl">
+    <bean id="id-FlightPlanModelAdapter" class="com.airportflightplanner.common.adapter.impl.FlightPlanModelAdapterImpl" init-method="init">
         <property name="adapterName" value="FlightPlanModelAdapter" />
+        <property name="model" ref="id-CurrentFlightPlan" />
     </bean>
-    
-    <bean id="id-StartDaysAdapter" class="com.airportflightplanner.common.adapter.StartDaysAdapterImpl">
+
+    <bean id="id-StartDaysAdapter" class="com.airportflightplanner.common.adapter.impl.StartDaysAdapterImpl" init-method="init">
         <property name="adapterName" value="StartDaysAdapter" />
         <property name="model" ref="id-DaySelectionModel" />
+    </bean>
+
+    <bean id="id-FlightPlanCollectionAdapter" class="com.airportflightplanner.common.adapter.impl.FlightPlanCollectionAdapterImpl">
+        <property name="adapterName" value="FlightPlanCollectionAdapter" />
+        <property name="model" ref="id-FlightPlansCollection" />
     </bean>
 </beans>
