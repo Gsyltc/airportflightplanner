@@ -5,6 +5,9 @@
  */
 package com.airportflightplanner.flightplancreation.panels;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -13,10 +16,17 @@ import javax.swing.border.TitledBorder;
 
 import com.airportflightplanner.common.api.flightplan.bean.FlightPlanProperties;
 import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
+import com.airportflightplanner.common.models.flightplans.FlightPlanModel;
+import com.airportflightplanner.common.types.ArrivalType;
+import com.airportflightplanner.common.types.DepartureType;
+import com.airportflightplanner.common.types.FlightType;
 import com.airportflightplanner.common.visualelement.AbstractCommonPanel;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
 import com.jgoodies.binding.PresentationModel;
+import com.jgoodies.binding.adapter.BasicComponentFactory;
+import com.jgoodies.binding.list.SelectionInList;
 import com.jgoodies.binding.value.BufferedValueModel;
+import com.jgoodies.binding.value.ValueModel;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
@@ -92,32 +102,29 @@ public class CreationOptionsPanel extends AbstractCommonPanel {
      * @return
      */
     private JComboBox<String> createDepartureTypeCb(final PresentationModel<FlightPlanReader> presenter) {
-        // final ValueModel infosModel =
-        // presenter.getModel(FlightPlanProperties.DEPARTURE_TYPE);
-        // final SelectionInList<String> selectionInList = new
-        // SelectionInList<String>(infosModel);
-        // final JComboBox<String> component =
-        // BasicComponentFactory.createComboBox(//
-        // selectionInList, new CreationFlightInfosCompagnieCellRenderer());
-        // component.setPrototypeDisplayValue("XXXXXXXXXXXXX");
-        // final FlightInfosModel bean = (FlightInfosModel) presenter.getBean();
-        // bean.addPropertyChangeListener(FlightPlanProperties.FILENAME, new
-        // PropertyChangeListener() {
-        // /**
-        // *
-        // * {@inheritDoc}
-        // */
-        // @Override
-        // public void propertyChange(final PropertyChangeEvent evt) {
-        // if (null == evt.getNewValue()) {
-        // component.setSelectedIndex(NO_SELECTION);
-        // } else {
-        // component.setSelectedItem(evt.getNewValue());
-        // }
-        // }
-        // });
-        //
-        return new JComboBox<>();
+        final ValueModel infosModel = presenter.getModel(FlightPlanProperties.DEPARTURE_TYPE);
+        final SelectionInList<DepartureType> selectionInList = new SelectionInList<DepartureType>(DepartureType.values(),
+                infosModel);
+        final JComboBox<String> component = BasicComponentFactory.createComboBox(//
+                selectionInList);
+        component.setPrototypeDisplayValue("XXXXXXXXXXXXX");
+        final FlightPlanModel bean = (FlightPlanModel) presenter.getBean();
+        bean.addPropertyChangeListener(FlightPlanProperties.DEPARTURE_TYPE, new PropertyChangeListener() {
+            /**
+             *
+             * {@inheritDoc}
+             */
+            @Override
+            public void propertyChange(final PropertyChangeEvent evt) {
+                System.out.println(evt.getNewValue());
+                if (null == evt.getNewValue()) {
+                    component.setSelectedIndex(NO_SELECTION);
+                } else {
+                    component.setSelectedItem(evt.getNewValue());
+                }
+            }
+        });
+        return component;
     }
 
     /**
@@ -146,33 +153,28 @@ public class CreationOptionsPanel extends AbstractCommonPanel {
      * @return
      */
     private JComboBox<String> createArrivalTypeCb(final PresentationModel<FlightPlanReader> presenter) {
-        // final ValueModel infosModel =
-        // presenter.getModel(FlightPlanProperties.ARRIVAL_TYPE);
-        // final SelectionInList<String> selectionInList = new
-        // SelectionInList<String>(infosModel);
-        // final JComboBox<String> component =
-        // BasicComponentFactory.createComboBox(//
-        // selectionInList, new CreationFlightInfosCompagnieCellRenderer());
-        // component.setPrototypeDisplayValue("XXXXXXXXXXXXX");
-        // final FlightInfosModel bean = (FlightInfosModel) presenter.getBean();
-        // bean.addPropertyChangeListener(FlightPlanProperties.FILENAME, new
-        // PropertyChangeListener() {
-        // /**
-        // *
-        // * {@inheritDoc}
-        // */
-        // @Override
-        // public void propertyChange(final PropertyChangeEvent evt) {
-        // if (null == evt.getNewValue()) {
-        // component.setSelectedIndex(NO_SELECTION);
-        // } else {
-        // component.setSelectedItem(evt.getNewValue());
-        // }
-        // }
-        // });
-        //
-        // return component;
-        return new JComboBox<>();
+        final ValueModel infosModel = presenter.getModel(FlightPlanProperties.ARRIVAL_TYPE);
+        final SelectionInList<ArrivalType> selectionInList = new SelectionInList<ArrivalType>(ArrivalType.values(),infosModel);
+        final JComboBox<String> component = BasicComponentFactory.createComboBox(//
+                selectionInList);
+        component.setPrototypeDisplayValue("XXXXXXXXXXXXX");
+        final FlightPlanModel bean = (FlightPlanModel) presenter.getBean();
+        bean.addPropertyChangeListener(FlightPlanProperties.ARRIVAL_TYPE, new PropertyChangeListener() {
+            /**
+             *
+             * {@inheritDoc}
+             */
+            @Override
+            public void propertyChange(final PropertyChangeEvent evt) {
+                if (null == evt.getNewValue()) {
+                    component.setSelectedIndex(NO_SELECTION);
+                } else {
+                    component.setSelectedItem(evt.getNewValue());
+                }
+            }
+        });
+
+        return component;
     }
 
     /**
@@ -181,33 +183,28 @@ public class CreationOptionsPanel extends AbstractCommonPanel {
      * @return
      */
     private JComboBox<String> createFlightTypeCb(final PresentationModel<FlightPlanReader> presenter) {
-        // final ValueModel infosModel =
-        // presenter.getModel(FlightPlanProperties.FLIGHT_TYPE);
-        // final SelectionInList<String> selectionInList = new
-        // SelectionInList<String>(infosModel);
-        // final JComboBox<String> component =
-        // BasicComponentFactory.createComboBox(//
-        // selectionInList, new CreationFlightInfosCompagnieCellRenderer());
-        // component.setPrototypeDisplayValue("XXXXXXXXXXXXX");
-        // final FlightInfosModel bean = (FlightInfosModel) presenter.getBean();
-        // bean.addPropertyChangeListener(FlightPlanProperties.FILENAME, new
-        // PropertyChangeListener() {
-        // /**
-        // *
-        // * {@inheritDoc}
-        // */
-        // @Override
-        // public void propertyChange(final PropertyChangeEvent evt) {
-        // if (null == evt.getNewValue()) {
-        // component.setSelectedIndex(NO_SELECTION);
-        // } else {
-        // component.setSelectedItem(evt.getNewValue());
-        // }
-        // }
-        // });
-        //
-        // return component;
-        return new JComboBox<>();
+        final ValueModel infosModel = presenter.getModel(FlightPlanProperties.FLIGHT_TYPE);
+        final SelectionInList<FlightType> selectionInList = new SelectionInList<FlightType>(FlightType.values(),infosModel);
+        final JComboBox<String> component = BasicComponentFactory.createComboBox(//
+                selectionInList);
+        component.setPrototypeDisplayValue("XXXXXXXXXXXXX");
+        final FlightPlanModel bean = (FlightPlanModel) presenter.getBean();
+        bean.addPropertyChangeListener(FlightPlanProperties.FLIGHT_TYPE, new PropertyChangeListener() {
+            /**
+             *
+             * {@inheritDoc}
+             */
+            @Override
+            public void propertyChange(final PropertyChangeEvent evt) {
+                if (null == evt.getNewValue()) {
+                    component.setSelectedIndex(NO_SELECTION);
+                } else {
+                    component.setSelectedItem(evt.getNewValue());
+                }
+            }
+        });
+
+        return component;
     }
 
     /**

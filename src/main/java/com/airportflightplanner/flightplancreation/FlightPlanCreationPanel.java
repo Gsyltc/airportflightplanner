@@ -164,6 +164,7 @@ public class FlightPlanCreationPanel extends AbstractCommonPanel {
      */
     public CreationOptionsPanel createCreationOptionsPanel(final PresentationModel<FlightPlanReader> fpPresenter) {
         final CreationOptionsPanel panel = new CreationOptionsPanel(fpPresenter);
+        panel.addAdapter(getAdapters().get("FlightPlanModelAdapter"));
         panel.build();
         return panel;
     }
