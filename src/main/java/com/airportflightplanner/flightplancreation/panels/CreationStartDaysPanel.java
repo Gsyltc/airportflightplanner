@@ -84,8 +84,7 @@ public class CreationStartDaysPanel extends AbstractCommonPanel {
      */
     private JCheckBox createMondayCb(final PresentationModel<DaySelectionReader> dayPresenter) {
         final ValueModel value = dayPresenter.getBufferedModel(DaySelectionProperties.MONDAY);
-        final JCheckBox checkBox = BasicComponentFactory.createCheckBox(value, StartDays.MONDAY.toString());
-        return checkBox;
+        return BasicComponentFactory.createCheckBox(value, StartDays.MONDAY.toString());
     }
 
     /**
@@ -95,8 +94,7 @@ public class CreationStartDaysPanel extends AbstractCommonPanel {
      */
     private JCheckBox createTuesdayCb(final PresentationModel<DaySelectionReader> dayPresenter) {
         final ValueModel value = dayPresenter.getBufferedModel(DaySelectionProperties.TUESDAY);
-        final JCheckBox checkBox = BasicComponentFactory.createCheckBox(value, StartDays.TUESDAY.toString());
-        return checkBox;
+        return BasicComponentFactory.createCheckBox(value, StartDays.TUESDAY.toString());
     }
 
     /**
@@ -106,8 +104,7 @@ public class CreationStartDaysPanel extends AbstractCommonPanel {
      */
     private JCheckBox createWednesdayCb(final PresentationModel<DaySelectionReader> dayPresenter) {
         final ValueModel value = dayPresenter.getBufferedModel(DaySelectionProperties.WEDNESDAY);
-        final JCheckBox checkBox = BasicComponentFactory.createCheckBox(value, StartDays.WEDNESDAY.toString());
-        return checkBox;
+        return BasicComponentFactory.createCheckBox(value, StartDays.WEDNESDAY.toString());
     }
 
     /**
@@ -117,8 +114,7 @@ public class CreationStartDaysPanel extends AbstractCommonPanel {
      */
     private JCheckBox createThrusdayCb(final PresentationModel<DaySelectionReader> dayPresenter) {
         final ValueModel value = dayPresenter.getBufferedModel(DaySelectionProperties.THRUSDAY);
-        final JCheckBox checkBox = BasicComponentFactory.createCheckBox(value, StartDays.THRUSDAY.toString());
-        return checkBox;
+        return BasicComponentFactory.createCheckBox(value, StartDays.THRUSDAY.toString());
     }
 
     /**
@@ -128,8 +124,7 @@ public class CreationStartDaysPanel extends AbstractCommonPanel {
      */
     private JCheckBox createFridayCb(final PresentationModel<DaySelectionReader> dayPresenter) {
         final ValueModel value = dayPresenter.getBufferedModel(DaySelectionProperties.FRIDAY);
-        final JCheckBox checkBox = BasicComponentFactory.createCheckBox(value, StartDays.FRIDAY.toString());
-        return checkBox;
+        return BasicComponentFactory.createCheckBox(value, StartDays.FRIDAY.toString());
     }
 
     /**
@@ -139,8 +134,7 @@ public class CreationStartDaysPanel extends AbstractCommonPanel {
      */
     private JCheckBox createSaturdayCb(final PresentationModel<DaySelectionReader> dayPresenter) {
         final ValueModel value = dayPresenter.getBufferedModel(DaySelectionProperties.SATURDAY);
-        final JCheckBox checkBox = BasicComponentFactory.createCheckBox(value, StartDays.SATURDAY.toString());
-        return checkBox;
+        return BasicComponentFactory.createCheckBox(value, StartDays.SATURDAY.toString());
     }
 
     /**
@@ -150,8 +144,7 @@ public class CreationStartDaysPanel extends AbstractCommonPanel {
      */
     private JCheckBox createSundayCb(final PresentationModel<DaySelectionReader> dayPresenter) {
         final ValueModel value = dayPresenter.getBufferedModel(DaySelectionProperties.SUNDAY);
-        final JCheckBox checkBox = BasicComponentFactory.createCheckBox(value, StartDays.SUNDAY.toString());
-        return checkBox;
+        return BasicComponentFactory.createCheckBox(value, StartDays.SUNDAY.toString());
     }
 
     /**

@@ -30,8 +30,6 @@ public class DaysSelectionPanel extends AbstractCommonPanel {
     private static final long serialVersionUID     = 3382772953500242522L;
     /** */
     private static final int  DAYS_PRESENTER       = AbstractCommonPanel.FIRST_PRESENTER;
-    /** */
-    private static final int  CURRENT_FP_PRESENTER = 1;
 
     /**
      * @param presenter
