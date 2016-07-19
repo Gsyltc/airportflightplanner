@@ -99,6 +99,9 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
         formLayout.setColumnGroups(new int[][] { new int[] { 2, 14, 12, 10, 8, 6, 4 } });
         setLayout(formLayout);
 
+        final PresentationModel<FlightInfosReader> flInfosPresenter = //
+                (PresentationModel<FlightInfosReader>) getPresenter(FL_INFOS_PRESENTER_INDEX);
+
         setBorder(new TitledBorder(null, FlightPlanCreationPanelMessages.FLIGHT_INFOS_LABEL));
         final StartDaysAdapter adapter = (StartDaysAdapter) getAdapterByName(StartDaysAdapter.class.getSimpleName());
         final CreationStartDaysPanel panel = new CreationStartDaysPanel(new PresentationModel<DaySelectionReader>(//
@@ -112,15 +115,15 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
 
         final JLabel typeLabel = new JLabel(FlightPlanCreationPanelMessages.TYPE_LABEL);
         add(typeLabel, "2, 4, right, default");
-        add(createAircraftClassComboBox(), "4, 4, 3, 1, fill, default");
+        add(createAircraftClassComboBox(flInfosPresenter), "4, 4, 3, 1, fill, default");
 
-        final JLabel liveryLabel = new JLabel(FlightPlanCreationPanelMessages.AIRCRAFT_LIVERY);
+        final JLabel liveryLabel = new JLabel(FlightPlanCreationPanelMessages.AIRCRAFT_LIVERY_LABEL);
         add(liveryLabel, "10, 6, right, default");
-        add(createAircraftLiveryComboBox(), "12, 6, 3, 1, fill, default");
+        add(createAircraftLiveryComboBox(flInfosPresenter), "12, 6, 3, 1, fill, default");
 
         final JLabel cpieLabel = new JLabel(FlightPlanCreationPanelMessages.CPIE_LABEL);
         add(cpieLabel, "2, 6, right, default");
-        add(createAircraftCpieComboBox(), "4, 6, 3, 1, fill, default");
+        add(createAircraftCpieComboBox(flInfosPresenter), "4, 6, 3, 1, fill, default");
 
         getPresenter(FIRST_PRESENTER).addPropertyChangeListener(new PropertyChangeListener() {
             /**
@@ -148,22 +151,20 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
      * @return
      */
     private JTextField createCallSignTextField() {
-
         final BufferedValueModel model = getPresenter(FIRST_PRESENTER).getBufferedModel(FlightPlanProperties.CALLSIGN);
-        final JTextField textField = BasicComponentFactory.createTextField(model);
-
-        return textField;
+        return BasicComponentFactory.createTextField(model);
     }
 
     /**
      *
+     * @param flInfosPresenter
      * @return
      */
-    private JComboBox<String> createAircraftClassComboBox() {
+    private JComboBox<String> createAircraftClassComboBox(final PresentationModel<FlightInfosReader> flInfosPresenter) {
         final AircraftTypeAdapter adapter = (AircraftTypeAdapter) getAdapterByName(AircraftTypeAdapter.class.getSimpleName());
         final Set<String> aircraftClass = adapter.getAircraftClasses();
         final JComboBox<String> component = BasicComponentFactory.createComboBox(new SelectionInList<>(aircraftClass.toArray()));
-        final FlightInfosModel bean = (FlightInfosModel) getPresenter(FL_INFOS_PRESENTER_INDEX).getBean();
+        final FlightInfosModel bean = (FlightInfosModel) flInfosPresenter.getBean();
         bean.addPropertyChangeListener(FlightInfosProperties.AIRCRAFT_CLASS, new PropertyChangeListener() {
             /**
              *
@@ -171,7 +172,7 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
              */
             @Override
             public void propertyChange(final PropertyChangeEvent evt) {
-                refreshData(evt.getPropertyName());
+                refreshData(evt.getPropertyName(), flInfosPresenter);
                 component.setSelectedItem(evt.getNewValue());
             }
         });
@@ -194,15 +195,15 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
 
     /**
      *
+     * @param flInfosPresenter
      * @return
      */
-    private JComboBox<String> createAircraftLiveryComboBox() {
-        final PresentationModel<?> presenter = getPresenter(FL_INFOS_PRESENTER_INDEX);
-        final ValueModel model = presenter.getModel(FlightInfosProperties.LIVERIES);
+    private JComboBox<String> createAircraftLiveryComboBox(final PresentationModel<FlightInfosReader> flInfosPresenter) {
+        final ValueModel model = flInfosPresenter.getModel(FlightInfosProperties.LIVERIES);
 
         final SelectionInList<String> selectionInList = new SelectionInList<String>(model);
         final JComboBox<String> component = BasicComponentFactory.createComboBox(selectionInList);
-        final FlightInfosModel bean = (FlightInfosModel) presenter.getBean();
+        final FlightInfosModel bean = (FlightInfosModel) flInfosPresenter.getBean();
         bean.addPropertyChangeListener(FlightInfosProperties.AIRCRAFT_LIVERY, new PropertyChangeListener() {
             /**
              *
@@ -210,7 +211,7 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
              */
             @Override
             public void propertyChange(final PropertyChangeEvent evt) {
-                refreshData(evt.getPropertyName());
+                refreshData(evt.getPropertyName(), flInfosPresenter);
                 if (null == evt.getNewValue()) {
                     component.setSelectedIndex(NO_SELECTION);
                 } else {
@@ -227,7 +228,7 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
              */
             @Override
             public void propertyChange(final PropertyChangeEvent evt) {
-                refreshData(evt.getPropertyName());
+                refreshData(evt.getPropertyName(), flInfosPresenter);
             }
         });
 
@@ -250,15 +251,16 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
 
     /**
      *
+     * @param flInfosPresenter
      * @return
      */
-    private JComboBox<String> createAircraftCpieComboBox() {
-        final PresentationModel<?> presenter = getPresenter(FL_INFOS_PRESENTER_INDEX);
-        final ValueModel infosModel = presenter.getModel(FlightInfosProperties.COMPANIES);
+    private JComboBox<String> createAircraftCpieComboBox(final PresentationModel<FlightInfosReader> flInfosPresenter) {
+        final ValueModel infosModel = flInfosPresenter.getModel(FlightInfosProperties.COMPANIES);
         final SelectionInList<String> selectionInList = new SelectionInList<String>(infosModel);
-        final JComboBox<String> component = BasicComponentFactory.createComboBox(selectionInList, new CreationFlightInfosCompagnieCellRenderer());
+        final JComboBox<String> component = BasicComponentFactory.createComboBox(//
+                selectionInList, new CreationFlightInfosCompagnieCellRenderer());
         component.setPrototypeDisplayValue("XXXXXXXXXXXXXXXXXXXX");
-        final FlightInfosModel bean = (FlightInfosModel) presenter.getBean();
+        final FlightInfosModel bean = (FlightInfosModel) flInfosPresenter.getBean();
         bean.addPropertyChangeListener(FlightInfosProperties.AIRCRAFT_CIE, new PropertyChangeListener() {
             /**
              *
@@ -266,7 +268,7 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
              */
             @Override
             public void propertyChange(final PropertyChangeEvent evt) {
-                refreshData(evt.getPropertyName());
+                refreshData(evt.getPropertyName(), flInfosPresenter);
                 if (null == evt.getNewValue()) {
                     component.setSelectedIndex(NO_SELECTION);
                 } else {
@@ -294,10 +296,11 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
     /**
      * @param propertyName
      *            Property to refresh.
+     * @param flInfosPresenter
      */
-    protected void refreshData(final String propertyName) {
+    protected void refreshData(final String propertyName, final PresentationModel<FlightInfosReader> flInfosPresenter) {
         final AircraftTypeAdapter adapter = (AircraftTypeAdapter) getAdapterByName(AircraftTypeAdapter.class.getSimpleName());
-        final FlightInfosWriter bean = (FlightInfosModel) getPresenter(FL_INFOS_PRESENTER_INDEX).getBean();
+        final FlightInfosWriter bean = (FlightInfosModel) flInfosPresenter.getBean();
         switch (propertyName) {
         // La classe a changee, on reset le model des compagnies et des livrees
         case FlightInfosProperties.AIRCRAFT_CLASS:

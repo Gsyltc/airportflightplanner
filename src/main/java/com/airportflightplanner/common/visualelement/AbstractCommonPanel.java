@@ -42,11 +42,13 @@ public abstract class AbstractCommonPanel extends FormDebugPanel implements Slot
     /** */
     protected Map<String, ? extends Object>                attributeMap        = new ConcurrentHashMap<String, Object>();
     /** */
-    private Map<String, CommonAdapter<?>>                     adapters            = new ConcurrentHashMap<String, CommonAdapter<?>>();
+    private Map<String, CommonAdapter<?>>                  adapters            = new ConcurrentHashMap<String, CommonAdapter<?>>();
     /** The logger of this class. */
     private static final Log                               LOGGER              = LogFactory.getLog(AbstractCommonPanel.class);
     /** */
     protected static final int                             FIRST_PRESENTER     = 0;
+    /** */
+    protected static final int                             NO_SELECTION        = -1;
     /** */
     protected static final String                          PREF_GROW           = "pref:grow";
 
