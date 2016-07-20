@@ -17,11 +17,13 @@ import com.airportflightplanner.common.utils.internationalization.Internationali
  */
 public enum ArrivalType {
     /** */
-    STRAIGHT_IN_APPROCH(0),
+    UNDEFINED(0),
     /** */
-    OVERHEAD_BRAKE(1),
+    STRAIGHT_IN_APPROCH(1),
     /** */
-    LOW_APPROCH(2);
+    OVERHEAD_BRAKE(2),
+    /** */
+    LOW_APPROCH(3);
     /** */
     private static final String PREFIX = "ArrivalType.";
     /** */

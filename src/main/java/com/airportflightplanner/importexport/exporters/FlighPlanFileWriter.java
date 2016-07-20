@@ -141,10 +141,10 @@ public class FlighPlanFileWriter extends AbstractSlotReceiver {
                     fileWriter.write(System.lineSeparator());
 
                     // START_FLY_TO_COMPLETION
-                    if (null != flightPlan.isFlightToCompletion()) {
+                    if (null != flightPlan.getFlightToCompletion()) {
                         fileWriter.write(FlightPlanInformationTypes.START_FLY_TO_COMPLETION.name());
                         fileWriter.write(System.lineSeparator());
-                        if (flightPlan.isFlightToCompletion()) {
+                        if (flightPlan.getFlightToCompletion()) {
                             fileWriter.write("1");
                         } else {
                             fileWriter.write("0");

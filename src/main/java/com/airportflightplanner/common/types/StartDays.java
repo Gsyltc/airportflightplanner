@@ -17,19 +17,19 @@ import com.airportflightplanner.common.utils.internationalization.Internationali
  */
 public enum StartDays {
     /** */
-    MONDAY(0),
+    MONDAY(1),
     /** */
-    TUESDAY(1),
+    TUESDAY(2),
     /** */
-    WEDNESDAY(2),
+    WEDNESDAY(3),
     /** */
-    THRUSDAY(3),
+    THRUSDAY(4),
     /** */
-    FRIDAY(4),
+    FRIDAY(5),
     /** */
-    SATURDAY(5),
+    SATURDAY(6),
     /** */
-    SUNDAY(6);
+    SUNDAY(0);
     /** */
     private static final String PREFIX = "StartDays.";
     /** */

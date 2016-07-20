@@ -17,6 +17,8 @@ import com.airportflightplanner.common.utils.internationalization.Internationali
  */
 public enum FlightType {
     /** */
+    UNDEFINED(-1),
+    /** */
     CIVILIAN(0),
     /** */
     MILITARY(1);

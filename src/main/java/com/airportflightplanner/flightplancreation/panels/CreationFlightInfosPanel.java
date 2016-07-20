@@ -33,7 +33,7 @@ import com.airportflightplanner.flightplancreation.api.model.flightinfos.FlightI
 import com.airportflightplanner.flightplancreation.api.model.flightinfos.FlightInfosWriter;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
 import com.airportflightplanner.flightplancreation.model.FlightInfosModel;
-import com.airportflightplanner.flightplancreation.renderers.CreationFlightInfosCompagnieCellRenderer;
+import com.airportflightplanner.flightplancreation.renderers.CommonComboBoxCellRenderer;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.adapter.BasicComponentFactory;
 import com.jgoodies.binding.list.SelectionInList;
@@ -53,11 +53,11 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
     /**
      *
      */
-    private static final long  serialVersionUID         = -2692513903084994308L;
+    private static final long   serialVersionUID         = -2692513903084994308L;
     /** */
-    protected static final int NO_SELECTION             = -1;
+    private static final int    FL_INFOS_PRESENTER_INDEX = 1;
     /** */
-    private static final int   FL_INFOS_PRESENTER_INDEX = 1;
+    private static final String PROTOTYPE_DISPLAY        = "XXXXXXXXXXXXX";
 
     /**
      * @param newCurrentFlightPlan
@@ -164,6 +164,7 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
         final AircraftTypeAdapter adapter = (AircraftTypeAdapter) getAdapterByName(AircraftTypeAdapter.class.getSimpleName());
         final Set<String> aircraftClass = adapter.getAircraftClasses();
         final JComboBox<String> component = BasicComponentFactory.createComboBox(new SelectionInList<>(aircraftClass.toArray()));
+        component.setPrototypeDisplayValue(PROTOTYPE_DISPLAY);
         final FlightInfosModel bean = (FlightInfosModel) flInfosPresenter.getBean();
         bean.addPropertyChangeListener(FlightInfosProperties.AIRCRAFT_CLASS, new PropertyChangeListener() {
             /**
@@ -203,6 +204,7 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
 
         final SelectionInList<String> selectionInList = new SelectionInList<String>(model);
         final JComboBox<String> component = BasicComponentFactory.createComboBox(selectionInList);
+        component.setPrototypeDisplayValue(PROTOTYPE_DISPLAY);
         final FlightInfosModel bean = (FlightInfosModel) flInfosPresenter.getBean();
         bean.addPropertyChangeListener(FlightInfosProperties.AIRCRAFT_LIVERY, new PropertyChangeListener() {
             /**
@@ -258,8 +260,8 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
         final ValueModel infosModel = flInfosPresenter.getModel(FlightInfosProperties.COMPANIES);
         final SelectionInList<String> selectionInList = new SelectionInList<String>(infosModel);
         final JComboBox<String> component = BasicComponentFactory.createComboBox(//
-                selectionInList, new CreationFlightInfosCompagnieCellRenderer());
-        component.setPrototypeDisplayValue("XXXXXXXXXXXXXXXXXXXX");
+                selectionInList, new CommonComboBoxCellRenderer(PROTOTYPE_DISPLAY));
+        component.setPrototypeDisplayValue(PROTOTYPE_DISPLAY);
         final FlightInfosModel bean = (FlightInfosModel) flInfosPresenter.getBean();
         bean.addPropertyChangeListener(FlightInfosProperties.AIRCRAFT_CIE, new PropertyChangeListener() {
             /**

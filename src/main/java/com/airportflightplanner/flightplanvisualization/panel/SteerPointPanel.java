@@ -78,7 +78,7 @@ public class SteerPointPanel extends AbstractCommonPanel {
                         FormSpecs.DEFAULT_ROWSPEC, //
                         FormSpecs.RELATED_GAP_ROWSPEC, }));
 
-        add(createSteerPointsPanel(), "2, 2, 3, 1, fill, top");
+        add(createSteerPointsPanel(), "2, 2, 3, 1");
 
         final SteerPointsPresenter presenter = (SteerPointsPresenter) getPresenter(STEERPOINT_PRESENTER);
         final SteerPointsCollectionReader reader = presenter.getBean();

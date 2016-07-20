@@ -41,22 +41,22 @@ import com.jgoodies.forms.layout.RowSpec;
 public class FlightPlanCreationPanel extends AbstractCommonPanel {
 
     /** */
-    protected static final int         DEPARTURE_POINT        = 0;
+    protected static final int            DEPARTURE_POINT        = 0;
     /**
      *
      */
-    private static final long          serialVersionUID       = 4047549681152943474L;
+    private static final long             serialVersionUID       = 4047549681152943474L;
     /** */
-    private static final int           DEFAULT_HEIGHT         = 400;
+    private static final int              DEFAULT_HEIGHT         = 400;
     /** */
-    private static final int           DEFAULT_WIDTH          = 400;
+    private static final int              DEFAULT_WIDTH          = 400;
     /** */
     private Map<String, CommonAdapter<?>> adapters;
 
     /** */
-    private static final int           FP_PRESENTER           = AbstractCommonPanel.FIRST_PRESENTER;
+    private static final int              FP_PRESENTER           = AbstractCommonPanel.FIRST_PRESENTER;
     /** */
-    private static final int           GOOGLE_PRESENTER_INDEX = 1;
+    private static final int              GOOGLE_PRESENTER_INDEX = 1;
 
     /**
      * @param currentFpBean

@@ -113,7 +113,9 @@ public class StartDaysAdapterImpl implements StartDaysAdapter {
              */
             @Override
             public void doAction(final FlightPlanReader bean) {
-                updateStartsDays(bean.getStartDays());
+                if (null != bean) {
+                    updateStartsDays(bean.getStartDays());
+                }
             }
         });
     }

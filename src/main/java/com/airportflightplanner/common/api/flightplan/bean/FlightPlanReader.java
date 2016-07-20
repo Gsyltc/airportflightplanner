@@ -98,7 +98,7 @@ public interface FlightPlanReader extends Serializable{
      *
      * @return
      */
-    Boolean isFlightToCompletion();
+    Boolean getFlightToCompletion();
 
     /**
      *

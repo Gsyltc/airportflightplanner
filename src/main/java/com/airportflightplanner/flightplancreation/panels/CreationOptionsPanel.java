@@ -7,12 +7,18 @@ package com.airportflightplanner.flightplancreation.panels;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.text.FieldPosition;
+import java.text.Format;
+import java.text.ParsePosition;
 
+import javax.measure.unit.NonSI;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
+
+import org.jscience.geography.coordinates.Altitude;
 
 import com.airportflightplanner.common.api.flightplan.bean.FlightPlanProperties;
 import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
@@ -22,10 +28,12 @@ import com.airportflightplanner.common.types.DepartureType;
 import com.airportflightplanner.common.types.FlightType;
 import com.airportflightplanner.common.visualelement.AbstractCommonPanel;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
+import com.airportflightplanner.flightplancreation.renderers.CommonComboBoxCellRenderer;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.adapter.BasicComponentFactory;
 import com.jgoodies.binding.list.SelectionInList;
 import com.jgoodies.binding.value.BufferedValueModel;
+import com.jgoodies.binding.value.ConverterFactory;
 import com.jgoodies.binding.value.ValueModel;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
@@ -41,6 +49,8 @@ public class CreationOptionsPanel extends AbstractCommonPanel {
     private static final long serialVersionUID = -2692513903084994308L;
     /** */
     private static final int  FP_PRESENTER     = AbstractCommonPanel.FIRST_PRESENTER;
+    /** */
+    private static final String PROTOTYPE_DISPLAY = "XXXXXXXXXXXXX";
 
     /**
      * @param model
@@ -101,13 +111,11 @@ public class CreationOptionsPanel extends AbstractCommonPanel {
      * @param presenter
      * @return
      */
-    private JComboBox<String> createDepartureTypeCb(final PresentationModel<FlightPlanReader> presenter) {
+    private JComboBox<DepartureType> createDepartureTypeCb(final PresentationModel<FlightPlanReader> presenter) {
         final ValueModel infosModel = presenter.getModel(FlightPlanProperties.DEPARTURE_TYPE);
-        final SelectionInList<DepartureType> selectionInList = new SelectionInList<DepartureType>(DepartureType.values(),
-                infosModel);
-        final JComboBox<String> component = BasicComponentFactory.createComboBox(//
-                selectionInList);
-        component.setPrototypeDisplayValue("XXXXXXXXXXXXX");
+        final SelectionInList<DepartureType> selectionInList = new SelectionInList<DepartureType>(DepartureType.values(), infosModel);
+        final JComboBox<DepartureType> component = BasicComponentFactory.createComboBox(//
+                selectionInList, new CommonComboBoxCellRenderer(PROTOTYPE_DISPLAY));
         final FlightPlanModel bean = (FlightPlanModel) presenter.getBean();
         bean.addPropertyChangeListener(FlightPlanProperties.DEPARTURE_TYPE, new PropertyChangeListener() {
             /**
@@ -116,7 +124,6 @@ public class CreationOptionsPanel extends AbstractCommonPanel {
              */
             @Override
             public void propertyChange(final PropertyChangeEvent evt) {
-                System.out.println(evt.getNewValue());
                 if (null == evt.getNewValue()) {
                     component.setSelectedIndex(NO_SELECTION);
                 } else {
@@ -135,16 +142,45 @@ public class CreationOptionsPanel extends AbstractCommonPanel {
     private JTextField createLandingLightAltitudeTb(final PresentationModel<FlightPlanReader> presenter) {
         final BufferedValueModel model = presenter.getBufferedModel(//
                 FlightPlanProperties.LANDING_LIGHT_ALTITUDE);
-        // model.addPropertyChangeListener(new PropertyChangeListener() {
-        //
-        // @Override
-        // public void propertyChange(final PropertyChangeEvent evt) {
-        //// return evt.getNewValue().toString();
-        //
-        // }
-        // });
-        // return BasicComponentFactory.createTextField(model);
-        return new JTextField();
+
+        final ValueModel value = ConverterFactory.createStringConverter(model, new Format() {
+            /**
+             *
+             */
+            private static final long serialVersionUID = 5858092520252522599L;
+
+            /**
+             *
+             * {@inheritDoc}
+             */
+            @Override
+            public Object parseObject(final String source, final ParsePosition pos) {
+                Double result = 0.0;
+                if (source.contains("m")) {
+                    // source in meters
+                    result = Double.parseDouble(source.replace("m", "").replace(" ", "")) * 3.28084;
+                } else {
+                    result = Double.parseDouble(source.replace("ft", "").replace(" ", ""));
+                }
+                return Altitude.valueOf(result, NonSI.FOOT);
+            }
+
+            /**
+             *
+             * {@inheritDoc}
+             */
+            @Override
+            public StringBuffer format(final Object obj, final StringBuffer toAppendTo, final FieldPosition pos) {
+                long result = 0;
+                if (obj instanceof Altitude) {
+                    final Altitude altitude = (Altitude) obj;
+                    result = altitude.longValue(NonSI.FOOT);
+                }
+                return new StringBuffer(String.valueOf(result)).append(" ft");
+            }
+        });
+
+        return BasicComponentFactory.createTextField(value);
     }
 
     /**
@@ -152,12 +188,11 @@ public class CreationOptionsPanel extends AbstractCommonPanel {
      * @param presenter
      * @return
      */
-    private JComboBox<String> createArrivalTypeCb(final PresentationModel<FlightPlanReader> presenter) {
+    private JComboBox<ArrivalType> createArrivalTypeCb(final PresentationModel<FlightPlanReader> presenter) {
         final ValueModel infosModel = presenter.getModel(FlightPlanProperties.ARRIVAL_TYPE);
-        final SelectionInList<ArrivalType> selectionInList = new SelectionInList<ArrivalType>(ArrivalType.values(),infosModel);
-        final JComboBox<String> component = BasicComponentFactory.createComboBox(//
-                selectionInList);
-        component.setPrototypeDisplayValue("XXXXXXXXXXXXX");
+        final SelectionInList<ArrivalType> selectionInList = new SelectionInList<ArrivalType>(ArrivalType.values(), infosModel);
+        final JComboBox<ArrivalType> component = BasicComponentFactory.createComboBox(//
+                selectionInList, new CommonComboBoxCellRenderer(PROTOTYPE_DISPLAY));
         final FlightPlanModel bean = (FlightPlanModel) presenter.getBean();
         bean.addPropertyChangeListener(FlightPlanProperties.ARRIVAL_TYPE, new PropertyChangeListener() {
             /**
@@ -182,12 +217,11 @@ public class CreationOptionsPanel extends AbstractCommonPanel {
      * @param presenter
      * @return
      */
-    private JComboBox<String> createFlightTypeCb(final PresentationModel<FlightPlanReader> presenter) {
+    private JComboBox<FlightType> createFlightTypeCb(final PresentationModel<FlightPlanReader> presenter) {
         final ValueModel infosModel = presenter.getModel(FlightPlanProperties.FLIGHT_TYPE);
-        final SelectionInList<FlightType> selectionInList = new SelectionInList<FlightType>(FlightType.values(),infosModel);
-        final JComboBox<String> component = BasicComponentFactory.createComboBox(//
-                selectionInList);
-        component.setPrototypeDisplayValue("XXXXXXXXXXXXX");
+        final SelectionInList<FlightType> selectionInList = new SelectionInList<FlightType>(FlightType.values(), infosModel);
+        final JComboBox<FlightType> component = BasicComponentFactory.createComboBox(//
+                selectionInList, new CommonComboBoxCellRenderer(PROTOTYPE_DISPLAY));
         final FlightPlanModel bean = (FlightPlanModel) presenter.getBean();
         bean.addPropertyChangeListener(FlightPlanProperties.FLIGHT_TYPE, new PropertyChangeListener() {
             /**
@@ -213,10 +247,7 @@ public class CreationOptionsPanel extends AbstractCommonPanel {
      * @return
      */
     private JCheckBox createFlyToCompletionCkb(final PresentationModel<FlightPlanReader> presenter) {
-        // final ValueModel value =
-        // presenter.getBufferedModel(FlightPlanProperties.FLIGHT_TO_COMPLETION);
-        // return BasicComponentFactory.createCheckBox(value,
-        // FlightPlanCreationPanelMessages.FLY_TO_COMPLETION_LABEL);
-        return new JCheckBox();
+        final ValueModel value = presenter.getBufferedModel(FlightPlanProperties.FLIGHT_TO_COMPLETION);
+        return BasicComponentFactory.createCheckBox(value, "");
     }
 }
