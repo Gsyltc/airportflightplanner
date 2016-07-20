@@ -41,7 +41,7 @@ public class CommonComboBoxCellRenderer<E> implements ListCellRenderer<E> {
      * {@inheritDoc}
      */
     @Override
-    public Component getListCellRendererComponent(final JList list, final E value, //
+    public Component getListCellRendererComponent(final JList<? extends E> list, final E value, //
             final int index, final boolean isSelected, final boolean cellHasFocus) {
         String result = "";
 
@@ -62,7 +62,6 @@ public class CommonComboBoxCellRenderer<E> implements ListCellRenderer<E> {
         }
 
         return renderer;
-
     }
 
 }
