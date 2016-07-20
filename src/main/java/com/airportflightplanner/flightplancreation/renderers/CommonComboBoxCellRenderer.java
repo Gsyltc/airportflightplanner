@@ -62,7 +62,6 @@ public class CommonComboBoxCellRenderer<E> implements ListCellRenderer<E> {
         }
 
         return renderer;
-
     }
 
 }
