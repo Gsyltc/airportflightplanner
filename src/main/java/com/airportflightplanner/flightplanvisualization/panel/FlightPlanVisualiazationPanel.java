@@ -9,30 +9,12 @@
  */
 package com.airportflightplanner.flightplanvisualization.panel;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.RowSorter;
-import javax.swing.SortOrder;
-import javax.swing.SwingConstants;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
-
 import com.airportflightplanner.common.api.adapter.FlightPlanCollectionAdapter;
 import com.airportflightplanner.common.api.adapter.StartDaysAdapter;
 import com.airportflightplanner.common.api.dayselection.bean.DaySelectionReader;
 import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
 import com.airportflightplanner.common.api.flightplan.collection.FlightPlanCollectionReader;
-import com.airportflightplanner.common.slotsignal.SelectionSlot;
 import com.airportflightplanner.common.slotsignal.Signal;
-import com.airportflightplanner.common.slotsignal.TopicName;
-import com.airportflightplanner.common.slotsignal.api.SlotAction;
 import com.airportflightplanner.common.visualelement.AbstractCommonPanel;
 import com.airportflightplanner.flightplanvisualization.presenter.flightplan.FlightPlanVisualizationPresenter;
 import com.airportflightplanner.flightplanvisualization.presenter.steerpoints.SteerPointsPresenter;
@@ -111,7 +93,7 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
 
         add(createCurrentAirportPanel(), "2, 2, 3, 1, fill, fill");
         add(createDaysSelectionPanel(), "2, 4, 3, 1, fill, fill");
-        add(createFlightScrollPane(), "2, 6, 3, 1");
+        add(createFlightPlanListPanel(), "2, 6, 3, 1");
         add(createSteerPointPanel(), "2, 8, 3, 1");
     }
 
@@ -144,92 +126,23 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
      *
      * @return
      */
-    private SteerPointPanel createSteerPointPanel() {
-        final SteerPointsPresenter presenter = (SteerPointsPresenter) getPresenter(SP_PRESENTER_INDEX);
-        final SteerPointPanel panel = new SteerPointPanel(presenter);
+    private FlightPlanListPanel createFlightPlanListPanel() {
+        final FlightPlanVisualizationPresenter presenter = (FlightPlanVisualizationPresenter) getPresenter(FP_PRESENTER);
+        final FlightPlanListPanel panel = new FlightPlanListPanel(presenter);
+        panel.addAdapter(getAdapterByName(FlightPlanCollectionAdapter.class.getSimpleName()));
         panel.build();
         return panel;
     }
 
     /**
-     * @return the panel.
      *
+     * @return
      */
-    private JScrollPane createFlightScrollPane() {
-        final DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        final PresentationModel<?> presenter = getPresenter(FP_PRESENTER);
-        final JTable table = new JTable(((FlightPlanVisualizationPresenter) presenter).getTableAdapter());
-        table.setDefaultRenderer(String.class, centerRenderer);
-        table.setFillsViewportHeight(true);
-        table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            /**
-             *
-             * {@inheritDoc}
-             */
-            @Override
-            public void valueChanged(final ListSelectionEvent event) {
-                FlightPlanReader flightPlan = null;
-                if (event.getValueIsAdjusting()) {
-                    final ListSelectionModel lsm = (ListSelectionModel) event.getSource();
-
-                    if (!lsm.isSelectionEmpty()) {
-                        final int minIndex = lsm.getMinSelectionIndex();
-                        final int maxIndex = lsm.getMaxSelectionIndex();
-                        for (int i = minIndex; i <= maxIndex; i++) {
-                            if (lsm.isSelectedIndex(i)) {
-                                flightPlan = getFpCollection().getFlightPlanByIndex(i);
-                            }
-                        }
-                    }
-                    signal.fireSignal(flightPlan);
-                }
-            }
-        });
-
-        final TableRowSorter<TableModel> sorter = new TableRowSorter<>(table.getModel());
-        table.setRowSorter(sorter);
-        final List<RowSorter.SortKey> sortKeys = new ArrayList<>();
-        sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
-
-        sorter.setSortKeys(sortKeys);
-        sorter.sort();
-
-        final JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setViewportView(table);
-        return scrollPane;
-    }
-
-    /**
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public final void attachSlotAction() {
-
-        final SelectionSlot<FlightPlanReader> slot = new SelectionSlot<FlightPlanReader>(TopicName.FLIGHTPLAN_TABLE_SELECTED, this);
-        slot.setSlotAction(new SlotAction<FlightPlanReader>() {
-            /**
-             *
-             * {@inheritDoc}
-             */
-            @Override
-            public void doAction(final FlightPlanReader bean) {
-                final PresentationModel<FlightPlanReader> fpPresenter = (PresentationModel<FlightPlanReader>) getPresenter(CURRENT_FP_PRESENTER);
-                fpPresenter.triggerFlush();
-                fpPresenter.setBean(bean);
-            }
-        });
-    }
-
-    /**
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public final void attachSignal() {
-        signal = new Signal(TopicName.FLIGHTPLAN_TABLE_SELECTED);
-        createSignal(TopicName.FLIGHTPLAN_TABLE_SELECTED, signal);
+    private SteerPointPanel createSteerPointPanel() {
+        final SteerPointsPresenter presenter = (SteerPointsPresenter) getPresenter(SP_PRESENTER_INDEX);
+        final SteerPointPanel panel = new SteerPointPanel(presenter);
+        panel.build();
+        return panel;
     }
 
     /**

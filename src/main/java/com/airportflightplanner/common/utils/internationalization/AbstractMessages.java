@@ -14,6 +14,8 @@ public abstract class AbstractMessages {
     /** */
     public static final String  LABEL   = ".label";
     /** */
+    public static final String  TITLE   = ".title";
+    /** */
     public static final String  UNKNOWN = format(PREFIX + "UNKNOWN");
 
     /**

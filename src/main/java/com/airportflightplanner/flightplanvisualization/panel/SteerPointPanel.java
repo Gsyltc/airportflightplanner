@@ -5,6 +5,7 @@
  */
 package com.airportflightplanner.flightplanvisualization.panel;
 
+import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import javax.swing.JTable;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
 import javax.swing.SwingConstants;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -27,6 +29,7 @@ import com.airportflightplanner.common.slotsignal.TopicName;
 import com.airportflightplanner.common.slotsignal.api.SlotAction;
 import com.airportflightplanner.common.utils.geographics.GeographicUtils;
 import com.airportflightplanner.common.visualelement.AbstractCommonPanel;
+import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
 import com.airportflightplanner.flightplanvisualization.presenter.steerpoints.SteerPointsPresenter;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
@@ -75,8 +78,11 @@ public class SteerPointPanel extends AbstractCommonPanel {
                 ColumnSpec.decode(PREF_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, }, //
                 new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, //
-                        FormSpecs.DEFAULT_ROWSPEC, //
+                        FormSpecs.PREF_ROWSPEC, //
                         FormSpecs.RELATED_GAP_ROWSPEC, }));
+
+        final TitledBorder panelBorder = new TitledBorder(FlightPlanCreationPanelMessages.STEERPOINTS_TITLE);
+        setBorder(panelBorder);
 
         add(createSteerPointsPanel(), "2, 2, 3, 1");
 
@@ -102,11 +108,12 @@ public class SteerPointPanel extends AbstractCommonPanel {
         table.setRowSorter(sorter);
         final List<RowSorter.SortKey> sortKeys = new ArrayList<>();
         sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
-
+        table.setFillsViewportHeight(true);
         sorter.setSortKeys(sortKeys);
         sorter.sort();
 
         final JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setPreferredSize(new Dimension(400, 350));
         scrollPane.setViewportView(table);
         return scrollPane;
     }

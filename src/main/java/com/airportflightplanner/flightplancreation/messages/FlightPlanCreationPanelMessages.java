@@ -53,5 +53,14 @@ public class FlightPlanCreationPanelMessages extends AbstractMessages {
     public static final String  FLIGHTTYPE_LABEL        = format(PREFIX + "FLIGHTTYPE" + LABEL);
     /** */
     public static final String  FLY_TO_COMPLETION_LABEL = format(PREFIX + "FLY_TO_COMPLETION" + LABEL);
-
+    /** */
+    public static final String  STEERPOINTS_TITLE       = format(PREFIX + "STEERPOINTS" + TITLE);
+    /** */
+    public static final String  FLIGHTSLIST_TITLE       = format(PREFIX + "FLIGHTSLIST" + TITLE);
+    /** */
+    public static final String  STARTDAYS_TITLE         = format(PREFIX + "STARTDAYS" + TITLE);
+    /** */
+    public static final String  MAP_TITLE               = format(PREFIX + "MAP" + TITLE);
+    /** */
+    public static final String  AIRPORT_TITLE           = format(PREFIX + "AIRPORT" + TITLE);
 }

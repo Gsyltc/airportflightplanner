@@ -10,7 +10,11 @@ import java.util.Collections;
 import java.util.Map;
 
 import javax.swing.JPanel;
+import javax.swing.border.TitledBorder;
 
+import com.airportflightplanner.common.api.adapter.AircraftTypeAdapter;
+import com.airportflightplanner.common.api.adapter.FlightPlanModelAdapter;
+import com.airportflightplanner.common.api.adapter.StartDaysAdapter;
 import com.airportflightplanner.common.api.adapter.common.CommonAdapter;
 import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
 import com.airportflightplanner.common.models.daysselection.DaysSelectionModel;
@@ -20,6 +24,7 @@ import com.airportflightplanner.common.slotsignal.api.SlotAction;
 import com.airportflightplanner.common.utils.geographics.GeographicUtils;
 import com.airportflightplanner.common.visualelement.AbstractCommonPanel;
 import com.airportflightplanner.flightplancreation.api.model.googlemap.GoogleMapWriter;
+import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
 import com.airportflightplanner.flightplancreation.model.GoogleMapModel;
 import com.airportflightplanner.flightplancreation.panels.CreationFlightInfosPanel;
 import com.airportflightplanner.flightplancreation.panels.CreationOptionsPanel;
@@ -154,6 +159,9 @@ public class FlightPlanCreationPanel extends AbstractCommonPanel {
         googleMap.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         panel.add(googleMap);
 
+
+        final TitledBorder panelBorder = new TitledBorder(FlightPlanCreationPanelMessages.MAP_TITLE);
+        panel.setBorder(panelBorder);
         return panel;
     }
 
@@ -164,7 +172,7 @@ public class FlightPlanCreationPanel extends AbstractCommonPanel {
      */
     public CreationOptionsPanel createCreationOptionsPanel(final PresentationModel<FlightPlanReader> fpPresenter) {
         final CreationOptionsPanel panel = new CreationOptionsPanel(fpPresenter);
-        panel.addAdapter(getAdapters().get("FlightPlanModelAdapter"));
+        panel.addAdapter(getAdapters().get(FlightPlanModelAdapter.class.getSimpleName()));
         panel.build();
         return panel;
     }
@@ -176,9 +184,9 @@ public class FlightPlanCreationPanel extends AbstractCommonPanel {
      */
     public CreationFlightInfosPanel createCreationFlightInfosPanel(final PresentationModel<FlightPlanReader> fpPresenter) {
         final CreationFlightInfosPanel panel = new CreationFlightInfosPanel(fpPresenter);
-        panel.addAdapter(getAdapters().get("FlightPlanModelAdapter"));
-        panel.addAdapter(getAdapters().get("AircraftTypeAdapter"));
-        panel.addAdapter(getAdapters().get("StartDaysAdapter"));
+        panel.addAdapter(getAdapters().get(FlightPlanModelAdapter.class.getSimpleName()));
+        panel.addAdapter(getAdapters().get(AircraftTypeAdapter.class.getSimpleName()));
+        panel.addAdapter(getAdapters().get(StartDaysAdapter.class.getSimpleName()));
         panel.build();
         return panel;
     }

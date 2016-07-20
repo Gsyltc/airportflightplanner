@@ -14,6 +14,7 @@ import java.awt.event.ItemListener;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.border.TitledBorder;
 
 import com.airportflightplanner.common.api.adapter.FlightPlanCollectionAdapter;
 import com.airportflightplanner.common.models.flightplans.FlighPlanCollectionModel;
@@ -21,6 +22,7 @@ import com.airportflightplanner.common.slotsignal.Signal;
 import com.airportflightplanner.common.slotsignal.TopicName;
 import com.airportflightplanner.common.utils.properties.CommonProperties;
 import com.airportflightplanner.common.visualelement.AbstractCommonPanel;
+import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
 import com.airportflightplanner.flightplanvisualization.messages.FlightPlanVisualizationMessages;
 import com.airportflightplanner.flightplanvisualization.presenter.flightplan.FlightPlanVisualizationPresenter;
 import com.airportflightplanner.importexport.importers.AirportFileReader;
@@ -66,15 +68,21 @@ public class CurrentAirportPanel extends AbstractCommonPanel {
         final FlighPlanCollectionModel model = adapter.getModel();
         model.addFligfhtPlanModelListener(model.getFlightPlanListModel());
 
-        setLayout(new FormLayout(new ColumnSpec[] { //
-                ColumnSpec.decode(PREF_GROW), //
-                FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode(PREF_GROW), //
-                FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode(PREF_GROW), //
-                FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode(PREF_GROW), }, //
-                new RowSpec[] { FormSpecs.PREF_ROWSPEC, }));
+        final FormLayout formLayout = new FormLayout(new ColumnSpec[] {
+                ColumnSpec.decode("pref:grow"),
+                FormSpecs.RELATED_GAP_COLSPEC,
+                ColumnSpec.decode("pref:grow"),
+                FormSpecs.RELATED_GAP_COLSPEC,
+                ColumnSpec.decode("pref:grow"),
+                FormSpecs.RELATED_GAP_COLSPEC,
+                ColumnSpec.decode("pref:grow"),},
+                new RowSpec[] {
+                        FormSpecs.PREF_ROWSPEC,});
+        formLayout.setColumnGroups(new int[][]{new int[]{1, 5}, new int[]{3, 7}});
+        setLayout(formLayout);
+
+        final TitledBorder panelBorder = new TitledBorder(FlightPlanCreationPanelMessages.AIRPORT_TITLE);
+        setBorder(panelBorder);
 
         final JLabel airportLabel = DefaultComponentFactory.getInstance().createLabel(FlightPlanVisualizationMessages.AIRPORT);
         add(airportLabel, "1, 1, right, default");

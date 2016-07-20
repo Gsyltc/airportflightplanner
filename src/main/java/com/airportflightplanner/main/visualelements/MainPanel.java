@@ -12,6 +12,7 @@ package com.airportflightplanner.main.visualelements;
 
 import java.util.Map;
 
+import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 
@@ -22,7 +23,6 @@ import com.airportflightplanner.flightplanvisualization.panel.FlightPlanVisualia
 import com.airportflightplanner.main.visualelements.messages.MainPanelMessages;
 import com.airportflightplanner.main.visualelements.panels.WaypointEditionPanel;
 import com.jgoodies.binding.beans.Model;
-import com.jgoodies.forms.debug.FormDebugPanel;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
@@ -32,21 +32,21 @@ import com.jgoodies.forms.layout.RowSpec;
  * @author Goubaud Sylvain
  *
  */
-public class MainPanel extends FormDebugPanel {
+public class MainPanel extends JPanel {
 
     /**
      *
      */
-    private static final long                serialVersionUID = -1014619836487219532L;
+    private static final long                   serialVersionUID = -1014619836487219532L;
     /**
      *
      */
-    private static final int                 FIRST_TAB        = 0;
+    private static final int                    FIRST_TAB        = 0;
     /** */
     private final Map<String, CommonAdapter<?>> adapters;
 
     /** */
-    private final Map<BeanNames, Model>      beansMap;
+    private final Map<BeanNames, Model>         beansMap;
 
     /**
      * Main Panel.
@@ -56,8 +56,8 @@ public class MainPanel extends FormDebugPanel {
      * @param adapters
      */
     public MainPanel(final Map<BeanNames, Model> beans, final Map<String, CommonAdapter<?>> adapters) {
-        setPaintRows(false);
-        setPaintInBackground(false);
+        //        setPaintRows(false);
+        //        setPaintInBackground(false);
         beansMap = beans;
         this.adapters = adapters;
         buildPanel();

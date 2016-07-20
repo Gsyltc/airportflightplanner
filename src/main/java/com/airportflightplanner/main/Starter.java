@@ -10,7 +10,6 @@
 package com.airportflightplanner.main;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.util.Map;
 
@@ -80,8 +79,8 @@ public class Starter {
                         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
                         mainFrame.getContentPane().add(new MainPanel(beansMap, adapters), BorderLayout.CENTER);
-                        mainFrame.setMinimumSize(new Dimension(MINIMUM_WEIGHT, MINIMUM_HEIGHT));
                         mainFrame.pack();
+                        mainFrame.setMinimumSize(mainFrame.getPreferredSize());
                         mainFrame.setVisible(true);
                     }
 
