@@ -34,7 +34,7 @@ public final class FlightPlanProperties {
     /** */
     public static final String FLIGHT_TYPE            = "flightType";
     /** */
-    public static final String FLIGHT_TO_COMPLETION   = "isFlightToCompletion";
+    public static final String FLIGHT_TO_COMPLETION   = "flightToCompletion";
     /** */
     public static final String LANDING_LIGHT_ALTITUDE = "landingLightAltitude";
     /** */

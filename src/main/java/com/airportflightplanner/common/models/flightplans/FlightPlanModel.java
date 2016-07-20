@@ -47,19 +47,19 @@ public class FlightPlanModel extends Model implements FlightPlanWriter {
     /** */
     private String            arrivalAirport       = "";
     /** */
-    private ArrivalType       arrivalType          = ArrivalType.STRAIGHT_IN_APPROCH;
+    private ArrivalType       arrivalType          = ArrivalType.UNDEFINED;
     /** */
     private String            callSign             = "";
     /** */
     private String            departureAirport     = "";
     /** */
-    private DepartureType     departureType        = DepartureType.NORMAL;
+    private DepartureType     departureType        = DepartureType.UNDEFINED;
     /** */
     private Period            duration;
     /** */
     private LocalTime         endTime;
     /** */
-    private FlightType        flightType           = FlightType.CIVILIAN;
+    private FlightType        flightType           = FlightType.UNDEFINED;
     /** */
     private Boolean           isFightToCompletion = false;
     /** */
@@ -224,7 +224,7 @@ public class FlightPlanModel extends Model implements FlightPlanWriter {
      * {@inheritDoc}
      */
     @Override
-    public Boolean isFlightToCompletion() {
+    public Boolean getFlightToCompletion() {
         return isFightToCompletion;
     }
 
@@ -374,7 +374,7 @@ public class FlightPlanModel extends Model implements FlightPlanWriter {
      */
     @Override
     public void setFlightToCompletion(final Boolean value) {
-        final Boolean oldValue = isFlightToCompletion();
+        final Boolean oldValue = getFlightToCompletion();
         if (null != value && !value.equals(oldValue)) {
             isFightToCompletion = value;
             firePropertyChange(FlightPlanProperties.FLIGHT_TO_COMPLETION, oldValue, isFightToCompletion);

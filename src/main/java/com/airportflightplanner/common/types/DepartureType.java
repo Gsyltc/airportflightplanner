@@ -17,9 +17,11 @@ import com.airportflightplanner.common.utils.internationalization.Internationali
  */
 public enum DepartureType {
     /** */
-    NORMAL(0),
+    UNDEFINED(0),
     /** */
-    VERTICAL(1);
+    NORMAL(1),
+    /** */
+    VERTICAL(2);
     /** */
     private static final String PREFIX = "DepartureType.";
     /** */

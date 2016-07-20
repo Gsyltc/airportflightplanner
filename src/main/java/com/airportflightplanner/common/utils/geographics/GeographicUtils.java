@@ -206,13 +206,11 @@ public class GeographicUtils {
      * Input: latitude or longitude in the DMS format ( example: W 79° 58'
      * 55.903") Return: latitude or longitude in decimal format
      * hemisphereOUmeridien => {W,E,S,N}
-     *
      * @param hemOUmeridien
      * @param degres
      * @param minutes
      * @param secondes
      * @return
-     *
      */
     public double dMSToDecimal(final String hemOUmeridien, final double degres, final double minutes, final double secondes) {
         double latOrLon = 0;

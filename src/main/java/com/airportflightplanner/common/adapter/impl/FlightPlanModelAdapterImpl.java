@@ -77,7 +77,11 @@ public class FlightPlanModelAdapterImpl implements FlightPlanModelAdapter {
     public final void updateFlightPlan(final FlightPlanInformationTypes informationsType, final String line) {
         switch (informationsType) {
         case START_FLY_TO_COMPLETION:
-            model.setFlightToCompletion(Boolean.valueOf(line));
+            boolean result = false;
+            if (Integer.parseInt(line) == NUMBER_ONE) {
+                result = true;
+            }
+            model.setFlightToCompletion(result);
 
             break;
         case START_LANDING_LIGHT_ALT:
