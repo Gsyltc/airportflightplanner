@@ -226,7 +226,7 @@ public class FlighPlanFileWriter extends AbstractSlotReceiver {
      */
     @Override
     public final void attachSlotAction() {
-        final SelectionSlot<FlightPlanReader> airportSlot = new SelectionSlot<FlightPlanReader>(TopicName.WRITE_FLIGHT_PLAN, this);
+        final SelectionSlot<FlightPlanReader> airportSlot = new SelectionSlot<FlightPlanReader>(TopicName.WRITE_FLIGHT_PLAN_TOPIC, this);
         airportSlot.setSlotAction(new SlotAction<FlightPlanReader>() {
             /**
              *

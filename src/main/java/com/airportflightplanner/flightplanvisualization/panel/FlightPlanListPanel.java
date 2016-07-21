@@ -152,7 +152,7 @@ public class FlightPlanListPanel extends AbstractCommonPanel {
     @Override
     public final void attachSlotAction() {
 
-        final SelectionSlot<FlightPlanReader> slot = new SelectionSlot<FlightPlanReader>(TopicName.FLIGHTPLAN_TABLE_SELECTED, this);
+        final SelectionSlot<FlightPlanReader> slot = new SelectionSlot<FlightPlanReader>(TopicName.FLIGHTPLAN_TABLE_SELECTED_TOPIC, this);
         slot.setSlotAction(new SlotAction<FlightPlanReader>() {
             /**
              *
@@ -173,7 +173,10 @@ public class FlightPlanListPanel extends AbstractCommonPanel {
      */
     @Override
     public final void attachSignal() {
-        signal = new Signal(TopicName.FLIGHTPLAN_TABLE_SELECTED);
-        createSignal(TopicName.FLIGHTPLAN_TABLE_SELECTED, signal);
+        signal = findSignal(TopicName.FLIGHTPLAN_TABLE_SELECTED_TOPIC);
+        if (null == signal) {
+            signal = new Signal(TopicName.FLIGHTPLAN_TABLE_SELECTED_TOPIC);
+        }
+        createSignal(TopicName.FLIGHTPLAN_TABLE_SELECTED_TOPIC, signal);
     }
 }

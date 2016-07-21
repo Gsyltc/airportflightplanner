@@ -88,7 +88,6 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
                         FormSpecs.PREF_ROWSPEC, //
                         FormSpecs.RELATED_GAP_ROWSPEC, });
 
-        //        formLayout.setRowGroups(new int[][] { new int[] { 2, 4 }, new int[] { 6, 8 } });
         formLayout.setColumnGroups(new int[][] { new int[] { 2, 4 } });
         setLayout(formLayout);
         final FlightPlanVisualizationPresenter presenter = (FlightPlanVisualizationPresenter) getPresenter(FP_PRESENTER);

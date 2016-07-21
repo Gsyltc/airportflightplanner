@@ -26,6 +26,7 @@ import com.airportflightplanner.common.visualelement.AbstractCommonPanel;
 import com.airportflightplanner.flightplancreation.api.model.googlemap.GoogleMapWriter;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
 import com.airportflightplanner.flightplancreation.model.GoogleMapModel;
+import com.airportflightplanner.flightplancreation.panels.CommandPanel;
 import com.airportflightplanner.flightplancreation.panels.CreationFlightInfosPanel;
 import com.airportflightplanner.flightplancreation.panels.CreationOptionsPanel;
 import com.airportflightplanner.flightplancreation.panels.CreationRoutePanel;
@@ -86,7 +87,7 @@ public class FlightPlanCreationPanel extends AbstractCommonPanel {
                 getPresenter(FP_PRESENTER);
 
         final SelectionSlot<FlightPlanReader> slot = new SelectionSlot<FlightPlanReader>( //
-                TopicName.FLIGHTPLAN_TABLE_SELECTED, this);
+                TopicName.FLIGHTPLAN_TABLE_SELECTED_TOPIC, this);
         slot.setSlotAction(new SlotAction<FlightPlanReader>() {
             /**
              *
@@ -140,7 +141,8 @@ public class FlightPlanCreationPanel extends AbstractCommonPanel {
         add(createCreationRoutePanel(fpPresenter), "2,4,11,1");
         add(createCreationFlightInfosPanel(fpPresenter), "2,6,11,1");
         add(createCreationOptionsPanel(fpPresenter), "2,8,11,1");
-        add(createMap(), "2, 14, 11, 1, center, center");
+        add(createMap(), "2, 10, 7, 1, fill,fill");
+        add(createCommandPanel(), "10, 10, 3, 1, fill,fill");
     }
 
     /**
@@ -158,7 +160,6 @@ public class FlightPlanCreationPanel extends AbstractCommonPanel {
         googleMap.setDimension(new Rectangle(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT));
         googleMap.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         panel.add(googleMap);
-
 
         final TitledBorder panelBorder = new TitledBorder(FlightPlanCreationPanelMessages.MAP_TITLE);
         panel.setBorder(panelBorder);
@@ -209,6 +210,16 @@ public class FlightPlanCreationPanel extends AbstractCommonPanel {
      */
     public CreationRoutePanel createCreationRoutePanel(final PresentationModel<FlightPlanReader> fpPresenter) {
         final CreationRoutePanel panel = new CreationRoutePanel(fpPresenter);
+        panel.build();
+        return panel;
+    }
+
+    /**
+     * @return
+     *
+     */
+    public CommandPanel createCommandPanel() {
+        final CommandPanel panel = new CommandPanel();
         panel.build();
         return panel;
     }

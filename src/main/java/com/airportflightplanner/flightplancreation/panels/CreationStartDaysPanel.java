@@ -152,7 +152,7 @@ public class CreationStartDaysPanel extends AbstractCommonPanel {
      */
     @Override
     public void attachSlotAction() {
-        final SelectionSlot<FlightPlanReader> slot = new SelectionSlot<FlightPlanReader>(TopicName.FLIGHTPLAN_TABLE_SELECTED, this);
+        final SelectionSlot<FlightPlanReader> slot = new SelectionSlot<FlightPlanReader>(TopicName.FLIGHTPLAN_TABLE_SELECTED_TOPIC, this);
         slot.setSlotAction(new SlotAction<FlightPlanReader>() {
             /**
              *
@@ -166,4 +166,5 @@ public class CreationStartDaysPanel extends AbstractCommonPanel {
             }
         });
     }
+
 }

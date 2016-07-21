@@ -112,7 +112,7 @@ public class SteerPointPanel extends AbstractCommonPanel {
      */
     @Override
     public final void attachSlotAction() {
-        final SelectionSlot<FlightPlanReader> slot = new SelectionSlot<FlightPlanReader>(TopicName.FLIGHTPLAN_TABLE_SELECTED, this);
+        final SelectionSlot<FlightPlanReader> slot = new SelectionSlot<FlightPlanReader>(TopicName.FLIGHTPLAN_TABLE_SELECTED_TOPIC, this);
         final SteerPointsPresenter presenter = (SteerPointsPresenter) getPresenter(STEERPOINT_PRESENTER);
         final SteerPointsCollectionModel steerPointsModel = presenter.getBean();
         slot.setSlotAction(new SlotAction<FlightPlanReader>() {

@@ -23,6 +23,9 @@ import org.jscience.geography.coordinates.Altitude;
 import com.airportflightplanner.common.api.flightplan.bean.FlightPlanProperties;
 import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
 import com.airportflightplanner.common.models.flightplans.FlightPlanModel;
+import com.airportflightplanner.common.slotsignal.SelectionSlot;
+import com.airportflightplanner.common.slotsignal.TopicName;
+import com.airportflightplanner.common.slotsignal.api.SlotAction;
 import com.airportflightplanner.common.types.ArrivalType;
 import com.airportflightplanner.common.types.DepartureType;
 import com.airportflightplanner.common.types.FlightType;
@@ -46,9 +49,9 @@ import com.jgoodies.forms.layout.RowSpec;
  */
 public class CreationOptionsPanel extends AbstractCommonPanel {
     /*** */
-    private static final long serialVersionUID = -2692513903084994308L;
+    private static final long   serialVersionUID  = -2692513903084994308L;
     /** */
-    private static final int  FP_PRESENTER     = AbstractCommonPanel.FIRST_PRESENTER;
+    private static final int    FP_PRESENTER      = AbstractCommonPanel.FIRST_PRESENTER;
     /** */
     private static final String PROTOTYPE_DISPLAY = "XXXXXXXXXXXXX";
 
@@ -249,5 +252,36 @@ public class CreationOptionsPanel extends AbstractCommonPanel {
     private JCheckBox createFlyToCompletionCkb(final PresentationModel<FlightPlanReader> presenter) {
         final ValueModel value = presenter.getBufferedModel(FlightPlanProperties.FLIGHT_TO_COMPLETION);
         return BasicComponentFactory.createCheckBox(value, "");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void attachSlotAction() {
+        super.attachSlotAction();
+        final SelectionSlot<Object> validationSlot = new SelectionSlot<Object>(TopicName.VALIDATION_TOPIC, this);
+        validationSlot.setSlotAction(new SlotAction<Object>() {
+            /**
+             *
+             * {@inheritDoc}
+             */
+            @Override
+            public void doAction(final Object bean) {
+                System.out.println(getClass().getSimpleName() + " - " + bean.toString());
+            }
+        });
+
+        final SelectionSlot<Object> cancelationSlot = new SelectionSlot<Object>(TopicName.CANCELLATION_TOPIC, this);
+        cancelationSlot.setSlotAction(new SlotAction<Object>() {
+            /**
+             *
+             * {@inheritDoc}
+             */
+            @Override
+            public void doAction(final Object bean) {
+                System.out.println(getClass().getSimpleName() + " - " + bean.toString());
+            }
+        });
     }
 }

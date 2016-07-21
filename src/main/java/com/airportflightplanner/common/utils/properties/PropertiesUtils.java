@@ -156,7 +156,7 @@ public class PropertiesUtils extends AbstractSlotReceiver {
 
         });
 
-        final SelectionSlot<Map<String, String>> googleSlot = new SelectionSlot<Map<String, String>>(TopicName.GOOGLE_PARAMETERS, this);
+        final SelectionSlot<Map<String, String>> googleSlot = new SelectionSlot<Map<String, String>>(TopicName.GOOGLE_PARAMETERS_TOPIC, this);
         googleSlot.setSlotAction(new SlotAction<Map<String, String>>() {
             /**
              *
