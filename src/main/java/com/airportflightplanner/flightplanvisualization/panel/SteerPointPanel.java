@@ -6,18 +6,13 @@
 package com.airportflightplanner.flightplanvisualization.panel;
 
 import java.awt.Dimension;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.RowSorter;
-import javax.swing.SortOrder;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 
 import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
 import com.airportflightplanner.common.api.steerpoints.bean.SteerPointReader;
@@ -104,16 +99,9 @@ public class SteerPointPanel extends AbstractCommonPanel {
         table.setColumnSelectionAllowed(true);
         table.setDefaultRenderer(String.class, centerRenderer);
 
-        final TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(table.getModel());
-        table.setRowSorter(sorter);
-        final List<RowSorter.SortKey> sortKeys = new ArrayList<>();
-        sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
         table.setFillsViewportHeight(true);
-        sorter.setSortKeys(sortKeys);
-        sorter.sort();
-
         final JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setPreferredSize(new Dimension(400, 350));
+        scrollPane.setPreferredSize(new Dimension(400, 300));
         scrollPane.setViewportView(table);
         return scrollPane;
     }

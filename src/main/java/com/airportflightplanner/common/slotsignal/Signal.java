@@ -25,11 +25,11 @@ public class Signal extends Observable implements Serializable {
     /**
      *
      */
-    private static final long      serialVersionUID = -3262485442303240084L;
+    private static final long                serialVersionUID = -3262485442303240084L;
     /** */
-    private final String           topicName;
+    private final String                     topicName;
     /** */
-    private transient List<SelectionSlot<?>> slotList         = new CopyOnWriteArrayList<SelectionSlot<?>>();
+    private List<SelectionSlot<?>> slotList;
 
     /**
      *
@@ -38,6 +38,7 @@ public class Signal extends Observable implements Serializable {
     public Signal(final String topicName) {
         super();
         this.topicName = topicName;
+        slotList = new CopyOnWriteArrayList<SelectionSlot<?>>();
     }
 
     /**

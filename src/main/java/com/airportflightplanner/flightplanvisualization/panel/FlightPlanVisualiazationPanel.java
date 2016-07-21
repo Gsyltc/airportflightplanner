@@ -74,7 +74,7 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
     @Override
     public final void build() {
         super.build();
-        setLayout(new FormLayout(new ColumnSpec[] { FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("3dlu:grow"), //
+        final FormLayout formLayout = new FormLayout(new ColumnSpec[] { FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("3dlu:grow"), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
                 ColumnSpec.decode(PREF_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, }, //
@@ -86,8 +86,11 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
                         FormSpecs.PREF_ROWSPEC, //
                         FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC, //
-                        FormSpecs.RELATED_GAP_ROWSPEC, }));
+                        FormSpecs.RELATED_GAP_ROWSPEC, });
 
+        //        formLayout.setRowGroups(new int[][] { new int[] { 2, 4 }, new int[] { 6, 8 } });
+        formLayout.setColumnGroups(new int[][] { new int[] { 2, 4 } });
+        setLayout(formLayout);
         final FlightPlanVisualizationPresenter presenter = (FlightPlanVisualizationPresenter) getPresenter(FP_PRESENTER);
         setFpCollection(presenter.getBean());
 
