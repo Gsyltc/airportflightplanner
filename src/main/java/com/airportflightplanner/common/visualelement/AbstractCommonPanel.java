@@ -150,7 +150,7 @@ public abstract class AbstractCommonPanel extends JPanel implements SlotReceiver
      *            Index of the presenter to return.
      * @return The presenter.
      */
-    protected PresentationModel<?> getPresenter(final int flInfosPresenterIndex) {
+    public PresentationModel<?> getPresenter(final int flInfosPresenterIndex) {
         return presenters.get(flInfosPresenterIndex);
     }
 

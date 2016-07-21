@@ -10,6 +10,7 @@
 
 package com.airportflightplanner.common.slotsignal;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
@@ -19,12 +20,16 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @author Goubaud Sylvain
  *
  */
-public class Signal extends Observable {
+public class Signal extends Observable implements Serializable {
 
+    /**
+     *
+     */
+    private static final long      serialVersionUID = -3262485442303240084L;
     /** */
-    private final String                 topicName;
+    private final String           topicName;
     /** */
-    private final List<SelectionSlot<?>> slotList = new CopyOnWriteArrayList<SelectionSlot<?>>();
+    private transient List<SelectionSlot<?>> slotList         = new CopyOnWriteArrayList<SelectionSlot<?>>();
 
     /**
      *
@@ -68,5 +73,13 @@ public class Signal extends Observable {
      */
     public List<SelectionSlot<?>> getSlotList() {
         return Collections.unmodifiableList(slotList);
+    }
+
+    /**
+     * @param slotList
+     *            the slotList to set
+     */
+    protected void setSlotList(final List<SelectionSlot<?>> slotList) {
+        this.slotList = slotList;
     }
 }
