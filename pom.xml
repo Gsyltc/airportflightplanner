@@ -168,16 +168,6 @@
                 </plugin>
             </plugins>
         </pluginManagement>
-<!--         <resources> -->
-<!--             <resource> -->
-<!--                 <filtering>false</filtering> -->
-<!--                 <directory>src</directory> -->
-<!--                 <includes> -->
-<!--                     <include>**/*.properties</include> -->
-<!--                     <include>**/*.xml</include> -->
-<!--                 </includes> -->
-<!--             </resource> -->
-<!--         </resources> -->
     </build>
     <reporting>
         <plugins>
@@ -213,11 +203,6 @@
                 <configuration>
                     <failOnViolation>false</failOnViolation>
                     <rulesets>
-                        <!-- <ruleset>tools/rules/pmd/pmd-level-1.xml</ruleset> -->
-                        <!-- <ruleset>tools/rules/pmd/pmd-level-2.xml</ruleset> -->
-                        <!-- <ruleset>tools/rules/pmd/pmd-level-3.xml</ruleset> -->
-                        <!-- <ruleset>tools/rules/pmd/pmd-level-4.xml</ruleset> -->
-                        <!-- <ruleset>tools/rules/pmd/pmd-level-5.xml</ruleset> -->
                         <ruleset>tools/rules/pmd/pmd-level-ALL.xml</ruleset>
                     </rulesets>
                     <excludes>
