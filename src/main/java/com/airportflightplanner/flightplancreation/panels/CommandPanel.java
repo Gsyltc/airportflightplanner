@@ -18,6 +18,7 @@ import javax.swing.border.TitledBorder;
 
 import com.airportflightplanner.common.slotsignal.Signal;
 import com.airportflightplanner.common.slotsignal.TopicName;
+import com.airportflightplanner.common.types.ActionTypes;
 import com.airportflightplanner.common.visualelement.AbstractCommonPanel;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -82,7 +83,7 @@ public class CommandPanel extends AbstractCommonPanel {
              */
             @Override
             public void actionPerformed(final ActionEvent e) {
-                validationSignal.fireSignal(e.getSource());
+                validationSignal.fireSignal(ActionTypes.VALIDATE);
             }
         });
         return button;
@@ -101,7 +102,7 @@ public class CommandPanel extends AbstractCommonPanel {
              */
             @Override
             public void actionPerformed(final ActionEvent e) {
-                validationSignal.fireSignal(e.getSource());
+                validationSignal.fireSignal(ActionTypes.CANCEL);
             }
         });
         return button;

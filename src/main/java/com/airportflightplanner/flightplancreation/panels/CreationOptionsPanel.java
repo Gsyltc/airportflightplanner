@@ -18,14 +18,18 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jscience.geography.coordinates.Altitude;
 
+import com.airportflightplanner.common.api.adapter.FlightPlanModelAdapter;
 import com.airportflightplanner.common.api.flightplan.bean.FlightPlanProperties;
 import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
 import com.airportflightplanner.common.models.flightplans.FlightPlanModel;
 import com.airportflightplanner.common.slotsignal.SelectionSlot;
 import com.airportflightplanner.common.slotsignal.TopicName;
 import com.airportflightplanner.common.slotsignal.api.SlotAction;
+import com.airportflightplanner.common.types.ActionTypes;
 import com.airportflightplanner.common.types.ArrivalType;
 import com.airportflightplanner.common.types.DepartureType;
 import com.airportflightplanner.common.types.FlightType;
@@ -48,6 +52,9 @@ import com.jgoodies.forms.layout.RowSpec;
  *
  */
 public class CreationOptionsPanel extends AbstractCommonPanel {
+    /** The logger of this class. */
+    protected static final Log  LOGGER            = LogFactory.getLog(CreationOptionsPanel.class);
+
     /*** */
     private static final long   serialVersionUID  = -2692513903084994308L;
     /** */
@@ -115,7 +122,7 @@ public class CreationOptionsPanel extends AbstractCommonPanel {
      * @return
      */
     private JComboBox<DepartureType> createDepartureTypeCb(final PresentationModel<FlightPlanReader> presenter) {
-        final ValueModel infosModel = presenter.getModel(FlightPlanProperties.DEPARTURE_TYPE);
+        final ValueModel infosModel = presenter.getBufferedModel(FlightPlanProperties.DEPARTURE_TYPE);
         final SelectionInList<DepartureType> selectionInList = new SelectionInList<DepartureType>(DepartureType.values(), infosModel);
         final JComboBox<DepartureType> component = BasicComponentFactory.createComboBox(//
                 selectionInList, new CommonComboBoxCellRenderer(PROTOTYPE_DISPLAY));
@@ -192,7 +199,7 @@ public class CreationOptionsPanel extends AbstractCommonPanel {
      * @return
      */
     private JComboBox<ArrivalType> createArrivalTypeCb(final PresentationModel<FlightPlanReader> presenter) {
-        final ValueModel infosModel = presenter.getModel(FlightPlanProperties.ARRIVAL_TYPE);
+        final ValueModel infosModel = presenter.getBufferedModel(FlightPlanProperties.ARRIVAL_TYPE);
         final SelectionInList<ArrivalType> selectionInList = new SelectionInList<ArrivalType>(ArrivalType.values(), infosModel);
         final JComboBox<ArrivalType> component = BasicComponentFactory.createComboBox(//
                 selectionInList, new CommonComboBoxCellRenderer(PROTOTYPE_DISPLAY));
@@ -221,7 +228,7 @@ public class CreationOptionsPanel extends AbstractCommonPanel {
      * @return
      */
     private JComboBox<FlightType> createFlightTypeCb(final PresentationModel<FlightPlanReader> presenter) {
-        final ValueModel infosModel = presenter.getModel(FlightPlanProperties.FLIGHT_TYPE);
+        final ValueModel infosModel = presenter.getBufferedModel(FlightPlanProperties.FLIGHT_TYPE);
         final SelectionInList<FlightType> selectionInList = new SelectionInList<FlightType>(FlightType.values(), infosModel);
         final JComboBox<FlightType> component = BasicComponentFactory.createComboBox(//
                 selectionInList, new CommonComboBoxCellRenderer(PROTOTYPE_DISPLAY));
@@ -260,27 +267,38 @@ public class CreationOptionsPanel extends AbstractCommonPanel {
     @Override
     public void attachSlotAction() {
         super.attachSlotAction();
-        final SelectionSlot<Object> validationSlot = new SelectionSlot<Object>(TopicName.VALIDATION_TOPIC, this);
-        validationSlot.setSlotAction(new SlotAction<Object>() {
+        final SelectionSlot<ActionTypes> validationSlot = new SelectionSlot<ActionTypes>(TopicName.VALIDATION_TOPIC, this);
+        FlightPlanModelAdapter adapter = (FlightPlanModelAdapter) getAdapterByName(FlightPlanModelAdapter.class.getSimpleName());
+        final PresentationModel<FlightPlanReader> presenter = (PresentationModel<FlightPlanReader>) getPresenter(FP_PRESENTER);
+        validationSlot.setSlotAction(new SlotAction<ActionTypes>() {
             /**
              *
              * {@inheritDoc}
              */
             @Override
-            public void doAction(final Object bean) {
-                System.out.println(getClass().getSimpleName() + " - " + bean.toString());
-            }
-        });
+            public void doAction(final ActionTypes action) {
+                FlightPlanReader bean = presenter.getBean();
+                switch (action) {
+                case VALIDATE:
+                    System.out.println("Commit");
+                    presenter.triggerCommit();
+                    presenter.triggerFlush();
+                    break;
 
-        final SelectionSlot<Object> cancelationSlot = new SelectionSlot<Object>(TopicName.CANCELLATION_TOPIC, this);
-        cancelationSlot.setSlotAction(new SlotAction<Object>() {
-            /**
-             *
-             * {@inheritDoc}
-             */
-            @Override
-            public void doAction(final Object bean) {
-                System.out.println(getClass().getSimpleName() + " - " + bean.toString());
+                case CANCEL:
+                    System.out.println("Flush");
+                    presenter.triggerFlush();
+                    break;
+
+                case REFRESH:
+                    System.out.println("refresh");
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("");
+                    }
+                    break;
+                default:
+                    break;
+                }
             }
         });
     }
