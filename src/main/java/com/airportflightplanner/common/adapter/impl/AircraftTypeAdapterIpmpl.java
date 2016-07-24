@@ -1,7 +1,9 @@
 /*
  * @(#)AircraftTypeAdapterIpmpl.java
  *
- * Goubaud Sylvain - 2016.
+ * Goubaud Sylvain
+ * Created : 2016
+ * Modified : 27 juil. 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -22,32 +24,22 @@ import com.airportflightplanner.common.api.adapter.AircraftTypeAdapter;
 import com.airportflightplanner.common.api.adapter.AircraftsLiveriesAdapter;
 import com.airportflightplanner.common.utils.aircraft.AircraftDecoder;
 
+import fr.gsyltc.framework.adapters.AbstractAdapterImpl;
+
 /**
  * @author Goubaud Sylvain
  *
  */
-public final class AircraftTypeAdapterIpmpl implements AircraftTypeAdapter {
-    /** */
-    private static final Map<String, AircraftsLiveriesAdapter> AIRCRAFT_CLASS_CIE =   //
-            new ConcurrentHashMap<String, AircraftsLiveriesAdapter>();
-    /** */
-    private String                                             adapterName;
-
+public final class AircraftTypeAdapterIpmpl extends AbstractAdapterImpl implements AircraftTypeAdapter {
+    
+    
     /**
      *
-     * {@inheritDoc}
      */
-    @Override
-    public List<String> getAircraftLiveriesByClassCpie(final String classCpie) {
-        final List<String> result = new ArrayList<String>();
-        final AircraftsLiveriesAdapter liveriesAdapter = AIRCRAFT_CLASS_CIE.get(AircraftDecoder.getAircraftClass(classCpie));
-        if (null != liveriesAdapter) {
-            final String company = AircraftDecoder.getAircraftCie(classCpie);
-            final SortedSet<String> liveries = liveriesAdapter.getLiveriesByCpie(company);
-            result.addAll(liveries);
-        }
-        return result;
-    }
+    private static final long serialVersionUID = 1059528093535615678L;
+    /** */
+    private static final Map<String, AircraftsLiveriesAdapter> AIRCRAFT_CLASS_CIE = //
+            new ConcurrentHashMap<String, AircraftsLiveriesAdapter>();
 
     /**
      *
@@ -68,7 +60,7 @@ public final class AircraftTypeAdapterIpmpl implements AircraftTypeAdapter {
 
     /**
      *
-     * {@inheritDoc}
+     * {@inheritDoc}.
      */
     @Override
     public SortedSet<String> getAircraftClasses() {
@@ -77,16 +69,7 @@ public final class AircraftTypeAdapterIpmpl implements AircraftTypeAdapter {
 
     /**
      *
-     * {@inheritDoc}
-     */
-    @Override
-    public List<String> getAircraftCompaniesByType(final String aircraftType) {
-        return getAircraftCompaniesByClass(AircraftDecoder.getAircraftClass(aircraftType));
-    }
-
-    /**
-     *
-     * {@inheritDoc}
+     * {@inheritDoc}.
      */
     @Override
     public List<String> getAircraftCompaniesByClass(final String aircraftClass) {
@@ -99,36 +82,35 @@ public final class AircraftTypeAdapterIpmpl implements AircraftTypeAdapter {
     }
 
     /**
-     * {@inheritDoc}
+     *
+     * {@inheritDoc}.
      */
     @Override
-    public String getAdapterName() {
-        return adapterName;
+    public List<String> getAircraftCompaniesByType(final String aircraftType) {
+        return getAircraftCompaniesByClass(AircraftDecoder.getAircraftClass(aircraftType));
     }
 
     /**
      *
-     * {@inheritDoc}
+     * {@inheritDoc}.
      */
     @Override
-    public void setAdapterName(final String name) {
-        adapterName = name;
+    public List<String> getAircraftLiveriesByClassCpie(final String classCpie) {
+        final List<String> result = new ArrayList<String>();
+        final AircraftsLiveriesAdapter liveriesAdapter = AIRCRAFT_CLASS_CIE.get(AircraftDecoder.getAircraftClass(classCpie));
+        if (null != liveriesAdapter) {
+            final String company = AircraftDecoder.getAircraftCie(classCpie);
+            final SortedSet<String> liveries = liveriesAdapter.getLiveriesByCpie(company);
+            result.addAll(liveries);
+        }
+        return result;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      */
     @Override
-    public void setModel(final Object model) {
-        // NOT USED
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Object getModel() {
-        // NOT USED
-        return null;
+    public void init() {
+        // Nothing to do
     }
 }

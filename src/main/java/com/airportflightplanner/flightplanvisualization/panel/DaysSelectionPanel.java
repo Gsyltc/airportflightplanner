@@ -1,7 +1,15 @@
-/* @(#)DaysSlectionPanel.java
+/*
+ * @(#)DaysSelectionPanel.java
  *
- * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
+ * Goubaud Sylvain
+ * Created : 2016
+ * Modified : 28 juil. 2016.
+ *
+ * This code may be freely used and modified on any personal or professional
+ * project.  It comes with no warranty.
+ *
  */
+
 package com.airportflightplanner.flightplanvisualization.panel;
 
 import javax.swing.JCheckBox;
@@ -11,7 +19,6 @@ import com.airportflightplanner.common.api.dayselection.bean.DaySelectionPropert
 import com.airportflightplanner.common.api.dayselection.bean.DaySelectionReader;
 import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
 import com.airportflightplanner.common.types.StartDays;
-import com.airportflightplanner.common.visualelement.AbstractCommonPanel;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.adapter.BasicComponentFactory;
@@ -21,17 +28,20 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
+import fr.gsyltc.framework.visualelements.AbstractCommonPanel;
+
 /**
  * @author Goubaud Sylvain
  *
  */
 public class DaysSelectionPanel extends AbstractCommonPanel {
+    
     /**
      *
      */
-    private static final long serialVersionUID     = 3382772953500242522L;
+    private static final long serialVersionUID = 3382772953500242522L;
     /** */
-    private static final int  DAYS_PRESENTER       = AbstractCommonPanel.FIRST_PRESENTER;
+    private static final int DAYS_PRESENTER = 0;
 
     /**
      * @param presenter
@@ -86,57 +96,21 @@ public class DaysSelectionPanel extends AbstractCommonPanel {
      * @param dayPresenter
      * @return
      */
-    private JCheckBox createMondayCb(final PresentationModel<DaySelectionReader> dayPresenter) {
-        final ValueModel value = dayPresenter.getModel(DaySelectionProperties.MONDAY);
-        final JCheckBox checkBox = BasicComponentFactory.createCheckBox(value, StartDays.MONDAY.toString());
-        checkBox.setEnabled(false);
-        return checkBox;
-    }
-
-    /**
-     *
-     * @param dayPresenter
-     * @return
-     */
-    private JCheckBox createTuesdayCb(final PresentationModel<DaySelectionReader> dayPresenter) {
-        final ValueModel value = dayPresenter.getModel(DaySelectionProperties.TUESDAY);
-        final JCheckBox checkBox = BasicComponentFactory.createCheckBox(value, StartDays.TUESDAY.toString());
-        checkBox.setEnabled(false);
-        return checkBox;
-    }
-
-    /**
-     *
-     * @param dayPresenter
-     * @return
-     */
-    private JCheckBox createWednesdayCb(final PresentationModel<DaySelectionReader> dayPresenter) {
-        final ValueModel value = dayPresenter.getModel(DaySelectionProperties.WEDNESDAY);
-        final JCheckBox checkBox = BasicComponentFactory.createCheckBox(value, StartDays.WEDNESDAY.toString());
-        checkBox.setEnabled(false);
-        return checkBox;
-    }
-
-    /**
-     *
-     * @param dayPresenter
-     * @return
-     */
-    private JCheckBox createThrusdayCb(final PresentationModel<DaySelectionReader> dayPresenter) {
-        final ValueModel value = dayPresenter.getModel(DaySelectionProperties.THRUSDAY);
-        final JCheckBox checkBox = BasicComponentFactory.createCheckBox(value, StartDays.THRUSDAY.toString());
-        checkBox.setEnabled(false);
-        return checkBox;
-    }
-
-    /**
-     *
-     * @param dayPresenter
-     * @return
-     */
     private JCheckBox createFridayCb(final PresentationModel<DaySelectionReader> dayPresenter) {
         final ValueModel value = dayPresenter.getModel(DaySelectionProperties.FRIDAY);
         final JCheckBox checkBox = BasicComponentFactory.createCheckBox(value, StartDays.FRIDAY.toString());
+        checkBox.setEnabled(false);
+        return checkBox;
+    }
+
+    /**
+     *
+     * @param dayPresenter
+     * @return
+     */
+    private JCheckBox createMondayCb(final PresentationModel<DaySelectionReader> dayPresenter) {
+        final ValueModel value = dayPresenter.getModel(DaySelectionProperties.MONDAY);
+        final JCheckBox checkBox = BasicComponentFactory.createCheckBox(value, StartDays.MONDAY.toString());
         checkBox.setEnabled(false);
         return checkBox;
     }
@@ -161,6 +135,42 @@ public class DaysSelectionPanel extends AbstractCommonPanel {
     private JCheckBox createSundayCb(final PresentationModel<DaySelectionReader> dayPresenter) {
         final ValueModel value = dayPresenter.getModel(DaySelectionProperties.SUNDAY);
         final JCheckBox checkBox = BasicComponentFactory.createCheckBox(value, StartDays.SUNDAY.toString());
+        checkBox.setEnabled(false);
+        return checkBox;
+    }
+
+    /**
+     *
+     * @param dayPresenter
+     * @return
+     */
+    private JCheckBox createThrusdayCb(final PresentationModel<DaySelectionReader> dayPresenter) {
+        final ValueModel value = dayPresenter.getModel(DaySelectionProperties.THRUSDAY);
+        final JCheckBox checkBox = BasicComponentFactory.createCheckBox(value, StartDays.THRUSDAY.toString());
+        checkBox.setEnabled(false);
+        return checkBox;
+    }
+
+    /**
+     *
+     * @param dayPresenter
+     * @return
+     */
+    private JCheckBox createTuesdayCb(final PresentationModel<DaySelectionReader> dayPresenter) {
+        final ValueModel value = dayPresenter.getModel(DaySelectionProperties.TUESDAY);
+        final JCheckBox checkBox = BasicComponentFactory.createCheckBox(value, StartDays.TUESDAY.toString());
+        checkBox.setEnabled(false);
+        return checkBox;
+    }
+
+    /**
+     *
+     * @param dayPresenter
+     * @return
+     */
+    private JCheckBox createWednesdayCb(final PresentationModel<DaySelectionReader> dayPresenter) {
+        final ValueModel value = dayPresenter.getModel(DaySelectionProperties.WEDNESDAY);
+        final JCheckBox checkBox = BasicComponentFactory.createCheckBox(value, StartDays.WEDNESDAY.toString());
         checkBox.setEnabled(false);
         return checkBox;
     }

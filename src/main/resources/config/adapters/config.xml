@@ -3,12 +3,12 @@
 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 
-    <util:map id="id-Adapters">
-        <entry key="AircraftTypeAdapter" value-ref="id-AircraftTypeAdapter" />
-        <entry key="FlightPlanModelAdapter" value-ref="id-FlightPlanModelAdapter" />
-        <entry key="StartDaysAdapter" value-ref="id-StartDaysAdapter" />
-        <entry key="FlightPlanCollectionAdapter" value-ref="id-FlightPlanCollectionAdapter" />
-    </util:map>
+    <util:list id="id-Adapters">
+        <ref bean="id-AircraftTypeAdapter" />
+        <ref bean="id-FlightPlanModelAdapter" />
+        <ref bean="id-StartDaysAdapter" />
+        <ref bean="id-FlightPlanCollectionAdapter" />
+    </util:list>
 
     <bean id="id-AircraftTypeAdapter" class="com.airportflightplanner.common.adapter.impl.AircraftTypeAdapterIpmpl">
         <property name="adapterName" value="AircraftTypeAdapter" />
@@ -17,11 +17,27 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     <bean id="id-FlightPlanModelAdapter" class="com.airportflightplanner.common.adapter.impl.FlightPlanModelAdapterImpl" init-method="init">
         <property name="adapterName" value="FlightPlanModelAdapter" />
         <property name="model" ref="id-CurrentFlightPlan" />
+        <property name="slots">
+            <bean class="fr.gsyltc.framework.slotsignals.slots.Slot">
+                <constructor-arg index="0">
+                    <util:constant static-field="com.airportflightplanner.common.slotsignal.TopicName.FLIGHTPLAN_TABLE_SELECTED_TOPIC" />
+                </constructor-arg>
+                <constructor-arg index="1" value="FlightPlanModelAdapter" />
+            </bean>
+        </property>
     </bean>
 
     <bean id="id-StartDaysAdapter" class="com.airportflightplanner.common.adapter.impl.StartDaysAdapterImpl" init-method="init">
         <property name="adapterName" value="StartDaysAdapter" />
         <property name="model" ref="id-DaySelectionModel" />
+        <property name="slots">
+            <bean class="fr.gsyltc.framework.slotsignals.slots.Slot">
+                <constructor-arg index="0">
+                    <util:constant static-field="com.airportflightplanner.common.slotsignal.TopicName.FLIGHTPLAN_TABLE_SELECTED_TOPIC" />
+                </constructor-arg>
+                <constructor-arg index="1" value="StartDaysAdapter" />
+            </bean>
+        </property>
     </bean>
 
     <bean id="id-FlightPlanCollectionAdapter" class="com.airportflightplanner.common.adapter.impl.FlightPlanCollectionAdapterImpl">

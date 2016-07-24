@@ -1,7 +1,9 @@
 /*
- * @(#)AircraftTypeAdapter
+ * @(#)AircraftTypeAdapter.java
  *
- * Goubaud Sylvain - 2016.
+ * Goubaud Sylvain
+ * Created : 2016
+ * Modified : 27 juil. 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -13,23 +15,15 @@ package com.airportflightplanner.common.api.adapter;
 import java.util.List;
 import java.util.SortedSet;
 
-import com.airportflightplanner.common.api.adapter.common.CommonAdapter;
+import fr.gsyltc.framework.adapters.api.CommonAdapter;
 
 /**
  * @author Goubaud Sylvain
  *
  */
-public interface AircraftTypeAdapter extends CommonAdapter{
-
-    /**
-     * Get the liveries.
-     *
-     * @param classCpie
-     *            Company.
-     * @return List of liveries for the company.
-     */
-    List<String> getAircraftLiveriesByClassCpie(final String classCpie);
-
+public interface AircraftTypeAdapter extends CommonAdapter {
+    
+    
     /**
      * Add a new livery for the type.
      *
@@ -46,6 +40,15 @@ public interface AircraftTypeAdapter extends CommonAdapter{
     SortedSet<String> getAircraftClasses();
 
     /**
+     * Get all the company for the class.
+     *
+     * @param aircraftClass
+     *            Aircraft class.
+     * @return List of the companies.
+     */
+    List<String> getAircraftCompaniesByClass(final String aircraftClass);
+
+    /**
      * Get the list of aircraft company by aircraft type.
      *
      * @param aircraftType
@@ -55,12 +58,12 @@ public interface AircraftTypeAdapter extends CommonAdapter{
     List<String> getAircraftCompaniesByType(final String aircraftType);
 
     /**
-     * Get all the company for the class.
+     * Get the liveries.
      *
-     * @param aircraftClass
-     *            Aircraft class.
-     * @return List of the companies.
+     * @param classCpie
+     *            Company.
+     * @return List of liveries for the company.
      */
-    List<String> getAircraftCompaniesByClass(final String aircraftClass);
+    List<String> getAircraftLiveriesByClassCpie(final String classCpie);
 
 }

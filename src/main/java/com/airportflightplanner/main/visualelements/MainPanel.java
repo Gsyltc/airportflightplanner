@@ -16,7 +16,6 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 
-import com.airportflightplanner.common.api.adapter.common.CommonAdapter;
 import com.airportflightplanner.common.types.BeanNames;
 import com.airportflightplanner.flightplancreation.FlightPlanCreationPanel;
 import com.airportflightplanner.flightplanvisualization.panel.FlightPlanVisualiazationPanel;
@@ -33,20 +32,21 @@ import com.jgoodies.forms.layout.RowSpec;
  *
  */
 public class MainPanel extends JPanel {
-
+    
+    
     /**
      *
      */
-    private static final long                   serialVersionUID = -1014619836487219532L;
+    private static final long serialVersionUID = -1014619836487219532L;
     /**
      *
      */
-    private static final int                    FIRST_TAB        = 0;
-    /** */
-    private final Map<String, CommonAdapter<?>> adapters;
+    private static final int FIRST_TAB = 0;
+    // /** */
+    // private final Map<String, DomainModelAdapter<?>> adapters;
 
     /** */
-    private final Map<BeanNames, Model>         beansMap;
+    private final Map<BeanNames, Model> beansMap;
 
     /**
      * Main Panel.
@@ -55,19 +55,26 @@ public class MainPanel extends JPanel {
      *            Map of Models.
      * @param adapters
      */
-    public MainPanel(final Map<BeanNames, Model> beans, final Map<String, CommonAdapter<?>> adapters) {
-        //        setPaintRows(false);
-        //        setPaintInBackground(false);
-        beansMap = beans;
-        this.adapters = adapters;
+    public MainPanel(final Map<BeanNames, Model> beans) {
+        // setPaintRows(false);
+        // setPaintInBackground(false);
+        this.beansMap = beans;
         buildPanel();
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Map<BeanNames, Model> getBeansMap() {
+        return this.beansMap;
     }
 
     /**
      *
      */
     private void buildPanel() {
-
+        
         // Set Layout
         setLayout(new FormLayout(new ColumnSpec[] { //
                 FormSpecs.RELATED_GAP_COLSPEC, //
@@ -103,8 +110,10 @@ public class MainPanel extends JPanel {
      *
      * @return the panel.
      */
-    private WaypointEditionPanel createWaypointEditionPanel() {
-        final WaypointEditionPanel panel = new WaypointEditionPanel();
+    private FlightPlanCreationPanel createFlightPlanCreationPanel() {
+        final FlightPlanCreationPanel panel = new FlightPlanCreationPanel(//
+                this.beansMap.get(BeanNames.CURRENT_FP_MODEL), //
+                this.beansMap.get(BeanNames.DAYS_MODEL));
         panel.build();
         return panel;
     }
@@ -114,12 +123,11 @@ public class MainPanel extends JPanel {
      * @return the panel.
      */
     private FlightPlanVisualiazationPanel createFlightPlanVisualiazationPanel() {
-        final FlightPlanVisualiazationPanel panel = new FlightPlanVisualiazationPanel( //
-                beansMap.get(BeanNames.FP_COLLECTION_MODEL), //
-                beansMap.get(BeanNames.STEERPOINT_MODEL), //
-                beansMap.get(BeanNames.CURRENT_FP_MODEL), //
-                beansMap.get(BeanNames.DAYS_MODEL));
-        panel.setAdapters(adapters);
+        final FlightPlanVisualiazationPanel panel = new FlightPlanVisualiazationPanel(//
+                this.beansMap.get(BeanNames.FP_COLLECTION_MODEL), //
+                this.beansMap.get(BeanNames.STEERPOINT_MODEL), //
+                this.beansMap.get(BeanNames.CURRENT_FP_MODEL), //
+                this.beansMap.get(BeanNames.DAYS_MODEL));
         panel.build();
         return panel;
     }
@@ -128,36 +136,9 @@ public class MainPanel extends JPanel {
      *
      * @return the panel.
      */
-    private FlightPlanCreationPanel createFlightPlanCreationPanel() {
-        final FlightPlanCreationPanel panel = new FlightPlanCreationPanel(//
-                beansMap.get(BeanNames.CURRENT_FP_MODEL), //
-                beansMap.get(BeanNames.DAYS_MODEL));
-        panel.setAdapters(getAdapters());
+    private WaypointEditionPanel createWaypointEditionPanel() {
+        final WaypointEditionPanel panel = new WaypointEditionPanel();
         panel.build();
         return panel;
-    }
-
-    /**
-     * @return the adapters
-     */
-    private Map<String, CommonAdapter<?>> getAdapters() {
-        return adapters;
-    }
-
-    /**
-     *
-     * @param name
-     * @return
-     */
-    private CommonAdapter<?> getAdapterByName(final String name) {
-        return adapters.get(name);
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Map<BeanNames, Model> getBeansMap() {
-        return beansMap;
     }
 }

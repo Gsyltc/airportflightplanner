@@ -7,6 +7,7 @@
  * project.  It comes with no warranty.
  *
  */
+
 package com.airportflightplanner.common.types;
 
 import com.airportflightplanner.common.utils.internationalization.Internationalizer;
@@ -24,11 +25,12 @@ public enum MapType {
     HYBRID(2),
     /** */
     TERRAIN(3);
+    
     /** */
     private static final String PREFIX = "arrivaltype.";
     /** */
-    private int                 value;
-
+    private int value;
+    
     /**
      *
      * @param value
@@ -36,7 +38,7 @@ public enum MapType {
     private MapType(final int value) {
         this.value = value;
     }
-
+    
     /**
      *
      * @param typeIndex
@@ -51,9 +53,9 @@ public enum MapType {
         }
         return result;
     }
-
+    
     /**
-     * Get i18nString
+     * Get i18nString.
      *
      * @param typeIndex
      * @return
@@ -61,7 +63,7 @@ public enum MapType {
     public static String getI18NName(final int typeIndex) {
         return Internationalizer.getI18String(PREFIX + valueOf(typeIndex).name());
     }
-
+    
     /**
      *
      * @param type
@@ -69,6 +71,6 @@ public enum MapType {
      */
     public static int getIndex(final MapType type) {
         return type.value;
-
+        
     }
 }

@@ -20,6 +20,6 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 
 
     <!-- Writers -->
-    <bean id="id-FlighPlanFileWriter" class="com.airportflightplanner.importexport.exporters.FlighPlanFileWriter" init-method="init" />
+    <bean id="id-FlighPlanFileWriter" class="com.airportflightplanner.importexport.exporters.FlighPlanFileWriter" />
 
 </beans>

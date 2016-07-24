@@ -29,7 +29,6 @@ import org.joda.time.Period;
 import com.airportflightplanner.common.api.flightplan.bean.FlightPlanProperties;
 import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
 import com.airportflightplanner.common.utils.time.TimeUtils;
-import com.airportflightplanner.common.visualelement.AbstractCommonPanel;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.adapter.BasicComponentFactory;
@@ -39,34 +38,40 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
+import fr.gsyltc.framework.visualelements.AbstractCommonPanel;
+import fr.gsyltc.framework.visualelements.types.LayoutSpecs;
+
 /**
  * @author Goubaud Sylvain
  *
  */
 public class CreationTimePanel extends AbstractCommonPanel {
+    
+    
     /**
      *
+     * @author Goubaud Sylvain
+     *
      */
-    private static final long      serialVersionUID = 8098225641658386495L;
-
-    /** */
-    protected transient JTextField endTextField;
-
-    /** */
-    protected transient JTextField startTextField;
-
-    /** */
-    protected transient JTextField timeTextField;
-
+    private enum TextFieldsEnum {
+        /** */
+        END,
+        /** */
+        START,
+        /** */
+        TIME
+    }
+    
     /**
      *
      * @author Goubaud Sylvain
      *
      */
     protected static class KeyTypingListener implements KeyListener {
-
+        
+        
         /** */
-        private   transient final JTextField textField;
+        private transient final JTextField textField;
 
         /**
          * @param textField
@@ -91,15 +96,15 @@ public class CreationTimePanel extends AbstractCommonPanel {
          */
         @Override
         public void keyReleased(final KeyEvent event) {
-            String newText = textField.getText();
-            if (event.getKeyCode() == 8 && newText.length() == 2) {
+            String newText = this.textField.getText();
+            if ((event.getKeyCode() == 8) && (newText.length() == 2)) {
                 newText = newText.substring(0, 1);
-                textField.setText(newText);
+                this.textField.setText(newText);
             } else {
-                if (newText.length() == 2 && !newText.endsWith(":")) {
+                if ((newText.length() == 2) && !newText.endsWith(":")) {
                     final StringBuffer buff = new StringBuffer(newText);
                     buff.append(':');
-                    textField.setText(buff.toString());
+                    this.textField.setText(buff.toString());
                 }
             }
         }
@@ -110,7 +115,7 @@ public class CreationTimePanel extends AbstractCommonPanel {
          */
         @Override
         public void keyTyped(final KeyEvent event) {
-            if (null == TimeUtils.getLocalTime(textField.getText() + event.getKeyChar())) {
+            if (null == TimeUtils.getLocalTime(this.textField.getText() + event.getKeyChar())) {
                 event.consume();
             }
         }
@@ -118,17 +123,20 @@ public class CreationTimePanel extends AbstractCommonPanel {
 
     /**
      *
-     * @author Goubaud Sylvain
-     *
      */
-    private enum TextFieldsEnum {
-        /** */
-        END,
-        /** */
-        START,
-        /** */
-        TIME
-    }
+    private static final long serialVersionUID = 8098225641658386495L;
+
+    /** */
+    private static final int FIRST_PRESENTER = 0;
+
+    /** */
+    protected transient JTextField endTextField;
+
+    /** */
+    protected transient JTextField startTextField;
+
+    /** */
+    protected transient JTextField timeTextField;
 
     /**
      * @param newCcurrentFlightPlan
@@ -145,13 +153,13 @@ public class CreationTimePanel extends AbstractCommonPanel {
     public void build() {
         super.build();
         setLayout(new FormLayout(new ColumnSpec[] { //
-                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(PREF_GROW), //
-                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(PREF_GROW), //
-                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(PREF_GROW), //
-                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(PREF_GROW), //
-                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(PREF_GROW), //
+                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(LayoutSpecs.PREF_GROW), //
+                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(LayoutSpecs.PREF_GROW), //
+                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(LayoutSpecs.PREF_GROW), //
+                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(LayoutSpecs.PREF_GROW), //
+                FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(LayoutSpecs.PREF_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode("pref:grow"), //
+                ColumnSpec.decode(LayoutSpecs.PREF_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, }, //
                 new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC, //
@@ -183,9 +191,11 @@ public class CreationTimePanel extends AbstractCommonPanel {
     private JTextField createEndTextField() {
         final PresentationModel<?> presenter = getPresenter(FIRST_PRESENTER);
         final BufferedValueModel model = presenter.getBufferedModel(FlightPlanProperties.END_TIME);
-        endTextField = BasicComponentFactory.createTextField(model);
+        this.endTextField = BasicComponentFactory.createTextField(model);
 
         model.addPropertyChangeListener(new PropertyChangeListener() {
+            
+            
             /**
              *
              * {@inheritDoc}
@@ -193,14 +203,15 @@ public class CreationTimePanel extends AbstractCommonPanel {
             @Override
             public void propertyChange(final PropertyChangeEvent evt) {
                 if (evt.getNewValue() instanceof LocalTime) {
-                    endTextField.setText(((LocalTime) evt.getNewValue()).toString(TimeUtils.TIME_DISPLAYER));
+                    CreationTimePanel.this.endTextField.setText(((LocalTime) evt.getNewValue()).toString(TimeUtils.TIME_DISPLAYER));
                 }
             }
         });
 
-        endTextField.addKeyListener(new KeyTypingListener(endTextField));
-        endTextField.addActionListener(new ActionListener() {
-
+        this.endTextField.addKeyListener(new KeyTypingListener(this.endTextField));
+        this.endTextField.addActionListener(new ActionListener() {
+            
+            
             /**
              *
              * {@inheritDoc}
@@ -210,7 +221,9 @@ public class CreationTimePanel extends AbstractCommonPanel {
                 textFieldUpdater(TextFieldsEnum.END);
             }
         });
-        endTextField.addFocusListener(new FocusListener() {
+        this.endTextField.addFocusListener(new FocusListener() {
+            
+            
             /**
              *
              * {@inheritDoc}
@@ -230,7 +243,7 @@ public class CreationTimePanel extends AbstractCommonPanel {
             }
 
         });
-        return endTextField;
+        return this.endTextField;
     }
 
     /**
@@ -240,9 +253,11 @@ public class CreationTimePanel extends AbstractCommonPanel {
     private JTextField createStartTextField() {
         final PresentationModel<?> presenter = getPresenter(FIRST_PRESENTER);
         final BufferedValueModel model = presenter.getBufferedModel(FlightPlanProperties.START_TIME);
-        startTextField = BasicComponentFactory.createTextField(model);
+        this.startTextField = BasicComponentFactory.createTextField(model);
 
         model.addPropertyChangeListener(new PropertyChangeListener() {
+            
+            
             /**
              *
              * {@inheritDoc}
@@ -250,13 +265,16 @@ public class CreationTimePanel extends AbstractCommonPanel {
             @Override
             public void propertyChange(final PropertyChangeEvent evt) {
                 if (evt.getNewValue() instanceof LocalTime) {
-                    startTextField.setText(((LocalTime) evt.getNewValue()).toString(TimeUtils.TIME_DISPLAYER));
+                    CreationTimePanel.this.startTextField.setText(((LocalTime) evt.getNewValue()).toString(
+                            TimeUtils.TIME_DISPLAYER));
                 }
             }
         });
         //
-        startTextField.addKeyListener(new KeyTypingListener(startTextField));
-        startTextField.addActionListener(new ActionListener() {
+        this.startTextField.addKeyListener(new KeyTypingListener(this.startTextField));
+        this.startTextField.addActionListener(new ActionListener() {
+            
+            
             /**
              *
              * {@inheritDoc}
@@ -266,7 +284,9 @@ public class CreationTimePanel extends AbstractCommonPanel {
                 textFieldUpdater(TextFieldsEnum.START);
             }
         });
-        startTextField.addFocusListener(new FocusListener() {
+        this.startTextField.addFocusListener(new FocusListener() {
+            
+            
             /**
              *
              * {@inheritDoc}
@@ -285,7 +305,7 @@ public class CreationTimePanel extends AbstractCommonPanel {
                 textFieldUpdater(TextFieldsEnum.START);
             }
         });
-        return startTextField;
+        return this.startTextField;
     }
 
     /**
@@ -295,9 +315,11 @@ public class CreationTimePanel extends AbstractCommonPanel {
     private JTextField createTimeTextField() {
         final PresentationModel<?> presenter = getPresenter(FIRST_PRESENTER);
         final BufferedValueModel model = presenter.getBufferedModel(FlightPlanProperties.DURATION);
-        timeTextField = BasicComponentFactory.createTextField(model);
+        this.timeTextField = BasicComponentFactory.createTextField(model);
 
         model.addPropertyChangeListener(new PropertyChangeListener() {
+            
+            
             /**
              *
              * {@inheritDoc}
@@ -305,12 +327,14 @@ public class CreationTimePanel extends AbstractCommonPanel {
             @Override
             public void propertyChange(final PropertyChangeEvent evt) {
                 if (evt.getNewValue() instanceof Period) {
-                    timeTextField.setText(((Period) evt.getNewValue()).toString(TimeUtils.PERIOD_DISPLAYER));
+                    CreationTimePanel.this.timeTextField.setText(((Period) evt.getNewValue()).toString(TimeUtils.PERIOD_DISPLAYER));
                 }
             }
         });
-        timeTextField.addKeyListener(new KeyTypingListener(timeTextField));
-        timeTextField.addActionListener(new ActionListener() {
+        this.timeTextField.addKeyListener(new KeyTypingListener(this.timeTextField));
+        this.timeTextField.addActionListener(new ActionListener() {
+            
+            
             /**
              *
              * {@inheritDoc}
@@ -321,7 +345,9 @@ public class CreationTimePanel extends AbstractCommonPanel {
             }
         });
 
-        timeTextField.addFocusListener(new FocusListener() {
+        this.timeTextField.addFocusListener(new FocusListener() {
+            
+            
             /**
              *
              * {@inheritDoc}
@@ -340,7 +366,7 @@ public class CreationTimePanel extends AbstractCommonPanel {
                 textFieldUpdater(TextFieldsEnum.TIME);
             }
         });
-        return timeTextField;
+        return this.timeTextField;
     }
 
     /**
@@ -354,31 +380,31 @@ public class CreationTimePanel extends AbstractCommonPanel {
     protected void textFieldUpdater(final TextFieldsEnum sender) {
         final PresentationModel<?> presenter = getPresenter(FIRST_PRESENTER);
 
-        final boolean isStartEmpty = startTextField.getText().isEmpty();
-        final boolean isEndEmpty = endTextField.getText().isEmpty();
-        final boolean isTimeEmpty = timeTextField.getText().isEmpty();
+        final boolean isStartEmpty = this.startTextField.getText().isEmpty();
+        final boolean isEndEmpty = this.endTextField.getText().isEmpty();
+        final boolean isTimeEmpty = this.timeTextField.getText().isEmpty();
         switch (sender) {
         case START:
             if (isTimeEmpty) {
                 if (!isEndEmpty) {
                     presenter.setBufferedValue(FlightPlanProperties.DURATION, //
-                            TimeUtils.getDuration(startTextField.getText(), endTextField.getText()));
+                            TimeUtils.getDuration(this.startTextField.getText(), this.endTextField.getText()));
                 }
             } else {
                 presenter.setBufferedValue(FlightPlanProperties.END_TIME, //
-                        TimeUtils.getEndTime(startTextField.getText(), timeTextField.getText()));
+                        TimeUtils.getEndTime(this.startTextField.getText(), this.timeTextField.getText()));
             }
             break;
-
+        
         case END:
             if (isTimeEmpty) {
                 if (!isStartEmpty) {
                     presenter.setBufferedValue(FlightPlanProperties.DURATION, //
-                            TimeUtils.getDuration(startTextField.getText(), endTextField.getText()));
+                            TimeUtils.getDuration(this.startTextField.getText(), this.endTextField.getText()));
                 }
             } else {
                 presenter.setBufferedValue(FlightPlanProperties.START_TIME, //
-                        TimeUtils.getStartTime(endTextField.getText(), timeTextField.getText()));
+                        TimeUtils.getStartTime(this.endTextField.getText(), this.timeTextField.getText()));
 
             }
 
@@ -387,24 +413,24 @@ public class CreationTimePanel extends AbstractCommonPanel {
             if (isTimeEmpty) {
                 if (!isStartEmpty && isEndEmpty) {
                     presenter.setBufferedValue(FlightPlanProperties.DURATION, //
-                            TimeUtils.getDuration(startTextField.getText(), endTextField.getText()));
+                            TimeUtils.getDuration(this.startTextField.getText(), this.endTextField.getText()));
                 }
             } else {
                 if (isStartEmpty) {
                     presenter.setBufferedValue(FlightPlanProperties.START_TIME, //
-                            TimeUtils.getStartTime(endTextField.getText(), timeTextField.getText()));
+                            TimeUtils.getStartTime(this.endTextField.getText(), this.timeTextField.getText()));
                 } else {
                     if (isEndEmpty) {
-                        endTextField.setText("TO EMPTY 2");
+                        this.endTextField.setText("TO EMPTY 2");
                     } else {
                         presenter.setBufferedValue(FlightPlanProperties.END_TIME, //
-                                TimeUtils.getEndTime(startTextField.getText(), timeTextField.getText()));
+                                TimeUtils.getEndTime(this.startTextField.getText(), this.timeTextField.getText()));
                     }
                 }
             }
 
             break;
-
+        
         default:
             break;
         }

@@ -24,47 +24,32 @@ import com.jgoodies.binding.adapter.AbstractTableAdapter;
  *
  */
 public class FlightPlanVisualizationTableAdapter extends AbstractTableAdapter<FlightPlanCollectionReader> {
+    
+    
     /**
      *
      */
-    private static final long                                 serialVersionUID = -1614722326210452309L;
+    private static final long serialVersionUID = -1614722326210452309L;
     /** */
-    private static final FlightPlanVisualisationTableColumn[] COLUMN_NAME      =                       //
-            new FlightPlanVisualisationTableColumn[] {                                                 //
-                    FlightPlanVisualisationTableColumn.START_AIRPORT,                                  //
-                    FlightPlanVisualisationTableColumn.DEPARTURE_TIME,                                 //
-                    FlightPlanVisualisationTableColumn.ARRIVAL_TIME,                                   //
-                    FlightPlanVisualisationTableColumn.AIRCRAFT_TYPE,                                  //
-                    FlightPlanVisualisationTableColumn.COMPANY,                                        //
-                    FlightPlanVisualisationTableColumn.DEST_AIRPORT,                                   //
+    private static final FlightPlanVisualisationTableColumn[] COLUMN_NAME = //
+            new FlightPlanVisualisationTableColumn[] { //
+                    FlightPlanVisualisationTableColumn.START_AIRPORT, //
+                    FlightPlanVisualisationTableColumn.DEPARTURE_TIME, //
+                    FlightPlanVisualisationTableColumn.ARRIVAL_TIME, //
+                    FlightPlanVisualisationTableColumn.AIRCRAFT_TYPE, //
+                    FlightPlanVisualisationTableColumn.COMPANY, //
+                    FlightPlanVisualisationTableColumn.DEST_AIRPORT, //
                     FlightPlanVisualisationTableColumn.DURATION };
-
+    
     /**
      *
      * @param listModel
      */
     public FlightPlanVisualizationTableAdapter(final FlightPlanVisualizationListModel listModel) {
         super(listModel);
-
         listModel.addListDataListener(new ListDataListener() {
-            /**
-             *
-             * {@inheritDoc}
-             */
-            @Override
-            public void intervalRemoved(final ListDataEvent event) {
-                //
-            }
-
-            /**
-             *
-             * {@inheritDoc}
-             */
-            @Override
-            public void intervalAdded(final ListDataEvent event) {
-                //
-            }
-
+            
+            
             /**
              *
              * {@inheritDoc}
@@ -72,11 +57,97 @@ public class FlightPlanVisualizationTableAdapter extends AbstractTableAdapter<Fl
             @Override
             public void contentsChanged(final ListDataEvent event) {
                 fireTableDataChanged();
-
+                
+            }
+            
+            /**
+             *
+             * {@inheritDoc}
+             */
+            @Override
+            public void intervalAdded(final ListDataEvent event) {
+                //
+                fireTableDataChanged();
+            }
+            
+            /**
+             *
+             * {@inheritDoc}
+             */
+            @Override
+            public void intervalRemoved(final ListDataEvent event) {
+                //
+                fireTableDataChanged();
             }
         });
     }
-
+    
+    /**
+     *
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<?> getColumnClass(final int columnIndex) {
+        Class<?> result = null;
+        final FlightPlanVisualisationTableColumn fpColumn = FlightPlanVisualisationTableColumn.valueOf(columnIndex);
+        switch (fpColumn) {
+        case START_AIRPORT:
+            result = String.class;
+            break;
+        
+        case DEST_AIRPORT:
+            result = String.class;
+            break;
+        
+        case DEPARTURE_TIME:
+            result = String.class;
+            break;
+        
+        case ARRIVAL_TIME:
+            result = String.class;
+            break;
+        
+        case AIRCRAFT_TYPE:
+            result = String.class;
+            break;
+        
+        case COMPANY:
+            result = String.class;
+            break;
+        
+        case DURATION:
+            result = String.class;
+            break;
+        
+        default:
+            break;
+        }
+        if (null == result) {
+            throw new IllegalArgumentException();
+        }
+        return result;
+        
+    }
+    
+    /**
+     *
+     * {@inheritDoc}
+     */
+    @Override
+    public int getColumnCount() {
+        return COLUMN_NAME.length;
+    }
+    
+    /**
+     *
+     * @param columnIndex
+     * @return
+     */
+    @Override
+    public String getColumnName(final int columnIndex) {
+        return FlightPlanVisualisationTableColumn.getName(columnIndex);
+    }
+    
     /**
      *
      * {@inheritDoc}
@@ -90,37 +161,37 @@ public class FlightPlanVisualizationTableAdapter extends AbstractTableAdapter<Fl
         case START_AIRPORT:
             result = flightPlan.getDepartureAirport();
             break;
-
+        
         case DEST_AIRPORT:
             result = flightPlan.getArrivalAirport();
             break;
-
+        
         case DEPARTURE_TIME:
             if (null != flightPlan.getStartTime()) {
                 result = flightPlan.getStartTime().toString(TimeUtils.TIME_DISPLAYER);
             }
             break;
-
+        
         case ARRIVAL_TIME:
             if (null != flightPlan.getEndTime()) {
                 result = flightPlan.getEndTime().toString(TimeUtils.TIME_DISPLAYER);
             }
             break;
-
+        
         case AIRCRAFT_TYPE:
             result = flightPlan.getAircraftType().split("_")[0];
             break;
-
+        
         case COMPANY:
             result = flightPlan.getAircraftCie();
             break;
-
+        
         case DURATION:
             if (null != flightPlan.getDuration()) {
                 result = flightPlan.getDuration().toString(TimeUtils.FP_PERIOD_DISPLAYER);
             }
             break;
-
+        
         default:
             break;
         }
@@ -128,71 +199,5 @@ public class FlightPlanVisualizationTableAdapter extends AbstractTableAdapter<Fl
         // throw new IllegalArgumentException();
         // }
         return result;
-    }
-
-    /**
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public int getColumnCount() {
-        return COLUMN_NAME.length;
-    }
-
-    /**
-     *
-     * @param columnIndex
-     * @return
-     */
-    @Override
-    public String getColumnName(final int columnIndex) {
-        return FlightPlanVisualisationTableColumn.getName(columnIndex);
-    }
-
-    /**
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public Class<?> getColumnClass(final int columnIndex) {
-        Class<?> result = null;
-        final FlightPlanVisualisationTableColumn fpColumn = FlightPlanVisualisationTableColumn.valueOf(columnIndex);
-        switch (fpColumn) {
-        case START_AIRPORT:
-            result = String.class;
-            break;
-
-        case DEST_AIRPORT:
-            result = String.class;
-            break;
-
-        case DEPARTURE_TIME:
-            result = String.class;
-            break;
-
-        case ARRIVAL_TIME:
-            result = String.class;
-            break;
-
-        case AIRCRAFT_TYPE:
-            result = String.class;
-            break;
-
-        case COMPANY:
-            result = String.class;
-            break;
-
-        case DURATION:
-            result = String.class;
-            break;
-
-        default:
-            break;
-        }
-        if (null == result) {
-            throw new IllegalArgumentException();
-        }
-        return result;
-
     }
 }

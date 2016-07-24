@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>fr.gsyltc</groupId>
     <artifactId>airportflightplanner</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.3-SNAPSHOT</version>
     <name>AirportFlightPlanner</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -104,6 +104,11 @@
             <groupId>org.jscience</groupId>
             <artifactId>jscience</artifactId>
             <version>4.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>fr.gsyltc</groupId>
+            <artifactId>Framework-main</artifactId>
+            <version>1.0.3-SNAPSHOT</version>
         </dependency>
     </dependencies>
     <dependencyManagement>

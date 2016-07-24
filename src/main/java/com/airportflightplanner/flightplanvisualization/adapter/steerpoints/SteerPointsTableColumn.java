@@ -28,7 +28,7 @@ public enum SteerPointsTableColumn {
     private static final String PREFIX = "SteerPointsTableColumn.";
     /** */
     private int                 value;
-
+    
     /**
      *
      * @param value
@@ -36,7 +36,7 @@ public enum SteerPointsTableColumn {
     private SteerPointsTableColumn(final int value) {
         this.value = value;
     }
-
+    
     /**
      *
      * @param columnNumber
@@ -51,9 +51,9 @@ public enum SteerPointsTableColumn {
         }
         return result;
     }
-
+    
     /**
-     * Get i18nString
+     * Get i18nString.
      *
      * @param columnIndex
      * @return
@@ -61,7 +61,7 @@ public enum SteerPointsTableColumn {
     public static String getName(final int columnIndex) {
         return Internationalizer.getI18String(PREFIX + valueOf(columnIndex).name());
     }
-
+    
     /**
      *
      * @param column
@@ -69,6 +69,6 @@ public enum SteerPointsTableColumn {
      */
     public static int getColumnNumber(final SteerPointsTableColumn column) {
         return column.value;
-
+        
     }
 }

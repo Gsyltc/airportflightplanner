@@ -7,6 +7,7 @@
  * project.  It comes with no warranty.
  *
  */
+
 package com.airportflightplanner.common.types;
 
 import com.airportflightplanner.common.utils.internationalization.Internationalizer;
@@ -22,21 +23,22 @@ public enum FlightType {
     CIVILIAN(0),
     /** */
     MILITARY(1);
+    
     /**
      *
      */
     private static final String PREFIX = "FlightType.";
     /** */
-    private int                 value;
-
+    private int value;
+    
     /**
      *
-     * @param value
+     * @param newValue
      */
-    private FlightType(final int value) {
-        this.value = value;
+    private FlightType(final int newValue) {
+        this.value = newValue;
     }
-
+    
     /**
      *
      * @param typeIndex
@@ -46,14 +48,14 @@ public enum FlightType {
         FlightType result = null;
         for (final FlightType type : FlightType.values()) {
             if (type.ordinal() == typeIndex) {
-                result= type;
+                result = type;
             }
         }
         return result;
     }
-
+    
     /**
-     * Get i18nString
+     * Get i18nString.
      *
      * @param typeIndex
      * @return
@@ -61,7 +63,7 @@ public enum FlightType {
     public static String getI18NName(final int typeIndex) {
         return Internationalizer.getI18String(PREFIX + valueOf(typeIndex).name());
     }
-
+    
     /**
      *
      * @param type
@@ -69,6 +71,6 @@ public enum FlightType {
      */
     public static int getIndex(final FlightType type) {
         return type.value;
-
+        
     }
 }

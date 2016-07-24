@@ -3,6 +3,7 @@
  * 2016 Goubaud Sylvain.
  *
  */
+
 package com.airportflightplanner.flightplanvisualization.panel;
 
 import java.awt.Dimension;
@@ -18,12 +19,8 @@ import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
 import com.airportflightplanner.common.api.steerpoints.bean.SteerPointReader;
 import com.airportflightplanner.common.api.steerpoints.collection.SteerPointsCollectionReader;
 import com.airportflightplanner.common.models.steerpoints.SteerPointsCollectionModel;
-import com.airportflightplanner.common.slotsignal.SelectionSlot;
-import com.airportflightplanner.common.slotsignal.Signal;
 import com.airportflightplanner.common.slotsignal.TopicName;
-import com.airportflightplanner.common.slotsignal.api.SlotAction;
 import com.airportflightplanner.common.utils.geographics.GeographicUtils;
-import com.airportflightplanner.common.visualelement.AbstractCommonPanel;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
 import com.airportflightplanner.flightplanvisualization.presenter.steerpoints.SteerPointsPresenter;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -31,22 +28,24 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
+import fr.gsyltc.framework.slotsignals.action.api.SlotAction;
+import fr.gsyltc.framework.slotsignals.slots.Slot;
+import fr.gsyltc.framework.visualelements.AbstractCommandablePanel;
+import fr.gsyltc.framework.visualelements.types.LayoutSpecs;
+
 /**
  * @author Goubaud Sylvain
  *
  */
-public class SteerPointPanel extends AbstractCommonPanel {
+public class SteerPointPanel extends AbstractCommandablePanel {
+    
+    
     /**
      *
      */
-    protected Signal          signal;
-
-    /**
-     *
-     */
-    private static final long serialVersionUID     = -6354635338489926005L;
+    private static final long serialVersionUID = -6354635338489926005L;
     /** */
-    private static final int  STEERPOINT_PRESENTER = AbstractCommonPanel.FIRST_PRESENTER;
+    private static final int STEERPOINT_PRESENTER = 0;
 
     /**
      *
@@ -70,7 +69,7 @@ public class SteerPointPanel extends AbstractCommonPanel {
                 FormSpecs.RELATED_GAP_COLSPEC, //
                 ColumnSpec.decode("3dlu:grow"), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode(PREF_GROW), //
+                ColumnSpec.decode(LayoutSpecs.PREF_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, }, //
                 new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC, //
@@ -85,6 +84,38 @@ public class SteerPointPanel extends AbstractCommonPanel {
         final SteerPointsCollectionReader reader = presenter.getBean();
         reader.addSteerPointsListModelListener(presenter.getListModel());
 
+    }
+
+    /**
+     * {@inheritDoc}.
+     */
+    @Override
+    public final void createSlots() {
+        super.createSlots();
+        final Slot slot = new Slot(TopicName.FLIGHTPLAN_TABLE_SELECTED_TOPIC, getClass().getSimpleName());
+        final SteerPointsPresenter presenter = (SteerPointsPresenter) getPresenter(STEERPOINT_PRESENTER);
+        final SteerPointsCollectionModel steerPointsModel = presenter.getBean();
+        slot.setSlotAction(new SlotAction<FlightPlanReader>() {
+            
+            
+            /**
+             *
+             */
+            private static final long serialVersionUID = -2598479386857311222L;
+            
+            /**
+             *
+             * {@inheritDoc}
+             */
+            @Override
+            public void doAction(final FlightPlanReader flightPlanReader) {
+                steerPointsModel.getSteerPointsListModel().clear();
+                if (null != flightPlanReader) {
+                    final List<SteerPointReader> steerPoints = GeographicUtils.getSteerPoints(flightPlanReader.getSteerPoints());
+                    steerPointsModel.addSteerPoints(steerPoints);
+                }
+            }
+        });
     }
 
     /**
@@ -104,30 +135,5 @@ public class SteerPointPanel extends AbstractCommonPanel {
         scrollPane.setPreferredSize(new Dimension(400, 300));
         scrollPane.setViewportView(table);
         return scrollPane;
-    }
-
-    /**
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public final void attachSlotAction() {
-        final SelectionSlot<FlightPlanReader> slot = new SelectionSlot<FlightPlanReader>(TopicName.FLIGHTPLAN_TABLE_SELECTED_TOPIC, this);
-        final SteerPointsPresenter presenter = (SteerPointsPresenter) getPresenter(STEERPOINT_PRESENTER);
-        final SteerPointsCollectionModel steerPointsModel = presenter.getBean();
-        slot.setSlotAction(new SlotAction<FlightPlanReader>() {
-            /**
-             *
-             * {@inheritDoc}
-             */
-            @Override
-            public void doAction(final FlightPlanReader flightPlanReader) {
-                steerPointsModel.getSteerPointsListModel().clear();
-                if (null != flightPlanReader) {
-                    final List<SteerPointReader> steerPoints = GeographicUtils.getSteerPoints(flightPlanReader.getSteerPoints());
-                    steerPointsModel.addSteerPoints(steerPoints);
-                }
-            }
-        });
     }
 }

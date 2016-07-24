@@ -1,10 +1,17 @@
-/* @(#)WaypointEditionPanel.java
+/*
+ * @(#)WaypointEditionPanel.java
  *
- * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
+ * Goubaud Sylvain
+ * Created : 2016
+ * Modified : 24 juil. 2016.
+ *
+ * This code may be freely used and modified on any personal or professional
+ * project.  It comes with no warranty.
+ *
  */
 package com.airportflightplanner.main.visualelements.panels;
 
-import com.airportflightplanner.common.visualelement.AbstractCommonPanel;
+import fr.gsyltc.framework.visualelements.AbstractCommonPanel;
 
 /**
  * @author Goubaud Sylvain

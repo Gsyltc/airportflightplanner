@@ -1,8 +1,15 @@
-/* @(#)SteepointdPanel.java
+/*
+ * @(#)FlightPlanListPanel.java
  *
- * 2016 Goubaud Sylvain.
+ * Goubaud Sylvain
+ * Created : 2016
+ * Modified : 28 juil. 2016.
+ *
+ * This code may be freely used and modified on any personal or professional
+ * project.  It comes with no warranty.
  *
  */
+
 package com.airportflightplanner.flightplanvisualization.panel;
 
 import java.util.ArrayList;
@@ -23,11 +30,7 @@ import javax.swing.table.TableRowSorter;
 
 import com.airportflightplanner.common.api.adapter.FlightPlanCollectionAdapter;
 import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
-import com.airportflightplanner.common.slotsignal.SelectionSlot;
-import com.airportflightplanner.common.slotsignal.Signal;
 import com.airportflightplanner.common.slotsignal.TopicName;
-import com.airportflightplanner.common.slotsignal.api.SlotAction;
-import com.airportflightplanner.common.visualelement.AbstractCommonPanel;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
 import com.airportflightplanner.flightplanvisualization.presenter.flightplan.FlightPlanVisualizationPresenter;
 import com.jgoodies.binding.PresentationModel;
@@ -36,22 +39,31 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
+import fr.gsyltc.framework.adapters.AdaptersProvider;
+import fr.gsyltc.framework.slotsignals.action.api.SlotAction;
+import fr.gsyltc.framework.slotsignals.signals.Signal;
+import fr.gsyltc.framework.slotsignals.slots.Slot;
+import fr.gsyltc.framework.visualelements.AbstractCommandablePanel;
+import fr.gsyltc.framework.visualelements.types.LayoutSpecs;
+
 /**
  * @author Goubaud Sylvain
  *
  */
-public class FlightPlanListPanel extends AbstractCommonPanel {
+public class FlightPlanListPanel extends AbstractCommandablePanel {
+    
+    
     /**
      *
      */
-    protected Signal           signal;
+    private static final long serialVersionUID = -6354635338489926005L;
 
+    /** */
+    protected static final int FP_COLLECTION_PRESENTER = 0;
     /**
      *
      */
-    private static final long  serialVersionUID        = -6354635338489926005L;
-    /** */
-    protected static final int FP_COLLECTION_PRESENTER = AbstractCommonPanel.FIRST_PRESENTER;
+    protected Signal signal;
 
     /**
      *
@@ -75,7 +87,7 @@ public class FlightPlanListPanel extends AbstractCommonPanel {
                 FormSpecs.RELATED_GAP_COLSPEC, //
                 ColumnSpec.decode("3dlu:grow"), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
-                ColumnSpec.decode(PREF_GROW), //
+                ColumnSpec.decode(LayoutSpecs.PREF_GROW), //
                 FormSpecs.RELATED_GAP_COLSPEC, }, //
                 new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC, //
@@ -85,12 +97,52 @@ public class FlightPlanListPanel extends AbstractCommonPanel {
         setBorder(panelBorder);
 
         add(createFlightScrollPane(), "2, 2, 3, 1");
+        
+    }
 
-        // final SteerPointsPresenter presenter = (SteerPointsPresenter)
-        // getPresenter(CURRENT_FP_PRESENTER);
-        // final SteerPointsCollectionReader reader = presenter.getBean();
-        // reader.addSteerPointsListModelListener(presenter.getListModel());
+    /**
+     *
+     * {@inheritDoc}
+     */
+    @Override
+    public final void createSignals() {
+        super.createSignals();
+        this.signal = findSignal(TopicName.FLIGHTPLAN_TABLE_SELECTED_TOPIC);
+        if (null == this.signal) {
+            this.signal = new Signal(TopicName.FLIGHTPLAN_TABLE_SELECTED_TOPIC);
+            registerSignal(this.signal);
+        }
+        attachSignal(TopicName.FLIGHTPLAN_TABLE_SELECTED_TOPIC);
+    }
 
+    /**
+     * {@inheritDoc}.
+     */
+    @Override
+    public final void createSlots() {
+        super.createSlots();
+
+        final Slot slot = new Slot(TopicName.FLIGHTPLAN_TABLE_SELECTED_TOPIC, getClass().getSimpleName());
+        slot.setSlotAction(new SlotAction<FlightPlanReader>() {
+            
+            
+            /**
+             *
+             */
+            private static final long serialVersionUID = -6027127491253834166L;
+
+            /**
+             *
+             * {@inheritDoc}
+             */
+            @Override
+            public void doAction(final FlightPlanReader bean) {
+                final PresentationModel<FlightPlanReader> fpPresenter = (PresentationModel<FlightPlanReader>) getPresenter(
+                        FP_COLLECTION_PRESENTER);
+                fpPresenter.triggerFlush();
+                fpPresenter.setBean(bean);
+            }
+        });
     }
 
     /**
@@ -98,7 +150,7 @@ public class FlightPlanListPanel extends AbstractCommonPanel {
      *
      */
     private JScrollPane createFlightScrollPane() {
-        final FlightPlanCollectionAdapter adapter = (FlightPlanCollectionAdapter) getAdapterByName(//
+        final FlightPlanCollectionAdapter adapter = (FlightPlanCollectionAdapter) AdaptersProvider.findAdapterByName(//
                 FlightPlanCollectionAdapter.class.getSimpleName());
         final DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
@@ -108,6 +160,8 @@ public class FlightPlanListPanel extends AbstractCommonPanel {
         table.setFillsViewportHeight(true);
         table.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            
+            
             /**
              *
              * {@inheritDoc}
@@ -127,7 +181,7 @@ public class FlightPlanListPanel extends AbstractCommonPanel {
                             }
                         }
                     }
-                    signal.fireSignal(flightPlan);
+                    FlightPlanListPanel.this.signal.fireSignal(flightPlan);
                 }
             }
         });
@@ -143,40 +197,5 @@ public class FlightPlanListPanel extends AbstractCommonPanel {
         final JScrollPane scrollPane = new JScrollPane();
         scrollPane.setViewportView(table);
         return scrollPane;
-    }
-
-    /**
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public final void attachSlotAction() {
-
-        final SelectionSlot<FlightPlanReader> slot = new SelectionSlot<FlightPlanReader>(TopicName.FLIGHTPLAN_TABLE_SELECTED_TOPIC, this);
-        slot.setSlotAction(new SlotAction<FlightPlanReader>() {
-            /**
-             *
-             * {@inheritDoc}
-             */
-            @Override
-            public void doAction(final FlightPlanReader bean) {
-                final PresentationModel<FlightPlanReader> fpPresenter = (PresentationModel<FlightPlanReader>) getPresenter(FP_COLLECTION_PRESENTER);
-                fpPresenter.triggerFlush();
-                fpPresenter.setBean(bean);
-            }
-        });
-    }
-
-    /**
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public final void attachSignal() {
-        signal = findSignal(TopicName.FLIGHTPLAN_TABLE_SELECTED_TOPIC);
-        if (null == signal) {
-            signal = new Signal(TopicName.FLIGHTPLAN_TABLE_SELECTED_TOPIC);
-        }
-        createSignal(TopicName.FLIGHTPLAN_TABLE_SELECTED_TOPIC, signal);
     }
 }

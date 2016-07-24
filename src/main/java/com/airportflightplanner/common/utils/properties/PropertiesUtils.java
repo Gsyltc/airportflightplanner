@@ -1,7 +1,15 @@
-/* @(#)PropertiesLoader.java
+/*
+ * @(#)PropertiesUtils.java
  *
- * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
+ * Goubaud Sylvain
+ * Created : 2016
+ * Modified : 28 juil. 2016.
+ *
+ * This code may be freely used and modified on any personal or professional
+ * project.  It comes with no warranty.
+ *
  */
+
 package com.airportflightplanner.common.utils.properties;
 
 import java.io.File;
@@ -12,42 +20,132 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.airportflightplanner.common.slotsignal.AbstractSlotReceiver;
-import com.airportflightplanner.common.slotsignal.SelectionSlot;
 import com.airportflightplanner.common.slotsignal.TopicName;
-import com.airportflightplanner.common.slotsignal.api.SlotAction;
+
+import fr.gsyltc.framework.slotsignals.action.api.SlotAction;
+import fr.gsyltc.framework.slotsignals.slotreceiver.api.SlotReceiver;
+import fr.gsyltc.framework.slotsignals.slots.Slot;
 
 /**
  * @author Goubaud Sylvain
  *
  */
-public class PropertiesUtils extends AbstractSlotReceiver {
+public class PropertiesUtils implements SlotReceiver {
+    
+    
     /** */
-    private static final String           USER_CONFIG_PATH      = "config/";
+    private static final String USER_CONFIG_PATH = "config/";
     /** */
-    private List<String>                  fileNames;
+    private static Properties userProperties = new Properties();
     /** */
-    private static Properties             userProperties        = new Properties();
+    private static Properties applicationProperties = new Properties();
     /** */
-    private static Properties             applicationProperties = new Properties();
-    /** */
-    private static final List<Properties> PROPERTIES            = new ArrayList<Properties>();
-
+    private static final List<Properties> PROPERTIES = new ArrayList<Properties>();
     /** The logger of this class. */
-    private static final Log              LOGGER                = LogFactory.getLog(PropertiesUtils.class);
-
+    private static final Log LOGGER = LogFactory.getLog(PropertiesUtils.class);
+    
     /**
      *
+     * @param key
+     * @return
+     */
+    public static String getPropertyByName(final String key) {
+        String result = "";
+        for (final Properties properties : PROPERTIES) {
+            if (properties.containsKey(key)) {
+                result = properties.getProperty(key);
+                break;
+            }
+            
+        }
+        
+        if (result.isEmpty() && LOGGER.isErrorEnabled()) {
+            LOGGER.error("Error while loading properties. Property " + key + " not found");
+        }
+        
+        return result;
+    }
+    
+    /**
+     *
+     * @param key
+     * @param value
+     */
+    public static void setPropertyByName(final String key, final String value) {
+        if (null != userProperties) {
+            userProperties.setProperty(key, value);
+        }
+    }
+    
+    /** */
+    private List<String> fileNames;
+    
+    /**
+     * {@inheritDoc}.
      */
     @Override
+    public Slot attachSlot(final String topicName) {
+        // Nothing to do
+        return null;
+    }
+    
+    /**
+     *
+     * {@inheritDoc}
+     */
+    @Override
+    public final void createSlots() {
+        final Slot airportSlot = new Slot(TopicName.UPDATE_AIRPORT_TOPIC, getClass().getSimpleName());
+        airportSlot.setSlotAction(new SlotAction<String>() {
+            
+            
+            /**
+             *
+             * {@inheritDoc}
+             */
+            @Override
+            public void doAction(final String arg) {
+                setPropertyByName(CommonProperties.DEFAULT_AIRPORT, arg);
+                updateProperties();
+            }
+            
+        });
+        
+        // final Slot googleSlot = new Slot(TopicName.GOOGLE_PARAMETERS_TOPIC,
+        // getClass().getSimpleName());
+        // googleSlot.setSlotAction(new SlotAction<Map<String, String>>() {
+        //
+        //
+        // /**
+        // *
+        // * {@inheritDoc}
+        // */
+        // @Override
+        // public void doAction(final Map<String, String> arg) {
+        // setPropertyByName(CommonProperties.GOOGLE_MAPTYPE,
+        // arg.get(CommonProperties.GOOGLE_MAPTYPE));
+        // setPropertyByName(CommonProperties.GOOGLE_ZOOM_FACTOR,
+        // arg.get(CommonProperties.GOOGLE_ZOOM_FACTOR));
+        // setPropertyByName(CommonProperties.GOOGLE_POLYLINE_COLOR,
+        // arg.get(CommonProperties.GOOGLE_POLYLINE_COLOR));
+        // setPropertyByName(CommonProperties.GOOGLE_POLYLINE_WIDTH,
+        // arg.get(CommonProperties.GOOGLE_POLYLINE_WIDTH));
+        // updateProperties();
+        // }
+        //
+        // });
+    }
+    
+    /**
+     * Initialize properties.
+     */
     public void init() {
-        super.init();
+        createSlots();
         PROPERTIES.add(userProperties);
         PROPERTIES.add(applicationProperties);
 
@@ -72,56 +170,23 @@ public class PropertiesUtils extends AbstractSlotReceiver {
             }
         }
     }
-
+    
     /**
      *
-     * @param key
-     * @return
-     */
-    public static String getPropertyByName(final String key) {
-        String result = "";
-        for (final Properties properties : PROPERTIES) {
-            if (properties.containsKey(key)) {
-                result = properties.getProperty(key);
-                break;
-            }
-
-        }
-
-        if (result.isEmpty() && LOGGER.isErrorEnabled()) {
-            LOGGER.error("Error while loading properties. Property " + key + " not found");
-        }
-
-        return result;
-    }
-
-    /**
-     *
-     * @param key
-     * @param value
-     */
-    public static void setPropertyByName(final String key, final String value) {
-        if (null != userProperties) {
-            userProperties.setProperty(key, value);
-        }
-    }
-
-    /**
-     *
-     * @param fileNames
+     * @param newFileNames
      *            List of resources files.
      */
-    public void setFileNames(final List<String> fileNames) {
-        this.fileNames = fileNames;
+    public void setFileNames(final List<String> newFileNames) {
+        this.fileNames = newFileNames;
     }
-
+    
     /**
      * @return the fileNames
      */
     private List<String> getFileNames() {
-        return Collections.unmodifiableList(fileNames);
+        return Collections.unmodifiableList(this.fileNames);
     }
-
+    
     /**
      * Update the user properties fles.
      */
@@ -134,43 +199,5 @@ public class PropertiesUtils extends AbstractSlotReceiver {
                 LOGGER.error("Error while writing application properties", e);
             }
         }
-    }
-
-    /**
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public final void attachSlotAction() {
-        final SelectionSlot<String> airportSlot = new SelectionSlot<String>(TopicName.UPDATE_AIRPORT_TOPIC, this);
-        airportSlot.setSlotAction(new SlotAction<String>() {
-            /**
-             *
-             * {@inheritDoc}
-             */
-            @Override
-            public void doAction(final String arg) {
-                setPropertyByName(CommonProperties.DEFAULT_AIRPORT, arg);
-                updateProperties();
-            }
-
-        });
-
-        final SelectionSlot<Map<String, String>> googleSlot = new SelectionSlot<Map<String, String>>(TopicName.GOOGLE_PARAMETERS_TOPIC, this);
-        googleSlot.setSlotAction(new SlotAction<Map<String, String>>() {
-            /**
-             *
-             * {@inheritDoc}
-             */
-            @Override
-            public void doAction(final Map<String, String> arg) {
-                setPropertyByName(CommonProperties.GOOGLE_MAPTYPE, arg.get(CommonProperties.GOOGLE_MAPTYPE));
-                setPropertyByName(CommonProperties.GOOGLE_ZOOM_FACTOR, arg.get(CommonProperties.GOOGLE_ZOOM_FACTOR));
-                setPropertyByName(CommonProperties.GOOGLE_POLYLINE_COLOR, arg.get(CommonProperties.GOOGLE_POLYLINE_COLOR));
-                setPropertyByName(CommonProperties.GOOGLE_POLYLINE_WIDTH, arg.get(CommonProperties.GOOGLE_POLYLINE_WIDTH));
-                updateProperties();
-            }
-
-        });
     }
 }

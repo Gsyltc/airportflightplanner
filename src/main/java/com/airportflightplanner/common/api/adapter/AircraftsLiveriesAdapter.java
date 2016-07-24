@@ -7,6 +7,7 @@
  * project.  It comes with no warranty.
  *
  */
+
 package com.airportflightplanner.common.api.adapter;
 
 import java.util.SortedSet;
@@ -16,7 +17,8 @@ import java.util.SortedSet;
  *
  */
 public interface AircraftsLiveriesAdapter {
-
+    
+    
     /**
      *
      * @param airCraftType
@@ -25,12 +27,9 @@ public interface AircraftsLiveriesAdapter {
     void addLivery(final String airCraftType);
 
     /**
-     *
-     * @param aircraftCie
-     *            aircraft companu.
-     * @return list of liveries for the company.
+     * @return the aircraftType
      */
-    SortedSet<String> getLiveriesByCpie(final String aircraftCie);
+    String getAircraftType();
 
     /**
      *
@@ -39,8 +38,11 @@ public interface AircraftsLiveriesAdapter {
     SortedSet<String> getCompagnies();
 
     /**
-     * @return the aircraftType
+     *
+     * @param aircraftCie
+     *            aircraft companu.
+     * @return list of liveries for the company.
      */
-    String getAircraftType();
+    SortedSet<String> getLiveriesByCpie(final String aircraftCie);
 
 }

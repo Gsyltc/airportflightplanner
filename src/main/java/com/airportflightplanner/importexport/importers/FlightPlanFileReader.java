@@ -1,12 +1,15 @@
 /*
  * @(#)FlightPlanFileReader.java
  *
- * Goubaud Sylvain - 2016.
+ * Goubaud Sylvain
+ * Created : 2016
+ * Modified : 27 juil. 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
  *
  */
+
 package com.airportflightplanner.importexport.importers;
 
 import java.beans.PropertyChangeEvent;
@@ -40,31 +43,67 @@ import com.airportflightplanner.common.utils.properties.CommonProperties;
  *
  */
 public class FlightPlanFileReader {
+    
+    
     /** The logger of this class. */
-    private static final Log         LOGGER = LogFactory.getLog(FlightPlanFileReader.class);
+    private static final Log LOGGER = LogFactory.getLog(FlightPlanFileReader.class);
 
     /**
      *
      */
-    private FlightPlanModelAdapter   flightPlanModelAdapter;
+    private FlightPlanModelAdapter flightPlanModelAdapter;
     /** */
     private FlighPlanCollectionModel flighPlanCollectionModel;
+
+    /**
+     * @return the flighPlanCollectionModel
+     */
+    public FlighPlanCollectionModel getFlighPlanCollectionModel() {
+        return this.flighPlanCollectionModel;
+    }
+
+    /**
+     * @return the flightPlanModelAdapter
+     */
+    public FlightPlanModelAdapter getFlightPlanModelAdapter() {
+        return this.flightPlanModelAdapter;
+    }
 
     /**
      *
      */
     @PostConstruct
     public void init() {
-        flighPlanCollectionModel.addPropertyChangeListener(FlightPlanCollectionProperties.CURRENT_AIRPORT, new PropertyChangeListener() {
-            /**
-             *
-             * {@inheritDoc}
-             */
-            @Override
-            public void propertyChange(final PropertyChangeEvent evt) {
-                loadFlightPlans(evt.getNewValue().toString());
-            }
-        });
+        this.flighPlanCollectionModel.addPropertyChangeListener(FlightPlanCollectionProperties.CURRENT_AIRPORT,
+                new PropertyChangeListener() {
+                    
+                    
+                    /**
+                     *
+                     * {@inheritDoc}
+                     */
+                    @Override
+                    public void propertyChange(final PropertyChangeEvent evt) {
+                        loadFlightPlans(evt.getNewValue().toString());
+                    }
+                });
+    }
+
+    /**
+     * Set the flight plan collection model.
+     * 
+     * @param newFlighPlanCollectionModel
+     */
+    public void setFlighPlanCollectionModel(final FlighPlanCollectionModel newFlighPlanCollectionModel) {
+        this.flighPlanCollectionModel = newFlighPlanCollectionModel;
+    }
+
+    /**
+     *
+     * @param newFlighPlanModelAdapter
+     */
+    public void setFlightPlanModelAdapter(final FlightPlanModelAdapter newFlighPlanModelAdapter) {
+        this.flightPlanModelAdapter = newFlighPlanModelAdapter;
     }
 
     /**
@@ -73,15 +112,18 @@ public class FlightPlanFileReader {
      */
     protected void loadFlightPlans(final String currentAirport) {
         getFlighPlanCollectionModel().getFlightPlanListModel().clear();
-        try (DirectoryStream<Path> stream = Files.newDirectoryStream(CommonProperties.ROUTES_DIRECTORY.resolve(currentAirport), "*.{txt}")) {
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(CommonProperties.ROUTES_DIRECTORY.resolve(currentAirport),
+                "*.{txt}")) {
             for (final Path path : stream) {
                 final Path fileName = path.getFileName();
                 if (null != fileName) {
                     final FlightPlanModel newFlightPlan = new FlightPlanModel();
-                    flightPlanModelAdapter.setModel(newFlightPlan);
+                    this.flightPlanModelAdapter.setModel(newFlightPlan);
                     newFlightPlan.setFileName(fileName.toString().replace("*.txt", ""));
                     // Attach listener for flight time
                     newFlightPlan.addPropertyChangeListener(FlightPlanProperties.DURATION, new PropertyChangeListener() {
+                        
+                        
                         /**
                          *
                          * {@inheritDoc}
@@ -99,7 +141,8 @@ public class FlightPlanFileReader {
                     });
 
                     try (InputStream inputStream = Files.newInputStream(path); //
-                            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+                            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream,
+                                    StandardCharsets.UTF_8))) {
                         String line = reader.readLine();
                         while (line != null) {
                             if (line.startsWith("START")) {
@@ -111,63 +154,63 @@ public class FlightPlanFileReader {
                                         getFlightPlanModelAdapter().updateFlightPlan(informationsType, line);
                                     }
                                     break;
-
+                                
                                 case STARTAIRCRAFT:
                                     line = reader.readLine();
                                     if (!FlightPlanInformationTypes.ENDAIRCRAFT.name().equals(line)) {
                                         getFlightPlanModelAdapter().updateFlightPlan(informationsType, line);
                                     }
                                     break;
-
+                                
                                 case STARTDESTAIRPORT:
                                     line = reader.readLine();
                                     if (!FlightPlanInformationTypes.ENDDESTAIRPORT.name().equals(line)) {
                                         getFlightPlanModelAdapter().updateFlightPlan(informationsType, line);
                                     }
                                     break;
-
+                                
                                 case STARTDEPAIRPORT:
                                     line = reader.readLine();
                                     if (!FlightPlanInformationTypes.ENDDEPAIRPORT.name().equals(line)) {
                                         getFlightPlanModelAdapter().updateFlightPlan(informationsType, line);
                                     }
                                     break;
-
+                                
                                 case START_FLY_TO_COMPLETION:
                                     line = reader.readLine();
                                     if (!FlightPlanInformationTypes.END_FLY_TO_COMPLETION.name().equals(line)) {
                                         getFlightPlanModelAdapter().updateFlightPlan(informationsType, line);
                                     }
                                     break;
-
+                                
                                 case START_LANDING_LIGHT_ALT:
                                     line = reader.readLine();
                                     if (!FlightPlanInformationTypes.END_LANDING_LIGHT_ALT.name().equals(line)) {
                                         getFlightPlanModelAdapter().updateFlightPlan(informationsType, line);
                                     }
                                     break;
-
+                                
                                 case STARTALTERNATEAIRPORT:
                                     line = reader.readLine();
                                     if (!FlightPlanInformationTypes.ENDALTERNATEAIRPORT.name().equals(line)) {
                                         getFlightPlanModelAdapter().updateFlightPlan(informationsType, line);
                                     }
                                     break;
-
+                                
                                 case STARTARRIVETYPE:
                                     line = reader.readLine();
                                     if (!FlightPlanInformationTypes.ENDARRIVETYPE.name().equals(line)) {
                                         getFlightPlanModelAdapter().updateFlightPlan(informationsType, line);
                                     }
                                     break;
-
+                                
                                 case STARTCALLSIGN:
                                     line = reader.readLine();
                                     if (!FlightPlanInformationTypes.ENDCALLSIGN.name().equals(line)) {
                                         getFlightPlanModelAdapter().updateFlightPlan(informationsType, line);
                                     }
                                     break;
-
+                                
                                 case STARTDAYS:
                                     line = reader.readLine();
                                     if (!FlightPlanInformationTypes.ENDDAYS.name().equals(line)) {
@@ -175,21 +218,21 @@ public class FlightPlanFileReader {
                                     }
 
                                     break;
-
+                                
                                 case STARTDEPARTTYPE:
                                     line = reader.readLine();
                                     if (!FlightPlanInformationTypes.ENDDEPARTTYPE.name().equals(line)) {
                                         getFlightPlanModelAdapter().updateFlightPlan(informationsType, line);
                                     }
                                     break;
-
+                                
                                 case STARTFLIGHTTYPE:
                                     line = reader.readLine();
                                     if (!FlightPlanInformationTypes.ENDFLIGHTTYPE.name().equals(line)) {
                                         getFlightPlanModelAdapter().updateFlightPlan(informationsType, line);
                                     }
                                     break;
-
+                                
                                 case STARTSTEERPOINTS:
                                     final List<String> steerpoints = new ArrayList<String>();
                                     line = reader.readLine();
@@ -199,7 +242,7 @@ public class FlightPlanFileReader {
                                     }
                                     getFlightPlanModelAdapter().addSteerpoints(steerpoints);
                                     break;
-
+                                
                                 default:
                                     break;
                                 }
@@ -210,41 +253,11 @@ public class FlightPlanFileReader {
                         }
                     }
 
-                    flighPlanCollectionModel.addFlightPlan(newFlightPlan);
+                    this.flighPlanCollectionModel.addFlightPlan(newFlightPlan);
                 }
             }
         } catch (final IOException e) {
             LOGGER.error("Error while reading Flght plans", e);
         }
-    }
-
-    /**
-     *
-     * @param flightPlanModelAdapter
-     */
-    public void setFlightPlanModelAdapter(final FlightPlanModelAdapter flightPlanModelAdapter) {
-        this.flightPlanModelAdapter = flightPlanModelAdapter;
-    }
-
-    /**
-     *
-     * @param flighPlanCollectionModel
-     */
-    public void setFlighPlanCollectionModel(final FlighPlanCollectionModel flighPlanCollectionModel) {
-        this.flighPlanCollectionModel = flighPlanCollectionModel;
-    }
-
-    /**
-     * @return the flighPlanCollectionModel
-     */
-    public FlighPlanCollectionModel getFlighPlanCollectionModel() {
-        return flighPlanCollectionModel;
-    }
-
-    /**
-     * @return the flightPlanModelAdapter
-     */
-    public FlightPlanModelAdapter getFlightPlanModelAdapter() {
-        return flightPlanModelAdapter;
     }
 }

@@ -85,21 +85,21 @@ public class SteerPointsListModel extends AbstractListModel<SteerPointReader> im
 
     /**
      *
-     * @param SteerPointReader
+     * @param steerPointReader
      *            a steerpoint.
      * @return Index of the steerpoint.
      */
-    public final int indexOf(final SteerPointReader SteerPointReader) {
-        return list.indexOf(SteerPointReader);
+    public final int indexOf(final SteerPointReader steerPointReader) {
+        return list.indexOf(steerPointReader);
     }
 
     /**
      *
-     * @param SteerPointReader
+     * @param steerPointReader
      *            a Steerpoint.
      */
-    public final void add(final SteerPointReader SteerPointReader) {
-        list.add(SteerPointReader);
+    public final void add(final SteerPointReader steerPointReader) {
+        list.add(steerPointReader);
         fireContentsChanged(this, FIRST_ROW, list.size() - 1);
     }
 

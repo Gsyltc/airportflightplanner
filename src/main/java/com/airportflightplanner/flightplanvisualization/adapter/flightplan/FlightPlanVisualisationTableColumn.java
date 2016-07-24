@@ -50,9 +50,9 @@ public enum FlightPlanVisualisationTableColumn {
      */
     public static FlightPlanVisualisationTableColumn valueOf(final int columnNumber) {
         FlightPlanVisualisationTableColumn result = null;
-        for (final FlightPlanVisualisationTableColumn iterable_element : FlightPlanVisualisationTableColumn.values()) {
-            if (iterable_element.ordinal() == columnNumber) {
-                result = iterable_element;
+        for (final FlightPlanVisualisationTableColumn column : FlightPlanVisualisationTableColumn.values()) {
+            if (column.ordinal() == columnNumber) {
+                result = column;
             }
         }
         return result;

@@ -1,7 +1,9 @@
 /*
  * @(#)FlightPlanCollectionAdapterImpl.java
  *
- * Goubaud Sylvain - 2016.
+ * Goubaud Sylvain
+ * Created : 2016
+ * Modified : 27 juil. 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -13,55 +15,35 @@ package com.airportflightplanner.common.adapter.impl;
 import com.airportflightplanner.common.api.adapter.FlightPlanCollectionAdapter;
 import com.airportflightplanner.common.models.flightplans.FlighPlanCollectionModel;
 
+import fr.gsyltc.framework.adapters.AbstractModelAdapterImpl;
+
 /**
+ * The flight plan collection Domain Model Adapter.
+ *
  * @author Goubaud Sylvain
  *
  */
 
-public class FlightPlanCollectionAdapterImpl implements FlightPlanCollectionAdapter {
-    /** */
-    private FlighPlanCollectionModel model;
-    /** */
-    private String                   adapterName;
+public class FlightPlanCollectionAdapterImpl extends AbstractModelAdapterImpl<FlighPlanCollectionModel> //
+        implements FlightPlanCollectionAdapter {
+    
+    
+    /** . */
+    private static final long serialVersionUID = 4408549118062180286L;
+
+    /**
+     * {@inheritDoc}.
+     */
+    @Override
+    public void init() {
+        // Nothing to do
+    }
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void setCurrentAirport(final String value) {
-        model.setCurrentAirport(value);
-    }
-
-    /**
-     * @param flighPlanCollectionModel
-     *            the flighPlanCollectionModel to set
-     */
-    @Override
-    public void setModel(final FlighPlanCollectionModel flighPlanCollectionModel) {
-        model = flighPlanCollectionModel;
-    }
-
-    /**
-     * @return the flighPlanCollectionModel
-     */
-    @Override
-    public FlighPlanCollectionModel getModel() {
-        return model;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getAdapterName() {
-        return adapterName;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setAdapterName(final String name) {
-        adapterName = name;
+        getModel().setCurrentAirport(value);
     }
 }
