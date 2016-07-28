@@ -1,7 +1,9 @@
 /*
  * @(#)StartDaysAdapterImpl.java
  *
- * Goubaud Sylvain - 2016.
+ * Goubaud Sylvain
+ * Created : 2016
+ * Modified : 28 juil. 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -35,18 +37,23 @@ public class StartDaysAdapterImpl extends AbstractReceiverModelAdapterImpl<DaysS
     private static final long serialVersionUID = 8742702470474381772L;
     
     /**
-     * {@inheritDoc}
+     *
+     * {@inheritDoc}.
      */
     @Override
     public void createSlots() {
         final Slot slot = new Slot(TopicName.FLIGHTPLAN_TABLE_SELECTED_TOPIC, getClass().getSimpleName());
-        slot.registerSlot();
         slot.setSlotAction(new SlotAction<FlightPlanReader>() {
             
             
             /**
              *
-             * {@inheritDoc}
+             */
+            private static final long serialVersionUID = -1849859877568448215L;
+            
+            /**
+             *
+             * {@inheritDoc}.
              */
             @Override
             public void doAction(final FlightPlanReader bean) {
@@ -56,15 +63,16 @@ public class StartDaysAdapterImpl extends AbstractReceiverModelAdapterImpl<DaysS
             }
         });
     }
-
+    
     /**
      *
+     * {@inheritDoc}.
      */
     @Override
     public void init() {
         createSlots();
     }
-
+    
     /**
      * {@inheritDoc}
      */

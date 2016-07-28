@@ -57,18 +57,18 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
      *
      */
     private static final long serialVersionUID = -6354635338489926005L;
-
+    
     /** */
     protected static final int FP_COLLECTION_PRESENTER = 0;
     /**
      *
      */
     protected Signal signal;
-
+    
     /**
      *
      */
-
+    
     /**
      * @param presenter
      *
@@ -76,7 +76,7 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
     public FlightPlanListPanel(final FlightPlanVisualizationPresenter presenter) {
         super(presenter);
     }
-
+    
     /**
      *
      */
@@ -92,14 +92,14 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
                 new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC, //
                         FormSpecs.RELATED_GAP_ROWSPEC, }));
-
+        
         final TitledBorder panelBorder = new TitledBorder(FlightPlanCreationPanelMessages.FLIGHTSLIST_TITLE);
         setBorder(panelBorder);
-
-        add(createFlightScrollPane(), "2, 2, 3, 1");
         
-    }
+        add(createFlightScrollPane(), "2, 2, 3, 1");
 
+    }
+    
     /**
      *
      * {@inheritDoc}
@@ -114,14 +114,14 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
         }
         attachSignal(TopicName.FLIGHTPLAN_TABLE_SELECTED_TOPIC);
     }
-
+    
     /**
      * {@inheritDoc}.
      */
     @Override
     public final void createSlots() {
         super.createSlots();
-
+        
         final Slot slot = new Slot(TopicName.FLIGHTPLAN_TABLE_SELECTED_TOPIC, getClass().getSimpleName());
         slot.setSlotAction(new SlotAction<FlightPlanReader>() {
             
@@ -130,7 +130,7 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
              *
              */
             private static final long serialVersionUID = -6027127491253834166L;
-
+            
             /**
              *
              * {@inheritDoc}
@@ -144,7 +144,7 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
             }
         });
     }
-
+    
     /**
      * @return the panel.
      *
@@ -171,7 +171,7 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
                 FlightPlanReader flightPlan = null;
                 if (event.getValueIsAdjusting()) {
                     final ListSelectionModel lsm = (ListSelectionModel) event.getSource();
-
+                    
                     if (!lsm.isSelectionEmpty()) {
                         final int minIndex = lsm.getMinSelectionIndex();
                         final int maxIndex = lsm.getMaxSelectionIndex();
@@ -185,15 +185,15 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
                 }
             }
         });
-
+        
         final TableRowSorter<TableModel> sorter = new TableRowSorter<>(table.getModel());
         table.setRowSorter(sorter);
         final List<RowSorter.SortKey> sortKeys = new ArrayList<>();
         sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
-
+        
         sorter.setSortKeys(sortKeys);
         sorter.sort();
-
+        
         final JScrollPane scrollPane = new JScrollPane();
         scrollPane.setViewportView(table);
         return scrollPane;

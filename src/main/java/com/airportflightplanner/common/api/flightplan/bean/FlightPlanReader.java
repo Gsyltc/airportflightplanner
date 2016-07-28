@@ -1,7 +1,15 @@
-/* @(#)FlightPlanVisualisationReader.java
+/*
+ * @(#)FlightPlanReader.java
  *
- * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
+ * Goubaud Sylvain
+ * Created : 2016
+ * Modified : 28 juil. 2016.
+ *
+ * This code may be freely used and modified on any personal or professional
+ * project.  It comes with no warranty.
+ *
  */
+
 package com.airportflightplanner.common.api.flightplan.bean;
 
 import java.io.Serializable;
@@ -21,42 +29,14 @@ import com.airportflightplanner.common.types.StartDays;
  * @author Goubaud Sylvain
  *
  */
-public interface FlightPlanReader extends Serializable{
+public interface FlightPlanReader extends Serializable {
+    
+    
     /**
      *
      * @return
      */
-    List<String> getSteerPoints();
-
-    /**
-     *
-     * @return
-     */
-    String getDepartureAirport();
-
-    /**
-     *
-     * @return
-     */
-    String getArrivalAirport();
-
-    /**
-     *
-     * @return
-     */
-    LocalTime getStartTime();
-
-    /**
-     *
-     * @return
-     */
-    LocalTime getEndTime();
-
-    /**
-     *
-     * @return
-     */
-    String getCallSign();
+    String getAircraftCie();
 
     /**
      *
@@ -68,13 +48,13 @@ public interface FlightPlanReader extends Serializable{
      *
      * @return
      */
-    String getAircraftCie();
+    String getAlternateAirport();
 
     /**
      *
      * @return
      */
-    Period getDuration();
+    String getArrivalAirport();
 
     /**
      *
@@ -86,19 +66,49 @@ public interface FlightPlanReader extends Serializable{
      *
      * @return
      */
+    String getCallSign();
+
+    /**
+     *
+     * @return
+     */
+    String getDepartureAirport();
+
+    /**
+     *
+     * @return
+     */
     DepartureType getDepartureType();
 
     /**
      *
      * @return
      */
-    FlightType getFlightType();
+    Period getDuration();
+
+    /**
+     *
+     * @return
+     */
+    LocalTime getEndTime();
+
+    /**
+     *
+     * @return
+     */
+    String getFileName();
 
     /**
      *
      * @return
      */
     Boolean getFlightToCompletion();
+
+    /**
+     *
+     * @return
+     */
+    FlightType getFlightType();
 
     /**
      *
@@ -116,17 +126,18 @@ public interface FlightPlanReader extends Serializable{
      *
      * @return
      */
-    String getAlternateAirport();
+    Set<StartDays> getStartDays();
 
     /**
      *
      * @return
      */
-    Set<StartDays> getStartDays();
+    LocalTime getStartTime();
+
     /**
      *
      * @return
      */
-    String getFileName();
+    List<String> getSteerPoints();
 
 }

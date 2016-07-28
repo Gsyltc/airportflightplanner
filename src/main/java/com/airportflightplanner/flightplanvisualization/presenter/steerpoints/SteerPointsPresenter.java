@@ -1,7 +1,15 @@
-/* @(#)FlightPlanVisaulizationPresenter.java
+/*
+ * @(#)SteerPointsPresenter.java
  *
- * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
+ * Goubaud Sylvain
+ * Created : 2016
+ * Modified : 28 juil. 2016.
+ *
+ * This code may be freely used and modified on any personal or professional
+ * project.  It comes with no warranty.
+ *
  */
+
 package com.airportflightplanner.flightplanvisualization.presenter.steerpoints;
 
 import com.airportflightplanner.common.models.steerpoints.SteerPointsCollectionModel;
@@ -14,13 +22,15 @@ import com.jgoodies.binding.beans.Model;
  *
  */
 public class SteerPointsPresenter extends PresentationModel<SteerPointsCollectionModel> {
+    
+    
     /**
      *
      */
-    private static final long       serialVersionUID = 2003878398284031619L;
+    private static final long serialVersionUID = 2003878398284031619L;
     /** */
     private SteerPointsTableAdapter tableAdapter;
-
+    
     /**
      *
      * @param bean
@@ -28,36 +38,36 @@ public class SteerPointsPresenter extends PresentationModel<SteerPointsCollectio
     public SteerPointsPresenter(final Model bean) {
         super((SteerPointsCollectionModel) bean);
     }
-
+    
     /**
-     * Get the table adapter for the flight plan visualization panel
-     *
-     * @return
-     */
-    public SteerPointsTableAdapter getTableAdapter() {
-        if (null == tableAdapter) {
-            setTableAdapter(new SteerPointsTableAdapter(getBean().getSteerPointsListModel()));
-        }
-        return tableAdapter;
-    }
-
-    /**
-     * Get the list model
+     * Get the list model.
      *
      * @return
      */
     public SteerPointsListModel getListModel() {
-        if (null == tableAdapter) {
+        if (null == this.tableAdapter) {
             getTableAdapter();
         }
         return (SteerPointsListModel) getTableAdapter().getListModel();
     }
-
+    
     /**
-     * @param tableAdapter
+     * Get the table adapter for the flight plan visualization panel.
+     *
+     * @return
+     */
+    public SteerPointsTableAdapter getTableAdapter() {
+        if (null == this.tableAdapter) {
+            setTableAdapter(new SteerPointsTableAdapter(getBean().getSteerPointsListModel()));
+        }
+        return this.tableAdapter;
+    }
+    
+    /**
+     * @param nTableAdapter
      *            the tableAdapter to set
      */
-    private void setTableAdapter(final SteerPointsTableAdapter tableAdapter) {
-        this.tableAdapter = tableAdapter;
+    private void setTableAdapter(final SteerPointsTableAdapter nTableAdapter) {
+        this.tableAdapter = nTableAdapter;
     }
 }

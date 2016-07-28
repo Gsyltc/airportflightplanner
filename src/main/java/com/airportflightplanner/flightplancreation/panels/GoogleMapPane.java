@@ -7,6 +7,7 @@
  * project.  It comes with no warranty.
  *
  */
+
 package com.airportflightplanner.flightplancreation.panels;
 
 import java.awt.Rectangle;
@@ -28,46 +29,50 @@ import com.jgoodies.binding.PresentationModel;
  * @author DCNS
  *
  */
-public class GoogleMapPane extends JEditorPane  {
+public class GoogleMapPane extends JEditorPane {
+    
+    
     /**
      *
      */
-    private static final long                                 serialVersionUID = -3128841669458527858L;
+    private static final long serialVersionUID = -3128841669458527858L;
     /** */
-    private String                                            zoomFactor       = CommonProperties.getPropertyValue(CommonProperties.GOOGLE_ZOOM_FACTOR);
+    private static final int DEFAULT_SIZE = 400;
     /** */
-    private transient final String                            apiKey           = CommonProperties.getPropertyValue(CommonProperties.GOOGLE_KEY);
+    private static final int INIT_CAPACITY = 250;
     /** */
-    private MapType                                           roadmap          =                                                                           //
+    private String zoomFactor = CommonProperties.getPropertyValue(CommonProperties.GOOGLE_ZOOM_FACTOR);
+    /** */
+    private final transient String apiKey = CommonProperties.getPropertyValue(CommonProperties.GOOGLE_KEY);
+    /** */
+    private MapType roadmap = //
             MapType.valueOf(CommonProperties.getPropertyValue(CommonProperties.GOOGLE_MAPTYPE));
     /** */
-    private transient final String                            polylineColor    = CommonProperties.getPropertyValue(CommonProperties.GOOGLE_POLYLINE_COLOR);
+    private final transient String polylineColor = CommonProperties.getPropertyValue(CommonProperties.GOOGLE_POLYLINE_COLOR);
     /** */
-    private transient final String                            polylineWeigth   = CommonProperties.getPropertyValue(CommonProperties.GOOGLE_POLYLINE_WIDTH);
+    private final transient String polylineWeigth = CommonProperties.getPropertyValue(CommonProperties.GOOGLE_POLYLINE_WIDTH);
     /** */
-    private static final int                                  DEFAULT_SIZE     = 400;
+    private transient int mapWidth = DEFAULT_SIZE;
     /** */
-    private transient int                                     mapWidth         = DEFAULT_SIZE;
+    private transient int mapHeight = DEFAULT_SIZE;
     /** */
-    private transient int                                     mapHeight        = DEFAULT_SIZE;
+    private final transient PresentationModel<GoogleMapModel> googleMapModel;
     /** */
-    private transient final PresentationModel<GoogleMapModel> googleMapModel;
+    private final transient HTMLEditorKit kit = new HTMLEditorKit();
     /** */
-    private transient final HTMLEditorKit                     kit              = new HTMLEditorKit();
-    /** */
-    private transient final HTMLDocument                      htmlDoc          = (HTMLDocument) kit.createDefaultDocument();
-    /** */
-    private static final int                                  INIT_CAPACITY    = 250;
+    private final transient HTMLDocument htmlDoc = (HTMLDocument) this.kit.createDefaultDocument();
 
     /**
-     * Constructeur: initialisation du EditorKit
+     * Constructeur: initialisation du EditorKit.
      *
-     * @param googleMapModel
+     * @param newGoogleMapModel
      */
-    public GoogleMapPane(final PresentationModel<GoogleMapModel> googleMapModel) {
+    public GoogleMapPane(final PresentationModel<GoogleMapModel> newGoogleMapModel) {
         super();
-        this.googleMapModel = googleMapModel;
-        googleMapModel.addBeanPropertyChangeListener(GoogleMapModelProperties.POLYLINE, new PropertyChangeListener() {
+        this.googleMapModel = newGoogleMapModel;
+        newGoogleMapModel.addBeanPropertyChangeListener(GoogleMapModelProperties.POLYLINE, new PropertyChangeListener() {
+            
+            
             /**
              *
              * {@inheritDoc}
@@ -82,37 +87,26 @@ public class GoogleMapPane extends JEditorPane  {
     }
 
     /**
-     *
+     * @return the roadmap
      */
-    private void build() {
-        setEditable(false);
-        setContentType("text/html");
-        setEditorKit(kit);
-        setDocument(htmlDoc);
-        final StringBuilder html = new StringBuilder(INIT_CAPACITY);
-        html.append("<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'><html><head></head><body><img width=") //
-        .append(mapWidth).append(" height=") //
-        .append(mapHeight).append(" src='file:") //
-        .append(getClass().getClassLoader().getResource("images/default.jpg").getPath()) //
-        .append("'></body></html>");
-        setText(html.toString());
-    }
-
-    /**
-     * Fixer le zoom.
-     *
-     * @param zoom
-     *            valeur de 0 a 21
-     */
-    public void setZoomFactor(final int zoom) {
-        zoomFactor = String.valueOf(zoom);
+    public MapType getRoadmap() {
+        return this.roadmap;
     }
 
     /**
      * @return the zoomFactor
      */
     public String getZoomFactor() {
-        return zoomFactor;
+        return this.zoomFactor;
+    }
+
+    /**
+     *
+     * @param bounds
+     */
+    public void setDimension(final Rectangle bounds) {
+        this.mapWidth = (int) bounds.getWidth();
+        this.mapHeight = (int) bounds.getHeight();
     }
 
     /**
@@ -122,47 +116,58 @@ public class GoogleMapPane extends JEditorPane  {
      *            the roadMap.
      */
     public void setRoadmap(final MapType roadMap) {
-        roadmap = roadMap;
+        this.roadmap = roadMap;
     }
 
     /**
-     * @return the roadmap
+     * Fixer le zoom.
+     *
+     * @param zoom
+     *            valeur de 0 a 21
      */
-    public MapType getRoadmap() {
-        return roadmap;
+    public void setZoomFactor(final int zoom) {
+        this.zoomFactor = String.valueOf(zoom);
+    }
+
+    /**
+     *
+     */
+    private void build() {
+        setEditable(false);
+        setContentType("text/html");
+        setEditorKit(this.kit);
+        setDocument(this.htmlDoc);
+        final StringBuilder html = new StringBuilder(INIT_CAPACITY);
+        html.append("<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'><html><head></head><body><img width=") //
+                .append(this.mapWidth).append(" height=") //
+                .append(this.mapHeight).append(" src='file:") //
+                .append(getClass().getClassLoader().getResource("images/default.jpg").getPath()) //
+                .append("'></body></html>");
+        setText(html.toString());
     }
 
     /**
      *
      */
     protected void updateMap() {
-        if (apiKey.isEmpty()) {
+        if (this.apiKey.isEmpty()) {
             throw new IllegalArgumentException("Developper API Key not set !!!!");
         }
         final StringBuffer uri = new StringBuffer().append("http://maps.googleapis.com/maps/api/staticmap?&path=color:") //
-                .append(polylineColor).append("|weight:") //
-                .append(polylineWeigth).append("|geodesic:true") //
-                .append(GoogleMapProcessor.getEncodedRoad(googleMapModel.getBean())) //
-                .append("&size=").append(mapWidth).append('x').append(mapHeight) //
-                .append("&maptype=").append(roadmap.name().toLowerCase()) //
+                .append(this.polylineColor).append("|weight:") //
+                .append(this.polylineWeigth).append("|geodesic:true") //
+                .append(GoogleMapProcessor.getEncodedRoad(this.googleMapModel.getBean())) //
+                .append("&size=").append(this.mapWidth).append('x').append(this.mapHeight) //
+                .append("&maptype=").append(this.roadmap.name().toLowerCase()) //
                 .append("&sensor=false") //
-                .append("&zoom").append(zoomFactor) //
-                .append("&key=").append(apiKey); //
+                .append("&zoom").append(this.zoomFactor) //
+                .append("&key=").append(this.apiKey); //
 
         final StringBuilder html = new StringBuilder(INIT_CAPACITY);
         html.append("<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'><html><head></head><body><img width=") //
-        .append(mapWidth).append(" height=") //
-        .append(mapHeight).append(" src='") //
-        .append(uri.toString()).append("'></body></html>");
+                .append(this.mapWidth).append(" height=") //
+                .append(this.mapHeight).append(" src='") //
+                .append(uri.toString()).append("'></body></html>");
         setText(html.toString());
-    }
-
-    /**
-     *
-     * @param bounds
-     */
-    public void setDimension(final Rectangle bounds) {
-        mapWidth = (int) bounds.getWidth();
-        mapHeight = (int) bounds.getHeight();
     }
 }

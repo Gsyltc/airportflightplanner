@@ -108,7 +108,7 @@
         <dependency>
             <groupId>fr.gsyltc</groupId>
             <artifactId>Framework-main</artifactId>
-            <version>1.0.3-SNAPSHOT</version>
+            <version>1.0.4-SNAPSHOT</version>
         </dependency>
     </dependencies>
     <dependencyManagement>

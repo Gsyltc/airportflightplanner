@@ -48,11 +48,11 @@ public class AircraftFileReader {
     }
 
     /**
-     * @param adapter
+     * @param newAdapter
      *            the adapter to set
      */
-    public void setAdapter(final AircraftTypeAdapter adapter) {
-        this.adapter = adapter;
+    public void setAdapter(final AircraftTypeAdapter newAdapter) {
+        this.adapter = newAdapter;
     }
 
     /**

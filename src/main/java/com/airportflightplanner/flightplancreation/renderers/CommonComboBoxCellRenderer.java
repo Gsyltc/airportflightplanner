@@ -3,6 +3,7 @@
  * 2016 Goubaud Sylvain.
  *
  */
+
 package com.airportflightplanner.flightplancreation.renderers;
 
 import java.awt.Component;
@@ -23,10 +24,12 @@ import com.airportflightplanner.common.utils.internationalization.Internationali
  *
  */
 public class CommonComboBoxCellRenderer<E> implements ListCellRenderer<E> {
+    
+    
     /** */
-    private transient final DefaultListCellRenderer defaultRenderer = new DefaultListCellRenderer();
+    private final transient DefaultListCellRenderer defaultRenderer = new DefaultListCellRenderer();
     /** */
-    private transient final String                  prototypeDisplay;
+    private final transient String prototypeDisplay;
 
     /**
      *
@@ -55,9 +58,9 @@ public class CommonComboBoxCellRenderer<E> implements ListCellRenderer<E> {
             result = Internationalizer.getI18String((String) value);
         }
 
-        final JLabel renderer = (JLabel) defaultRenderer.getListCellRendererComponent(//
+        final JLabel renderer = (JLabel) this.defaultRenderer.getListCellRendererComponent(//
                 list, value, index, isSelected, cellHasFocus);
-        if (null != value && !prototypeDisplay.equals(value)) {
+        if ((null != value) && !this.prototypeDisplay.equals(value)) {
             renderer.setText(result);
         }
 
