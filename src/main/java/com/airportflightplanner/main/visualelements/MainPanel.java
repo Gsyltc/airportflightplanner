@@ -10,8 +10,6 @@
 
 package com.airportflightplanner.main.visualelements;
 
-import java.util.Map;
-
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
@@ -21,11 +19,12 @@ import com.airportflightplanner.flightplancreation.FlightPlanCreationPanel;
 import com.airportflightplanner.flightplanvisualization.panel.FlightPlanVisualiazationPanel;
 import com.airportflightplanner.main.visualelements.messages.MainPanelMessages;
 import com.airportflightplanner.main.visualelements.panels.WaypointEditionPanel;
-import com.jgoodies.binding.beans.Model;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
+
+import fr.gsyltc.framework.models.ModelProvider;
 
 /**
  * @author Goubaud Sylvain
@@ -42,12 +41,7 @@ public class MainPanel extends JPanel {
      *
      */
     private static final int FIRST_TAB = 0;
-    // /** */
-    // private final Map<String, DomainModelAdapter<?>> adapters;
-
-    /** */
-    private final Map<BeanNames, Model> beansMap;
-
+    
     /**
      * Main Panel.
      *
@@ -55,21 +49,12 @@ public class MainPanel extends JPanel {
      *            Map of Models.
      * @param adapters
      */
-    public MainPanel(final Map<BeanNames, Model> beans) {
+    public MainPanel() {
         // setPaintRows(false);
         // setPaintInBackground(false);
-        this.beansMap = beans;
         buildPanel();
     }
-
-    /**
-     *
-     * @return
-     */
-    public Map<BeanNames, Model> getBeansMap() {
-        return this.beansMap;
-    }
-
+    
     /**
      *
      */
@@ -86,14 +71,14 @@ public class MainPanel extends JPanel {
                         FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.DEFAULT_ROWSPEC, //
                         FormSpecs.RELATED_GAP_ROWSPEC, }));
-
+        
         // Create Panel
         final FlightPlanCreationPanel createPanel = createFlightPlanCreationPanel();
         //
         final FlightPlanVisualiazationPanel fpVisuPanel = createFlightPlanVisualiazationPanel();
         //
         final WaypointEditionPanel wpEditionPanel = createWaypointEditionPanel();
-
+        
         // Create TabbedPanel
         final JTabbedPane tabbedPane = new JTabbedPane(SwingConstants.TOP);
         tabbedPane.add(MainPanelMessages.CREATE, createPanel);
@@ -103,35 +88,35 @@ public class MainPanel extends JPanel {
         // Add component to main panel
         add(fpVisuPanel, "2, 2, fill, fill");
         add(tabbedPane, "4, 2, center, fill");
-
+        
     }
-
+    
     /**
      *
      * @return the panel.
      */
     private FlightPlanCreationPanel createFlightPlanCreationPanel() {
         final FlightPlanCreationPanel panel = new FlightPlanCreationPanel(//
-                this.beansMap.get(BeanNames.CURRENT_FP_MODEL), //
-                this.beansMap.get(BeanNames.DAYS_MODEL));
+                ModelProvider.findModelByName(BeanNames.CURRENT_FP_MODEL), //
+                ModelProvider.findModelByName(BeanNames.DAYS_MODEL));
         panel.build();
         return panel;
     }
-
+    
     /**
      *
      * @return the panel.
      */
     private FlightPlanVisualiazationPanel createFlightPlanVisualiazationPanel() {
         final FlightPlanVisualiazationPanel panel = new FlightPlanVisualiazationPanel(//
-                this.beansMap.get(BeanNames.FP_COLLECTION_MODEL), //
-                this.beansMap.get(BeanNames.STEERPOINT_MODEL), //
-                this.beansMap.get(BeanNames.CURRENT_FP_MODEL), //
-                this.beansMap.get(BeanNames.DAYS_MODEL));
+                ModelProvider.findModelByName(BeanNames.FP_COLLECTION_MODEL), //
+                ModelProvider.findModelByName(BeanNames.STEERPOINT_MODEL), //
+                ModelProvider.findModelByName(BeanNames.CURRENT_FP_MODEL), //
+                ModelProvider.findModelByName(BeanNames.DAYS_MODEL));
         panel.build();
         return panel;
     }
-
+    
     /**
      *
      * @return the panel.

@@ -3,7 +3,7 @@
 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 
-    <bean id="id-FlightPlansCollection" class="com.airportflightplanner.common.models.flightplans.FlighPlanCollectionModel" />
+    <bean id="id-FlightPlansCollection" class="com.airportflightplanner.common.models.flightplans.FlighPlanCollectionModel" scope="singleton" />
 
-    <bean id="id-CurrentFlightPlan" class="com.airportflightplanner.common.models.flightplans.FlightPlanModel" />
+    <bean id="id-CurrentFlightPlan" class="com.airportflightplanner.common.models.flightplans.FlightPlanModel" scope="singleton" />
 </beans>
