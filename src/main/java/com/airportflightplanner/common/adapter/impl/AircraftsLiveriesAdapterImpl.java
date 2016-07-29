@@ -1,7 +1,9 @@
 /*
- * @(#)AircraftsLiveriesMapper.java
+ * @(#)AircraftsLiveriesAdapterImpl.java
  *
- * Goubaud Sylvain - 2016.
+ * Goubaud Sylvain
+ * Created : 2016
+ * Modified : 29 juil. 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -35,7 +37,7 @@ public class AircraftsLiveriesAdapterImpl implements AircraftsLiveriesAdapter, S
     private final Map<String, SortedSet<String>> liveriesMap = new ConcurrentHashMap<String, SortedSet<String>>();
     /** */
     private final String aircraftType;
-
+    
     /**
      * @param newAircraftType
      *            The companie.
@@ -43,7 +45,7 @@ public class AircraftsLiveriesAdapterImpl implements AircraftsLiveriesAdapter, S
     public AircraftsLiveriesAdapterImpl(final String newAircraftType) {
         this.aircraftType = newAircraftType;
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -60,7 +62,7 @@ public class AircraftsLiveriesAdapterImpl implements AircraftsLiveriesAdapter, S
             getLiveriesMap().put(company, liveries);
         }
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -69,7 +71,7 @@ public class AircraftsLiveriesAdapterImpl implements AircraftsLiveriesAdapter, S
     public String getAircraftType() {
         return this.aircraftType;
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -78,7 +80,7 @@ public class AircraftsLiveriesAdapterImpl implements AircraftsLiveriesAdapter, S
     public final SortedSet<String> getCompagnies() {
         return Collections.unmodifiableSortedSet(new TreeSet<String>(getLiveriesMap().keySet()));
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -91,7 +93,7 @@ public class AircraftsLiveriesAdapterImpl implements AircraftsLiveriesAdapter, S
         }
         return result;
     }
-
+    
     /**
      * @return the liveriesMap
      */

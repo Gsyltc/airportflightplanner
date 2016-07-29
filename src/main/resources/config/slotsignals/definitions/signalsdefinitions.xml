@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xmlns:util="http://www.springframework.org/schema/util" xmlns:p="http://www.springframework.org/schema/p" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+
+    <!-- CREATE THE GENERIC SIGNAL LIST - id-Signals is the common list called in the lifecycle -->
+    <util:list id="id-Signals" value-type="fr.gsyltc.framework.slotsignals.signals.Signal">
+        <ref bean="id-UpdateAirportSignal" />
+        <ref bean="id-FpTableSelectionSignal" />
+        <ref bean="id-WriteFpSignal" />
+        <ref bean="id-GoogleParametersSignal" />
+        <ref bean="id-ValidationSignal" />
+        <ref bean="id-CancellationSignal" />
+    </util:list>
+
+    <!-- CREATE SIGNALS -->
+    <bean id="id-UpdateAirportSignal" class="fr.gsyltc.framework.slotsignals.signals.Signal">
+        <constructor-arg>
+            <util:constant static-field="com.airportflightplanner.common.slotsignal.TopicName.UPDATE_AIRPORT_TOPIC" />
+        </constructor-arg>
+    </bean>
+    <bean id="id-FpTableSelectionSignal" class="fr.gsyltc.framework.slotsignals.signals.Signal">
+        <constructor-arg>
+            <util:constant static-field="com.airportflightplanner.common.slotsignal.TopicName.FLIGHTPLAN_TABLE_SELECTED_TOPIC" />
+        </constructor-arg>
+    </bean>
+    <bean id="id-WriteFpSignal" class="fr.gsyltc.framework.slotsignals.signals.Signal">
+        <constructor-arg>
+            <util:constant static-field="com.airportflightplanner.common.slotsignal.TopicName.WRITE_FLIGHT_PLAN_TOPIC" />
+        </constructor-arg>
+    </bean>
+    <bean id="id-GoogleParametersSignal" class="fr.gsyltc.framework.slotsignals.signals.Signal">
+        <constructor-arg>
+            <util:constant static-field="com.airportflightplanner.common.slotsignal.TopicName.GOOGLE_PARAMETERS_TOPIC" />
+        </constructor-arg>
+    </bean>
+    <bean id="id-ValidationSignal" class="fr.gsyltc.framework.slotsignals.signals.Signal">
+        <constructor-arg>
+            <util:constant static-field="com.airportflightplanner.common.slotsignal.TopicName.VALIDATION_TOPIC" />
+        </constructor-arg>
+    </bean>
+    <bean id="id-CancellationSignal" class="fr.gsyltc.framework.slotsignals.signals.Signal">
+        <constructor-arg>
+            <util:constant static-field="com.airportflightplanner.common.slotsignal.TopicName.CANCELLATION_TOPIC" />
+        </constructor-arg>
+    </bean>
+</beans>

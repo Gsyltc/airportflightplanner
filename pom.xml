@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>fr.gsyltc</groupId>
     <artifactId>airportflightplanner</artifactId>
-    <version>0.0.3-SNAPSHOT</version>
+    <version>0.0.4-SNAPSHOT</version>
     <name>AirportFlightPlanner</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -108,7 +108,7 @@
         <dependency>
             <groupId>fr.gsyltc</groupId>
             <artifactId>Framework-main</artifactId>
-            <version>1.0.4-SNAPSHOT</version>
+            <version>1.1.2</version>
         </dependency>
     </dependencies>
     <dependencyManagement>
@@ -227,4 +227,16 @@
             </plugin>
         </plugins>
     </reporting>
+    <organization>
+        <name>Gsyltc Cie</name>
+    </organization>
+    <scm>
+        <url>https://github.com/Gsyltc/airportflightplanner</url>
+        <connection>scm:git:git://github.com/Gsyltc/airportflightplanner.git</connection>
+        <developerConnection>scm:git:git://github.com/Gsyltc/airportflightplanner.git</developerConnection>
+    </scm>
+    <issueManagement>
+        <system>Github Issues</system>
+        <url>https://github.com/Gsyltc/airportflightplanner/issues</url>
+    </issueManagement>
 </project>

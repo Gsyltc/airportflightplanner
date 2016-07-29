@@ -1,25 +1,41 @@
-/* @(#)TopicName.java
+/*
+ * @(#)TopicName.java
  *
- * 2016 Goubaud Sylvain.
+ * Goubaud Sylvain
+ * Created : 2016
+ * Modified : 29 juil. 2016.
+ *
+ * This code may be freely used and modified on any personal or professional
+ * project.  It comes with no warranty.
  *
  */
+
 package com.airportflightplanner.common.slotsignal;
 
 /**
  * @author Goubaud Sylvain
  *
  */
-public class TopicName {
+public final class TopicName {
+    
+    
     /** */
-    public static final String UPDATE_AIRPORT_TOPIC            = "UPDATE_AIRPORT_TOPIC";
+    public static final String UPDATE_AIRPORT_TOPIC = "UPDATE_AIRPORT_TOPIC";
     /** */
     public static final String FLIGHTPLAN_TABLE_SELECTED_TOPIC = "FLIGHTPLAN_TABLE_SELECTED";
     /** */
-    public static final String WRITE_FLIGHT_PLAN_TOPIC         = "WRITE_FLIGHT_PLAN";
+    public static final String WRITE_FLIGHT_PLAN_TOPIC = "WRITE_FLIGHT_PLAN";
     /** */
-    public static final String GOOGLE_PARAMETERS_TOPIC         = "GOOGLE_PARAMETERS";
+    public static final String GOOGLE_PARAMETERS_TOPIC = "GOOGLE_PARAMETERS";
     /*** */
-    public static final String VALIDATION_TOPIC                = "VALIDATION";
+    public static final String VALIDATION_TOPIC = "VALIDATION";
     /*** */
-    public static final String CANCELLATION_TOPIC              = "CANCELLATION";
+    public static final String CANCELLATION_TOPIC = "CANCELLATION";
+    
+    /**
+     * Protected constructor.
+     */
+    private TopicName() {
+        //
+    }
 }
