@@ -41,6 +41,7 @@ import com.jgoodies.forms.layout.RowSpec;
 
 import fr.gsyltc.framework.adapters.AdaptersProvider;
 import fr.gsyltc.framework.slotsignals.action.api.SlotAction;
+import fr.gsyltc.framework.slotsignals.common.SignalProvider;
 import fr.gsyltc.framework.slotsignals.signals.Signal;
 import fr.gsyltc.framework.slotsignals.slots.Slot;
 import fr.gsyltc.framework.visualelements.AbstractCommandablePanel;
@@ -60,10 +61,6 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
     
     /** */
     protected static final int FP_COLLECTION_PRESENTER = 0;
-    /**
-     *
-     */
-    protected Signal signal;
     
     /**
      *
@@ -98,51 +95,6 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
         
         add(createFlightScrollPane(), "2, 2, 3, 1");
 
-    }
-    
-    /**
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public final void createSignals() {
-        super.createSignals();
-        this.signal = findSignal(TopicName.FLIGHTPLAN_TABLE_SELECTED_TOPIC);
-        if (null == this.signal) {
-            this.signal = new Signal(TopicName.FLIGHTPLAN_TABLE_SELECTED_TOPIC);
-            registerSignal(this.signal);
-        }
-        attachSignal(TopicName.FLIGHTPLAN_TABLE_SELECTED_TOPIC);
-    }
-    
-    /**
-     * {@inheritDoc}.
-     */
-    @Override
-    public final void createSlots() {
-        super.createSlots();
-        
-        final Slot slot = new Slot(TopicName.FLIGHTPLAN_TABLE_SELECTED_TOPIC, getClass().getSimpleName());
-        slot.setSlotAction(new SlotAction<FlightPlanReader>() {
-            
-            
-            /**
-             *
-             */
-            private static final long serialVersionUID = -6027127491253834166L;
-            
-            /**
-             *
-             * {@inheritDoc}
-             */
-            @Override
-            public void doAction(final FlightPlanReader bean) {
-                final PresentationModel<FlightPlanReader> fpPresenter = (PresentationModel<FlightPlanReader>) getPresenter(
-                        FP_COLLECTION_PRESENTER);
-                fpPresenter.triggerFlush();
-                fpPresenter.setBean(bean);
-            }
-        });
     }
     
     /**
@@ -181,7 +133,8 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
                             }
                         }
                     }
-                    FlightPlanListPanel.this.signal.fireSignal(flightPlan);
+                    final Signal signal = SignalProvider.findSignalByTopicName(TopicName.FLIGHTPLAN_TABLE_SELECTED_TOPIC);
+                    signal.fireSignal(flightPlan);
                 }
             }
         });
@@ -197,5 +150,35 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
         final JScrollPane scrollPane = new JScrollPane();
         scrollPane.setViewportView(table);
         return scrollPane;
+    }
+    
+    /**
+     * {@inheritDoc}.
+     */
+    @Override
+    public final void createSlots() {
+        super.createSlots();
+        
+        final Slot slot = new Slot(TopicName.FLIGHTPLAN_TABLE_SELECTED_TOPIC, getClass().getSimpleName());
+        slot.setSlotAction(new SlotAction<FlightPlanReader>() {
+            
+            
+            /**
+             *
+             */
+            private static final long serialVersionUID = -6027127491253834166L;
+            
+            /**
+             *
+             * {@inheritDoc}
+             */
+            @Override
+            public void doAction(final FlightPlanReader bean) {
+                final PresentationModel<FlightPlanReader> fpPresenter = (PresentationModel<FlightPlanReader>) getPresenter(
+                        FP_COLLECTION_PRESENTER);
+                fpPresenter.triggerFlush();
+                fpPresenter.setBean(bean);
+            }
+        });
     }
 }

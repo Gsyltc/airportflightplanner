@@ -35,14 +35,14 @@ public class StartDaysAdapterImpl extends AbstractReceiverModelAdapterImpl<DaysS
      *
      */
     private static final long serialVersionUID = 8742702470474381772L;
-    
+
     /**
      *
      * {@inheritDoc}.
      */
     @Override
     public void createSlots() {
-        final Slot slot = new Slot(TopicName.FLIGHTPLAN_TABLE_SELECTED_TOPIC, getClass().getSimpleName());
+        final Slot slot = attachSlot(TopicName.FLIGHTPLAN_TABLE_SELECTED_TOPIC);
         slot.setSlotAction(new SlotAction<FlightPlanReader>() {
             
             
@@ -50,7 +50,7 @@ public class StartDaysAdapterImpl extends AbstractReceiverModelAdapterImpl<DaysS
              *
              */
             private static final long serialVersionUID = -1849859877568448215L;
-            
+
             /**
              *
              * {@inheritDoc}.
@@ -63,7 +63,7 @@ public class StartDaysAdapterImpl extends AbstractReceiverModelAdapterImpl<DaysS
             }
         });
     }
-    
+
     /**
      *
      * {@inheritDoc}.
@@ -72,7 +72,7 @@ public class StartDaysAdapterImpl extends AbstractReceiverModelAdapterImpl<DaysS
     public void init() {
         createSlots();
     }
-    
+
     /**
      * {@inheritDoc}
      */

@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 28 juil. 2016.
+ * Modified : 29 juil. 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -28,6 +28,7 @@ import org.apache.commons.logging.LogFactory;
 import com.airportflightplanner.common.slotsignal.TopicName;
 
 import fr.gsyltc.framework.slotsignals.action.api.SlotAction;
+import fr.gsyltc.framework.slotsignals.common.SlotsProvider;
 import fr.gsyltc.framework.slotsignals.slotreceiver.api.SlotReceiver;
 import fr.gsyltc.framework.slotsignals.slots.Slot;
 
@@ -48,7 +49,7 @@ public class PropertiesUtils implements SlotReceiver {
     private static final List<Properties> PROPERTIES = new ArrayList<Properties>();
     /** The logger of this class. */
     private static final Log LOGGER = LogFactory.getLog(PropertiesUtils.class);
-    
+
     /**
      *
      * @param key
@@ -61,16 +62,16 @@ public class PropertiesUtils implements SlotReceiver {
                 result = properties.getProperty(key);
                 break;
             }
-            
+
         }
-        
+
         if (result.isEmpty() && LOGGER.isErrorEnabled()) {
             LOGGER.error("Error while loading properties. Property " + key + " not found");
         }
-        
+
         return result;
     }
-    
+
     /**
      *
      * @param key
@@ -81,26 +82,28 @@ public class PropertiesUtils implements SlotReceiver {
             userProperties.setProperty(key, value);
         }
     }
-    
-    /** */
+
+    /** List of slots. */
+    private List<Slot> slots;
+
+    /** files. */
     private List<String> fileNames;
-    
+
     /**
      * {@inheritDoc}.
      */
     @Override
     public Slot attachSlot(final String topicName) {
-        // Nothing to do
-        return null;
+        return SlotsProvider.findSlotBySlotName(topicName + "." + PropertiesUtils.class.getSimpleName());
     }
-    
+
     /**
      *
      * {@inheritDoc}
      */
     @Override
     public final void createSlots() {
-        final Slot airportSlot = new Slot(TopicName.UPDATE_AIRPORT_TOPIC, getClass().getSimpleName());
+        final Slot airportSlot = attachSlot(TopicName.UPDATE_AIRPORT_TOPIC);
         airportSlot.setSlotAction(new SlotAction<String>() {
             
             
@@ -113,9 +116,9 @@ public class PropertiesUtils implements SlotReceiver {
                 setPropertyByName(CommonProperties.DEFAULT_AIRPORT, arg);
                 updateProperties();
             }
-            
+
         });
-        
+
         // final Slot googleSlot = new Slot(TopicName.GOOGLE_PARAMETERS_TOPIC,
         // getClass().getSimpleName());
         // googleSlot.setSlotAction(new SlotAction<Map<String, String>>() {
@@ -140,7 +143,14 @@ public class PropertiesUtils implements SlotReceiver {
         //
         // });
     }
-    
+
+    /**
+     * @return the fileNames
+     */
+    private List<String> getFileNames() {
+        return Collections.unmodifiableList(this.fileNames);
+    }
+
     /**
      * Initialize properties.
      */
@@ -170,7 +180,7 @@ public class PropertiesUtils implements SlotReceiver {
             }
         }
     }
-    
+
     /**
      *
      * @param newFileNames
@@ -179,14 +189,15 @@ public class PropertiesUtils implements SlotReceiver {
     public void setFileNames(final List<String> newFileNames) {
         this.fileNames = newFileNames;
     }
-    
+
     /**
-     * @return the fileNames
+     * @param slots
+     *            the slots to set
      */
-    private List<String> getFileNames() {
-        return Collections.unmodifiableList(this.fileNames);
+    public void setSlots(final List<Slot> slots) {
+        this.slots = slots;
     }
-    
+
     /**
      * Update the user properties fles.
      */

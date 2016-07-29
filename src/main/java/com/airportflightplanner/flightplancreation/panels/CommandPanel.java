@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 24 juil. 2016.
+ * Modified : 29 juil. 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -26,6 +26,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
+import fr.gsyltc.framework.slotsignals.common.SignalProvider;
 import fr.gsyltc.framework.slotsignals.signals.Signal;
 import fr.gsyltc.framework.visualelements.AbstractCommandablePanel;
 
@@ -35,27 +36,26 @@ import fr.gsyltc.framework.visualelements.AbstractCommandablePanel;
  */
 public class CommandPanel extends AbstractCommandablePanel {
     
+    
     /**
      *
      */
     private static final long serialVersionUID = 7075372771107433751L;
-    /** */
-    protected Signal            validationSignal;
-    
+
     /**
-     *
+     * Constructor.
      */
     public CommandPanel() {
         super();
     }
-    
+
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      */
     @Override
     public void build() {
         super.build();
-        
+
         final FormLayout formLayout = new FormLayout(new ColumnSpec[] { //
                 FormSpecs.RELATED_GAP_COLSPEC, //
                 ColumnSpec.decode("center:default:grow"), //
@@ -65,63 +65,58 @@ public class CommandPanel extends AbstractCommandablePanel {
                         FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC, //
                         FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, });
-        
+
         setLayout(formLayout);
         setBorder(new TitledBorder(null, FlightPlanCreationPanelMessages.FLIGHT_INFOS_LABEL));
-        
+
         add(createValidateButton(), "2,2");
         add(createCancelButton(), "2,4");
     }
-    
+
     /**
-     *
-     * @return
-     */
-    private JButton createValidateButton() {
-        final JButton button = new JButton("Validate");
-        button.addActionListener(new ActionListener() {
-            /**
-             *
-             * {@inheritDoc}
-             */
-            @Override
-            public void actionPerformed(final ActionEvent e) {
-                validationSignal.fireSignal(ActionTypes.VALIDATE);
-            }
-        });
-        return button;
-    }
-    
-    /**
+     * Create the cancel button.
      *
      * @return
      */
     private JButton createCancelButton() {
         final JButton button = new JButton("Cancel");
         button.addActionListener(new ActionListener() {
+            
+            
             /**
              *
-             * {@inheritDoc}
+             * {@inheritDoc}.
              */
             @Override
-            public void actionPerformed(final ActionEvent e) {
-                validationSignal.fireSignal(ActionTypes.CANCEL);
+            public void actionPerformed(final ActionEvent event) {
+                final Signal signal = SignalProvider.findSignalByTopicName(TopicName.CANCELLATION_TOPIC);
+                signal.fireSignal(ActionTypes.CANCEL);
             }
         });
         return button;
     }
-    
+
     /**
-     * {@inheritDoc}
+     * Create the validation button.
+     *
+     * @return
      */
-    @Override
-    public void createSignals() {
-        super.createSignals();
-        validationSignal = findSignal(TopicName.VALIDATION_TOPIC);
-        if (null == validationSignal) {
-            validationSignal = new Signal(TopicName.VALIDATION_TOPIC);
-            registerSignal(validationSignal);
-        }
-        attachSignal(TopicName.VALIDATION_TOPIC);
+    private JButton createValidateButton() {
+        final JButton button = new JButton("Validate");
+        button.addActionListener(new ActionListener() {
+            
+            
+            /**
+             *
+             * {@inheritDoc}.
+             */
+            @Override
+            public void actionPerformed(final ActionEvent event) {
+                final Signal signal = SignalProvider.findSignalByTopicName(TopicName.VALIDATION_TOPIC);
+                signal.fireSignal(ActionTypes.VALIDATE);
+            }
+        });
+        return button;
     }
+
 }
