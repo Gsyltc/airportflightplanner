@@ -35,7 +35,7 @@ public class SteerPointsPresenter extends PresentationModel<SteerPointsCollectio
      *
      * @param bean
      */
-    public SteerPointsPresenter(final Model bean) {
+    public SteerPointsPresenter(final Model bean) { // NOPMD by sylva on 31/07/16 15:42
         super((SteerPointsCollectionModel) bean);
     }
     

@@ -38,9 +38,6 @@ public class Starter {
      *
      */
     private static final String MAIN_TITLE = "Airport Flight Planner";
-    // /** */
-    // protected final static ClassPathXmlApplicationContext CONTEXT = new
-    // ClassPathXmlApplicationContext("./config/imports.xml");
     /** The logger of this class. */
     private static final Log LOGGER = LogFactory.getLog(Starter.class);
 

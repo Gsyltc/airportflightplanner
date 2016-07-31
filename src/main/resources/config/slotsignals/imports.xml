@@ -5,4 +5,5 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 
     <import resource="./definitions/signalsdefinitions.xml" />
+    <import resource="./definitions/slotsdefinitions.xml" />
 </beans>

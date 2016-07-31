@@ -38,7 +38,7 @@ public class FlightPlanVisualizationPresenter extends PresentationModel<FlighPla
      * @param bean
      *            the bean for presenter.
      */
-    public FlightPlanVisualizationPresenter(final Model bean) {
+    public FlightPlanVisualizationPresenter(final Model bean) { // NOPMD by sylva on 31/07/16 15:41
         super((FlighPlanCollectionModel) bean);
     }
 

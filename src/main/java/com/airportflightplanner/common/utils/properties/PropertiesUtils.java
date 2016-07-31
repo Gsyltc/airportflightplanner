@@ -20,6 +20,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.apache.commons.logging.Log;
@@ -49,6 +50,8 @@ public class PropertiesUtils implements SlotReceiver {
     private static final List<Properties> PROPERTIES = new ArrayList<Properties>();
     /** The logger of this class. */
     private static final Log LOGGER = LogFactory.getLog(PropertiesUtils.class);
+    /** files. */
+    private List<String> fileNames;
 
     /**
      *
@@ -83,12 +86,6 @@ public class PropertiesUtils implements SlotReceiver {
         }
     }
 
-    /** List of slots. */
-    private List<Slot> slots;
-
-    /** files. */
-    private List<String> fileNames;
-
     /**
      * {@inheritDoc}.
      */
@@ -119,36 +116,31 @@ public class PropertiesUtils implements SlotReceiver {
 
         });
 
-        // final Slot googleSlot = new Slot(TopicName.GOOGLE_PARAMETERS_TOPIC,
-        // getClass().getSimpleName());
-        // googleSlot.setSlotAction(new SlotAction<Map<String, String>>() {
-        //
-        //
-        // /**
-        // *
-        // * {@inheritDoc}
-        // */
-        // @Override
-        // public void doAction(final Map<String, String> arg) {
-        // setPropertyByName(CommonProperties.GOOGLE_MAPTYPE,
-        // arg.get(CommonProperties.GOOGLE_MAPTYPE));
-        // setPropertyByName(CommonProperties.GOOGLE_ZOOM_FACTOR,
-        // arg.get(CommonProperties.GOOGLE_ZOOM_FACTOR));
-        // setPropertyByName(CommonProperties.GOOGLE_POLYLINE_COLOR,
-        // arg.get(CommonProperties.GOOGLE_POLYLINE_COLOR));
-        // setPropertyByName(CommonProperties.GOOGLE_POLYLINE_WIDTH,
-        // arg.get(CommonProperties.GOOGLE_POLYLINE_WIDTH));
-        // updateProperties();
-        // }
-        //
-        // });
+        final Slot googleSlot = attachSlot(TopicName.GOOGLE_PARAMETERS_TOPIC);
+        googleSlot.setSlotAction(new SlotAction<Map<String, String>>() {
+            
+            
+            /**
+             *
+             * {@inheritDoc}
+             */
+            @Override
+            public void doAction(final Map<String, String> arg) {
+                setPropertyByName(CommonProperties.GOOGLE_MAPTYPE, arg.get(CommonProperties.GOOGLE_MAPTYPE));
+                setPropertyByName(CommonProperties.GOOGLE_ZOOM_FACTOR, arg.get(CommonProperties.GOOGLE_ZOOM_FACTOR));
+                setPropertyByName(CommonProperties.GOOGLE_POLYLINE_COLOR, arg.get(CommonProperties.GOOGLE_POLYLINE_COLOR));
+                setPropertyByName(CommonProperties.GOOGLE_POLYLINE_WIDTH, arg.get(CommonProperties.GOOGLE_POLYLINE_WIDTH));
+                updateProperties();
+            }
+
+        });
     }
 
     /**
      * @return the fileNames
      */
     private List<String> getFileNames() {
-        return Collections.unmodifiableList(this.fileNames);
+        return Collections.unmodifiableList(fileNames);
     }
 
     /**
@@ -187,15 +179,7 @@ public class PropertiesUtils implements SlotReceiver {
      *            List of resources files.
      */
     public void setFileNames(final List<String> newFileNames) {
-        this.fileNames = newFileNames;
-    }
-
-    /**
-     * @param slots
-     *            the slots to set
-     */
-    public void setSlots(final List<Slot> slots) {
-        this.slots = slots;
+        fileNames = newFileNames;
     }
 
     /**

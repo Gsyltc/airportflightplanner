@@ -21,7 +21,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     </bean>
     <bean id="id-FpTableSelectionSignal" class="fr.gsyltc.framework.slotsignals.signals.Signal">
         <constructor-arg>
-            <util:constant static-field="com.airportflightplanner.common.slotsignal.TopicName.FLIGHTPLAN_TABLE_SELECTED_TOPIC" />
+            <util:constant static-field="com.airportflightplanner.common.slotsignal.TopicName.FP_TABLE_SELECTED_TOPIC" />
         </constructor-arg>
     </bean>
     <bean id="id-WriteFpSignal" class="fr.gsyltc.framework.slotsignals.signals.Signal">

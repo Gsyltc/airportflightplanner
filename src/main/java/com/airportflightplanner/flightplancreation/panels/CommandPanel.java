@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 29 juil. 2016.
+ * Modified : 31 juil. 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -41,13 +41,6 @@ public class CommandPanel extends AbstractCommandablePanel {
      *
      */
     private static final long serialVersionUID = 7075372771107433751L;
-
-    /**
-     * Constructor.
-     */
-    public CommandPanel() {
-        super();
-    }
 
     /**
      * {@inheritDoc}.

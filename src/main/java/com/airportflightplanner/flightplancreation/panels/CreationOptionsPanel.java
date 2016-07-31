@@ -10,7 +10,7 @@
  *
  */
 
-package com.airportflightplanner.flightplancreation.panels;
+package com.airportflightplanner.flightplancreation.panels; // NOPMD by sylva on 31/07/16 15:43
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

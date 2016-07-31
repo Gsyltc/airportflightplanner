@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 29 juil. 2016.
+ * Modified : 31 juil. 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -22,7 +22,7 @@ public final class TopicName {
     /** */
     public static final String UPDATE_AIRPORT_TOPIC = "UPDATE_AIRPORT_TOPIC";
     /** */
-    public static final String FLIGHTPLAN_TABLE_SELECTED_TOPIC = "FLIGHTPLAN_TABLE_SELECTED";
+    public static final String FP_TABLE_SELECTED_TOPIC = "FLIGHTPLAN_TABLE_SELECTED";
     /** */
     public static final String WRITE_FLIGHT_PLAN_TOPIC = "WRITE_FLIGHT_PLAN";
     /** */
@@ -31,7 +31,7 @@ public final class TopicName {
     public static final String VALIDATION_TOPIC = "VALIDATION";
     /*** */
     public static final String CANCELLATION_TOPIC = "CANCELLATION";
-    
+
     /**
      * Protected constructor.
      */

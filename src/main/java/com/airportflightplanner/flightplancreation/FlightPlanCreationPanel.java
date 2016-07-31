@@ -71,7 +71,7 @@ public class FlightPlanCreationPanel extends AbstractCommandablePanel {
      * @param currentFpBean
      * @param daySelection
      */
-    public FlightPlanCreationPanel(final Model currentFpBean, final Model daySelection) {
+    public FlightPlanCreationPanel(final Model currentFpBean, final Model daySelection) { // NOPMD by sylva on 31/07/16 15:43
         super(new PresentationModel<FlightPlanReader>((FlightPlanReader) currentFpBean), //
                 new PresentationModel<GoogleMapModel>(new GoogleMapModel()), //
                 new PresentationModel<DaysSelectionModel>((DaysSelectionModel) daySelection));
@@ -182,7 +182,7 @@ public class FlightPlanCreationPanel extends AbstractCommandablePanel {
         final PresentationModel<FlightPlanReader> fpPresenter = (PresentationModel<FlightPlanReader>) //
         getPresenter(FP_PRESENTER);
 
-        final Slot slot = new Slot(TopicName.FLIGHTPLAN_TABLE_SELECTED_TOPIC, getClass().getSimpleName());
+        final Slot slot = new Slot(TopicName.FP_TABLE_SELECTED_TOPIC, getClass().getSimpleName());
         slot.registerSlot();
         slot.setSlotAction(new SlotAction<FlightPlanReader>() {
             
