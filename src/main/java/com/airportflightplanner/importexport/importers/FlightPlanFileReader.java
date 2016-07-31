@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 27 juil. 2016.
+ * Modified : 31 juil. 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -47,34 +47,69 @@ public class FlightPlanFileReader {
     
     /** The logger of this class. */
     private static final Log LOGGER = LogFactory.getLog(FlightPlanFileReader.class);
-
     /**
      *
      */
     private FlightPlanModelAdapter flightPlanModelAdapter;
+
     /** */
     private FlighPlanCollectionModel flighPlanCollectionModel;
+    
+    /** Listener for update a flight plan. */
+    public static final class FlightPlanPropertyChangeListener implements PropertyChangeListener {
+        
+        
+        /** the flight plan to update. */
+        private final transient FlightPlanModel flightPlan;
+        
+        /**
+         * Creation an instance of the listener.
+         *
+         * @param newFlightPlan
+         *            the flight plan to update.
+         */
+        protected FlightPlanPropertyChangeListener(final FlightPlanModel newFlightPlan) {
+            flightPlan = newFlightPlan;
+        }
+        
+        /**
+         * {@inheritDoc}.
+         */
+        @Override
+        public void propertyChange(final PropertyChangeEvent evt) {
+            if (null == flightPlan.getStartTime()) {
+                if (null != flightPlan.getEndTime()) {
+                    flightPlan.setStartTime(flightPlan.getEndTime().plus(flightPlan.getDuration()));
+                }
+            } else {
+                flightPlan.setEndTime(flightPlan.getStartTime().plus(flightPlan.getDuration()));
+                
+            }
+            
+        }
+        
+    }
 
     /**
      * @return the flighPlanCollectionModel
      */
     public FlighPlanCollectionModel getFlighPlanCollectionModel() {
-        return this.flighPlanCollectionModel;
+        return flighPlanCollectionModel;
     }
-
+    
     /**
      * @return the flightPlanModelAdapter
      */
     public FlightPlanModelAdapter getFlightPlanModelAdapter() {
-        return this.flightPlanModelAdapter;
+        return flightPlanModelAdapter;
     }
-
+    
     /**
      *
      */
     @PostConstruct
     public void init() {
-        this.flighPlanCollectionModel.addPropertyChangeListener(FlightPlanCollectionProperties.CURRENT_AIRPORT,
+        flighPlanCollectionModel.addPropertyChangeListener(FlightPlanCollectionProperties.CURRENT_AIRPORT,
                 new PropertyChangeListener() {
                     
                     
@@ -88,24 +123,7 @@ public class FlightPlanFileReader {
                     }
                 });
     }
-
-    /**
-     * Set the flight plan collection model.
-     * 
-     * @param newFlighPlanCollectionModel
-     */
-    public void setFlighPlanCollectionModel(final FlighPlanCollectionModel newFlighPlanCollectionModel) {
-        this.flighPlanCollectionModel = newFlighPlanCollectionModel;
-    }
-
-    /**
-     *
-     * @param newFlighPlanModelAdapter
-     */
-    public void setFlightPlanModelAdapter(final FlightPlanModelAdapter newFlighPlanModelAdapter) {
-        this.flightPlanModelAdapter = newFlighPlanModelAdapter;
-    }
-
+    
     /**
      * @param currentAirport
      *
@@ -118,28 +136,12 @@ public class FlightPlanFileReader {
                 final Path fileName = path.getFileName();
                 if (null != fileName) {
                     final FlightPlanModel newFlightPlan = new FlightPlanModel();
-                    this.flightPlanModelAdapter.setModel(newFlightPlan);
+                    flightPlanModelAdapter.setModel(newFlightPlan);
                     newFlightPlan.setFileName(fileName.toString().replace("*.txt", ""));
                     // Attach listener for flight time
-                    newFlightPlan.addPropertyChangeListener(FlightPlanProperties.DURATION, new PropertyChangeListener() {
-                        
-                        
-                        /**
-                         *
-                         * {@inheritDoc}
-                         */
-                        @Override
-                        public void propertyChange(final PropertyChangeEvent evt) {
-                            if (null != newFlightPlan.getStartTime()) {
-                                newFlightPlan.setEndTime(newFlightPlan.getStartTime().plus(newFlightPlan.getDuration()));
-                            } else {
-                                if (null != newFlightPlan.getEndTime()) {
-                                    newFlightPlan.setStartTime(newFlightPlan.getEndTime().plus(newFlightPlan.getDuration()));
-                                }
-                            }
-                        }
-                    });
-
+                    newFlightPlan.addPropertyChangeListener(FlightPlanProperties.DURATION, new FlightPlanPropertyChangeListener(
+                            newFlightPlan));
+                    
                     try (InputStream inputStream = Files.newInputStream(path); //
                             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream,
                                     StandardCharsets.UTF_8))) {
@@ -216,7 +218,7 @@ public class FlightPlanFileReader {
                                     if (!FlightPlanInformationTypes.ENDDAYS.name().equals(line)) {
                                         getFlightPlanModelAdapter().updateFlightPlan(informationsType, line);
                                     }
-
+                                    
                                     break;
                                 
                                 case STARTDEPARTTYPE:
@@ -252,12 +254,29 @@ public class FlightPlanFileReader {
                             }
                         }
                     }
-
-                    this.flighPlanCollectionModel.addFlightPlan(newFlightPlan);
+                    
+                    flighPlanCollectionModel.addFlightPlan(newFlightPlan);
                 }
             }
         } catch (final IOException e) {
             LOGGER.error("Error while reading Flght plans", e);
         }
+    }
+    
+    /**
+     * Set the flight plan collection model.
+     *
+     * @param newFpCollectionModel
+     */
+    public void setFlighPlanCollectionModel(final FlighPlanCollectionModel newFpCollectionModel) {
+        flighPlanCollectionModel = newFpCollectionModel;
+    }
+    
+    /**
+     *
+     * @param newFlighPlanModelAdapter
+     */
+    public void setFlightPlanModelAdapter(final FlightPlanModelAdapter newFlighPlanModelAdapter) {
+        flightPlanModelAdapter = newFlighPlanModelAdapter;
     }
 }

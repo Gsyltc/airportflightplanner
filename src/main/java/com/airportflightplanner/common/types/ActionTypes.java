@@ -1,15 +1,15 @@
-/* @(#)ActionTypes.java
+/*
+ * @(#)ActionTypes.java
  *
- * Copyright (c) 2016 DCNS SA. All rights reserved.
- * DCNS PROPRIETARY/CONFIDENTIAL.  Use is subject to license terms.
+ * Goubaud Sylvain
+ * Created : 2016
+ * Modified : 31 juil. 2016.
  *
- * This file, together  with  its accompanying  software product  and
- * documentation, is  protected by the  intellectual  property rights
- * in  France  and  other  countries, any  applicable  copyrights  or
- * patent rights, and international treaty provisions. No part may be
- * reproduced  in  any  form  by  any  mean  without   prior  written
- * authorization of DCNS.
+ * This code may be freely used and modified on any personal or professional
+ * project.  It comes with no warranty.
+ *
  */
+
 package com.airportflightplanner.common.types;
 
 /**
@@ -17,5 +17,10 @@ package com.airportflightplanner.common.types;
  *
  */
 public enum ActionTypes {
-    VALIDATE, CANCEL, REFRESH
+    /** Validate action. */
+    VALIDATE,
+    /** Cacel action. */
+    CANCEL,
+    /** Refresh action */
+    REFRESH
 }

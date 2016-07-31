@@ -92,7 +92,7 @@ public class SteerPointPanel extends AbstractCommandablePanel {
     @Override
     public final void createSlots() {
         super.createSlots();
-        final Slot slot = new Slot(TopicName.FLIGHTPLAN_TABLE_SELECTED_TOPIC, getClass().getSimpleName());
+        final Slot slot = new Slot(TopicName.FP_TABLE_SELECTED_TOPIC, getClass().getSimpleName());
         final SteerPointsPresenter presenter = (SteerPointsPresenter) getPresenter(STEERPOINT_PRESENTER);
         final SteerPointsCollectionModel steerPointsModel = presenter.getBean();
         slot.setSlotAction(new SlotAction<FlightPlanReader>() {

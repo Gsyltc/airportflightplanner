@@ -1,7 +1,9 @@
 /*
  * @(#)DepartureType.java
  *
- * Goubaud Sylvain - 2016.
+ * Goubaud Sylvain
+ * Created : 2016
+ * Modified : 31 juil. 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -23,12 +25,12 @@ public enum DepartureType {
     NORMAL(1),
     /** */
     VERTICAL(2);
-    
+
     /** */
     private static final String PREFIX = "DepartureType.";
     /** */
     private int value;
-    
+
     /**
      *
      * @param value
@@ -36,7 +38,7 @@ public enum DepartureType {
     private DepartureType(final int value) {
         this.value = value;
     }
-    
+
     /**
      *
      * @param typeIndex
@@ -51,7 +53,7 @@ public enum DepartureType {
         }
         return result;
     }
-    
+
     /**
      * Get i18nString.
      *
@@ -61,7 +63,7 @@ public enum DepartureType {
     public static String getI18NName(final int typeIndex) {
         return Internationalizer.getI18String(PREFIX + valueOf(typeIndex).name());
     }
-    
+
     /**
      *
      * @param type
@@ -69,6 +71,6 @@ public enum DepartureType {
      */
     public static int getIndex(final DepartureType type) {
         return type.value;
-        
+
     }
 }

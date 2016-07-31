@@ -1,6 +1,13 @@
-/* @(#)FlghtPlanListModel.java
+/*
+ * @(#)FlightPlanVisualizationListModel.java
  *
- * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
+ * Goubaud Sylvain
+ * Created : 2016
+ * Modified : 31 juil. 2016.
+ *
+ * This code may be freely used and modified on any personal or professional
+ * project.  It comes with no warranty.
+ *
  */
 
 package com.airportflightplanner.flightplanvisualization.presenter.flightplan;
@@ -22,101 +29,105 @@ public class FlightPlanVisualizationListModel extends AbstractListModel<FlightPl
         FlightPlanVisualizationListModelListener {
     
     
-    /**
-     *
-     */
+    /** */
     private static final long serialVersionUID = -6702145855038118674L;
     /** */
     private static final int FIRST_ROW = 0;
-    /** */
+    /** list of flight plans. */
     private final List<FlightPlanReader> list = new ArrayList<FlightPlanReader>();
-    
+
     /**
      *
-     * @param flightPlan
+     * {@inheritDoc}.
      */
     @Override
     public final void addFlightPlan(final FlightPlanReader flightPlan) {
-        if ((null != flightPlan) && !this.list.contains(flightPlan)) {
-            this.list.add(flightPlan);
-            fireContentsChanged(this, FIRST_ROW, this.list.size() - 1);
+        if (null != flightPlan && !list.contains(flightPlan)) {
+            list.add(flightPlan);
+            fireContentsChanged(this, FIRST_ROW, list.size() - 1);
         }
     }
-    
+
     /**
-     *
+     * Clear the model.
      */
     public final void clear() {
-        this.list.clear();
+        list.clear();
         fireContentsChanged(this, -1, -1);
     }
-    
+
     /**
      *
      * {@inheritDoc}
      */
     @Override
     public final FlightPlanReader getElementAt(final int index) {
-        return this.list.get(index);
+        return list.get(index);
     }
-    
+
     /**
+     * Return the list of flight plans.
      *
      * @return List of the flight plan
      */
     public final List<FlightPlanReader> getList() {
-        return Collections.unmodifiableList(this.list);
+        return Collections.unmodifiableList(list);
     }
-    
+
     /**
      *
-     * {@inheritDoc}
+     * {@inheritDoc}.
      */
     @Override
     public final int getSize() {
-        return this.list.size();
+        return list.size();
     }
-    
+
     /**
+     * Return the index a of flight plan.
      *
      * @param flightPlan
      *            a flight plan.
      * @return return the index of the flight plan.
      */
     public final int indexOf(final FlightPlanReader flightPlan) {
-        return this.list.indexOf(flightPlan);
+        return list.indexOf(flightPlan);
     }
-    
+
     /**
+     * Remove a flight plan.
      *
      * @param flightPlan
+     *            flight plan to remove.
      */
     @Override
     public final void removeFlightPlan(final FlightPlanReader flightPlan) {
-        if ((null != flightPlan) && this.list.contains(flightPlan)) {
-            this.list.remove(flightPlan);
-            fireContentsChanged(this, FIRST_ROW, this.list.size() - 1);
+        if (null != flightPlan && list.contains(flightPlan)) {
+            list.remove(flightPlan);
+            fireContentsChanged(this, FIRST_ROW, list.size() - 1);
         }
     }
-    
+
     /**
+     * Set a list of flight plans.
      *
      * @param newList
      *            List of flight plan.
      */
     public final void setList(final List<FlightPlanReader> newList) {
-        this.list.clear();
-        this.list.addAll(newList);
+        list.clear();
+        list.addAll(newList);
         fireContentsChanged(this, FIRST_ROW, Math.max(newList.size() - 1, 0));
     }
-    
+
     /**
+     * Fire modification.
      *
      * @param elementCOunt
      *            Element count.
      */
     protected final void fireIntervalAdded(final int elementCOunt) {
-        final int index0 = this.list.size() - elementCOunt;
-        fireIntervalAdded(this, Math.max(FIRST_ROW, index0), Math.max(FIRST_ROW, this.list.size() - 1));
+        final int index0 = list.size() - elementCOunt;
+        fireIntervalAdded(this, Math.max(FIRST_ROW, index0), Math.max(FIRST_ROW, list.size() - 1));
     }
 }

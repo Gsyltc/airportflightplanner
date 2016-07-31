@@ -1,7 +1,9 @@
 /*
  * @(#)MainPanel.java
  *
- * Goubaud Sylvain - 2016.
+ * Goubaud Sylvain
+ * Created : 2016
+ * Modified : 31 juil. 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -41,20 +43,15 @@ public class MainPanel extends JPanel {
      *
      */
     private static final int FIRST_TAB = 0;
-    
+
     /**
      * Main Panel.
-     *
-     * @param beans
-     *            Map of Models.
-     * @param adapters
      */
     public MainPanel() {
-        // setPaintRows(false);
-        // setPaintInBackground(false);
+        super();
         buildPanel();
     }
-    
+
     /**
      *
      */
@@ -71,14 +68,14 @@ public class MainPanel extends JPanel {
                         FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.DEFAULT_ROWSPEC, //
                         FormSpecs.RELATED_GAP_ROWSPEC, }));
-        
+
         // Create Panel
         final FlightPlanCreationPanel createPanel = createFlightPlanCreationPanel();
         //
         final FlightPlanVisualiazationPanel fpVisuPanel = createFlightPlanVisualiazationPanel();
         //
         final WaypointEditionPanel wpEditionPanel = createWaypointEditionPanel();
-        
+
         // Create TabbedPanel
         final JTabbedPane tabbedPane = new JTabbedPane(SwingConstants.TOP);
         tabbedPane.add(MainPanelMessages.CREATE, createPanel);
@@ -88,9 +85,9 @@ public class MainPanel extends JPanel {
         // Add component to main panel
         add(fpVisuPanel, "2, 2, fill, fill");
         add(tabbedPane, "4, 2, center, fill");
-        
+
     }
-    
+
     /**
      *
      * @return the panel.
@@ -102,7 +99,7 @@ public class MainPanel extends JPanel {
         panel.build();
         return panel;
     }
-    
+
     /**
      *
      * @return the panel.
@@ -116,7 +113,7 @@ public class MainPanel extends JPanel {
         panel.build();
         return panel;
     }
-    
+
     /**
      *
      * @return the panel.

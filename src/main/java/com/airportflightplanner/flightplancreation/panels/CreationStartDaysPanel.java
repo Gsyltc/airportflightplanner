@@ -93,7 +93,7 @@ public class CreationStartDaysPanel extends AbstractCommandablePanel {
     @Override
     public void createSlots() {
         super.createSlots();
-        final Slot slot = new Slot(TopicName.FLIGHTPLAN_TABLE_SELECTED_TOPIC, getClass().getSimpleName());
+        final Slot slot = new Slot(TopicName.FP_TABLE_SELECTED_TOPIC, getClass().getSimpleName());
         slot.registerSlot();
         slot.setSlotAction(new SlotAction<FlightPlanReader>() {
             

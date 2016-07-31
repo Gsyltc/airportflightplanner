@@ -42,7 +42,7 @@ public class StartDaysAdapterImpl extends AbstractReceiverModelAdapterImpl<DaysS
      */
     @Override
     public void createSlots() {
-        final Slot slot = attachSlot(TopicName.FLIGHTPLAN_TABLE_SELECTED_TOPIC);
+        final Slot slot = attachSlot(TopicName.FP_TABLE_SELECTED_TOPIC);
         slot.setSlotAction(new SlotAction<FlightPlanReader>() {
             
             

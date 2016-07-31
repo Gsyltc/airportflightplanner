@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 27 juil. 2016.
+ * Modified : 31 juil. 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -61,13 +61,6 @@ public class FlightPlanModelAdapterImpl extends AbstractReceiverModelAdapterImpl
 
     /**
      *
-     */
-    public FlightPlanModelAdapterImpl() {
-        super();
-    }
-
-    /**
-     *
      * {@inheritDoc}.
      */
     @Override
@@ -84,7 +77,7 @@ public class FlightPlanModelAdapterImpl extends AbstractReceiverModelAdapterImpl
      */
     @Override
     public void createSlots() {
-        final Slot slot = attachSlot(TopicName.FLIGHTPLAN_TABLE_SELECTED_TOPIC);
+        final Slot slot = attachSlot(TopicName.FP_TABLE_SELECTED_TOPIC);
         slot.setSlotAction(new SlotAction<FlightPlanModel>() {
             
             

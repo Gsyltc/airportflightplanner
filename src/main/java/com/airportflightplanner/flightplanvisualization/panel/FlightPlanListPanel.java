@@ -10,7 +10,7 @@
  *
  */
 
-package com.airportflightplanner.flightplanvisualization.panel;
+package com.airportflightplanner.flightplanvisualization.panel; // NOPMD by sylva on 31/07/16 15:42
 
 import java.util.ArrayList;
 import java.util.List;
@@ -128,12 +128,12 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
                         final int minIndex = lsm.getMinSelectionIndex();
                         final int maxIndex = lsm.getMaxSelectionIndex();
                         for (int i = minIndex; i <= maxIndex; i++) {
-                            if (lsm.isSelectedIndex(i)) {
+                            if (lsm.isSelectedIndex(i)) { // NOPMD by sylva on 31/07/16 15:42
                                 flightPlan = adapter.getModel().getFlightPlanByIndex(i);
                             }
                         }
                     }
-                    final Signal signal = SignalProvider.findSignalByTopicName(TopicName.FLIGHTPLAN_TABLE_SELECTED_TOPIC);
+                    final Signal signal = SignalProvider.findSignalByTopicName(TopicName.FP_TABLE_SELECTED_TOPIC);
                     signal.fireSignal(flightPlan);
                 }
             }
@@ -159,7 +159,7 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
     public final void createSlots() {
         super.createSlots();
         
-        final Slot slot = new Slot(TopicName.FLIGHTPLAN_TABLE_SELECTED_TOPIC, getClass().getSimpleName());
+        final Slot slot = new Slot(TopicName.FP_TABLE_SELECTED_TOPIC, getClass().getSimpleName());
         slot.setSlotAction(new SlotAction<FlightPlanReader>() {
             
             

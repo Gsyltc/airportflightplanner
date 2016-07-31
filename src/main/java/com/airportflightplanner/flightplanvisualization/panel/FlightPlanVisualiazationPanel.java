@@ -65,7 +65,7 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
      * @param daysSelectionModel
      *
      */
-    public FlightPlanVisualiazationPanel(final Model newFPCollectionModel, //
+    public FlightPlanVisualiazationPanel(final Model newFPCollectionModel, // // NOPMD by sylva on 31/07/16 15:43
             final Model steerpointsModel, final Model currentFp, final Model daysSelectionModel) {
         super(new FlightPlanVisualizationPresenter(newFPCollectionModel), //
                 new SteerPointsPresenter(steerpointsModel), //
