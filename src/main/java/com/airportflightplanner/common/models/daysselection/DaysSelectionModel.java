@@ -1,7 +1,9 @@
 /*
  * @(#)DaysSelectionModel.java
  *
- * Goubaud Sylvain - 2016.
+ * Goubaud Sylvain
+ * Created : 2016
+ * Modified : 31 juil. 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -19,6 +21,8 @@ import com.jgoodies.binding.beans.Model;
  *
  */
 public class DaysSelectionModel extends Model implements DaySelectionWriter {
+    
+    
     /**
      *
      */

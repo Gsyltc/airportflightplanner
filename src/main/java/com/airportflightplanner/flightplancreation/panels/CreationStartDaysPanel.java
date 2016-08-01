@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 27 juil. 2016.
+ * Modified : 1 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -14,10 +14,14 @@ package com.airportflightplanner.flightplancreation.panels;
 
 import javax.swing.JCheckBox;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.airportflightplanner.common.api.dayselection.bean.DaySelectionProperties;
 import com.airportflightplanner.common.api.dayselection.bean.DaySelectionReader;
 import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
 import com.airportflightplanner.common.slotsignal.TopicName;
+import com.airportflightplanner.common.types.ActionTypes;
 import com.airportflightplanner.common.types.StartDays;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.adapter.BasicComponentFactory;
@@ -38,6 +42,8 @@ import fr.gsyltc.framework.visualelements.AbstractCommandablePanel;
 public class CreationStartDaysPanel extends AbstractCommandablePanel {
     
     
+    /** The logger of this class. */
+    private static final Log LOGGER = LogFactory.getLog(CreationStartDaysPanel.class);
     /**
      *
      */
@@ -108,6 +114,43 @@ public class CreationStartDaysPanel extends AbstractCommandablePanel {
                         (PresentationModel<DaySelectionReader>) getPresenter(DAYS_PRESENTER);
                 dayPresenter.triggerFlush();
             }
+        });
+        
+        final Slot validateSlot = new Slot(TopicName.VALIDATION_TOPIC, getClass().getSimpleName());
+        validateSlot.registerSlot();
+        validateSlot.setSlotAction(new SlotAction<ActionTypes>() {
+            
+            
+            /**
+             *
+             * {@inheritDoc}.
+             */
+            @Override
+            public void doAction(final ActionTypes arg) {
+                switch (arg) {
+                case VALIDATE:
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Validate Days");
+                    }
+                    break;
+                
+                case CANCEL:
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Cancel Days");
+                    }
+                    break;
+                
+                case REFRESH:
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Refresh Days");
+                    }
+                    break;
+                default:
+                    break;
+                }
+                
+            }
+            
         });
     }
     

@@ -6,4 +6,5 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 
     <import resource="./slotsdefinitions.xml" />
     <import resource="./config.xml" />
+    <import resource="./logs.xml" />
 </beans>

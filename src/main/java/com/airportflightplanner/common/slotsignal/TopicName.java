@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 31 juil. 2016.
+ * Modified : 1 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -31,7 +31,9 @@ public final class TopicName {
     public static final String VALIDATION_TOPIC = "VALIDATION";
     /*** */
     public static final String CANCELLATION_TOPIC = "CANCELLATION";
-
+    /** */
+    public static final String FP_MODIFIED_TOPIC = "FP_MODIFIED";
+    
     /**
      * Protected constructor.
      */

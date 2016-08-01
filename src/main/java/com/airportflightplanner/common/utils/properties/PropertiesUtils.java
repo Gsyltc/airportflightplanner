@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 29 juil. 2016.
+ * Modified : 1 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -29,7 +30,6 @@ import org.apache.commons.logging.LogFactory;
 import com.airportflightplanner.common.slotsignal.TopicName;
 
 import fr.gsyltc.framework.slotsignals.action.api.SlotAction;
-import fr.gsyltc.framework.slotsignals.common.SlotsProvider;
 import fr.gsyltc.framework.slotsignals.slotreceiver.api.SlotReceiver;
 import fr.gsyltc.framework.slotsignals.slots.Slot;
 
@@ -52,6 +52,8 @@ public class PropertiesUtils implements SlotReceiver {
     private static final Log LOGGER = LogFactory.getLog(PropertiesUtils.class);
     /** files. */
     private List<String> fileNames;
+    /** map of attached slots. */
+    Map<String, Slot> slotsMap = new ConcurrentHashMap<String, Slot>();
 
     /**
      *
@@ -91,7 +93,8 @@ public class PropertiesUtils implements SlotReceiver {
      */
     @Override
     public Slot attachSlot(final String topicName) {
-        return SlotsProvider.findSlotBySlotName(topicName + "." + PropertiesUtils.class.getSimpleName());
+        // Nothing to do or to return
+        return null;
     }
 
     /**
@@ -100,7 +103,10 @@ public class PropertiesUtils implements SlotReceiver {
      */
     @Override
     public final void createSlots() {
-        final Slot airportSlot = attachSlot(TopicName.UPDATE_AIRPORT_TOPIC);
+        // LA CREATION DES SLOTS DOIT ETRE MANUELLE POUR NE PAS CASSER L'ARCHI.
+
+        final Slot airportSlot = new Slot(TopicName.UPDATE_AIRPORT_TOPIC, PropertiesUtils.class.getSimpleName());
+        airportSlot.registerSlot();
         airportSlot.setSlotAction(new SlotAction<String>() {
             
             
@@ -115,8 +121,10 @@ public class PropertiesUtils implements SlotReceiver {
             }
 
         });
+        slotsMap.put(airportSlot.getTopicName(), airportSlot);
 
-        final Slot googleSlot = attachSlot(TopicName.GOOGLE_PARAMETERS_TOPIC);
+        final Slot googleSlot = new Slot(TopicName.GOOGLE_PARAMETERS_TOPIC, PropertiesUtils.class.getSimpleName());
+        googleSlot.registerSlot();
         googleSlot.setSlotAction(new SlotAction<Map<String, String>>() {
             
             
@@ -134,6 +142,8 @@ public class PropertiesUtils implements SlotReceiver {
             }
 
         });
+
+        slotsMap.put(googleSlot.getTopicName(), googleSlot);
     }
 
     /**
@@ -194,5 +204,13 @@ public class PropertiesUtils implements SlotReceiver {
                 LOGGER.error("Error while writing application properties", e);
             }
         }
+    }
+
+    /**
+     * {@inheritDoc}.
+     */
+    @Override
+    public Slot findSlot(final String topicName) {
+        return slotsMap.get(topicName);
     }
 }

@@ -26,7 +26,6 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
-import fr.gsyltc.framework.slotsignals.common.SignalProvider;
 import fr.gsyltc.framework.slotsignals.signals.Signal;
 import fr.gsyltc.framework.visualelements.AbstractCommandablePanel;
 
@@ -82,7 +81,7 @@ public class CommandPanel extends AbstractCommandablePanel {
              */
             @Override
             public void actionPerformed(final ActionEvent event) {
-                final Signal signal = SignalProvider.findSignalByTopicName(TopicName.CANCELLATION_TOPIC);
+                final Signal signal = findSignal(TopicName.CANCELLATION_TOPIC);
                 signal.fireSignal(ActionTypes.CANCEL);
             }
         });
@@ -105,11 +104,20 @@ public class CommandPanel extends AbstractCommandablePanel {
              */
             @Override
             public void actionPerformed(final ActionEvent event) {
-                final Signal signal = SignalProvider.findSignalByTopicName(TopicName.VALIDATION_TOPIC);
+                final Signal signal = findSignal(TopicName.VALIDATION_TOPIC);
                 signal.fireSignal(ActionTypes.VALIDATE);
             }
         });
         return button;
     }
 
+    /**
+     * {@inheritDoc}.
+     */
+    @Override
+    public void createSignals() {
+        super.createSignals();
+        attachSignal(TopicName.VALIDATION_TOPIC);
+        attachSignal(TopicName.CANCELLATION_TOPIC);
+    }
 }

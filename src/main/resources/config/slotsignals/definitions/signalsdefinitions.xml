@@ -11,6 +11,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <ref bean="id-GoogleParametersSignal" />
         <ref bean="id-ValidationSignal" />
         <ref bean="id-CancellationSignal" />
+        <ref bean="id-FpModifiedSignal" />
     </util:list>
 
     <!-- CREATE SIGNALS -->
@@ -42,6 +43,11 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     <bean id="id-CancellationSignal" class="fr.gsyltc.framework.slotsignals.signals.Signal">
         <constructor-arg>
             <util:constant static-field="com.airportflightplanner.common.slotsignal.TopicName.CANCELLATION_TOPIC" />
+        </constructor-arg>
+    </bean>
+    <bean id="id-FpModifiedSignal" class="fr.gsyltc.framework.slotsignals.signals.Signal">
+        <constructor-arg>
+            <util:constant static-field="com.airportflightplanner.common.slotsignal.TopicName.FP_MODIFIED_TOPIC" />
         </constructor-arg>
     </bean>
 </beans>
