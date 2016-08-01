@@ -254,8 +254,8 @@ public class FlightPlanFileReader {
                             }
                         }
                     }
-                    
                     flighPlanCollectionModel.addFlightPlan(newFlightPlan);
+                    newFlightPlan.setModified(false);
                 }
             }
         } catch (final IOException e) {
