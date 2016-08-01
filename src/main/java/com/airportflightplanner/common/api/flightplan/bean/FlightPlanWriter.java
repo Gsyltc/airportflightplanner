@@ -36,114 +36,106 @@ public interface FlightPlanWriter extends FlightPlanReader {
      * @param value
      */
     void setAircraftCie(String value);
-    
+
     /**
      *
      * @param value
      */
     void setAircraftType(String value);
-    
+
     /**
      *
      * @param value
      */
     void setAlternateAirport(String value);
-    
+
     /**
      *
      * @param value
      */
     void setArrivalAirport(String value);
-    
+
     /**
      *
      * @param value
      */
     void setArrivalType(ArrivalType value);
-    
+
     /**
      *
      * @param value
      */
     void setCallSign(String value);
-    
+
     /**
      *
      * @param value
      */
     void setDepartureAirport(String value);
-    
+
     /**
      *
      * @param value
      */
     void setDepartureType(DepartureType value);
-    
+
     /**
      *
      * @param value
      */
     void setDuration(Period value);
-    
+
     /**
      *
      * @param value
      */
     void setEndTime(LocalTime value);
-    
+
     /**
      *
      * @param value
      */
     void setFileName(String value);
-    
+
     /**
      *
      * @param value
      */
     void setFlightToCompletion(Boolean value);
-    
+
     /**
      *
      * @param value
      */
     void setFlightType(FlightType value);
-    
+
     /**
      *
      * @param value
      */
     void setLandingLightAltitude(Altitude value);
-    
+
     /**
      *
      * @param value
      */
     void setName(String value);
-    
+
     /**
      *
      * @param value
      */
     void setStartDays(Set<StartDays> value);
-    
+
     /**
      *
      * @param value
      */
     void setStartTime(LocalTime value);
-    
+
     /**
      *
      * @param value
      */
     void setSteerPoints(List<String> value);
-    
-    /**
-     * /** Set if the flight plan has been modified.
-     *
-     * @param value
-     *            the state of the flight plant.
-     */
-    void setModified(boolean value);
 }
