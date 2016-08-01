@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 27 juil. 2016.
+ * Modified : 1 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -61,22 +61,27 @@ public class FlightPlanCreationPanel extends AbstractCommandablePanel {
     private static final int DEFAULT_HEIGHT = 400;
     /** */
     private static final int DEFAULT_WIDTH = 400;
-
+    
     /** */
     private static final int FP_PRESENTER = 0;
     /** */
     private static final int GOOGLE_PRESENTER_INDEX = 1;
-
+    
     /**
      * @param currentFpBean
      * @param daySelection
      */
-    public FlightPlanCreationPanel(final Model currentFpBean, final Model daySelection) { // NOPMD by sylva on 31/07/16 15:43
+    public FlightPlanCreationPanel(final Model currentFpBean, final Model daySelection) { // NOPMD
+                                                                                          // by
+                                                                                          // sylva
+                                                                                          // on
+                                                                                          // 31/07/16
+                                                                                          // 15:43
         super(new PresentationModel<FlightPlanReader>((FlightPlanReader) currentFpBean), //
                 new PresentationModel<GoogleMapModel>(new GoogleMapModel()), //
                 new PresentationModel<DaysSelectionModel>((DaysSelectionModel) daySelection));
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -100,10 +105,9 @@ public class FlightPlanCreationPanel extends AbstractCommandablePanel {
                         FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, }));
-
+        
         final PresentationModel<FlightPlanReader> fpPresenter = (PresentationModel<FlightPlanReader>) //
         getPresenter(FP_PRESENTER);
-        fpPresenter.getBean();
         add(createCreationTimePanel(fpPresenter), "2,2,11,1");
         add(createCreationRoutePanel(fpPresenter), "2,4,11,1");
         add(createCreationFlightInfosPanel(fpPresenter), "2,6,11,1");
@@ -111,7 +115,7 @@ public class FlightPlanCreationPanel extends AbstractCommandablePanel {
         add(createMap(), "2, 10, 7, 1, fill,fill");
         add(createCommandPanel(), "10, 10, 3, 1, fill,fill");
     }
-
+    
     /**
      * @return
      *
@@ -121,7 +125,7 @@ public class FlightPlanCreationPanel extends AbstractCommandablePanel {
         panel.build();
         return panel;
     }
-
+    
     /**
      * @param fpPresenter
      * @return
@@ -132,7 +136,7 @@ public class FlightPlanCreationPanel extends AbstractCommandablePanel {
         panel.build();
         return panel;
     }
-
+    
     /**
      * @param fpPresenter
      * @return
@@ -140,13 +144,10 @@ public class FlightPlanCreationPanel extends AbstractCommandablePanel {
      */
     public CreationOptionsPanel createCreationOptionsPanel(final PresentationModel<FlightPlanReader> fpPresenter) {
         final CreationOptionsPanel panel = new CreationOptionsPanel(fpPresenter);
-        // panel.addAdapter((DomainModelAdapter<?>)
-        // AdaptersProvider.findAdapterByName(//
-        // FlightPlanModelAdapter.class.getSimpleName()));
         panel.build();
         return panel;
     }
-
+    
     /**
      * @param fpPresenter
      * @return
@@ -157,7 +158,7 @@ public class FlightPlanCreationPanel extends AbstractCommandablePanel {
         panel.build();
         return panel;
     }
-
+    
     /**
      * @param fpPresenter
      * @return
@@ -168,20 +169,20 @@ public class FlightPlanCreationPanel extends AbstractCommandablePanel {
         panel.build();
         return panel;
     }
-
+    
     /**
      * {@inheritDoc}
      */
     @Override
     public void createSlots() {
         super.createSlots();
-
+        
         final PresentationModel<GoogleMapModel> googlePresenter = (PresentationModel<GoogleMapModel>) //
         getPresenter(GOOGLE_PRESENTER_INDEX);
-
+        
         final PresentationModel<FlightPlanReader> fpPresenter = (PresentationModel<FlightPlanReader>) //
         getPresenter(FP_PRESENTER);
-
+        
         final Slot slot = new Slot(TopicName.FP_TABLE_SELECTED_TOPIC, getClass().getSimpleName());
         slot.registerSlot();
         slot.setSlotAction(new SlotAction<FlightPlanReader>() {
@@ -191,7 +192,7 @@ public class FlightPlanCreationPanel extends AbstractCommandablePanel {
              *
              */
             private static final long serialVersionUID = 1240749169986714101L;
-
+            
             /**
              *
              * {@inheritDoc}
@@ -202,7 +203,7 @@ public class FlightPlanCreationPanel extends AbstractCommandablePanel {
                     
                     fpPresenter.triggerFlush();
                     fpPresenter.setBean(flightPlanReader);
-
+                    
                     final GoogleMapWriter googleMapWriter = new GoogleMapModel();
                     googlePresenter.setBean((GoogleMapModel) googleMapWriter);
                     googleMapWriter.setMarkers(GeographicUtils.getSteerPoints(flightPlanReader.getSteerPoints()));
@@ -212,7 +213,7 @@ public class FlightPlanCreationPanel extends AbstractCommandablePanel {
             }
         });
     }
-
+    
     /**
      *
      * @return the Maps.
@@ -221,17 +222,17 @@ public class FlightPlanCreationPanel extends AbstractCommandablePanel {
         final JPanel panel = new JPanel();
         panel.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         panel.setMinimumSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
-
+        
         final PresentationModel<GoogleMapModel> googlePresenter = (PresentationModel<GoogleMapModel>) //
         getPresenter(GOOGLE_PRESENTER_INDEX);
         final GoogleMapPane googleMap = new GoogleMapPane(googlePresenter);
         googleMap.setDimension(new Rectangle(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT));
         googleMap.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         panel.add(googleMap);
-
+        
         final TitledBorder panelBorder = new TitledBorder(FlightPlanCreationPanelMessages.MAP_TITLE);
         panel.setBorder(panelBorder);
         return panel;
     }
-
+    
 }

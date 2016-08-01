@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 24 juil. 2016.
+ * Modified : 1 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -24,11 +24,16 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.airportflightplanner.common.api.adapter.AircraftTypeAdapter;
 import com.airportflightplanner.common.api.adapter.StartDaysAdapter;
 import com.airportflightplanner.common.api.dayselection.bean.DaySelectionReader;
 import com.airportflightplanner.common.api.flightplan.bean.FlightPlanProperties;
 import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
+import com.airportflightplanner.common.slotsignal.TopicName;
+import com.airportflightplanner.common.types.ActionTypes;
 import com.airportflightplanner.common.utils.aircraft.AircraftDecoder;
 import com.airportflightplanner.flightplancreation.api.model.flightinfos.FlightInfosProperties;
 import com.airportflightplanner.flightplancreation.api.model.flightinfos.FlightInfosReader;
@@ -46,29 +51,34 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
-import fr.gsyltc.framework.adapters.AdaptersProvider;
-import fr.gsyltc.framework.visualelements.AbstractCommonPanel;
+import fr.gsyltc.framework.slotsignals.action.api.SlotAction;
+import fr.gsyltc.framework.slotsignals.signals.Signal;
+import fr.gsyltc.framework.slotsignals.slots.Slot;
+import fr.gsyltc.framework.visualelements.AbstractCommandablePanel;
 import fr.gsyltc.framework.visualelements.types.LayoutSpecs;
 
 /**
  * @author Goubaud Sylvain
  *
  */
-public class CreationFlightInfosPanel extends AbstractCommonPanel {
+public class CreationFlightInfosPanel extends AbstractCommandablePanel {
     
     
     /** The logger of this class. */
-    /**
-     *
-     */
+    protected static final Log LOGGER = LogFactory.getLog(CreationFlightInfosPanel.class);
+    /** The UID og the class. */
     private static final long serialVersionUID = -2692513903084994308L;
-    /** */
+    /** the flight infos presenter index. */
     private static final int FL_INFOS_PRESENTER_INDEX = 1;
-    /** */
+    /** the prototype display of the combobox. */
     private static final String PROTOTYPE_DISPLAY = "XXXXXXXXXXXXX";
-    /** */
+    /** the figlht plan presenter index. */
     private static final int FP_PRESENTER = 0;
-    
+    /** */
+    private static final String AIRCRAFT_TYPE_ADAPTER = AircraftTypeAdapter.class.getSimpleName();
+    /** */
+    private static final String STARTDAYS_ADAPTER = StartDaysAdapter.class.getSimpleName();
+
     /**
      * @param newCurrentFlightPlan
      *
@@ -76,7 +86,7 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
     public CreationFlightInfosPanel(final PresentationModel<FlightPlanReader> newCurrentFlightPlan) {
         super(newCurrentFlightPlan, new PresentationModel<FlightInfosReader>(new FlightInfosModel()));
     }
-    
+
     /**
      *
      * {@inheritDoc}
@@ -104,38 +114,38 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
                         FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC, //
                         FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, });
-        
+
         formLayout.setRowGroups(new int[][] { new int[] { 6, 4, 2 } });
         formLayout.setColumnGroups(new int[][] { new int[] { 2, 14, 12, 10, 8, 6, 4 } });
         setLayout(formLayout);
-        
+
         final PresentationModel<FlightInfosReader> flInfosPresenter = //
                 (PresentationModel<FlightInfosReader>) getPresenter(FL_INFOS_PRESENTER_INDEX);
-        
+
+        final StartDaysAdapter startDaysAdapter = (StartDaysAdapter) findAdapter(STARTDAYS_ADAPTER);
+
         setBorder(new TitledBorder(null, FlightPlanCreationPanelMessages.FLIGHT_INFOS_LABEL));
-        final StartDaysAdapter adapter = (StartDaysAdapter) AdaptersProvider.findAdapterByName(//
-                StartDaysAdapter.class.getSimpleName());
         final CreationStartDaysPanel panel = new CreationStartDaysPanel(new PresentationModel<DaySelectionReader>(//
-                adapter.getModel()));
+                startDaysAdapter.getModel()));
         panel.build();
         add(panel, "2, 2,11,1");
-        
+
         final JLabel callSignLabel = new JLabel(FlightPlanCreationPanelMessages.CALLSIGN_LABEL);
         add(callSignLabel, "10, 4, right, default");
         add(createCallSignTextField(), "12, 4, 3, 1, fill, default");
-        
+
         final JLabel typeLabel = new JLabel(FlightPlanCreationPanelMessages.TYPE_LABEL);
         add(typeLabel, "2, 4, right, default");
         add(createAircraftClassComboBox(flInfosPresenter), "4, 4, 3, 1, fill, default");
-        
+
         final JLabel liveryLabel = new JLabel(FlightPlanCreationPanelMessages.AIRCRAFT_LIVERY_LABEL);
         add(liveryLabel, "10, 6, right, default");
         add(createAircraftLiveryComboBox(flInfosPresenter), "12, 6, 3, 1, fill, default");
-        
+
         final JLabel cpieLabel = new JLabel(FlightPlanCreationPanelMessages.CPIE_LABEL);
         add(cpieLabel, "2, 6, right, default");
         add(createAircraftCpieComboBox(flInfosPresenter), "4, 6, 3, 1, fill, default");
-        
+
         getPresenter(FP_PRESENTER).addPropertyChangeListener(new PropertyChangeListener() {
             
             
@@ -148,7 +158,7 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
                 if (evt.getNewValue() instanceof FlightPlanReader) {
                     final String aircraftType = ((FlightPlanReader) evt.getNewValue()).getAircraftType();
                     final FlightInfosModel bean = (FlightInfosModel) getPresenter(FL_INFOS_PRESENTER_INDEX).getBean();
-                    
+
                     final String aircraftClass = AircraftDecoder.getAircraftClass(aircraftType);
                     bean.setAircraftClass(aircraftClass);
                     bean.setAircraftCie(AircraftDecoder.getAircraftCie(aircraftType));
@@ -156,17 +166,26 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
                 }
             }
         });
-        
+
     }
-    
+
+    /**
+     * {@inheritDoc}.
+     */
+    @Override
+    public void createAdapters() {
+        super.createAdapters();
+        attachAdapter(STARTDAYS_ADAPTER);
+        attachAdapter(AIRCRAFT_TYPE_ADAPTER);
+    }
+
     /**
      *
      * @param flInfosPresenter
      * @return
      */
     private JComboBox<String> createAircraftClassComboBox(final PresentationModel<FlightInfosReader> flInfosPresenter) {
-        final AircraftTypeAdapter adapter = (AircraftTypeAdapter) AdaptersProvider.findAdapterByName(//
-                AircraftTypeAdapter.class.getSimpleName());
+        final AircraftTypeAdapter adapter = (AircraftTypeAdapter) findAdapter(AIRCRAFT_TYPE_ADAPTER);
         final Set<String> aircraftClass = adapter.getAircraftClasses();
         final JComboBox<String> component = BasicComponentFactory.createComboBox(new SelectionInList<>(aircraftClass.toArray()));
         component.setPrototypeDisplayValue(PROTOTYPE_DISPLAY);
@@ -184,7 +203,7 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
                 component.setSelectedItem(evt.getNewValue());
             }
         });
-        
+
         component.addActionListener(new ActionListener() {
             
             
@@ -199,10 +218,10 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
                 }
             }
         });
-        
+
         return component;
     }
-    
+
     /**
      *
      * @param flInfosPresenter
@@ -232,7 +251,7 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
                 }
             }
         });
-        
+
         component.addActionListener(new ActionListener() {
             
             
@@ -249,7 +268,7 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
         });
         return component;
     }
-    
+
     /**
      *
      * @param flInfosPresenter
@@ -257,7 +276,7 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
      */
     private JComboBox<String> createAircraftLiveryComboBox(final PresentationModel<FlightInfosReader> flInfosPresenter) {
         final ValueModel model = flInfosPresenter.getModel(FlightInfosProperties.LIVERIES);
-        
+
         final SelectionInList<String> selectionInList = new SelectionInList<String>(model);
         final JComboBox<String> component = BasicComponentFactory.createComboBox(selectionInList);
         component.setPrototypeDisplayValue(PROTOTYPE_DISPLAY);
@@ -280,7 +299,7 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
                 }
             }
         });
-        
+
         bean.addPropertyChangeListener(FlightInfosProperties.COMPANIES, new PropertyChangeListener() {
             
             
@@ -293,7 +312,7 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
                 refreshData(evt.getPropertyName(), flInfosPresenter);
             }
         });
-        
+
         component.addActionListener(new ActionListener() {
             
             
@@ -310,9 +329,9 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
             }
         });
         return component;
-        
+
     }
-    
+
     /**
      *
      * @return
@@ -321,15 +340,14 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
         final BufferedValueModel model = getPresenter(FP_PRESENTER).getBufferedModel(FlightPlanProperties.CALLSIGN);
         return BasicComponentFactory.createTextField(model);
     }
-    
+
     /**
      * @param propertyName
      *            Property to refresh.
      * @param flInfosPresenter
      */
     protected void refreshData(final String propertyName, final PresentationModel<FlightInfosReader> flInfosPresenter) {
-        final AircraftTypeAdapter adapter = (AircraftTypeAdapter) AdaptersProvider.findAdapterByName(//
-                AircraftTypeAdapter.class.getSimpleName());
+        final AircraftTypeAdapter adapter = (AircraftTypeAdapter) findAdapter(AIRCRAFT_TYPE_ADAPTER);
         final FlightInfosWriter bean = (FlightInfosModel) flInfosPresenter.getBean();
         switch (propertyName) {
         // La classe a changee, on reset le model des compagnies et des livrees
@@ -345,5 +363,65 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
         default:
             break;
         }
+    }
+
+    /**
+     * {@inheritDoc}.
+     */
+    @Override
+    public void createSlots() {
+        super.createSlots();
+        final Slot validationSlot = new Slot(TopicName.VALIDATION_TOPIC, getClass().getSimpleName());
+        validationSlot.registerSlot();
+        validationSlot.setSlotAction(new SlotAction<ActionTypes>() {
+            
+            
+            /**
+             *
+             */
+            private static final long serialVersionUID = 1996369709690063664L;
+
+            /**
+             *
+             * {@inheritDoc}.
+             */
+            @Override
+            public void doAction(final ActionTypes arg) {
+                switch (arg) {
+                case VALIDATE:
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Validate Infos Panel");
+                    }
+
+                    break;
+                
+                case CANCEL:
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Cancel Infos Panel");
+                    }
+                    break;
+                
+                case REFRESH:
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Refreash Infos Panel");
+                    }
+                    break;
+                
+                default:
+                    break;
+                }
+                final Signal signal = findSignal(TopicName.FP_MODIFIED_TOPIC);
+                signal.fireSignal(false);
+            }
+        });
+    }
+
+    /**
+     * {@inheritDoc}.
+     */
+    @Override
+    public void createSignals() {
+        super.createSignals();
+        attachSignal(TopicName.FP_MODIFIED_TOPIC);
     }
 }

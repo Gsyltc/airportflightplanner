@@ -40,7 +40,7 @@ public class Starter {
     private static final String MAIN_TITLE = "Airport Flight Planner";
     /** The logger of this class. */
     private static final Log LOGGER = LogFactory.getLog(Starter.class);
-
+    
     /**
      * Start Application.
      *
@@ -50,7 +50,7 @@ public class Starter {
     public static void main(final String... args) {
         // Load spring configuration
         LifeCycleManager.initApplication();
-
+        
         EventQueue.invokeLater(new Runnable() {
             
             
@@ -69,14 +69,14 @@ public class Starter {
                     final JFrame mainFrame = new JFrame(MAIN_TITLE);
                     mainFrame.setJMenuBar(menu);
                     mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+                    
                     mainFrame.getContentPane().add(new MainPanel(), BorderLayout.CENTER);
                     mainFrame.pack();
                     mainFrame.setMinimumSize(mainFrame.getPreferredSize());
                     mainFrame.setVisible(true);
-
+                    
                     LifeCycleManager.registerSlots();
-
+                    
                 } catch (final UnsupportedLookAndFeelException | //
                 ClassNotFoundException | //
                 InstantiationException | //
@@ -87,9 +87,9 @@ public class Starter {
                 }
             }
         });
-
+        
     }
-
+    
     /**
      * @return the logger
      */

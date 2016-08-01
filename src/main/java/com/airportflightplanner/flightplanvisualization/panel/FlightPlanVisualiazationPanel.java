@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 28 juil. 2016.
+ * Modified : 1 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -65,7 +65,13 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
      * @param daysSelectionModel
      *
      */
-    public FlightPlanVisualiazationPanel(final Model newFPCollectionModel, // // NOPMD by sylva on 31/07/16 15:43
+    public FlightPlanVisualiazationPanel(final Model newFPCollectionModel, // //
+                                                                           // NOPMD
+                                                                           // by
+                                                                           // sylva
+                                                                           // on
+                                                                           // 31/07/16
+                                                                           // 15:43
             final Model steerpointsModel, final Model currentFp, final Model daysSelectionModel) {
         super(new FlightPlanVisualizationPresenter(newFPCollectionModel), //
                 new SteerPointsPresenter(steerpointsModel), //
@@ -112,9 +118,6 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
     private CurrentAirportPanel createCurrentAirportPanel() {
         final CurrentAirportPanel panel = new CurrentAirportPanel(//
                 (FlightPlanVisualizationPresenter) getPresenter(FP_PRESENTER));
-        // panel.addAdapter((DomainModelAdapter<?>)
-        // AdaptersProvider.findAdapterByName(//
-        // FlightPlanCollectionAdapter.class.getSimpleName()));
         panel.build();
         return panel;
     }
@@ -158,13 +161,13 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
      * @param newFpCollection
      */
     private void setFpCollection(final FlightPlanCollectionReader newFpCollection) {
-        this.fpCollection = newFpCollection;
+        fpCollection = newFpCollection;
     }
 
     /**
      * @return the fpCollection
      */
     protected FlightPlanCollectionReader getFpCollection() {
-        return this.fpCollection;
+        return fpCollection;
     }
 }

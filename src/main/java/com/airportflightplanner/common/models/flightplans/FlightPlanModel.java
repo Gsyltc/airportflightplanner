@@ -256,7 +256,6 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
         if (!value.equals(oldValue)) {
             aircraftCie = value;
             firePropertyChange(FlightPlanProperties.AIRCRAFT_CIE, oldValue, aircraftCie);
-            setModified(true);
         }
     }
     
@@ -270,7 +269,6 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
         if (!value.equals(oldValue)) {
             aircraftType = value;
             firePropertyChange(FlightPlanProperties.AIRCRAFT_TYPE, oldValue, aircraftType);
-            setModified(true);
         }
     }
     
@@ -284,7 +282,6 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
         if (!value.equals(oldValue)) {
             alternateAirport = value;
             firePropertyChange(FlightPlanProperties.ALTERNATE_AIRPORT, oldValue, alternateAirport);
-            setModified(true);
         }
     }
     
@@ -298,7 +295,6 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
         if (!value.equals(oldValue)) {
             arrivalAirport = value;
             firePropertyChange(FlightPlanProperties.ARRIVAL_AIRPORT, oldValue, arrivalAirport);
-            setModified(true);
         }
     }
     
@@ -312,7 +308,6 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
         if (null != value && !value.equals(oldValue)) {
             arrivalType = value;
             firePropertyChange(FlightPlanProperties.ARRIVAL_TYPE, oldValue, arrivalType);
-            setModified(true);
         }
     }
     
@@ -326,7 +321,6 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
         if (!value.equals(oldValue)) {
             callSign = value;
             firePropertyChange(FlightPlanProperties.CALLSIGN, oldValue, callSign);
-            setModified(true);
         }
     }
     
@@ -340,7 +334,6 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
         if (!value.equals(oldValue)) {
             departureAirport = value;
             firePropertyChange(FlightPlanProperties.DEPARTURE_AIRPORT, oldValue, departureAirport);
-            setModified(true);
         }
     }
     
@@ -354,7 +347,6 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
         if (null != value && !value.equals(oldValue)) {
             departureType = value;
             firePropertyChange(FlightPlanProperties.DEPARTURE_TYPE, oldValue, departureType);
-            setModified(true);
         }
     }
     
@@ -368,7 +360,6 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
         if (null != value && !value.equals(oldValue)) {
             duration = value;
             firePropertyChange(FlightPlanProperties.DURATION, oldValue, duration);
-            setModified(true);
         }
     }
     
@@ -382,7 +373,6 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
         if (null != value && !value.equals(oldValue)) {
             endTime = value;
             firePropertyChange(FlightPlanProperties.END_TIME, oldValue, endTime);
-            setModified(true);
         }
     }
     
@@ -396,7 +386,6 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
         if (null != value && !value.equals(oldValue)) {
             isFightToCompletion = value;
             firePropertyChange(FlightPlanProperties.FLIGHT_TO_COMPLETION, oldValue, isFightToCompletion);
-            setModified(true);
         }
     }
     
@@ -410,7 +399,6 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
         if (null != value && !value.equals(oldValue)) {
             flightType = value;
             firePropertyChange(FlightPlanProperties.FLIGHT_TYPE, oldValue, flightType);
-            setModified(true);
         }
     }
     
@@ -424,7 +412,6 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
         if (null != value && !value.equals(oldValue)) {
             landingLightAltitude = value;
             firePropertyChange(FlightPlanProperties.LANDING_LIGHT_ALTITUDE, oldValue, landingLightAltitude);
-            setModified(true);
         }
     }
     
@@ -438,7 +425,6 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
         if (!value.equals(oldValue)) {
             name = value;
             firePropertyChange(FlightPlanProperties.NAME, oldValue, name);
-            setModified(true);
         }
     }
     
@@ -452,7 +438,6 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
         if (null != value && !value.equals(oldValue)) {
             startDays = value;
             firePropertyChange(FlightPlanProperties.START_DAYS, oldValue, startDays);
-            setModified(true);
         }
         
     }
@@ -467,7 +452,6 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
         if (null != value && !value.equals(oldValue)) {
             startTime = value;
             firePropertyChange(FlightPlanProperties.START_TIME, oldValue, startTime);
-            setModified(true);
         }
     }
     
@@ -481,7 +465,6 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
         if (null != value && !value.equals(oldValue)) {
             steerPoints = value;
             firePropertyChange(FlightPlanProperties.STEERPOINTS_MAP, oldValue, steerPoints);
-            setModified(true);
         }
     }
     
@@ -495,7 +478,6 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
         if (!value.equals(oldValue)) {
             fileName = value;
             firePropertyChange(FlightPlanProperties.FILENAME, oldValue, fileName);
-            setModified(true);
         }
     }
 }

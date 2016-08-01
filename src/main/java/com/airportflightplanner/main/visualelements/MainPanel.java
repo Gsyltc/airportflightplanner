@@ -26,7 +26,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
-import fr.gsyltc.framework.models.ModelProvider;
+import fr.gsyltc.framework.models.ModelsProvider;
 
 /**
  * @author Goubaud Sylvain
@@ -43,7 +43,7 @@ public class MainPanel extends JPanel {
      *
      */
     private static final int FIRST_TAB = 0;
-
+    
     /**
      * Main Panel.
      */
@@ -51,7 +51,7 @@ public class MainPanel extends JPanel {
         super();
         buildPanel();
     }
-
+    
     /**
      *
      */
@@ -68,14 +68,14 @@ public class MainPanel extends JPanel {
                         FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.DEFAULT_ROWSPEC, //
                         FormSpecs.RELATED_GAP_ROWSPEC, }));
-
+        
         // Create Panel
         final FlightPlanCreationPanel createPanel = createFlightPlanCreationPanel();
         //
         final FlightPlanVisualiazationPanel fpVisuPanel = createFlightPlanVisualiazationPanel();
         //
         final WaypointEditionPanel wpEditionPanel = createWaypointEditionPanel();
-
+        
         // Create TabbedPanel
         final JTabbedPane tabbedPane = new JTabbedPane(SwingConstants.TOP);
         tabbedPane.add(MainPanelMessages.CREATE, createPanel);
@@ -85,35 +85,35 @@ public class MainPanel extends JPanel {
         // Add component to main panel
         add(fpVisuPanel, "2, 2, fill, fill");
         add(tabbedPane, "4, 2, center, fill");
-
+        
     }
-
+    
     /**
      *
      * @return the panel.
      */
     private FlightPlanCreationPanel createFlightPlanCreationPanel() {
         final FlightPlanCreationPanel panel = new FlightPlanCreationPanel(//
-                ModelProvider.findModelByName(BeanNames.CURRENT_FP_MODEL), //
-                ModelProvider.findModelByName(BeanNames.DAYS_MODEL));
+                ModelsProvider.INSTANCE.findModelByName(BeanNames.CURRENT_FP_MODEL), //
+                ModelsProvider.INSTANCE.findModelByName(BeanNames.DAYS_MODEL));
         panel.build();
         return panel;
     }
-
+    
     /**
      *
      * @return the panel.
      */
     private FlightPlanVisualiazationPanel createFlightPlanVisualiazationPanel() {
         final FlightPlanVisualiazationPanel panel = new FlightPlanVisualiazationPanel(//
-                ModelProvider.findModelByName(BeanNames.FP_COLLECTION_MODEL), //
-                ModelProvider.findModelByName(BeanNames.STEERPOINT_MODEL), //
-                ModelProvider.findModelByName(BeanNames.CURRENT_FP_MODEL), //
-                ModelProvider.findModelByName(BeanNames.DAYS_MODEL));
+                ModelsProvider.INSTANCE.findModelByName(BeanNames.FP_COLLECTION_MODEL), //
+                ModelsProvider.INSTANCE.findModelByName(BeanNames.STEERPOINT_MODEL), //
+                ModelsProvider.INSTANCE.findModelByName(BeanNames.CURRENT_FP_MODEL), //
+                ModelsProvider.INSTANCE.findModelByName(BeanNames.DAYS_MODEL));
         panel.build();
         return panel;
     }
-
+    
     /**
      *
      * @return the panel.

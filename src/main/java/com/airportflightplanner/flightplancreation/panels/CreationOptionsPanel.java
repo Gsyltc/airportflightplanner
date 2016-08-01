@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 27 juil. 2016.
+ * Modified : 1 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -65,14 +65,16 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
     
     /** The logger of this class. */
     protected static final Log LOGGER = LogFactory.getLog(CreationOptionsPanel.class);
-    
+
     /*** */
     private static final long serialVersionUID = -2692513903084994308L;
     /** */
     private static final int FP_PRESENTER = 0;
     /** */
     private static final String PROTOTYPE_DISPLAY = "XXXXXXXXXXXXX";
-    
+    /** */
+    private static final double FEET_FACTOR = 3.28084;
+
     /**
      * @param model
      *
@@ -80,7 +82,7 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
     public CreationOptionsPanel(final PresentationModel<FlightPlanReader> model) {
         super(model);
     }
-    
+
     /**
      *
      * {@inheritDoc}.
@@ -102,31 +104,31 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
                         FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC, });
-        
+
         setLayout(formLayout);
         formLayout.setRowGroups(new int[][] { new int[] { 4, 2 } });
         formLayout.setColumnGroups(new int[][] { new int[] { 2, 6 }, new int[] { 4, 8 } });
-        
+
         setBorder(new TitledBorder(null, FlightPlanCreationPanelMessages.OPTIONS_LABEL));
-        
+
         final PresentationModel<FlightPlanReader> presenter = (PresentationModel<FlightPlanReader>) getPresenter(FP_PRESENTER);
         add(new JLabel(FlightPlanCreationPanelMessages.DEPATURETYPE_LABEL), "2,2");
         add(createDepartureTypeCb(presenter), "4, 2");
-        
+
         add(new JLabel(FlightPlanCreationPanelMessages.ARRIVALTYPE_LABEL), "2,4");
         add(createArrivalTypeCb(presenter), "4, 4");
-        
+
         add(new JLabel(FlightPlanCreationPanelMessages.FLIGHTTYPE_LABEL), "6,2");
         add(createFlightTypeCb(presenter), "8, 2");
-        
+
         add(new JLabel(FlightPlanCreationPanelMessages.LANDINGLIGHT_LABEL), "6,4");
         add(createLandingLightAltitudeTb(presenter), "8, 4");
-        
+
         add(new JLabel(FlightPlanCreationPanelMessages.FLY_TO_COMPLETION_LABEL), "2,6");
         add(createFlyToCompletionCkb(presenter), "4, 6");
-        
+
     }
-    
+
     /**
      * {@inheritDoc}.
      */
@@ -135,7 +137,7 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
         super.createSlots();
         final Slot validationSlot = new Slot(TopicName.VALIDATION_TOPIC, getClass().getSimpleName());
         validationSlot.registerSlot();
-        
+
         final PresentationModel<FlightPlanReader> presenter = (PresentationModel<FlightPlanReader>) getPresenter(FP_PRESENTER);
         validationSlot.setSlotAction(new SlotAction<ActionTypes>() {
             
@@ -144,7 +146,7 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
              *
              */
             private static final long serialVersionUID = 1289014075739897031L;
-            
+
             /**
              *
              * {@inheritDoc}
@@ -181,7 +183,7 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
             }
         });
     }
-    
+
     /**
      *
      * @param presenter
@@ -209,10 +211,10 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
                 }
             }
         });
-        
+
         return component;
     }
-    
+
     /**
      *
      * @param presenter
@@ -243,7 +245,7 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
         });
         return component;
     }
-    
+
     /**
      *
      * @param presenter
@@ -271,10 +273,10 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
                 }
             }
         });
-        
+
         return component;
     }
-    
+
     /**
      *
      * @param presenter
@@ -284,7 +286,7 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
         final ValueModel value = presenter.getBufferedModel(FlightPlanProperties.FLIGHT_TO_COMPLETION);
         return BasicComponentFactory.createCheckBox(value, "");
     }
-    
+
     /**
      *
      * @param presenter
@@ -293,7 +295,7 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
     private JTextField createLandingLightAltitudeTb(final PresentationModel<FlightPlanReader> presenter) {
         final BufferedValueModel model = presenter.getBufferedModel(//
                 FlightPlanProperties.LANDING_LIGHT_ALTITUDE);
-        
+
         final ValueModel value = ConverterFactory.createStringConverter(model, new Format() {
             
             
@@ -301,7 +303,7 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
              *
              */
             private static final long serialVersionUID = 5858092520252522599L;
-            
+
             /**
              *
              * {@inheritDoc}
@@ -315,7 +317,7 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
                 }
                 return new StringBuffer(String.valueOf(result)).append(" ft");
             }
-            
+
             /**
              *
              * {@inheritDoc}
@@ -325,14 +327,14 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
                 Double result = 0.0;
                 if (source.contains("m")) {
                     // source in meters
-                    result = Double.parseDouble(source.replace("m", "").replace(" ", "")) * 3.28084;
+                    result = Double.parseDouble(source.replace("m", "").replace(" ", "")) * FEET_FACTOR;
                 } else {
                     result = Double.parseDouble(source.replace("ft", "").replace(" ", ""));
                 }
                 return Altitude.valueOf(result, NonSI.FOOT);
             }
         });
-        
+
         return BasicComponentFactory.createTextField(value);
     }
 }
