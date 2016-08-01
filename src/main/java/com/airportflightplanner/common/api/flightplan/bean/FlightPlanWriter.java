@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 28 juil. 2016.
+ * Modified : 1 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -29,6 +29,7 @@ import com.airportflightplanner.common.types.StartDays;
  *
  */
 public interface FlightPlanWriter extends FlightPlanReader {
+    
     
     /**
      *
@@ -137,4 +138,12 @@ public interface FlightPlanWriter extends FlightPlanReader {
      * @param value
      */
     void setSteerPoints(List<String> value);
+    
+    /**
+     * /** Set if the flight plan has been modified.
+     *
+     * @param value
+     *            the state of the flight plant.
+     */
+    void setModified(boolean value);
 }

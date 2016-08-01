@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 28 juil. 2016.
+ * Modified : 1 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -37,107 +37,114 @@ public interface FlightPlanReader extends Serializable {
      * @return
      */
     String getAircraftCie();
-
+    
     /**
      *
      * @return
      */
     String getAircraftType();
-
+    
     /**
      *
      * @return
      */
     String getAlternateAirport();
-
+    
     /**
      *
      * @return
      */
     String getArrivalAirport();
-
+    
     /**
      *
      * @return
      */
     ArrivalType getArrivalType();
-
+    
     /**
      *
      * @return
      */
     String getCallSign();
-
+    
     /**
      *
      * @return
      */
     String getDepartureAirport();
-
+    
     /**
      *
      * @return
      */
     DepartureType getDepartureType();
-
+    
     /**
      *
      * @return
      */
     Period getDuration();
-
+    
     /**
      *
      * @return
      */
     LocalTime getEndTime();
-
+    
     /**
      *
      * @return
      */
     String getFileName();
-
+    
     /**
      *
      * @return
      */
     Boolean getFlightToCompletion();
-
+    
     /**
      *
      * @return
      */
     FlightType getFlightType();
-
+    
     /**
      *
      * @return
      */
     Altitude getLandingLightAltitude();
-
+    
     /**
      *
      * @return
      */
     String getName();
-
+    
     /**
      *
      * @return
      */
     Set<StartDays> getStartDays();
-
+    
     /**
      *
      * @return
      */
     LocalTime getStartTime();
-
+    
     /**
      *
      * @return
      */
     List<String> getSteerPoints();
-
+    
+    /**
+     * Return is the flght plan has been modified.
+     *
+     * @return true if modified.
+     */
+    boolean isModified();
+    
 }
