@@ -12,7 +12,7 @@
         <dependency>
             <groupId>com.puppycrawl.tools</groupId>
             <artifactId>checkstyle</artifactId>
-            <version>7.0</version>
+            <version>7.1</version>
             <exclusions>
                 <exclusion>
                     <artifactId>tools</artifactId>
@@ -34,13 +34,13 @@
         <dependency>
             <groupId>net.sourceforge.pmd</groupId>
             <artifactId>pmd-core</artifactId>
-            <version>5.5.0</version>
+            <version>5.5.1</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/net.sourceforge.pmd/pmd-java8 -->
         <dependency>
             <groupId>net.sourceforge.pmd</groupId>
             <artifactId>pmd-java8</artifactId>
-            <version>5.5.0</version>
+            <version>5.5.1</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.google.maps/google-maps-services -->
         <dependency>
@@ -52,7 +52,7 @@
             <!-- SPRING FRAMEWORK -->
             <groupId>org.springframework</groupId>
             <artifactId>spring</artifactId>
-            <version>2.5.6</version>
+            <version>2.5.6.SEC03</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -61,7 +61,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
-            <version>4.3.0.RELEASE</version>
+            <version>4.3.2.RELEASE</version>
         </dependency>
         <!--JGOODIES -->
         <!-- https://mvnrepository.com/artifact/com.jgoodies/jgoodies-common -->
@@ -115,7 +115,7 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-core</artifactId>
-                <version>4.3.0.RELEASE</version>
+                <version>4.3.2.RELEASE</version>
             </dependency>
             <dependency>
                 <groupId>fr.gsyltc</groupId>
@@ -134,6 +134,14 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                <verbose>true</verbose>
                 </configuration>
             </plugin>
         </plugins>
@@ -161,7 +169,7 @@
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
                             <artifactId>checkstyle</artifactId>
-                            <version>7.0</version>
+                            <version>7.1</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -228,6 +236,11 @@
                         <exclude>**/geodesy/**/*.java</exclude>
                     </excludes>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.3</version>
             </plugin>
         </plugins>
     </reporting>
