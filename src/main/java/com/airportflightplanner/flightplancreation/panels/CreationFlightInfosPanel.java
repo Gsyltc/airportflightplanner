@@ -28,6 +28,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.airportflightplanner.common.api.adapter.AircraftTypeAdapter;
+import com.airportflightplanner.common.api.adapter.FlightPlanModelAdapter;
 import com.airportflightplanner.common.api.adapter.StartDaysAdapter;
 import com.airportflightplanner.common.api.dayselection.bean.DaySelectionReader;
 import com.airportflightplanner.common.api.flightplan.bean.FlightPlanProperties;
@@ -52,7 +53,6 @@ import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
 import fr.gsyltc.framework.slotsignals.action.api.SlotAction;
-import fr.gsyltc.framework.slotsignals.signals.Signal;
 import fr.gsyltc.framework.slotsignals.slots.Slot;
 import fr.gsyltc.framework.visualelements.AbstractCommandablePanel;
 import fr.gsyltc.framework.visualelements.types.LayoutSpecs;
@@ -78,6 +78,8 @@ public class CreationFlightInfosPanel extends AbstractCommandablePanel {
     private static final String AIRCRAFT_TYPE_ADAPTER = AircraftTypeAdapter.class.getSimpleName();
     /** */
     private static final String STARTDAYS_ADAPTER = StartDaysAdapter.class.getSimpleName();
+    /** */
+    private static final String CURRENT_FP_ADAPTER = FlightPlanModelAdapter.class.getSimpleName();
 
     /**
      * @param newCurrentFlightPlan
@@ -146,7 +148,8 @@ public class CreationFlightInfosPanel extends AbstractCommandablePanel {
         add(cpieLabel, "2, 6, right, default");
         add(createAircraftCpieComboBox(flInfosPresenter), "4, 6, 3, 1, fill, default");
 
-        getPresenter(FP_PRESENTER).addPropertyChangeListener(new PropertyChangeListener() {
+        // Listen the flight plan changes for update the display
+        getPresenter(FP_PRESENTER).addPropertyChangeListener(PresentationModel.PROPERTY_AFTER_BEAN, new PropertyChangeListener() {
             
             
             /**
@@ -155,6 +158,9 @@ public class CreationFlightInfosPanel extends AbstractCommandablePanel {
              */
             @Override
             public void propertyChange(final PropertyChangeEvent evt) {
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("FP PRESENTER - AFTER BEAN : " + evt.getPropertyName() + "=" + evt.getNewValue());
+                }
                 if (evt.getNewValue() instanceof FlightPlanReader) {
                     final String aircraftType = ((FlightPlanReader) evt.getNewValue()).getAircraftType();
                     final FlightInfosModel bean = (FlightInfosModel) getPresenter(FL_INFOS_PRESENTER_INDEX).getBean();
@@ -164,6 +170,20 @@ public class CreationFlightInfosPanel extends AbstractCommandablePanel {
                     bean.setAircraftCie(AircraftDecoder.getAircraftCie(aircraftType));
                     bean.setAircraftLivery(aircraftType);
                 }
+            }
+        });
+
+        // Listen the display presenter to update the model
+        flInfosPresenter.addPropertyChangeListener(PresentationModel.PROPERTY_BUFFERING, new PropertyChangeListener() {
+            
+            
+            /**
+             *
+             * {@inheritDoc}.
+             */
+            @Override
+            public void propertyChange(final PropertyChangeEvent evt) {
+                
             }
         });
 
@@ -177,6 +197,7 @@ public class CreationFlightInfosPanel extends AbstractCommandablePanel {
         super.createAdapters();
         attachAdapter(STARTDAYS_ADAPTER);
         attachAdapter(AIRCRAFT_TYPE_ADAPTER);
+        attachAdapter(CURRENT_FP_ADAPTER);
     }
 
     /**
@@ -294,8 +315,18 @@ public class CreationFlightInfosPanel extends AbstractCommandablePanel {
                 if (null == evt.getNewValue()) {
                     component.setSelectedIndex(JComponent.UNDEFINED_CONDITION);
                 } else {
-                    
+                    if (null != evt.getOldValue()) {
+                        System.out.println("Old Value :" + evt.getOldValue());
+                    }
+                    System.out.println("New Value :" + evt.getNewValue());
                     component.setSelectedItem(evt.getNewValue());
+                    // if (evt.getNewValue().equals(evt.getOldValue())) {
+                    // final PresentationModel<FlightPlanModel> fpPresenter =
+                    // (PresentationModel<FlightPlanModel>) getPresenter(
+                    // FP_PRESENTER);
+                    // fpPresenter.setBufferedValue(FlightPlanProperties.AIRCRAFT_TYPE,
+                    // evt.getNewValue().toString());
+                    // }
                 }
             }
         });
@@ -410,18 +441,10 @@ public class CreationFlightInfosPanel extends AbstractCommandablePanel {
                 default:
                     break;
                 }
-                final Signal signal = findSignal(TopicName.FP_MODIFIED_TOPIC);
-                signal.fireSignal(false);
+                // final Signal signal =
+                // findSignal(TopicName.FP_MODIFIED_TOPIC);
+                // signal.fireSignal(false);
             }
         });
-    }
-
-    /**
-     * {@inheritDoc}.
-     */
-    @Override
-    public void createSignals() {
-        super.createSignals();
-        attachSignal(TopicName.FP_MODIFIED_TOPIC);
     }
 }

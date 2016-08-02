@@ -123,7 +123,7 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
         final JTable table = new JTable(presenter.getTableAdapter());
         table.setDefaultRenderer(String.class, centerRenderer);
         table.setFillsViewportHeight(true);
-        table.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             
@@ -152,12 +152,12 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
                             if (lsm.isSelectedIndex(i)) { // NOPMD by sylva on
                                                           // 31/07/16 15:42
 
-                                currentFlightPlan = adapter.getModel().getFlightPlanByIndex(i);
+                                setCurrentFlightPlan(adapter.getModel().getFlightPlanByIndex(i));
                             }
                         }
                     }
                     final Signal signal = findSignal(TopicName.FP_TABLE_SELECTED_TOPIC);
-                    signal.fireSignal(currentFlightPlan);
+                    signal.fireSignal(getCurrentFlightPlan());
                 }
             }
 
@@ -234,4 +234,19 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
         attachSignal(TopicName.VALIDATION_TOPIC);
     }
 
+    /**
+     * @return the currentFlightPlan
+     */
+    protected FlightPlanReader getCurrentFlightPlan() {
+        return currentFlightPlan;
+    }
+
+    /**
+     *
+     * @param newFp
+     *            the currentFlightPlan to set
+     */
+    protected void setCurrentFlightPlan(final FlightPlanReader newFp) {
+        currentFlightPlan = newFp;
+    }
 }
