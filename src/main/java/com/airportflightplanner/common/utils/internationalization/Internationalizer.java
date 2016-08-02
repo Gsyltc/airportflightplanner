@@ -1,7 +1,15 @@
-/* @(#)Internationalizer.java
+/*
+ * @(#)Internationalizer.java
  *
- * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
+ * Goubaud Sylvain
+ * Created : 2016
+ * Modified : 2 août 2016.
+ *
+ * This code may be freely used and modified on any personal or professional
+ * project.  It comes with no warranty.
+ *
  */
+
 package com.airportflightplanner.common.utils.internationalization;
 
 import java.util.List;
@@ -15,10 +23,11 @@ import org.springframework.context.support.ResourceBundleMessageSource;
  *
  */
 public class Internationalizer {
-
+    
+    
     /** */
     private static ResourceBundleMessageSource bundleMessageSource = new ResourceBundleMessageSource();
-
+    
     /**
      * Get the internationalized String form properties files
      *
@@ -29,19 +38,19 @@ public class Internationalizer {
         String message = "";
         try {
             message = bundleMessageSource.getMessage(key, null, Locale.getDefault());
-        } catch (NoSuchMessageException e) {
+        } catch (final NoSuchMessageException e) {
             message = key + AbstractMessages.UNKNOWN;
         }
         return message;
     }
-
+    
     /**
      * Set the bundles for internationalization Injected by Spring
      *
      * @param bundles
      */
     public void setBundles(final List<String> bundles) {
-        String[] bundlesArrays = new String[bundles.size()];
+        final String[] bundlesArrays = new String[bundles.size()];
         for (int i = 0; i < bundles.size(); i++) {
             bundlesArrays[i] = bundles.get(i);
         }

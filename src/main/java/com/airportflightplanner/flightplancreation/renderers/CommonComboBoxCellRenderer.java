@@ -39,10 +39,10 @@ public class CommonComboBoxCellRenderer<E> implements ListCellRenderer<E> {
     
     /**
      *
-     * @param prototypeDisplay
+     * @param pDisplay
      */
-    public CommonComboBoxCellRenderer(final String prototypeDisplay) {
-        this.prototypeDisplay = prototypeDisplay;
+    public CommonComboBoxCellRenderer(final String pDisplay) {
+        this.prototypeDisplay = pDisplay;
     }
     
     /**

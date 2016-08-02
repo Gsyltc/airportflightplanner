@@ -51,7 +51,7 @@ public class FlightPlanModelAdapterImpl extends AbstractReceiverModelAdapterImpl
      *
      */
     private static final long serialVersionUID = -7652261197111997309L;
-    
+
     /** The logger of this class. */
     private static final Log LOGGER = LogFactory.getLog(FlightPlanModelAdapterImpl.class);
     /** */
@@ -60,7 +60,7 @@ public class FlightPlanModelAdapterImpl extends AbstractReceiverModelAdapterImpl
     private static final int NUMBER_ONE = 1;
     /** Definied if the current flight plan has been modified. */
     private boolean modificationtoCommit;
-    
+
     /**
      *
      * {@inheritDoc}.
@@ -68,12 +68,12 @@ public class FlightPlanModelAdapterImpl extends AbstractReceiverModelAdapterImpl
     @Override
     public final void addSteerpoints(final List<String> steerpoints) {
         getModel().setSteerPoints(steerpoints);
-        
+
         // calculate Flight Time
         final long result = GeographicUtils.getFlightTime(steerpoints);
         getModel().setDuration(new Period(result));
     }
-    
+
     /**
      * {@inheritDoc}.
      */
@@ -85,7 +85,7 @@ public class FlightPlanModelAdapterImpl extends AbstractReceiverModelAdapterImpl
             
             /** . */
             private static final long serialVersionUID = 4397834631502532479L;
-            
+
             /**
              *
              * {@inheritDoc}.
@@ -95,14 +95,14 @@ public class FlightPlanModelAdapterImpl extends AbstractReceiverModelAdapterImpl
                 setModel(bean);
             }
         });
-        
+
         final Slot modifiedSlot = attachSlot(TopicName.FP_MODIFIED_TOPIC);
         modifiedSlot.setSlotAction(new SlotAction<Boolean>() {
             
             
             /** . */
             private static final long serialVersionUID = 4397834631502532479L;
-            
+
             /**
              *
              * {@inheritDoc}.
@@ -113,7 +113,7 @@ public class FlightPlanModelAdapterImpl extends AbstractReceiverModelAdapterImpl
             }
         });
     }
-    
+
     /**
      * /** {@inheritDoc}..
      */
@@ -121,7 +121,7 @@ public class FlightPlanModelAdapterImpl extends AbstractReceiverModelAdapterImpl
     public void init() {
         this.createSlots();
     }
-    
+
     /**
      *
      * {@inheritDoc}.
@@ -135,7 +135,7 @@ public class FlightPlanModelAdapterImpl extends AbstractReceiverModelAdapterImpl
                 result = true;
             }
             getModel().setFlightToCompletion(result);
-            
+
             break;
         case START_LANDING_LIGHT_ALT:
             getModel().setLandingLightAltitude(Altitude.valueOf(Double.valueOf(line), NonSI.FOOT));
@@ -150,7 +150,7 @@ public class FlightPlanModelAdapterImpl extends AbstractReceiverModelAdapterImpl
             if (splitAirCraft.length > NUMBER_ONE) {
                 getModel().setAircraftCie(Internationalizer.getI18String(splitAirCraft[1]));
             }
-            
+
             break;
         case STARTALTERNATEAIRPORT:
             getModel().setAlternateAirport(line);
@@ -208,12 +208,12 @@ public class FlightPlanModelAdapterImpl extends AbstractReceiverModelAdapterImpl
         
         case STARTDAYS:
             final String[] days = line.split(" +");
-            
+
             final Set<StartDays> daysSet = new HashSet<StartDays>();
             for (final String day : days) {
                 daysSet.add(StartDays.valueOf(Integer.parseInt(day)));
             }
-            
+
             getModel().setStartDays(daysSet);
             break;
         
@@ -221,7 +221,7 @@ public class FlightPlanModelAdapterImpl extends AbstractReceiverModelAdapterImpl
             break;
         }
     }
-    
+
     /**
      * {@inheritDoc}.
      */
@@ -229,7 +229,7 @@ public class FlightPlanModelAdapterImpl extends AbstractReceiverModelAdapterImpl
     public boolean hasModificationToCommit() {
         return modificationtoCommit;
     }
-    
+
     /**
      * {@inheritDoc}.
      */

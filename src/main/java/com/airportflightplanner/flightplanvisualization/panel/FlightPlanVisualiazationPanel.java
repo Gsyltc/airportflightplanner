@@ -49,14 +49,14 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
     private static final long serialVersionUID = -6354635338489926005L;
     /** */
     protected transient Signal signal;
-
+    
     /** */
     private FlightPlanCollectionReader fpCollection;
-
+    
     /**
      *
      */
-
+    
     /**
      * @param newFPCollectionModel
      *            the Flightplan collection model.
@@ -78,7 +78,7 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
                 new PresentationModel<FlightPlanReader>((FlightPlanReader) currentFp), //
                 new PresentationModel<DaySelectionReader>((DaySelectionReader) daysSelectionModel));
     }
-
+    
     /**
      *
      */
@@ -99,18 +99,18 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
                         FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC, //
                         FormSpecs.RELATED_GAP_ROWSPEC, });
-
+        
         formLayout.setColumnGroups(new int[][] { new int[] { 2, 4 } });
         setLayout(formLayout);
         final FlightPlanVisualizationPresenter presenter = (FlightPlanVisualizationPresenter) getPresenter(FP_PRESENTER);
         setFpCollection(presenter.getBean());
-
+        
         add(createCurrentAirportPanel(), "2, 2, 3, 1, fill, fill");
         add(createDaysSelectionPanel(), "2, 4, 3, 1, fill, fill");
         add(createFlightPlanListPanel(), "2, 6, 3, 1");
         add(createSteerPointPanel(), "2, 8, 3, 1");
     }
-
+    
     /**
      *
      * @return
@@ -121,7 +121,7 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
         panel.build();
         return panel;
     }
-
+    
     /**
      *
      * @return
@@ -133,7 +133,7 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
         panel.build();
         return panel;
     }
-
+    
     /**
      *
      * @return
@@ -144,7 +144,7 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
         panel.build();
         return panel;
     }
-
+    
     /**
      *
      * @return
@@ -155,7 +155,7 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
         panel.build();
         return panel;
     }
-
+    
     /**
      *
      * @param newFpCollection
@@ -163,7 +163,7 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
     private void setFpCollection(final FlightPlanCollectionReader newFpCollection) {
         fpCollection = newFpCollection;
     }
-
+    
     /**
      * @return the fpCollection
      */

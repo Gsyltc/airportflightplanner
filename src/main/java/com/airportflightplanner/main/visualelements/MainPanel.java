@@ -17,7 +17,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 
 import com.airportflightplanner.common.types.BeanNames;
-import com.airportflightplanner.flightplancreation.FlightPlanCreationPanel;
+import com.airportflightplanner.flightplancreation.panels.FlightPlanCreationPanel;
 import com.airportflightplanner.flightplanvisualization.panel.FlightPlanVisualiazationPanel;
 import com.airportflightplanner.main.visualelements.messages.MainPanelMessages;
 import com.airportflightplanner.main.visualelements.panels.WaypointEditionPanel;

@@ -12,7 +12,6 @@
 
 package com.airportflightplanner.flightplanvisualization.panel; // NOPMD by sylva on 31/07/16 15:42
 
-import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +34,9 @@ import com.airportflightplanner.common.api.adapter.FlightPlanCollectionAdapter;
 import com.airportflightplanner.common.api.adapter.FlightPlanModelAdapter;
 import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
 import com.airportflightplanner.common.slotsignal.TopicName;
+import com.airportflightplanner.common.types.ActionTypes;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
+import com.airportflightplanner.flightplanvisualization.messages.FlightPlanVisualizationMessages;
 import com.airportflightplanner.flightplanvisualization.presenter.flightplan.FlightPlanVisualizationPresenter;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -63,16 +64,14 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
 
     /** */
     protected static final int FP_COLLECTION_PRESENTER = 0;
+    /** */
+    protected static final int CURRENT_FP_PRESENTER = 1;
     /** The current flight plan. */
     protected FlightPlanReader currentFlightPlan;
 
     /**
-     *
-     */
-
-    /**
      * @param presenter
-     *
+     *            the list presenter.
      */
     public FlightPlanListPanel(final FlightPlanVisualizationPresenter presenter) {
         super(presenter);
@@ -98,9 +97,9 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
         setBorder(panelBorder);
 
         add(createFlightScrollPane(), "2, 2, 3, 1");
-        
+
     }
-    
+
     /**
      * {@inheritDoc}.
      */
@@ -125,6 +124,7 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
         table.setDefaultRenderer(String.class, centerRenderer);
         table.setFillsViewportHeight(true);
         table.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             
             
@@ -136,10 +136,13 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
             public void valueChanged(final ListSelectionEvent event) {
                 final FlightPlanModelAdapter fpAdapter = (FlightPlanModelAdapter) findAdapter(FlightPlanModelAdapter.class
                         .getSimpleName());
-                if (fpAdapter.hasModificationToCommit()) {
-                    showConfirmDialog();
-                }
                 if (event.getValueIsAdjusting()) {
+                    if (fpAdapter.hasModificationToCommit()) {
+                        // use repaint to avoid graphical problem with the
+                        // selected row
+                        table.repaint();
+                        showConfirmDialog();
+                    }
                     final ListSelectionModel lsm = (ListSelectionModel) event.getSource();
 
                     if (!lsm.isSelectionEmpty()) {
@@ -148,6 +151,7 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
                         for (int i = minIndex; i <= maxIndex; i++) {
                             if (lsm.isSelectedIndex(i)) { // NOPMD by sylva on
                                                           // 31/07/16 15:42
+
                                 currentFlightPlan = adapter.getModel().getFlightPlanByIndex(i);
                             }
                         }
@@ -161,16 +165,18 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
              * Show the confirm dialog (Current flight plan is modified).
              */
             private void showConfirmDialog() {
-                final JOptionPane confirmDialog = new JOptionPane("Do you want toto", JOptionPane.QUESTION_MESSAGE,
-                        JOptionPane.YES_NO_OPTION);
+                final JOptionPane confirmDialog = new JOptionPane(FlightPlanVisualizationMessages.CONFIRM_DIALOG_TEXT,
+                        JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
 
-                final JDialog dialog = new JDialog(new Frame("Toto"), "Click a button", true);
-                dialog.setContentPane(confirmDialog);
-                dialog.pack();
+                final JDialog dialog = confirmDialog.createDialog(null, FlightPlanVisualizationMessages.CONFIRM_DIALOG_TITLE);
                 dialog.setVisible(true);
-
-                final Signal signal = findSignal(TopicName.FP_MODIFIED_TOPIC);
-                signal.fireSignal(false);
+                final Object result = confirmDialog.getValue();
+                final Signal signal = findSignal(TopicName.VALIDATION_TOPIC);
+                if (result.equals(JOptionPane.YES_OPTION)) {
+                    signal.fireSignal(ActionTypes.VALIDATE);
+                } else {
+                    signal.fireSignal(ActionTypes.CANCEL);
+                }
             }
         });
 
@@ -225,6 +231,7 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
         super.createSignals();
         attachSignal(TopicName.FP_MODIFIED_TOPIC);
         attachSignal(TopicName.FP_TABLE_SELECTED_TOPIC);
+        attachSignal(TopicName.VALIDATION_TOPIC);
     }
 
 }
