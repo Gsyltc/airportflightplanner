@@ -61,7 +61,6 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
     
     /** The logger of this class. */
     protected static final Log LOGGER = LogFactory.getLog(CreationOptionsPanel.class);
-    
     /*** */
     private static final long serialVersionUID = -2692513903084994308L;
     /** */
@@ -123,14 +122,6 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
         add(new JLabel(FlightPlanCreationPanelMessages.FLY_TO_COMPLETION_LABEL), "2,6");
         add(createFlyToCompletionCkb(presenter), "4, 6");
         
-    }
-    
-    /**
-     * {@inheritDoc}.
-     */
-    @Override
-    public void createSlots() {
-        super.createSlots();
     }
     
     /**
