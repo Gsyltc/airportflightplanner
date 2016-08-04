@@ -36,6 +36,7 @@ import com.airportflightplanner.common.models.flightplans.FlightPlanModel;
 import com.airportflightplanner.common.types.ArrivalType;
 import com.airportflightplanner.common.types.DepartureType;
 import com.airportflightplanner.common.types.FlightType;
+import com.airportflightplanner.common.types.UnitTypes;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
 import com.airportflightplanner.flightplancreation.renderers.CommonComboBoxCellRenderer;
 import com.jgoodies.binding.PresentationModel;
@@ -255,7 +256,7 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
                     final Altitude altitude = (Altitude) obj;
                     result = altitude.longValue(NonSI.FOOT);
                 }
-                return new StringBuffer(String.valueOf(result)).append(" ft");
+                return new StringBuffer(String.valueOf(result)).append(" ").append(UnitTypes.FEET.getI18String(false));
             }
             
             /**
@@ -267,9 +268,10 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
                 Double result = 0.0;
                 if (source.contains("m")) {
                     // source in meters
-                    result = Double.parseDouble(source.replace("m", "").replace(" ", "")) * FEET_FACTOR;
+                    result = Double.parseDouble(source.replace(UnitTypes.METER.getI18String(false), "").replace(" ", ""))
+                            * FEET_FACTOR;
                 } else {
-                    result = Double.parseDouble(source.replace("ft", "").replace(" ", ""));
+                    result = Double.parseDouble(source.replace(UnitTypes.FEET.getI18String(false), "").replace(" ", ""));
                 }
                 return Altitude.valueOf(result, NonSI.FOOT);
             }
