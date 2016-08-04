@@ -70,7 +70,7 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
     private static final String PROTOTYPE_DISPLAY = "XXXXXXXXXXXXX";
     /** */
     private static final double FEET_FACTOR = 3.28084;
-
+    
     /**
      * @param model
      *
@@ -78,7 +78,7 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
     public CreationOptionsPanel(final PresentationModel<FlightPlanReader> model) {
         super(model);
     }
-
+    
     /**
      *
      * {@inheritDoc}.
@@ -100,31 +100,31 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
                         FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC, });
-
+        
         setLayout(formLayout);
         formLayout.setRowGroups(new int[][] { new int[] { 4, 2 } });
         formLayout.setColumnGroups(new int[][] { new int[] { 2, 6 }, new int[] { 4, 8 } });
-
+        
         setBorder(new TitledBorder(null, FlightPlanCreationPanelMessages.OPTIONS_LABEL));
-
+        
         final PresentationModel<FlightPlanReader> presenter = (PresentationModel<FlightPlanReader>) getPresenter(FP_PRESENTER);
         add(new JLabel(FlightPlanCreationPanelMessages.DEPATURETYPE_LABEL), "2,2");
         add(createDepartureTypeCb(presenter), "4, 2");
-
+        
         add(new JLabel(FlightPlanCreationPanelMessages.ARRIVALTYPE_LABEL), "2,4");
         add(createArrivalTypeCb(presenter), "4, 4");
-
+        
         add(new JLabel(FlightPlanCreationPanelMessages.FLIGHTTYPE_LABEL), "6,2");
         add(createFlightTypeCb(presenter), "8, 2");
-
+        
         add(new JLabel(FlightPlanCreationPanelMessages.LANDINGLIGHT_LABEL), "6,4");
         add(createLandingLightAltitudeTb(presenter), "8, 4");
-
+        
         add(new JLabel(FlightPlanCreationPanelMessages.FLY_TO_COMPLETION_LABEL), "2,6");
         add(createFlyToCompletionCkb(presenter), "4, 6");
-
+        
     }
-
+    
     /**
      *
      * @param presenter
@@ -152,10 +152,10 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
                 }
             }
         });
-
+        
         return component;
     }
-
+    
     /**
      *
      * @param presenter
@@ -186,7 +186,7 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
         });
         return component;
     }
-
+    
     /**
      *
      * @param presenter
@@ -214,10 +214,10 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
                 }
             }
         });
-
+        
         return component;
     }
-
+    
     /**
      *
      * @param presenter
@@ -227,7 +227,7 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
         final ValueModel value = presenter.getBufferedModel(FlightPlanProperties.FLIGHT_TO_COMPLETION);
         return BasicComponentFactory.createCheckBox(value, "");
     }
-
+    
     /**
      *
      * @param presenter
@@ -236,7 +236,7 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
     private JTextField createLandingLightAltitudeTb(final PresentationModel<FlightPlanReader> presenter) {
         final BufferedValueModel model = presenter.getBufferedModel(//
                 FlightPlanProperties.LANDING_LIGHT_ALTITUDE);
-
+        
         final ValueModel value = ConverterFactory.createStringConverter(model, new Format() {
             
             
@@ -244,7 +244,7 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
              *
              */
             private static final long serialVersionUID = 5858092520252522599L;
-
+            
             /**
              *
              * {@inheritDoc}
@@ -258,7 +258,7 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
                 }
                 return new StringBuffer(String.valueOf(result)).append(" ").append(UnitTypes.FEET.getI18String(false));
             }
-
+            
             /**
              *
              * {@inheritDoc}
@@ -266,7 +266,7 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
             @Override
             public Object parseObject(final String source, final ParsePosition pos) {
                 Double result = 0.0;
-                if (source.contains("m")) {
+                if (source.contains(UnitTypes.METER.getI18String(false))) {
                     // source in meters
                     result = Double.parseDouble(source.replace(UnitTypes.METER.getI18String(false), "").replace(" ", ""))
                             * FEET_FACTOR;
@@ -276,7 +276,7 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
                 return Altitude.valueOf(result, NonSI.FOOT);
             }
         });
-
+        
         return BasicComponentFactory.createTextField(value);
     }
 }

@@ -141,7 +141,8 @@
                 <artifactId>versions-maven-plugin</artifactId>
                 <version>2.3</version>
                 <configuration>
-                <verbose>true</verbose>
+                    <verbose>true</verbose>
+                    <allowSnapshots>true</allowSnapshots>
                 </configuration>
             </plugin>
         </plugins>
@@ -241,6 +242,9 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
                 <version>2.3</version>
+                <configuration>
+                    <allowSnapshots>true</allowSnapshots>
+                </configuration>
             </plugin>
         </plugins>
     </reporting>
