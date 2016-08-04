@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 31 juil. 2016.
+ * Modified : 4 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -21,6 +21,6 @@ public enum ActionTypes {
     VALIDATE,
     /** Cacel action. */
     CANCEL,
-    /** Refresh action */
+    /** Refresh action. */
     REFRESH
 }

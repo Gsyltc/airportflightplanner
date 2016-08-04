@@ -1,7 +1,15 @@
-/* @(#)TimeProcessor.java
+/*
+ * @(#)TimeUtils.java
  *
- * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
+ * Goubaud Sylvain
+ * Created : 2016
+ * Modified : 4 août 2016.
+ *
+ * This code may be freely used and modified on any personal or professional
+ * project.  It comes with no warranty.
+ *
  */
+
 package com.airportflightplanner.common.utils.time;
 
 import java.util.regex.Matcher;
@@ -23,37 +31,38 @@ import org.joda.time.format.PeriodFormatterBuilder;
  *
  */
 public final class TimeUtils {
+    
     /** The logger of this class. */
-    private static final Log              LOGGER              = LogFactory.getLog(TimeUtils.class);
-
+    private static final Log LOGGER = LogFactory.getLog(TimeUtils.class);
+    
     /** */
-    private static final DateTimeZone     CURRENT_TIMEZONE    = DateTimeZone.getDefault();
-
+    private static final DateTimeZone CURRENT_TIMEZONE = DateTimeZone.getDefault();
+    
     /** */
-    public static final Pattern           PATTERN             = Pattern.compile("^([0-2]|[0-1][0-9]|2[0-3])((:[0-9])|(:[0-5][0-9]))?");
-
+    public static final Pattern PATTERN = Pattern.compile("^([0-2]|[0-1][0-9]|2[0-3])((:[0-9])|(:[0-5][0-9]))?");
+    
     /** */
-    public static final PeriodFormatter   PERIOD_DISPLAYER    =                                                                        //
-            new PeriodFormatterBuilder().minimumPrintedDigits(2).appendHours().appendSeparator(":")                                    //
-            .minimumPrintedDigits(2).printZeroAlways().appendMinutes().toFormatter();
-
+    public static final PeriodFormatter PERIOD_DISPLAYER = //
+            new PeriodFormatterBuilder().minimumPrintedDigits(2).appendHours().appendSeparator(":") //
+                    .minimumPrintedDigits(2).printZeroAlways().appendMinutes().toFormatter();
+    
     /** */
-    public static final PeriodFormatter   FP_PERIOD_DISPLAYER =                                                                        //
-            new PeriodFormatterBuilder().appendHours().appendSuffix(" h ", " h ").                                                     //
-            printZeroRarelyLast().appendMinutes().appendSuffix(" m", " m").toFormatter();
-
+    public static final PeriodFormatter FP_PERIOD_DISPLAYER = //
+            new PeriodFormatterBuilder().appendHours().appendSuffix(" h ", " h "). //
+                    printZeroRarelyLast().appendMinutes().appendSuffix(" m", " m").toFormatter();
+    
     /** */
-    public static final DateTimeFormatter TIME_DISPLAYER      =                                                                        //
-            new DateTimeFormatterBuilder().appendHourOfDay(2).appendLiteral(":").                                                      //
-            appendMinuteOfHour(2).toFormatter();
-
+    public static final DateTimeFormatter TIME_DISPLAYER = //
+            new DateTimeFormatterBuilder().appendHourOfDay(2).appendLiteral(":"). //
+                    appendMinuteOfHour(2).toFormatter();
+    
     /**
      * Protected Constructor.
      */
     private TimeUtils() {
         //
     }
-
+    
     /**
      *
      * @param utcTime
@@ -63,7 +72,7 @@ public final class TimeUtils {
         final DateTime currentDt = utcTime.toDateTimeToday(DateTimeZone.UTC);
         return currentDt.toDateTime(CURRENT_TIMEZONE).toLocalTime();
     }
-
+    
     /**
      *
      * @param utcTimeString
@@ -79,7 +88,7 @@ public final class TimeUtils {
         }
         return result;
     }
-
+    
     /**
      *
      * @param origin
@@ -102,7 +111,7 @@ public final class TimeUtils {
         }
         return result;
     }
-
+    
     /**
      *
      * @param value
@@ -112,7 +121,7 @@ public final class TimeUtils {
         final Matcher matcher = PATTERN.matcher(value);
         return matcher.matches();
     }
-
+    
     /**
      *
      * @param origin
@@ -122,7 +131,7 @@ public final class TimeUtils {
     public static String getStartTime(final String origin, final String duration) {
         return calculateByTimeAndDuration(origin, duration, false).toString(TIME_DISPLAYER);
     }
-
+    
     /***
      *
      * @param origin
@@ -132,7 +141,7 @@ public final class TimeUtils {
     public static String getEndTime(final String origin, final String duration) {
         return calculateByTimeAndDuration(origin, duration, true).toString(TIME_DISPLAYER);
     }
-
+    
     /**
      *
      * @param origin
@@ -151,7 +160,7 @@ public final class TimeUtils {
         }
         return result;
     }
-
+    
     /**
      *
      * @param dateString

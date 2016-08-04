@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 1 août 2016.
+ * Modified : 4 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -24,8 +24,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.airportflightplanner.common.slotsignal.TopicName;
 
@@ -49,7 +49,7 @@ public class PropertiesUtils implements SlotReceiver {
     /** */
     private static final List<Properties> PROPERTIES = new ArrayList<Properties>();
     /** The logger of this class. */
-    private static final Log LOGGER = LogFactory.getLog(PropertiesUtils.class);
+    private static final Logger LOGGER = LogManager.getLogger(PropertiesUtils.class);
     /** files. */
     private List<String> fileNames;
     /** map of attached slots. */

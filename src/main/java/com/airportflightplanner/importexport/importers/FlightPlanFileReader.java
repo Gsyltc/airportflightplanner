@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 31 juil. 2016.
+ * Modified : 4 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -27,8 +27,8 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.airportflightplanner.common.api.adapter.FlightPlanModelAdapter;
 import com.airportflightplanner.common.api.flightplan.bean.FlightPlanProperties;
@@ -46,12 +46,13 @@ public class FlightPlanFileReader {
     
     
     /** The logger of this class. */
-    private static final Log LOGGER = LogFactory.getLog(FlightPlanFileReader.class);
+    private static final Logger LOGGER = LogManager.getLogger(FlightPlanFileReader.class);
+
     /**
      *
      */
     private FlightPlanModelAdapter flightPlanModelAdapter;
-    
+
     /** */
     private FlighPlanCollectionModel flighPlanCollectionModel;
 
@@ -89,7 +90,7 @@ public class FlightPlanFileReader {
         }
 
     }
-    
+
     /**
      * @return the flighPlanCollectionModel
      */

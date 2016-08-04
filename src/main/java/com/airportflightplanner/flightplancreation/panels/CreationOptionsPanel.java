@@ -26,8 +26,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jscience.geography.coordinates.Altitude;
 
 import com.airportflightplanner.common.api.flightplan.bean.FlightPlanProperties;
@@ -61,7 +61,7 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
     
     
     /** The logger of this class. */
-    protected static final Log LOGGER = LogFactory.getLog(CreationOptionsPanel.class);
+    protected static final Logger LOGGER = LogManager.getLogger(CreationOptionsPanel.class);
     /*** */
     private static final long serialVersionUID = -2692513903084994308L;
     /** */

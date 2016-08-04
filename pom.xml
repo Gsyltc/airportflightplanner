@@ -20,6 +20,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.6.2</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/org.codehaus.javancss/javancss -->
         <dependency>
             <groupId>org.codehaus.javancss</groupId>
@@ -108,6 +114,17 @@
         <dependency>
             <groupId>fr.gsyltc</groupId>
             <artifactId>Framework-main</artifactId>
+        </dependency>
+        <!-- Log4j -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.6.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.6.2</version>
         </dependency>
     </dependencies>
     <dependencyManagement>

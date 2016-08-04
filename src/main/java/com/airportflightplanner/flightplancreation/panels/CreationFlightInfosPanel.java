@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 1 août 2016.
+ * Modified : 4 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -24,8 +24,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.airportflightplanner.common.api.adapter.AircraftTypeAdapter;
 import com.airportflightplanner.common.api.adapter.FlightPlanModelAdapter;
@@ -65,7 +65,7 @@ public class CreationFlightInfosPanel extends AbstractCommandablePanel {
     
     
     /** The logger of this class. */
-    protected static final Log LOGGER = LogFactory.getLog(CreationFlightInfosPanel.class);
+    protected static final Logger LOGGER = LogManager.getLogger(CreationFlightInfosPanel.class);
     /** The UID og the class. */
     private static final long serialVersionUID = -2692513903084994308L;
     /** the flight infos presenter index. */
