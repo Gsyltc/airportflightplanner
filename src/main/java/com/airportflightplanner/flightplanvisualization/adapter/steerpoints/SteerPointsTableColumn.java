@@ -1,7 +1,9 @@
 /*
  * @(#)SteerPointsTableColumn.java
  *
- * Goubaud Sylvain - 2016.
+ * Goubaud Sylvain
+ * Created : 2016
+ * Modified : 4 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -10,7 +12,7 @@
 
 package com.airportflightplanner.flightplanvisualization.adapter.steerpoints;
 
-import com.airportflightplanner.common.utils.internationalization.Internationalizer;
+import fr.gsyltc.framework.utils.internationalizer.Internationalizer;
 
 /**
  * @author Goubaud Sylvain
@@ -25,10 +27,10 @@ public enum SteerPointsTableColumn {
     VELOCITY(2),
     /** */
     ALTITUDE(3);
-    
+
     /** */
     private static final String PREFIX = "SteerPointsTableColumn.";
-    
+
     /**
      *
      * @param column
@@ -36,11 +38,11 @@ public enum SteerPointsTableColumn {
      */
     public static int getColumnNumber(final SteerPointsTableColumn column) {
         return column.value;
-
+        
     }
-
+    
     /**
-     * Get i18nString.
+     * Get the internationalized name.
      *
      * @param columnIndex
      * @return
@@ -48,7 +50,7 @@ public enum SteerPointsTableColumn {
     public static String getName(final int columnIndex) {
         return Internationalizer.getI18String(PREFIX + valueOf(columnIndex).name());
     }
-
+    
     /**
      *
      * @param columnNumber
@@ -63,10 +65,10 @@ public enum SteerPointsTableColumn {
         }
         return result;
     }
-
+    
     /** */
     private int value;
-
+    
     /**
      *
      * @param value

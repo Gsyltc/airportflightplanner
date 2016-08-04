@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 1 août 2016.
+ * Modified : 4 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -32,12 +32,12 @@ import com.airportflightplanner.common.types.FlightPlanInformationTypes;
 import com.airportflightplanner.common.types.FlightType;
 import com.airportflightplanner.common.types.StartDays;
 import com.airportflightplanner.common.utils.geographics.GeographicUtils;
-import com.airportflightplanner.common.utils.internationalization.Internationalizer;
 import com.airportflightplanner.common.utils.time.TimeUtils;
 
 import fr.gsyltc.framework.adapters.AbstractReceiverModelAdapterImpl;
 import fr.gsyltc.framework.slotsignals.action.api.SlotAction;
 import fr.gsyltc.framework.slotsignals.slots.Slot;
+import fr.gsyltc.framework.utils.internationalizer.Internationalizer;
 
 /**
  * @author Goubaud Sylvain
@@ -75,6 +75,7 @@ public class FlightPlanModelAdapterImpl extends AbstractReceiverModelAdapterImpl
     }
 
     /**
+     *
      * {@inheritDoc}.
      */
     @Override
