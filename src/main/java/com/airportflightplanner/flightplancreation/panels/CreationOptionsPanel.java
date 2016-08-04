@@ -33,8 +33,6 @@ import org.jscience.geography.coordinates.Altitude;
 import com.airportflightplanner.common.api.flightplan.bean.FlightPlanProperties;
 import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
 import com.airportflightplanner.common.models.flightplans.FlightPlanModel;
-import com.airportflightplanner.common.slotsignal.TopicName;
-import com.airportflightplanner.common.types.ActionTypes;
 import com.airportflightplanner.common.types.ArrivalType;
 import com.airportflightplanner.common.types.DepartureType;
 import com.airportflightplanner.common.types.FlightType;
@@ -51,8 +49,6 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
-import fr.gsyltc.framework.slotsignals.action.api.SlotAction;
-import fr.gsyltc.framework.slotsignals.slots.Slot;
 import fr.gsyltc.framework.visualelements.AbstractCommandablePanel;
 import fr.gsyltc.framework.visualelements.types.LayoutSpecs;
 
@@ -65,7 +61,7 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
     
     /** The logger of this class. */
     protected static final Log LOGGER = LogFactory.getLog(CreationOptionsPanel.class);
-
+    
     /*** */
     private static final long serialVersionUID = -2692513903084994308L;
     /** */
@@ -74,7 +70,7 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
     private static final String PROTOTYPE_DISPLAY = "XXXXXXXXXXXXX";
     /** */
     private static final double FEET_FACTOR = 3.28084;
-
+    
     /**
      * @param model
      *
@@ -82,7 +78,7 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
     public CreationOptionsPanel(final PresentationModel<FlightPlanReader> model) {
         super(model);
     }
-
+    
     /**
      *
      * {@inheritDoc}.
@@ -104,86 +100,39 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
                         FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC, });
-
+        
         setLayout(formLayout);
         formLayout.setRowGroups(new int[][] { new int[] { 4, 2 } });
         formLayout.setColumnGroups(new int[][] { new int[] { 2, 6 }, new int[] { 4, 8 } });
-
+        
         setBorder(new TitledBorder(null, FlightPlanCreationPanelMessages.OPTIONS_LABEL));
-
+        
         final PresentationModel<FlightPlanReader> presenter = (PresentationModel<FlightPlanReader>) getPresenter(FP_PRESENTER);
         add(new JLabel(FlightPlanCreationPanelMessages.DEPATURETYPE_LABEL), "2,2");
         add(createDepartureTypeCb(presenter), "4, 2");
-
+        
         add(new JLabel(FlightPlanCreationPanelMessages.ARRIVALTYPE_LABEL), "2,4");
         add(createArrivalTypeCb(presenter), "4, 4");
-
+        
         add(new JLabel(FlightPlanCreationPanelMessages.FLIGHTTYPE_LABEL), "6,2");
         add(createFlightTypeCb(presenter), "8, 2");
-
+        
         add(new JLabel(FlightPlanCreationPanelMessages.LANDINGLIGHT_LABEL), "6,4");
         add(createLandingLightAltitudeTb(presenter), "8, 4");
-
+        
         add(new JLabel(FlightPlanCreationPanelMessages.FLY_TO_COMPLETION_LABEL), "2,6");
         add(createFlyToCompletionCkb(presenter), "4, 6");
-
+        
     }
-
+    
     /**
      * {@inheritDoc}.
      */
     @Override
     public void createSlots() {
         super.createSlots();
-        final Slot validationSlot = new Slot(TopicName.VALIDATION_TOPIC, getClass().getSimpleName());
-        validationSlot.registerSlot();
-
-        final PresentationModel<FlightPlanReader> presenter = (PresentationModel<FlightPlanReader>) getPresenter(FP_PRESENTER);
-        validationSlot.setSlotAction(new SlotAction<ActionTypes>() {
-            
-            
-            /**
-             *
-             */
-            private static final long serialVersionUID = 1289014075739897031L;
-
-            /**
-             *
-             * {@inheritDoc}
-             */
-            @Override
-            public void doAction(final ActionTypes action) {
-                switch (action) {
-                case VALIDATE:
-                    if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug(this.getClass().getSimpleName() + " : " + "Validate");
-                    }
-                    presenter.triggerCommit();
-                    presenter.triggerFlush();
-                    break;
-                
-                case CANCEL:
-                    if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug(this.getClass().getSimpleName() + " : " + "CANCEL");
-                    }
-                    presenter.triggerFlush();
-                    break;
-                
-                case REFRESH:
-                    if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug(this.getClass().getSimpleName() + " : " + "REFREASH");
-                    }
-                    if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug("");
-                    }
-                    break;
-                default:
-                    break;
-                }
-            }
-        });
     }
-
+    
     /**
      *
      * @param presenter
@@ -211,10 +160,10 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
                 }
             }
         });
-
+        
         return component;
     }
-
+    
     /**
      *
      * @param presenter
@@ -245,7 +194,7 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
         });
         return component;
     }
-
+    
     /**
      *
      * @param presenter
@@ -273,10 +222,10 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
                 }
             }
         });
-
+        
         return component;
     }
-
+    
     /**
      *
      * @param presenter
@@ -286,7 +235,7 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
         final ValueModel value = presenter.getBufferedModel(FlightPlanProperties.FLIGHT_TO_COMPLETION);
         return BasicComponentFactory.createCheckBox(value, "");
     }
-
+    
     /**
      *
      * @param presenter
@@ -295,7 +244,7 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
     private JTextField createLandingLightAltitudeTb(final PresentationModel<FlightPlanReader> presenter) {
         final BufferedValueModel model = presenter.getBufferedModel(//
                 FlightPlanProperties.LANDING_LIGHT_ALTITUDE);
-
+        
         final ValueModel value = ConverterFactory.createStringConverter(model, new Format() {
             
             
@@ -303,7 +252,7 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
              *
              */
             private static final long serialVersionUID = 5858092520252522599L;
-
+            
             /**
              *
              * {@inheritDoc}
@@ -317,7 +266,7 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
                 }
                 return new StringBuffer(String.valueOf(result)).append(" ft");
             }
-
+            
             /**
              *
              * {@inheritDoc}
@@ -334,7 +283,7 @@ public class CreationOptionsPanel extends AbstractCommandablePanel {
                 return Altitude.valueOf(result, NonSI.FOOT);
             }
         });
-
+        
         return BasicComponentFactory.createTextField(value);
     }
 }
