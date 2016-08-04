@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 2 août 2016.
+ * Modified : 4 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -12,7 +12,7 @@
 
 package com.airportflightplanner.flightplancreation.messages;
 
-import com.airportflightplanner.common.utils.internationalization.AbstractMessages;
+import fr.gsyltc.framework.utils.internationalizer.AbstractMessages;
 
 /**
  * @author Goubaud Sylvain
@@ -20,9 +20,10 @@ import com.airportflightplanner.common.utils.internationalization.AbstractMessag
  */
 public class FlightPlanCreationPanelMessages extends AbstractMessages {
     
+    
     /** */
     private static final String PREFIX = FlightPlanCreationPanelMessages.class.getSimpleName() + ".";
-    
+
     /** */
     public static final String SCHEDULE_LABEL = format(PREFIX + "SCHEDULE" + LABEL);
     /** */

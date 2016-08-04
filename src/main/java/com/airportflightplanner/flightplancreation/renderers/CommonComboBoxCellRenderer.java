@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 31 juil. 2016.
+ * Modified : 4 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -22,7 +22,8 @@ import javax.swing.ListCellRenderer;
 import com.airportflightplanner.common.types.ArrivalType;
 import com.airportflightplanner.common.types.DepartureType;
 import com.airportflightplanner.common.types.FlightType;
-import com.airportflightplanner.common.utils.internationalization.Internationalizer;
+
+import fr.gsyltc.framework.utils.internationalizer.Internationalizer;
 
 /**
  * @author DCNS
@@ -36,7 +37,7 @@ public class CommonComboBoxCellRenderer<E> implements ListCellRenderer<E> {
     private final transient DefaultListCellRenderer defaultRenderer = new DefaultListCellRenderer();
     /** */
     private final transient String prototypeDisplay;
-    
+
     /**
      *
      * @param pDisplay
@@ -44,7 +45,7 @@ public class CommonComboBoxCellRenderer<E> implements ListCellRenderer<E> {
     public CommonComboBoxCellRenderer(final String pDisplay) {
         this.prototypeDisplay = pDisplay;
     }
-    
+
     /**
      *
      * {@inheritDoc}
@@ -53,7 +54,7 @@ public class CommonComboBoxCellRenderer<E> implements ListCellRenderer<E> {
     public Component getListCellRendererComponent(final JList<? extends E> list, final E value, //
             final int index, final boolean isSelected, final boolean cellHasFocus) {
         String result = "";
-        
+
         if (value instanceof DepartureType) {
             result = DepartureType.getI18NName(((DepartureType) value).ordinal());
         } else if (value instanceof ArrivalType) {
@@ -63,14 +64,14 @@ public class CommonComboBoxCellRenderer<E> implements ListCellRenderer<E> {
         } else {
             result = Internationalizer.getI18String((String) value);
         }
-        
+
         final JLabel renderer = (JLabel) this.defaultRenderer.getListCellRendererComponent(//
                 list, value, index, isSelected, cellHasFocus);
         if (null != value && !this.prototypeDisplay.equals(value)) {
             renderer.setText(result);
         }
-        
+
         return renderer;
     }
-    
+
 }

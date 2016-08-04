@@ -1,16 +1,6 @@
 /*
  * @(#)UnitTypes.java
  *
- * Goubaud Sylvain - 2016.
- *
- * This code may be freely used and modified on any personal or professional
- * project.  It comes with no warranty.
- *
- */
-
-/*
- * @(#)UnitTypes.java
- *
  * Goubaud Sylvain
  * Created : 2016
  * Modified : 4 août 2016.
@@ -22,12 +12,7 @@
 
 package com.airportflightplanner.common.types;
 
-import com.airportflightplanner.common.utils.internationalization.Internationalizer;
-
-/**
- * @author Goubaud Sylvain
- *
- */
+import fr.gsyltc.framework.utils.internationalizer.Internationalizer;
 
 /**
  * @author Goubaud Sylvain

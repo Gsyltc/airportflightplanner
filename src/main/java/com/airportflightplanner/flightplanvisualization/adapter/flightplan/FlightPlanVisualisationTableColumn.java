@@ -1,15 +1,18 @@
 /*
  * @(#)FlightPlanVisualisationTableColumn.java
  *
- * Goubaud Sylvain - 2016.
+ * Goubaud Sylvain
+ * Created : 2016
+ * Modified : 4 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
  *
  */
+
 package com.airportflightplanner.flightplanvisualization.adapter.flightplan;
 
-import com.airportflightplanner.common.utils.internationalization.Internationalizer;
+import fr.gsyltc.framework.utils.internationalizer.Internationalizer;
 
 /**
  * @author Goubaud Sylvain
@@ -30,10 +33,11 @@ public enum FlightPlanVisualisationTableColumn {
     DEST_AIRPORT(5),
     /** */
     DURATION(6);
+
     /** */
     private static final String PREFIX = "FlightPlanVisualisationTableColumn.";
     /** */
-    private int                 value;
+    private int value;
 
     /**
      *
@@ -59,7 +63,7 @@ public enum FlightPlanVisualisationTableColumn {
     }
 
     /**
-     * Get i18nString
+     * Get the internationalized name.
      *
      * @param columnIndex
      * @return

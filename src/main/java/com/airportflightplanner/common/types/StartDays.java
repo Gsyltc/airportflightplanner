@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 31 juil. 2016.
+ * Modified : 4 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -12,7 +12,7 @@
 
 package com.airportflightplanner.common.types;
 
-import com.airportflightplanner.common.utils.internationalization.Internationalizer;
+import fr.gsyltc.framework.utils.internationalizer.Internationalizer;
 
 /**
  * @author Goubaud Sylvain
@@ -33,12 +33,12 @@ public enum StartDays {
     SATURDAY(6),
     /** */
     SUNDAY(0);
-    
+
     /** */
     private static final String PREFIX = "StartDays.";
     /** */
     private int value;
-    
+
     /**
      *
      * @param value
@@ -46,7 +46,7 @@ public enum StartDays {
     private StartDays(final int value) {
         this.value = value;
     }
-    
+
     /**
      *
      * @param typeIndex
@@ -61,7 +61,7 @@ public enum StartDays {
         }
         return result;
     }
-    
+
     /**
      * Get i18nString
      *
@@ -71,7 +71,7 @@ public enum StartDays {
     public static String getI18NName(final int typeIndex) {
         return valueOf(typeIndex).toString();
     }
-    
+
     /**
      *
      * @param type
@@ -79,9 +79,9 @@ public enum StartDays {
      */
     public static int getIndex(final StartDays type) {
         return type.value;
-        
+
     }
-    
+
     /**
      *
      * {@inheritDoc}
