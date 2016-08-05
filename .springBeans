@@ -18,6 +18,7 @@
 		<config>src/main/resources/config/models/flightplans/steerpointsmodel.xml</config>
 		<config>src/main/resources/config/adapters/config.xml</config>
 		<config>src/main/resources/config/slotsignals/definitions/slotsdefinitions.xml</config>
+		<config>src/main/resources/config/log/config.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>

@@ -1,8 +1,15 @@
-/* @(#)GoogleMapModel.java
+/*
+ * @(#)GoogleMapModel.java
  *
- * 2016 Goubaud Sylvain.
+ * Goubaud Sylvain
+ * Created : 2016
+ * Modified : 7 août 2016.
+ *
+ * This code may be freely used and modified on any personal or professional
+ * project.  It comes with no warranty.
  *
  */
+
 package com.airportflightplanner.flightplancreation.model;
 
 import java.util.ArrayList;
@@ -21,16 +28,18 @@ import com.jgoodies.binding.beans.Model;
  *
  */
 public class GoogleMapModel extends Model implements GoogleMapWriter {
+    
+    
     /**
      *
      */
-    private static final long         serialVersionUID = 2127934258581088787L;
+    private static final long serialVersionUID = 2127934258581088787L;
     /** */
-    private static final int          FIRST_STERRPOINT = 0;
+    private static final int FIRST_STERRPOINT = 0;
     /** */
     private transient EncodedPolyline encodedPolyline;
     /** */
-    private List<SteerPointReader>    specificSteerPoint;
+    private List<SteerPointReader> specificSteerPoint;
 
     /**
      *
@@ -50,11 +59,11 @@ public class GoogleMapModel extends Model implements GoogleMapWriter {
      * {@inheritDoc}
      */
     @Override
-    public void setMarkers(final List<SteerPointReader> specificSteerPoint) {
+    public void setMarkers(final List<SteerPointReader> newSpecificSteerPoint) {
         final List<SteerPointReader> oldValue = getSpecificSteerPoint();
-        if (null != specificSteerPoint && !specificSteerPoint.equals(this.specificSteerPoint)) {
-            setSpecificSteerPoint(specificSteerPoint);
-            firePropertyChange(GoogleMapModelProperties.STEERPOINTS, oldValue, this.specificSteerPoint);
+        if (null != newSpecificSteerPoint && !newSpecificSteerPoint.equals(specificSteerPoint)) {
+            setSpecificSteerPoint(newSpecificSteerPoint);
+            firePropertyChange(GoogleMapModelProperties.STEERPOINTS, oldValue, specificSteerPoint);
         }
     }
 
@@ -108,10 +117,10 @@ public class GoogleMapModel extends Model implements GoogleMapWriter {
     }
 
     /**
-     * @param specificSteerPoint
+     * @param newSpecificSteerPoint
      *            the specificSteerPoint to set
      */
-    private void setSpecificSteerPoint(final List<SteerPointReader> specificSteerPoint) {
-        this.specificSteerPoint = specificSteerPoint;
+    private void setSpecificSteerPoint(final List<SteerPointReader> newSpecificSteerPoint) {
+        specificSteerPoint = newSpecificSteerPoint;
     }
 }

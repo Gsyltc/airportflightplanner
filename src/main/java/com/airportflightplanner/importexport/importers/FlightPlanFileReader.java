@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 4 août 2016.
+ * Modified : 7 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -129,7 +129,10 @@ public class FlightPlanFileReader {
      * @param currentAirport
      *
      */
-    protected void loadFlightPlans(final String currentAirport) {
+    protected void loadFlightPlans(final String currentAirport) { // NOPMD by
+                                                                  // sylva on
+                                                                  // 06/08/16
+                                                                  // 16:23
         getFlighPlanCollectionModel().getFlightPlanListModel().clear();
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(CommonProperties.ROUTES_DIRECTORY.resolve(currentAirport),
                 "*.{txt}")) {

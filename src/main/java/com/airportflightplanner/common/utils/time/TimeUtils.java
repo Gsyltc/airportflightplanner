@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 4 août 2016.
+ * Modified : 7 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -32,6 +32,7 @@ import org.joda.time.format.PeriodFormatterBuilder;
  */
 public final class TimeUtils {
     
+    
     /** The logger of this class. */
     private static final Log LOGGER = LogFactory.getLog(TimeUtils.class);
     
@@ -55,6 +56,8 @@ public final class TimeUtils {
     public static final DateTimeFormatter TIME_DISPLAYER = //
             new DateTimeFormatterBuilder().appendHourOfDay(2).appendLiteral(":"). //
                     appendMinuteOfHour(2).toFormatter();
+    /** One day in hours. */
+    private static final int ONE_DAY = 24;
     
     /**
      * Protected Constructor.
@@ -79,7 +82,7 @@ public final class TimeUtils {
      * @return
      */
     public static LocalTime convertUtcToCurrentTimeZone(final String utcTimeString) {
-        LocalTime result = null;
+        LocalTime result = LocalTime.MIDNIGHT;
         try {
             final LocalTime utcTime = getLocalTime(utcTimeString);
             result = convertUtcToCurrentTimeZone(utcTime);
@@ -97,7 +100,7 @@ public final class TimeUtils {
      * @return
      */
     private static LocalTime calculateByTimeAndDuration(final String origin, final String duration, final boolean isAdded) {
-        LocalTime result = null;
+        LocalTime result = LocalTime.MIDNIGHT;
         if (isMatch(duration)) {
             final LocalTime originLocalTime = getLocalTime(origin);
             final Period durationLocalTime = Period.parse(duration, PERIOD_DISPLAYER);
@@ -117,7 +120,7 @@ public final class TimeUtils {
      * @param value
      * @return
      */
-    private static boolean isMatch(final String value) {
+    public static boolean isMatch(final String value) {
         final Matcher matcher = PATTERN.matcher(value);
         return matcher.matches();
     }
@@ -128,8 +131,8 @@ public final class TimeUtils {
      * @param duration
      * @return
      */
-    public static String getStartTime(final String origin, final String duration) {
-        return calculateByTimeAndDuration(origin, duration, false).toString(TIME_DISPLAYER);
+    public static LocalTime getStartTime(final String origin, final String duration) {
+        return calculateByTimeAndDuration(origin, duration, false);
     }
     
     /***
@@ -138,8 +141,8 @@ public final class TimeUtils {
      * @param duration
      * @return
      */
-    public static String getEndTime(final String origin, final String duration) {
-        return calculateByTimeAndDuration(origin, duration, true).toString(TIME_DISPLAYER);
+    public static LocalTime getEndTime(final String origin, final String duration) {
+        return calculateByTimeAndDuration(origin, duration, true);
     }
     
     /**
@@ -148,13 +151,18 @@ public final class TimeUtils {
      * @param end
      * @return
      */
-    public static String getDuration(final String origin, final String end) {
-        String result = "";
+    public static Period getDuration(final String origin, final String end) {
+        Period result = Period.ZERO;
         final LocalTime originLocalTime = getLocalTime(origin);
         final LocalTime endLocalTime = getLocalTime(end);
         if (null != originLocalTime && null != endLocalTime) {
-            result = Period.fieldDifference(originLocalTime, endLocalTime).toString(PERIOD_DISPLAYER);
+            result = Period.fieldDifference(originLocalTime, endLocalTime);
+            if (originLocalTime.isAfter(endLocalTime)) {
+                result = result.plusHours(ONE_DAY);
+            }
+            
         }
+        
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Error while calculating duration");
         }
@@ -167,9 +175,22 @@ public final class TimeUtils {
      * @return
      */
     public static LocalTime getLocalTime(final String dateString) {
-        LocalTime result = null;
-        if (isMatch(dateString)) {
-            result = LocalTime.parse(dateString);
+        LocalTime result = LocalTime.MIDNIGHT;
+        if (!dateString.isEmpty() && isMatch(dateString)) {
+            result = LocalTime.parse(dateString, TIME_DISPLAYER);
+        }
+        return result;
+    }
+    
+    /**
+     *
+     * @param dateString
+     * @return
+     */
+    public static Period getPeriod(final String dateString) {
+        Period result = null;
+        if (!dateString.isEmpty() && isMatch(dateString)) {
+            result = Period.parse(dateString, PERIOD_DISPLAYER);
         }
         return result;
     }

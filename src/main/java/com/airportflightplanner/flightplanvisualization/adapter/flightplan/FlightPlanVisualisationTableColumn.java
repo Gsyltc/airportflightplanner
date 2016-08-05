@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 4 août 2016.
+ * Modified : 7 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -33,20 +33,20 @@ public enum FlightPlanVisualisationTableColumn {
     DEST_AIRPORT(5),
     /** */
     DURATION(6);
-
+    
     /** */
     private static final String PREFIX = "FlightPlanVisualisationTableColumn.";
     /** */
     private int value;
-
+    
     /**
      *
-     * @param value
+     * @param newValue
      */
-    private FlightPlanVisualisationTableColumn(final int value) {
-        this.value = value;
+    FlightPlanVisualisationTableColumn(final int newValue) {
+        value = newValue;
     }
-
+    
     /**
      *
      * @param columnNumber
@@ -61,7 +61,7 @@ public enum FlightPlanVisualisationTableColumn {
         }
         return result;
     }
-
+    
     /**
      * Get the internationalized name.
      *
@@ -71,7 +71,7 @@ public enum FlightPlanVisualisationTableColumn {
     public static String getName(final int columnIndex) {
         return Internationalizer.getI18String(PREFIX + valueOf(columnIndex).name());
     }
-
+    
     /**
      *
      * @param column
@@ -79,6 +79,6 @@ public enum FlightPlanVisualisationTableColumn {
      */
     public static int getColumnNumber(final FlightPlanVisualisationTableColumn column) {
         return column.value;
-
+        
     }
 }

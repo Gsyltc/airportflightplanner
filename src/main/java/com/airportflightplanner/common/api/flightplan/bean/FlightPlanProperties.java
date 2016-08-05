@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 28 juil. 2016.
+ * Modified : 7 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -18,6 +18,7 @@ package com.airportflightplanner.common.api.flightplan.bean;
  */
 public final class FlightPlanProperties {
     
+    
     /** */
     public static final String STEERPOINTS_MAP = "steerPoints";
     /** */
@@ -31,7 +32,7 @@ public final class FlightPlanProperties {
     /** */
     public static final String CALLSIGN = "callSign";
     /** */
-    public static final String AIRCRAFT_TYPE = "aircraftType";
+    public static final String AIRCRAFT_LIVERY = "aircraftLivery";
     /** */
     public static final String AIRCRAFT_CIE = "aircraftCie";
     /** */
@@ -54,12 +55,14 @@ public final class FlightPlanProperties {
     public static final String ALTERNATE_AIRPORT = "alternateAirport";
     /** */
     public static final String FILENAME = "fileName";
-    
+    /** */
+    public static final String AIRCRAFT_CLASS = "aircraftClass";
+
     /**
      * Protected constructor.
      */
     private FlightPlanProperties() {
         //
     }
-    
+
 }

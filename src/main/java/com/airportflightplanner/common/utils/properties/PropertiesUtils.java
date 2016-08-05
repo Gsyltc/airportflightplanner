@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 4 août 2016.
+ * Modified : 7 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -53,7 +53,7 @@ public class PropertiesUtils implements SlotReceiver {
     /** files. */
     private List<String> fileNames;
     /** map of attached slots. */
-    Map<String, Slot> slotsMap = new ConcurrentHashMap<String, Slot>();
+    private final Map<String, Slot> slotsMap = new ConcurrentHashMap<String, Slot>();
 
     /**
      *
@@ -212,5 +212,12 @@ public class PropertiesUtils implements SlotReceiver {
     @Override
     public Slot findSlot(final String topicName) {
         return slotsMap.get(topicName);
+    }
+    
+    /**
+     * @return the slotsMap
+     */
+    public Map<String, Slot> getSlotsMap() {
+        return slotsMap;
     }
 }

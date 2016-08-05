@@ -9,8 +9,21 @@
         <Root level="error">
             <AppenderRef ref="Console" />
         </Root>
+        <Logger name="com.airportflightplanner.flightplancreation.panels.CreationTimePanel" level="error">
+            <AppenderRef ref="Console" />
+        </Logger>
+
+        <Logger name="com.airportflightplanner.flightplancreation.panels.FlightPlanCreationPanel" level="error">
+            <AppenderRef ref="Console" />
+        </Logger>
+
         <Logger name="com.airportflightplanner.flightplancreation.panels.CreationFlightInfosPanel" level="debug">
             <AppenderRef ref="Console" />
         </Logger>
+        <Logger name="com.airportflightplanner.flightplancreation.model.FlightInfosModel" level="error">
+            <AppenderRef ref="Console" />
+        </Logger>
+        
+
     </Loggers>
 </Configuration>

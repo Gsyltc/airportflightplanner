@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 1 août 2016.
+ * Modified : 7 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -35,12 +35,9 @@ import com.jgoodies.binding.beans.Model;
  * @author Goubaud Sylvain
  *
  */
-public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPMD
-                                                                         // by
-                                                                         // sylva
-                                                                         // on
-                                                                         // 31/07/16
-                                                                         // 16:13
+// @formatter:off
+public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPMD by sylva on 31/07/16 16:13
+// @formatter:on
     
     /**
      *
@@ -49,7 +46,9 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
     /** */
     private String aircraftCie = "";
     /** */
-    private String aircraftType = "";
+    private String aircraftLivery = "";
+    /** */
+    private String aircraftClass = "";
     /** */
     private String alternateAirport = "";
     /** */
@@ -98,8 +97,17 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
      * {@inheritDoc}
      */
     @Override
-    public String getAircraftType() {
-        return aircraftType;
+    public String getAircraftClass() {
+        return aircraftClass;
+    }
+    
+    /**
+     *
+     * {@inheritDoc}
+     */
+    @Override
+    public String getAircraftLivery() {
+        return aircraftLivery;
     }
     
     /**
@@ -264,11 +272,24 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
      * {@inheritDoc}
      */
     @Override
-    public void setAircraftType(final String value) {
-        final String oldValue = getAircraftType();
+    public void setAircraftLivery(final String value) {
+        final String oldValue = getAircraftLivery();
         if (!value.equals(oldValue)) {
-            aircraftType = value;
-            firePropertyChange(FlightPlanProperties.AIRCRAFT_TYPE, oldValue, aircraftType);
+            aircraftLivery = value;
+            firePropertyChange(FlightPlanProperties.AIRCRAFT_LIVERY, oldValue, aircraftLivery);
+        }
+    }
+    
+    /**
+     *
+     * {@inheritDoc}
+     */
+    @Override
+    public void setAircraftClass(final String value) {
+        final String oldValue = getAircraftClass();
+        if (!value.equals(oldValue)) {
+            aircraftClass = value;
+            firePropertyChange(FlightPlanProperties.AIRCRAFT_CLASS, oldValue, aircraftClass);
         }
     }
     

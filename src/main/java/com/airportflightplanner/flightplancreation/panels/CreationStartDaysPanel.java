@@ -46,14 +46,14 @@ public class CreationStartDaysPanel extends AbstractCommandablePanel {
     
     
     /** The logger of this class. */
-    private static final Logger LOGGER = LogManager.getLogger(CreationStartDaysPanel.class);
+    protected static final Logger LOGGER = LogManager.getLogger(CreationStartDaysPanel.class);
     /**
      *
      */
     private static final long serialVersionUID = 3382772953500242522L;
     /** */
     private static final int DAYS_PRESENTER = 0;
-    
+
     /**
      * @param presenter
      *
@@ -61,7 +61,7 @@ public class CreationStartDaysPanel extends AbstractCommandablePanel {
     public CreationStartDaysPanel(final PresentationModel<DaySelectionReader> presenter) {
         super(presenter);
     }
-    
+
     /**
      *
      */
@@ -83,10 +83,10 @@ public class CreationStartDaysPanel extends AbstractCommandablePanel {
                 FormSpecs.DEFAULT_COLSPEC, }, //
                 new RowSpec[] { //
                         FormSpecs.PREF_ROWSPEC, })); //
-        
+
         final PresentationModel<DaySelectionReader> dayPresenter = //
                 (PresentationModel<DaySelectionReader>) getPresenter(DAYS_PRESENTER);
-        
+
         dayPresenter.addPropertyChangeListener(PresentationModel.PROPERTY_BUFFERING, new PropertyChangeListener() {
             
             
@@ -101,7 +101,7 @@ public class CreationStartDaysPanel extends AbstractCommandablePanel {
                 }
             }
         });
-        
+
         add(createMondayCb(dayPresenter), "1, 1");
         add(createTuesdayCb(dayPresenter), "3, 1");
         add(createWednesdayCb(dayPresenter), "5, 1");
@@ -110,7 +110,7 @@ public class CreationStartDaysPanel extends AbstractCommandablePanel {
         add(createSaturdayCb(dayPresenter), "11, 1");
         add(createSundayCb(dayPresenter), "13, 1");
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -124,6 +124,11 @@ public class CreationStartDaysPanel extends AbstractCommandablePanel {
             
             /**
              *
+             */
+            private static final long serialVersionUID = 842551482406987966L;
+
+            /**
+             *
              * {@inheritDoc}
              */
             @Override
@@ -133,11 +138,16 @@ public class CreationStartDaysPanel extends AbstractCommandablePanel {
                 dayPresenter.triggerFlush();
             }
         });
-        
+
         final Slot validateSlot = new Slot(TopicName.VALIDATION_TOPIC, getClass().getSimpleName());
         validateSlot.registerSlot();
         validateSlot.setSlotAction(new SlotAction<ActionTypes>() {
             
+            
+            /**
+             *
+             */
+            private static final long serialVersionUID = -7327592856033503598L;
             
             /**
              *
@@ -166,12 +176,12 @@ public class CreationStartDaysPanel extends AbstractCommandablePanel {
                 default:
                     break;
                 }
-                
+
             }
-            
+
         });
     }
-    
+
     /**
      *
      * @param dayPresenter
@@ -181,7 +191,7 @@ public class CreationStartDaysPanel extends AbstractCommandablePanel {
         final ValueModel value = dayPresenter.getBufferedModel(DaySelectionProperties.FRIDAY);
         return BasicComponentFactory.createCheckBox(value, StartDays.FRIDAY.toString());
     }
-    
+
     /**
      *
      * @param dayPresenter
@@ -191,7 +201,7 @@ public class CreationStartDaysPanel extends AbstractCommandablePanel {
         final ValueModel value = dayPresenter.getBufferedModel(DaySelectionProperties.MONDAY);
         return BasicComponentFactory.createCheckBox(value, StartDays.MONDAY.toString());
     }
-    
+
     /**
      *
      * @param dayPresenter
@@ -201,7 +211,7 @@ public class CreationStartDaysPanel extends AbstractCommandablePanel {
         final ValueModel value = dayPresenter.getBufferedModel(DaySelectionProperties.SATURDAY);
         return BasicComponentFactory.createCheckBox(value, StartDays.SATURDAY.toString());
     }
-    
+
     /**
      *
      * @param dayPresenter
@@ -211,7 +221,7 @@ public class CreationStartDaysPanel extends AbstractCommandablePanel {
         final ValueModel value = dayPresenter.getBufferedModel(DaySelectionProperties.SUNDAY);
         return BasicComponentFactory.createCheckBox(value, StartDays.SUNDAY.toString());
     }
-    
+
     /**
      *
      * @param dayPresenter
@@ -221,7 +231,7 @@ public class CreationStartDaysPanel extends AbstractCommandablePanel {
         final ValueModel value = dayPresenter.getBufferedModel(DaySelectionProperties.THRUSDAY);
         return BasicComponentFactory.createCheckBox(value, StartDays.THRUSDAY.toString());
     }
-    
+
     /**
      *
      * @param dayPresenter
@@ -231,7 +241,7 @@ public class CreationStartDaysPanel extends AbstractCommandablePanel {
         final ValueModel value = dayPresenter.getBufferedModel(DaySelectionProperties.TUESDAY);
         return BasicComponentFactory.createCheckBox(value, StartDays.TUESDAY.toString());
     }
-    
+
     /**
      *
      * @param dayPresenter
@@ -241,5 +251,5 @@ public class CreationStartDaysPanel extends AbstractCommandablePanel {
         final ValueModel value = dayPresenter.getBufferedModel(DaySelectionProperties.WEDNESDAY);
         return BasicComponentFactory.createCheckBox(value, StartDays.WEDNESDAY.toString());
     }
-    
+
 }

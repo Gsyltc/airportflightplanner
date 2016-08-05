@@ -1,7 +1,9 @@
 /*
  * @(#)FlightPlanVisualizationTableAdapter.java
  *
- * Goubaud Sylvain - 2016.
+ * Goubaud Sylvain
+ * Created : 2016
+ * Modified : 7 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -18,6 +20,8 @@ import com.airportflightplanner.common.api.flightplan.collection.FlightPlanColle
 import com.airportflightplanner.common.utils.time.TimeUtils;
 import com.airportflightplanner.flightplanvisualization.presenter.flightplan.FlightPlanVisualizationListModel;
 import com.jgoodies.binding.adapter.AbstractTableAdapter;
+
+import fr.gsyltc.framework.utils.internationalizer.Internationalizer;
 
 /**
  * @author Goubaud Sylvain
@@ -179,11 +183,11 @@ public class FlightPlanVisualizationTableAdapter extends AbstractTableAdapter<Fl
             break;
         
         case AIRCRAFT_TYPE:
-            result = flightPlan.getAircraftType().split("_")[0];
+            result = flightPlan.getAircraftLivery().split("_")[0];
             break;
         
         case COMPANY:
-            result = flightPlan.getAircraftCie();
+            result = Internationalizer.getI18String(flightPlan.getAircraftCie());
             break;
         
         case DURATION:

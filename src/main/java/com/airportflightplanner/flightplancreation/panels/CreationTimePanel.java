@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 31 juil. 2016.
+ * Modified : 7 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -14,17 +14,18 @@ package com.airportflightplanner.flightplancreation.panels;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import java.text.FieldPosition;
+import java.text.Format;
+import java.text.ParsePosition;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.joda.time.LocalTime;
 import org.joda.time.Period;
 
@@ -35,6 +36,8 @@ import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPa
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.adapter.BasicComponentFactory;
 import com.jgoodies.binding.value.BufferedValueModel;
+import com.jgoodies.binding.value.ConverterFactory;
+import com.jgoodies.binding.value.ValueModel;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
@@ -50,23 +53,30 @@ import fr.gsyltc.framework.visualelements.types.LayoutSpecs;
 public class CreationTimePanel extends AbstractCommonPanel {
     
     
+    /** The logger of this class. */
+    protected static final Logger LOGGER = LogManager.getLogger(CreationTimePanel.class);
+    
     /**
     *
     */
     private static final long serialVersionUID = 8098225641658386495L;
-
+    
     /** */
-    private static final int FIRST_PRESENTER = 0;
-
+    private static final int FP_PRESENTER = 0;
+    /** */
+    private static final int TIME_TEXT_LENGHT = 5;
+    /** */
+    private static final int BACKSPACE_CHAR = 8;
+    
     /** */
     protected transient JTextField endTextField;
-
+    
     /** */
     protected transient JTextField startTextField;
-
+    
     /** */
     protected transient JTextField timeTextField;
-
+    
     /**
      *
      * @author Goubaud Sylvain
@@ -77,7 +87,7 @@ public class CreationTimePanel extends AbstractCommonPanel {
         
         /** */
         private final transient JTextField textField;
-
+        
         /**
          * @param nTextField
          *
@@ -85,7 +95,7 @@ public class CreationTimePanel extends AbstractCommonPanel {
         public KeyTypingListener(final JTextField nTextField) {
             textField = nTextField;
         }
-
+        
         /**
          *
          * {@inheritDoc}
@@ -94,7 +104,7 @@ public class CreationTimePanel extends AbstractCommonPanel {
         public void keyPressed(final KeyEvent event) {
             //
         }
-
+        
         /**
          *
          * {@inheritDoc}
@@ -102,7 +112,7 @@ public class CreationTimePanel extends AbstractCommonPanel {
         @Override
         public void keyReleased(final KeyEvent event) {
             String newText = textField.getText();
-            if (event.getKeyCode() == 8 && newText.length() == 2) {
+            if (BACKSPACE_CHAR == event.getKeyCode() && 2 == newText.length()) {
                 newText = newText.substring(0, 1);
                 textField.setText(newText);
             } else {
@@ -112,20 +122,27 @@ public class CreationTimePanel extends AbstractCommonPanel {
                     textField.setText(buff.toString());
                 }
             }
+            
+            if (TIME_TEXT_LENGHT == newText.length()) {
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Update Other Fextfield : Sender is " + textField);
+                }
+                textField.postActionEvent();
+            }
         }
-
+        
         /**
          *
          * {@inheritDoc}
          */
         @Override
         public void keyTyped(final KeyEvent event) {
-            if (null == TimeUtils.getLocalTime(textField.getText() + event.getKeyChar())) {
+            if (!TimeUtils.isMatch(textField.getText() + event.getKeyChar())) {
                 event.consume();
             }
         }
     }
-
+    
     /**
      *
      * @author Goubaud Sylvain
@@ -139,7 +156,7 @@ public class CreationTimePanel extends AbstractCommonPanel {
         /** */
         TIME
     }
-
+    
     /**
      * @param newCcurrentFlightPlan
      *            Flightplan.
@@ -147,7 +164,7 @@ public class CreationTimePanel extends AbstractCommonPanel {
     public CreationTimePanel(final PresentationModel<FlightPlanReader> newCcurrentFlightPlan) {
         super(newCcurrentFlightPlan);
     }
-
+    
     /**
      *
      */
@@ -169,246 +186,283 @@ public class CreationTimePanel extends AbstractCommonPanel {
                         FormSpecs.PREF_ROWSPEC, //
                         FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC }));
-
+        
+        final PresentationModel<FlightPlanReader> presenter = (PresentationModel<FlightPlanReader>) getPresenter(FP_PRESENTER);
+        
         final TitledBorder timePanelBorder = new TitledBorder(FlightPlanCreationPanelMessages.SCHEDULE_LABEL);
         setBorder(timePanelBorder);
-
+        
         final JLabel startLabel = new JLabel(FlightPlanCreationPanelMessages.START_LABEL);
         add(startLabel, "2,2,3,1");
-        add(createStartTextField(), "2,4,3,1");
-
+        add(createStartTextField(presenter), "2,4,3,1");
+        
         final JLabel endLabel = new JLabel(FlightPlanCreationPanelMessages.END_LABEL);
         add(endLabel, "6,2,3,1");
-        add(createEndTextField(), "6,4,3,1");
-
+        add(createEndTextField(presenter), "6,4,3,1");
+        
         final JLabel timeLabel = new JLabel(FlightPlanCreationPanelMessages.TIME_LABEL);
         add(timeLabel, "10,2,3,1");
-        add(createTimeTextField(), "10,4,3,1");
+        add(createTimeTextField(presenter), "10,4,3,1");
     }
-
+    
     /**
+     * Create the end text field.
      *
-     * @return
+     * @param presenter
+     *            the presenter.
+     * @return the text field.
      */
-    private JTextField createEndTextField() {
-        final PresentationModel<?> presenter = getPresenter(FIRST_PRESENTER);
+    private JTextField createEndTextField(final PresentationModel<FlightPlanReader> presenter) {
         final BufferedValueModel model = presenter.getBufferedModel(FlightPlanProperties.END_TIME);
-        endTextField = BasicComponentFactory.createTextField(model);
-
-        model.addPropertyChangeListener(new PropertyChangeListener() {
+        
+        final ValueModel value = ConverterFactory.createStringConverter(model, new Format() {
             
             
             /**
              *
-             * {@inheritDoc}
+             */
+            private static final long serialVersionUID = 2946901254606932313L;
+            
+            /**
+             *
+             *
+             * {@inheritDoc}.
              */
             @Override
-            public void propertyChange(final PropertyChangeEvent evt) {
-                if (evt.getNewValue() instanceof LocalTime) {
-                    endTextField.setText(((LocalTime) evt.getNewValue()).toString(TimeUtils.TIME_DISPLAYER));
+            public StringBuffer format(final Object obj, final StringBuffer toAppendTo, final FieldPosition pos) {
+                final StringBuffer result = new StringBuffer();
+                if (obj instanceof LocalTime) {
+                    result.append(((LocalTime) obj).toString(TimeUtils.TIME_DISPLAYER));
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Format end time : " + result);
+                    }
                 }
+                return result;
             }
+            
+            /**
+             *
+             *
+             * {@inheritDoc}.
+             */
+            @Override
+            public Object parseObject(final String source, final ParsePosition pos) {
+                final LocalTime result = TimeUtils.getLocalTime(source);
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Parse end time : " + result);
+                }
+                pos.setIndex(source.length() - 1);
+                return result;
+            }
+            
         });
-
+        
+        endTextField = BasicComponentFactory.createTextField(value);
         endTextField.addKeyListener(new KeyTypingListener(endTextField));
         endTextField.addActionListener(new ActionListener() {
             
             
             /**
              *
-             * {@inheritDoc}
+             *
+             * {@inheritDoc}.
              */
             @Override
             public void actionPerformed(final ActionEvent event) {
-                textFieldUpdater(TextFieldsEnum.END);
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("End text field - An action is performed");
+                }
+                textFieldUpdater(TextFieldsEnum.END, presenter);
             }
-        });
-        endTextField.addFocusListener(new FocusListener() {
-            
-            
-            /**
-             *
-             * {@inheritDoc}
-             */
-            @Override
-            public void focusGained(final FocusEvent event) {
-                //
-            }
-
-            /**
-             *
-             * {@inheritDoc}
-             */
-            @Override
-            public void focusLost(final FocusEvent event) {
-                textFieldUpdater(TextFieldsEnum.END);
-            }
-
         });
         return endTextField;
     }
-
+    
     /**
+     * Create the start text field.
      *
-     * @return
+     * @param presenter
+     *            the presenter.
+     *
+     * @return the text field.
      */
-    private JTextField createStartTextField() {
-        final PresentationModel<?> presenter = getPresenter(FIRST_PRESENTER);
+    private JTextField createStartTextField(final PresentationModel<FlightPlanReader> presenter) {
         final BufferedValueModel model = presenter.getBufferedModel(FlightPlanProperties.START_TIME);
-        startTextField = BasicComponentFactory.createTextField(model);
-
-        model.addPropertyChangeListener(new PropertyChangeListener() {
+        
+        final ValueModel value = ConverterFactory.createStringConverter(model, new Format() {
             
             
             /**
              *
-             * {@inheritDoc}
+             */
+            private static final long serialVersionUID = 8021308744564004518L;
+            
+            /**
+             *
+             *
+             * {@inheritDoc}.
              */
             @Override
-            public void propertyChange(final PropertyChangeEvent evt) {
-                if (evt.getNewValue() instanceof LocalTime) {
-                    startTextField.setText(((LocalTime) evt.getNewValue()).toString(TimeUtils.TIME_DISPLAYER));
+            public StringBuffer format(final Object obj, final StringBuffer toAppendTo, final FieldPosition pos) {
+                final StringBuffer result = new StringBuffer();
+                if (obj instanceof LocalTime) {
+                    result.append(((LocalTime) obj).toString(TimeUtils.TIME_DISPLAYER));
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Format start time : " + result);
+                    }
                 }
+                return result;
             }
+            
+            /**
+             *
+             *
+             * {@inheritDoc}.
+             */
+            @Override
+            public Object parseObject(final String source, final ParsePosition pos) {
+                final LocalTime result = TimeUtils.getLocalTime(source);
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Parse start time : " + result);
+                }
+                pos.setIndex(source.length() - 1);
+                return result;
+            }
+            
         });
-        //
+        startTextField = BasicComponentFactory.createTextField(value);
         startTextField.addKeyListener(new KeyTypingListener(startTextField));
         startTextField.addActionListener(new ActionListener() {
             
             
             /**
              *
-             * {@inheritDoc}
+             *
+             * {@inheritDoc}.
              */
             @Override
             public void actionPerformed(final ActionEvent event) {
-                textFieldUpdater(TextFieldsEnum.START);
-            }
-        });
-        startTextField.addFocusListener(new FocusListener() {
-            
-            
-            /**
-             *
-             * {@inheritDoc}
-             */
-            @Override
-            public void focusGained(final FocusEvent event) {
-                //
-            }
-
-            /**
-             *
-             * {@inheritDoc}
-             */
-            @Override
-            public void focusLost(final FocusEvent event) {
-                textFieldUpdater(TextFieldsEnum.START);
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Start text field - An action is performed");
+                }
+                textFieldUpdater(TextFieldsEnum.START, presenter);
             }
         });
         return startTextField;
     }
-
+    
     /**
+     * Create the time text field.
      *
-     * @return
+     * @param presenter
+     *            the presenter.
+     *
+     * @return the text field.
      */
-    private JTextField createTimeTextField() {
-        final PresentationModel<?> presenter = getPresenter(FIRST_PRESENTER);
+    private JTextField createTimeTextField(final PresentationModel<FlightPlanReader> presenter) {
         final BufferedValueModel model = presenter.getBufferedModel(FlightPlanProperties.DURATION);
-        timeTextField = BasicComponentFactory.createTextField(model);
-
-        model.addPropertyChangeListener(new PropertyChangeListener() {
+        
+        final ValueModel value = ConverterFactory.createStringConverter(model, new Format() {
             
             
             /**
              *
-             * {@inheritDoc}
+             */
+            private static final long serialVersionUID = 8021308744564004518L;
+            
+            /**
+             *
+             *
+             * {@inheritDoc}.
              */
             @Override
-            public void propertyChange(final PropertyChangeEvent evt) {
-                if (evt.getNewValue() instanceof Period) {
-                    timeTextField.setText(((Period) evt.getNewValue()).toString(TimeUtils.PERIOD_DISPLAYER));
+            public StringBuffer format(final Object obj, final StringBuffer toAppendTo, final FieldPosition pos) {
+                final StringBuffer result = new StringBuffer();
+                if (obj instanceof Period) {
+                    result.append(((Period) obj).toString(TimeUtils.PERIOD_DISPLAYER));
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Format period time : " + result);
+                    }
                 }
+                return result;
             }
+            
+            /**
+             *
+             *
+             * {@inheritDoc}.
+             */
+            @Override
+            public Object parseObject(final String source, final ParsePosition pos) {
+                final Period result = TimeUtils.getPeriod(source);
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Parse period time : " + result);
+                }
+                pos.setIndex(source.length() - 1);
+                return result;
+            }
+            
         });
+        
+        timeTextField = BasicComponentFactory.createTextField(value);
         timeTextField.addKeyListener(new KeyTypingListener(timeTextField));
         timeTextField.addActionListener(new ActionListener() {
             
             
             /**
              *
-             * {@inheritDoc}
+             *
+             * {@inheritDoc}.
              */
             @Override
             public void actionPerformed(final ActionEvent event) {
-                textFieldUpdater(TextFieldsEnum.TIME);
-            }
-        });
-
-        timeTextField.addFocusListener(new FocusListener() {
-            
-            
-            /**
-             *
-             * {@inheritDoc}
-             */
-            @Override
-            public void focusGained(final FocusEvent event) {
-                //
-            }
-
-            /**
-             *
-             * {@inheritDoc}
-             */
-            @Override
-            public void focusLost(final FocusEvent event) {
-                textFieldUpdater(TextFieldsEnum.TIME);
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Time text field - An action is performed");
+                }
+                textFieldUpdater(TextFieldsEnum.TIME, presenter);
             }
         });
         return timeTextField;
     }
-
+    
     /**
      * Update the correct text field start, end not empty & time empty=> update
      * time// if start ,time not empty & end empty=> update end // if end, time
      * not empty & start empty => update start// if all not empty => if start or
-     * end updated => update time | if time updated => update end
+     * end updated => update time | if time updated => update end.
      *
      * @param sender
+     *            the sender id.
+     * @param presenter
+     *            the presenter.
      */
-    protected void textFieldUpdater(final TextFieldsEnum sender) {
-        final PresentationModel<?> presenter = getPresenter(FIRST_PRESENTER);
-
+    protected void textFieldUpdater(final TextFieldsEnum sender, final PresentationModel<FlightPlanReader> presenter) {
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Update text fields - Sender is " + sender.name());
+        }
         final boolean isStartEmpty = startTextField.getText().isEmpty();
         final boolean isEndEmpty = endTextField.getText().isEmpty();
         final boolean isTimeEmpty = timeTextField.getText().isEmpty();
         switch (sender) {
         case START:
-            if (isTimeEmpty) {
-                if (!isEndEmpty) {
-                    presenter.setBufferedValue(FlightPlanProperties.DURATION, //
-                            TimeUtils.getDuration(startTextField.getText(), endTextField.getText()));
-                }
-            } else {
+            if (isEndEmpty) {
                 presenter.setBufferedValue(FlightPlanProperties.END_TIME, //
                         TimeUtils.getEndTime(startTextField.getText(), timeTextField.getText()));
+            } else {
+                presenter.setBufferedValue(FlightPlanProperties.DURATION, //
+                        TimeUtils.getDuration(startTextField.getText(), endTextField.getText()));
             }
             break;
         
         case END:
-            if (isTimeEmpty) {
-                if (!isStartEmpty) {
-                    presenter.setBufferedValue(FlightPlanProperties.DURATION, //
-                            TimeUtils.getDuration(startTextField.getText(), endTextField.getText()));
-                }
-            } else {
+            if (isStartEmpty) {
                 presenter.setBufferedValue(FlightPlanProperties.START_TIME, //
                         TimeUtils.getStartTime(endTextField.getText(), timeTextField.getText()));
-
+            } else {
+                presenter.setBufferedValue(FlightPlanProperties.DURATION, //
+                        TimeUtils.getDuration(startTextField.getText(), endTextField.getText()));
             }
-
+            
             break;
         case TIME:
             if (isTimeEmpty) {
@@ -429,7 +483,7 @@ public class CreationTimePanel extends AbstractCommonPanel {
                     }
                 }
             }
-
+            
             break;
         
         default:

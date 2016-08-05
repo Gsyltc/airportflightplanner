@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 4 août 2016.
+ * Modified : 7 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -75,6 +75,11 @@ public class FlighPlanFileWriter implements SlotReceiver {
             
             /**
              *
+             */
+            private static final long serialVersionUID = 6749468517423430395L;
+            
+            /**
+             *
              * {@inheritDoc}
              */
             @Override
@@ -99,7 +104,7 @@ public class FlighPlanFileWriter implements SlotReceiver {
             final String flightPlanFileName = flightPlan.getDepartureAirport() + "/" + flightPlan.getStartTime().toString(
                     WRITER_FORMATTER) + "_" + //
                     flightPlan.getDepartureAirport() + "TEST_" + flightPlan.getArrivalAirport() + "_" + //
-                    flightPlan.getAircraftType() + ".txt";
+                    flightPlan.getAircraftLivery() + ".txt";
             
             final Path fileName = CommonProperties.ROUTES_DIRECTORY.resolve(flightPlanFileName);
             if (null != fileName) {
@@ -121,7 +126,7 @@ public class FlighPlanFileWriter implements SlotReceiver {
                     // STARTAIRCRAFT
                     fileWriter.write(FlightPlanInformationTypes.STARTAIRCRAFT.name());
                     fileWriter.write(System.lineSeparator());
-                    fileWriter.write(flightPlan.getAircraftType());
+                    fileWriter.write(flightPlan.getAircraftLivery());
                     fileWriter.write(System.lineSeparator());
                     fileWriter.write(FlightPlanInformationTypes.ENDAIRCRAFT.name());
                     fileWriter.write(System.lineSeparator());

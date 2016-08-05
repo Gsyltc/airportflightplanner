@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 1 août 2016.
+ * Modified : 7 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -35,7 +35,7 @@ public interface FlightPlanModelAdapter extends DomainModelAdapter<FlightPlanMod
      *            list of steerpoints.
      */
     void addSteerpoints(List<String> steerpoints);
-
+    
     /**
      * Update the flight plan.
      *
@@ -45,14 +45,14 @@ public interface FlightPlanModelAdapter extends DomainModelAdapter<FlightPlanMod
      *            list read in the file.
      */
     void updateFlightPlan(FlightPlanInformationTypes informationsType, String line);
-
+    
     /**
      * Is the current Flight plan has been modified.
      *
      * @return true or false.
      */
-    boolean hasModificationToCommit();
-
+    boolean isModificationToCommit();
+    
     /**
      * Set if the flight plan has been modified.
      *
@@ -60,5 +60,5 @@ public interface FlightPlanModelAdapter extends DomainModelAdapter<FlightPlanMod
      *            the value to set
      */
     void setModificationtoCommit(boolean value);
-
+    
 }

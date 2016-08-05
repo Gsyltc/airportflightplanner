@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 4 août 2016.
+ * Modified : 7 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -33,8 +33,7 @@ import fr.gsyltc.framework.lifecycle.LifeCycleManager;
  * @author Goubaud Sylvain
  *
  */
-public class Starter {
-    
+public class Starter { // NOPMD by sylva on 06/08/16 16:23
     
     /**
      *
@@ -42,7 +41,7 @@ public class Starter {
     private static final String MAIN_TITLE = "Airport Flight Planner";
     /** The logger of this class. */
     private static final Logger LOGGER = LogManager.getLogger(Starter.class);
-
+    
     /**
      * Start Application.
      *
@@ -52,7 +51,7 @@ public class Starter {
     public static void main(final String... args) {
         // Load spring configuration
         LifeCycleManager.initApplication();
-        
+
         EventQueue.invokeLater(new Runnable() {
             
             
@@ -71,14 +70,14 @@ public class Starter {
                     final JFrame mainFrame = new JFrame(MAIN_TITLE);
                     mainFrame.setJMenuBar(menu);
                     mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+                    
                     mainFrame.getContentPane().add(new MainPanel(), BorderLayout.CENTER);
                     mainFrame.pack();
                     mainFrame.setMinimumSize(mainFrame.getPreferredSize());
                     mainFrame.setVisible(true);
-
+                    
                     LifeCycleManager.registerSlots();
-
+                    
                 } catch (final UnsupportedLookAndFeelException | //
                 ClassNotFoundException | //
                 InstantiationException | //
@@ -89,9 +88,9 @@ public class Starter {
                 }
             }
         });
-
+        
     }
-
+    
     /**
      * @return the logger
      */

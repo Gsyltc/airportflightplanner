@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 4 août 2016.
+ * Modified : 7 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -12,14 +12,13 @@
 
 package com.airportflightplanner.flightplancreation.panels; // NOPMD by sylva on 31/07/16 15:43
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
@@ -28,13 +27,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.airportflightplanner.common.api.adapter.AircraftTypeAdapter;
-import com.airportflightplanner.common.api.adapter.FlightPlanModelAdapter;
 import com.airportflightplanner.common.api.adapter.StartDaysAdapter;
 import com.airportflightplanner.common.api.dayselection.bean.DaySelectionReader;
 import com.airportflightplanner.common.api.flightplan.bean.FlightPlanProperties;
 import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
-import com.airportflightplanner.common.slotsignal.TopicName;
-import com.airportflightplanner.common.types.ActionTypes;
 import com.airportflightplanner.common.utils.aircraft.AircraftDecoder;
 import com.airportflightplanner.flightplancreation.api.model.flightinfos.FlightInfosProperties;
 import com.airportflightplanner.flightplancreation.api.model.flightinfos.FlightInfosReader;
@@ -45,6 +41,7 @@ import com.airportflightplanner.flightplancreation.renderers.CommonComboBoxCellR
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.adapter.BasicComponentFactory;
 import com.jgoodies.binding.list.SelectionInList;
+import com.jgoodies.binding.value.AbstractValueModel;
 import com.jgoodies.binding.value.BufferedValueModel;
 import com.jgoodies.binding.value.ValueModel;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -52,16 +49,14 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
-import fr.gsyltc.framework.slotsignals.action.api.SlotAction;
-import fr.gsyltc.framework.slotsignals.slots.Slot;
-import fr.gsyltc.framework.visualelements.AbstractCommandablePanel;
+import fr.gsyltc.framework.visualelements.AbstractCommonPanel;
 import fr.gsyltc.framework.visualelements.types.LayoutSpecs;
 
 /**
  * @author Goubaud Sylvain
  *
  */
-public class CreationFlightInfosPanel extends AbstractCommandablePanel {
+public class CreationFlightInfosPanel extends AbstractCommonPanel {
     
     
     /** The logger of this class. */
@@ -75,13 +70,19 @@ public class CreationFlightInfosPanel extends AbstractCommandablePanel {
     /** the figlht plan presenter index. */
     private static final int FP_PRESENTER = 0;
     /** */
-    private static final String AIRCRAFT_TYPE_ADAPTER = AircraftTypeAdapter.class.getSimpleName();
+    protected static final String AIRCRAFT_TYPE_ADAPTER = AircraftTypeAdapter.class.getSimpleName();
     /** */
     private static final String STARTDAYS_ADAPTER = StartDaysAdapter.class.getSimpleName();
     /** */
-    private static final String CURRENT_FP_ADAPTER = FlightPlanModelAdapter.class.getSimpleName();
+    protected static final int DEFAULT_ELEMENT = 0;
+    /** */
+    private static final int[] ROM_GROUP = new int[] { 6, 4, 2 };
+    /** */
+    private static final int[] COLLUMN_GROUP = new int[] { 2, 14, 12, 10, 8, 6, 4 };
 
     /**
+     * Create the panel.
+     *
      * @param newCurrentFlightPlan
      *
      */
@@ -117,14 +118,50 @@ public class CreationFlightInfosPanel extends AbstractCommandablePanel {
                         FormSpecs.PREF_ROWSPEC, //
                         FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, });
 
-        formLayout.setRowGroups(new int[][] { new int[] { 6, 4, 2 } });
-        formLayout.setColumnGroups(new int[][] { new int[] { 2, 14, 12, 10, 8, 6, 4 } });
+        formLayout.setRowGroups(new int[][] { ROM_GROUP });
+        formLayout.setColumnGroups(new int[][] { COLLUMN_GROUP });
         setLayout(formLayout);
 
         final PresentationModel<FlightInfosReader> flInfosPresenter = //
                 (PresentationModel<FlightInfosReader>) getPresenter(FL_INFOS_PRESENTER_INDEX);
 
         final StartDaysAdapter startDaysAdapter = (StartDaysAdapter) findAdapter(STARTDAYS_ADAPTER);
+
+        // Listen the flight plan changes for update the display
+        final PresentationModel<?> fpPresenter = getPresenter(FP_PRESENTER);
+        fpPresenter.addPropertyChangeListener(PresentationModel.PROPERTY_BEFORE_BEAN, new PropertyChangeListener() {
+            
+            
+            /**
+             *
+             * {@inheritDoc}
+             */
+            @Override
+            public void propertyChange(final PropertyChangeEvent evt) {
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("FP_PRESENTER : " + evt.getPropertyName() + "=" + evt.getNewValue());
+                }
+                if (evt.getNewValue() instanceof FlightPlanReader) {
+                    final String aircraftType = ((FlightPlanReader) evt.getNewValue()).getAircraftLivery();
+                    refreshData(aircraftType, flInfosPresenter);
+                    fpPresenter.triggerFlush();
+                }
+            }
+        });
+        fpPresenter.addPropertyChangeListener(PresentationModel.PROPERTY_BUFFERING, new PropertyChangeListener() {
+            
+            
+            /**
+             *
+             * {@inheritDoc}
+             */
+            @Override
+            public void propertyChange(final PropertyChangeEvent evt) {
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("FP_PRESENTER : " + evt.getPropertyName() + "=" + evt.getNewValue());
+                }
+            }
+        });
 
         setBorder(new TitledBorder(null, FlightPlanCreationPanelMessages.FLIGHT_INFOS_LABEL));
         final CreationStartDaysPanel panel = new CreationStartDaysPanel(new PresentationModel<DaySelectionReader>(//
@@ -142,51 +179,11 @@ public class CreationFlightInfosPanel extends AbstractCommandablePanel {
 
         final JLabel liveryLabel = new JLabel(FlightPlanCreationPanelMessages.AIRCRAFT_LIVERY_LABEL);
         add(liveryLabel, "10, 6, right, default");
-        add(createAircraftLiveryComboBox(flInfosPresenter), "12, 6, 3, 1, fill, default");
+        add(createAircraftLiveryComboBox(flInfosPresenter, fpPresenter), "12, 6, 3, 1, fill, default");
 
         final JLabel cpieLabel = new JLabel(FlightPlanCreationPanelMessages.CPIE_LABEL);
         add(cpieLabel, "2, 6, right, default");
         add(createAircraftCpieComboBox(flInfosPresenter), "4, 6, 3, 1, fill, default");
-
-        // Listen the flight plan changes for update the display
-        getPresenter(FP_PRESENTER).addPropertyChangeListener(PresentationModel.PROPERTY_AFTER_BEAN, new PropertyChangeListener() {
-            
-            
-            /**
-             *
-             * {@inheritDoc}
-             */
-            @Override
-            public void propertyChange(final PropertyChangeEvent evt) {
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("FP PRESENTER - AFTER BEAN : " + evt.getPropertyName() + "=" + evt.getNewValue());
-                }
-                if (evt.getNewValue() instanceof FlightPlanReader) {
-                    final String aircraftType = ((FlightPlanReader) evt.getNewValue()).getAircraftType();
-                    final FlightInfosModel bean = (FlightInfosModel) getPresenter(FL_INFOS_PRESENTER_INDEX).getBean();
-
-                    final String aircraftClass = AircraftDecoder.getAircraftClass(aircraftType);
-                    bean.setAircraftClass(aircraftClass);
-                    bean.setAircraftCie(AircraftDecoder.getAircraftCie(aircraftType));
-                    bean.setAircraftLivery(aircraftType);
-                }
-            }
-        });
-
-        // Listen the display presenter to update the model
-        flInfosPresenter.addPropertyChangeListener(PresentationModel.PROPERTY_BUFFERING, new PropertyChangeListener() {
-            
-            
-            /**
-             *
-             * {@inheritDoc}.
-             */
-            @Override
-            public void propertyChange(final PropertyChangeEvent evt) {
-                
-            }
-        });
-
     }
 
     /**
@@ -197,175 +194,150 @@ public class CreationFlightInfosPanel extends AbstractCommandablePanel {
         super.createAdapters();
         attachAdapter(STARTDAYS_ADAPTER);
         attachAdapter(AIRCRAFT_TYPE_ADAPTER);
-        attachAdapter(CURRENT_FP_ADAPTER);
     }
 
     /**
+     * Create the aircraft class combo box.
      *
      * @param flInfosPresenter
-     * @return
+     *            the presenter.
+     * @return the combo box.
      */
     private JComboBox<String> createAircraftClassComboBox(final PresentationModel<FlightInfosReader> flInfosPresenter) {
         final AircraftTypeAdapter adapter = (AircraftTypeAdapter) findAdapter(AIRCRAFT_TYPE_ADAPTER);
         final Set<String> aircraftClass = adapter.getAircraftClasses();
-        final JComboBox<String> component = BasicComponentFactory.createComboBox(new SelectionInList<>(aircraftClass.toArray()));
-        component.setPrototypeDisplayValue(PROTOTYPE_DISPLAY);
-        final FlightInfosModel bean = (FlightInfosModel) flInfosPresenter.getBean();
-        bean.addPropertyChangeListener(FlightInfosProperties.AIRCRAFT_CLASS, new PropertyChangeListener() {
+
+        final ValueModel selectedClass = flInfosPresenter.getModel(FlightInfosProperties.AIRCRAFT_CLASS);
+        selectedClass.addValueChangeListener(new PropertyChangeListener() {
             
             
             /**
              *
-             * {@inheritDoc}
+             *
+             * {@inheritDoc}.
              */
             @Override
             public void propertyChange(final PropertyChangeEvent evt) {
-                refreshData(evt.getPropertyName(), flInfosPresenter);
-                component.setSelectedItem(evt.getNewValue());
-            }
-        });
-
-        component.addActionListener(new ActionListener() {
-            
-            
-            /**
-             *
-             * {@inheritDoc}
-             */
-            @Override
-            public void actionPerformed(final ActionEvent event) {
-                if (event.getSource() instanceof JComboBox) {
-                    bean.setAircraftClass((String) ((JComboBox<?>) event.getSource()).getSelectedItem());
+                if (null != evt.getPropertyName()) {
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Set aircraft class : " + evt.getNewValue());
+                    }
+                    final FlightInfosReader bean = flInfosPresenter.getBean();
+                    final List<String> companies = adapter.getAircraftCompaniesByClass(evt.getNewValue().toString());
+                    flInfosPresenter.setValue(FlightInfosProperties.COMPANIES, companies);
+                    if (companies.contains(bean.getAircraftCie())) {
+                        final String classCpie = bean.getAircraftClass() + "_" + bean.getAircraftCie();
+                        final List<String> liveries = adapter.getAircraftLiveriesByClassCpie(classCpie);
+                        flInfosPresenter.setValue(FlightInfosProperties.LIVERIES, liveries);
+                    } else {
+                        flInfosPresenter.setValue(FlightInfosProperties.LIVERIES, Collections.EMPTY_LIST);
+                    }
                 }
             }
         });
+        final SelectionInList<?> selectionInList = new SelectionInList<>(aircraftClass.toArray());
+        selectionInList.setSelectionHolder(selectedClass);
+        final JComboBox<String> component = BasicComponentFactory.createComboBox(selectionInList);
+        component.setPrototypeDisplayValue(PROTOTYPE_DISPLAY);
 
         return component;
     }
 
     /**
+     * Create the aircraft company combo box.
      *
      * @param flInfosPresenter
-     * @return
+     *            the flight info presenter.
+     * @return the combo box.
      */
     private JComboBox<String> createAircraftCpieComboBox(final PresentationModel<FlightInfosReader> flInfosPresenter) {
         final ValueModel infosModel = flInfosPresenter.getModel(FlightInfosProperties.COMPANIES);
+        final ValueModel selectedCompany = flInfosPresenter.getModel(FlightInfosProperties.AIRCRAFT_CIE);
         final SelectionInList<String> selectionInList = new SelectionInList<String>(infosModel);
+        selectionInList.setSelectionHolder(selectedCompany);
         final JComboBox<String> component = BasicComponentFactory.createComboBox(//
                 selectionInList, new CommonComboBoxCellRenderer(PROTOTYPE_DISPLAY));
         component.setPrototypeDisplayValue(PROTOTYPE_DISPLAY);
-        final FlightInfosModel bean = (FlightInfosModel) flInfosPresenter.getBean();
-        bean.addPropertyChangeListener(FlightInfosProperties.AIRCRAFT_CIE, new PropertyChangeListener() {
+
+        selectedCompany.addValueChangeListener(new PropertyChangeListener() {
             
             
             /**
              *
-             * {@inheritDoc}
+             *
+             * {@inheritDoc}.
              */
             @Override
             public void propertyChange(final PropertyChangeEvent evt) {
-                refreshData(evt.getPropertyName(), flInfosPresenter);
-                if (null == evt.getNewValue()) {
-                    component.setSelectedIndex(JComponent.UNDEFINED_CONDITION);
+                final String newValue = (String) evt.getNewValue();
+                if (newValue.isEmpty()) {
+                    flInfosPresenter.setValue(FlightInfosProperties.LIVERIES, Collections.EMPTY_LIST);
                 } else {
-                    component.setSelectedItem(evt.getNewValue());
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Set aircraft livery : " + evt.getNewValue());
+                    }
+                    final AircraftTypeAdapter adapter = (AircraftTypeAdapter) findAdapter(AIRCRAFT_TYPE_ADAPTER);
+                    final AbstractValueModel aircraftClass = flInfosPresenter.getModel(FlightInfosProperties.AIRCRAFT_CLASS);
+                    final String value = aircraftClass.getString() + "_" + evt.getNewValue().toString();
+                    final List<String> liveries = adapter.getAircraftLiveriesByClassCpie(value);
+                    flInfosPresenter.setValue(FlightInfosProperties.LIVERIES, liveries);
+                    final AbstractValueModel aircraftLivery = flInfosPresenter.getModel(FlightInfosProperties.AIRCRAFT_LIVERY);
+                    aircraftLivery.setValue(liveries.get(DEFAULT_ELEMENT));
                 }
             }
         });
 
-        component.addActionListener(new ActionListener() {
-            
-            
-            /**
-             *
-             * {@inheritDoc}
-             */
-            @Override
-            public void actionPerformed(final ActionEvent event) {
-                if (event.getSource() instanceof JComboBox) {
-                    bean.setAircraftCie((String) ((JComboBox<?>) event.getSource()).getSelectedItem());
-                }
-            }
-        });
         return component;
     }
 
     /**
+     * Create the aircraft livery combo box.
      *
-     * @param flInfosPresenter
-     * @return
+     * @param fInfosPresenter
+     *            the flight info presenter.
+     * @param fpPresenter
+     *            the flight plan presenter.
+     * @return the combo box.
      */
-    private JComboBox<String> createAircraftLiveryComboBox(final PresentationModel<FlightInfosReader> flInfosPresenter) {
-        final ValueModel model = flInfosPresenter.getModel(FlightInfosProperties.LIVERIES);
+    private JComboBox<String> createAircraftLiveryComboBox(final PresentationModel<?> fInfosPresenter,
+            final PresentationModel<?> fpPresenter) {
+        final ValueModel model = fInfosPresenter.getModel(FlightInfosProperties.LIVERIES);
+        final ValueModel selectedLivery = fInfosPresenter.getModel(FlightInfosProperties.AIRCRAFT_LIVERY);
 
+        selectedLivery.addValueChangeListener(new PropertyChangeListener() {
+            
+            
+            /**
+             *
+             *
+             * {@inheritDoc}.
+             */
+            @Override
+            public void propertyChange(final PropertyChangeEvent evt) {
+                if (!((String) evt.getNewValue()).isEmpty()) {
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Set aircraft livery : " + evt.getNewValue());
+                    }
+                    final FlightInfosReader bean = (FlightInfosReader) fInfosPresenter.getBean();
+                    fpPresenter.setBufferedValue(FlightPlanProperties.AIRCRAFT_CLASS, bean.getAircraftClass());
+                    fpPresenter.setBufferedValue(FlightPlanProperties.AIRCRAFT_CIE, bean.getAircraftCie());
+                    fpPresenter.setBufferedValue(FlightPlanProperties.AIRCRAFT_LIVERY, bean.getAircraftLivery());
+
+                }
+            }
+        });
         final SelectionInList<String> selectionInList = new SelectionInList<String>(model);
+        selectionInList.setSelectionHolder(selectedLivery);
         final JComboBox<String> component = BasicComponentFactory.createComboBox(selectionInList);
         component.setPrototypeDisplayValue(PROTOTYPE_DISPLAY);
-        final FlightInfosModel bean = (FlightInfosModel) flInfosPresenter.getBean();
-        bean.addPropertyChangeListener(FlightInfosProperties.AIRCRAFT_LIVERY, new PropertyChangeListener() {
-            
-            
-            /**
-             *
-             * {@inheritDoc}
-             */
-            @Override
-            public void propertyChange(final PropertyChangeEvent evt) {
-                refreshData(evt.getPropertyName(), flInfosPresenter);
-                if (null == evt.getNewValue()) {
-                    component.setSelectedIndex(JComponent.UNDEFINED_CONDITION);
-                } else {
-                    if (null != evt.getOldValue()) {
-                        System.out.println("Old Value :" + evt.getOldValue());
-                    }
-                    System.out.println("New Value :" + evt.getNewValue());
-                    component.setSelectedItem(evt.getNewValue());
-                    // if (evt.getNewValue().equals(evt.getOldValue())) {
-                    // final PresentationModel<FlightPlanModel> fpPresenter =
-                    // (PresentationModel<FlightPlanModel>) getPresenter(
-                    // FP_PRESENTER);
-                    // fpPresenter.setBufferedValue(FlightPlanProperties.AIRCRAFT_TYPE,
-                    // evt.getNewValue().toString());
-                    // }
-                }
-            }
-        });
 
-        bean.addPropertyChangeListener(FlightInfosProperties.COMPANIES, new PropertyChangeListener() {
-            
-            
-            /**
-             *
-             * {@inheritDoc}
-             */
-            @Override
-            public void propertyChange(final PropertyChangeEvent evt) {
-                refreshData(evt.getPropertyName(), flInfosPresenter);
-            }
-        });
-
-        component.addActionListener(new ActionListener() {
-            
-            
-            /**
-             *
-             * {@inheritDoc}
-             */
-            @Override
-            public void actionPerformed(final ActionEvent event) {
-                final String livery = (String) ((JComboBox<?>) event.getSource()).getSelectedItem();
-                if (null != livery) {
-                    bean.setAircraftLivery((String) ((JComboBox<?>) event.getSource()).getSelectedItem());
-                }
-            }
-        });
         return component;
-
     }
 
     /**
+     * Create the call sign text field.
      *
-     * @return
+     * @return the text field.
      */
     private JTextField createCallSignTextField() {
         final BufferedValueModel model = getPresenter(FP_PRESENTER).getBufferedModel(FlightPlanProperties.CALLSIGN);
@@ -373,78 +345,24 @@ public class CreationFlightInfosPanel extends AbstractCommandablePanel {
     }
 
     /**
-     * @param propertyName
-     *            Property to refresh.
+     * Refresh datas.
+     *
+     * @param aircraftType
+     *            the aircraft type.
      * @param flInfosPresenter
+     *            the presenter.
      */
-    protected void refreshData(final String propertyName, final PresentationModel<FlightInfosReader> flInfosPresenter) {
-        final AircraftTypeAdapter adapter = (AircraftTypeAdapter) findAdapter(AIRCRAFT_TYPE_ADAPTER);
-        final FlightInfosWriter bean = (FlightInfosModel) flInfosPresenter.getBean();
-        switch (propertyName) {
-        // La classe a changee, on reset le model des compagnies et des livrees
-        case FlightInfosProperties.AIRCRAFT_CLASS:
-            bean.setCompanies(adapter.getAircraftCompaniesByClass(bean.getAircraftClass()));
-            break;
-        
-        case FlightInfosProperties.COMPANIES:
-        case FlightInfosProperties.AIRCRAFT_CIE:
-            bean.setLiveries(adapter.getAircraftLiveriesByClassCpie(bean.getAircraftClass() + "_" + bean.getAircraftCie()));
-            break;
-        
-        default:
-            break;
+    protected void refreshData(final String aircraftType, final PresentationModel<FlightInfosReader> flInfosPresenter) {
+        final String aircraftClass = AircraftDecoder.getAircraftClass(aircraftType);
+        final String aircraftCpie = AircraftDecoder.getAircraftCie(aircraftType);
+
+        final FlightInfosWriter bean = (FlightInfosWriter) flInfosPresenter.getBean();
+
+        bean.setAircraftClass(aircraftClass);
+        bean.setAircraftCie(aircraftCpie);
+        bean.setAircraftLivery(aircraftType);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Refresh Data with : " + aircraftClass + " - " + aircraftCpie + " - " + aircraftType);
         }
-    }
-
-    /**
-     * {@inheritDoc}.
-     */
-    @Override
-    public void createSlots() {
-        super.createSlots();
-        final Slot validationSlot = new Slot(TopicName.VALIDATION_TOPIC, getClass().getSimpleName());
-        validationSlot.registerSlot();
-        validationSlot.setSlotAction(new SlotAction<ActionTypes>() {
-            
-            
-            /**
-             *
-             */
-            private static final long serialVersionUID = 1996369709690063664L;
-
-            /**
-             *
-             * {@inheritDoc}.
-             */
-            @Override
-            public void doAction(final ActionTypes arg) {
-                switch (arg) {
-                case VALIDATE:
-                    if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug("Validate Infos Panel");
-                    }
-
-                    break;
-                
-                case CANCEL:
-                    if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug("Cancel Infos Panel");
-                    }
-                    break;
-                
-                case REFRESH:
-                    if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug("Refreash Infos Panel");
-                    }
-                    break;
-                
-                default:
-                    break;
-                }
-                // final Signal signal =
-                // findSignal(TopicName.FP_MODIFIED_TOPIC);
-                // signal.fireSignal(false);
-            }
-        });
     }
 }
