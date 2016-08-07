@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 4 août 2016.
+ * Modified : 7 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -28,6 +28,8 @@ public enum SteerPointsTableColumn {
     /** */
     ALTITUDE(3);
 
+    /** */
+    private int value;
     /** */
     private static final String PREFIX = "SteerPointsTableColumn.";
 
@@ -66,14 +68,11 @@ public enum SteerPointsTableColumn {
         return result;
     }
     
-    /** */
-    private int value;
-    
     /**
      *
-     * @param value
+     * @param newValue
      */
-    SteerPointsTableColumn(final int value) {
-        this.value = value;
+    SteerPointsTableColumn(final int newValue) {
+        value = newValue;
     }
 }
