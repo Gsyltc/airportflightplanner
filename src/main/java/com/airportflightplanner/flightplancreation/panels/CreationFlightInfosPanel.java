@@ -165,7 +165,7 @@ public class CreationFlightInfosPanel extends AbstractCommonPanel {
 
         setBorder(new TitledBorder(null, FlightPlanCreationPanelMessages.FLIGHT_INFOS_LABEL));
         final CreationStartDaysPanel panel = new CreationStartDaysPanel(new PresentationModel<DaySelectionReader>(//
-                startDaysAdapter.getModel()));
+                startDaysAdapter.getModel()), fpPresenter);
         panel.build();
         add(panel, "2, 2,11,1");
 

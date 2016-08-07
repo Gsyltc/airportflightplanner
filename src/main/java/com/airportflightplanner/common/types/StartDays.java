@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 4 août 2016.
+ * Modified : 7 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -20,31 +20,34 @@ import fr.gsyltc.framework.utils.internationalizer.Internationalizer;
  */
 public enum StartDays {
     /** */
-    MONDAY(1),
+    MONDAY(0),
     /** */
-    TUESDAY(2),
+    TUESDAY(1),
     /** */
-    WEDNESDAY(3),
+    WEDNESDAY(2),
     /** */
-    THRUSDAY(4),
+    THRUSDAY(3),
     /** */
-    FRIDAY(5),
+    FRIDAY(4),
     /** */
-    SATURDAY(6),
+    SATURDAY(5),
     /** */
-    SUNDAY(0);
+    SUNDAY(6);
 
-    /** */
+    /** Prefix for internationalization. */
     private static final String PREFIX = "StartDays.";
-    /** */
+    /** the index. */
     private int value;
 
     /**
+     * Constructor.
      *
-     * @param value
+     * @param newVvalue
+     *            the index.
+     *
      */
-    private StartDays(final int value) {
-        this.value = value;
+    StartDays(final int newVvalue) {
+        value = newVvalue;
     }
 
     /**
@@ -63,7 +66,7 @@ public enum StartDays {
     }
 
     /**
-     * Get i18nString
+     * Get i18nString.
      *
      * @param typeIndex
      * @return
@@ -73,9 +76,11 @@ public enum StartDays {
     }
 
     /**
+     * Get the index.
      *
      * @param type
-     * @return
+     *            the type.
+     * @return the index.
      */
     public static int getIndex(final StartDays type) {
         return type.value;
@@ -84,7 +89,7 @@ public enum StartDays {
 
     /**
      *
-     * {@inheritDoc}
+     * {@inheritDoc}.
      */
     @Override
     public String toString() {
