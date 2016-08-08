@@ -20,7 +20,7 @@ import com.airportflightplanner.common.types.BeanNames;
 import com.airportflightplanner.flightplancreation.panels.FlightPlanCreationPanel;
 import com.airportflightplanner.flightplanvisualization.panel.FlightPlanVisualiazationPanel;
 import com.airportflightplanner.main.visualelements.messages.MainPanelMessages;
-import com.airportflightplanner.main.visualelements.panels.WaypointEditionPanel;
+import com.airportflightplanner.waypointmodifications.panels.WaypointEditionPanel;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;

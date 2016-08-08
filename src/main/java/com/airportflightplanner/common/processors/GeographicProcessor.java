@@ -18,6 +18,7 @@ import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.measure.DecimalMeasure;
@@ -28,7 +29,6 @@ import javax.measure.unit.SI;
 import org.gavaghan.geodesy.Ellipsoid;
 import org.gavaghan.geodesy.GeodeticCalculator;
 import org.gavaghan.geodesy.GlobalPosition;
-import org.joda.time.Period;
 import org.jscience.geography.coordinates.Altitude;
 import org.jscience.geography.coordinates.LatLong;
 
@@ -58,8 +58,23 @@ public class GeographicProcessor {
     /** */
     private static final double THOUSAND = 1000;
     /** */
-    /** */
     private static final int MINUTE_IN_SECOND = 60;
+    /** */
+    private static final int MIN_LENGTH = 6;
+    /** */
+    private static final int LATITUDE_KEY = 0;
+    /** */
+    private static final int LONGITUDE_KEY = 1;
+    /** */
+    private static final int ALTITUDE_KEY = 2;
+    /** */
+    private static final int SPEED_KEY = 3;
+    /** */
+    private static final int MAX_BANKING_ANGLE_KEY = 5;
+    /** */
+    private static final int WAYPOINT_NAME_KEY = 9;
+    /** */
+    private static final double TIME_FACTOR = 3600.0;
 
     /**
      *
@@ -105,42 +120,37 @@ public class GeographicProcessor {
     }
 
     /**
+     * Get the duration of the flight.
      *
      * @param steerpointsString
-     * @return
+     *            list of the steerpoint
+     * @return the duration.
      */
     public static long getFlightTime(final List<String> steerpointsString) {
         SteerPointReader origin = null;
         long result = 0L;
-        System.out.println("================================ START =====================");
-        System.out.println("\n");
-        
         for (final SteerPointReader destination : getSteerPoints(steerpointsString)) {
-            if (null == origin) {
-                origin = destination;
-            } else {
+            if (null != origin) {
                 result += getTimeBetweenWaypoint(origin, destination);
+                origin = destination;
             }
+            origin = destination;
         }
-
-        System.out.println(result);
-        System.out.println("\n");
-        System.out.println("================================ END =====================");
         return result;
     }
 
     /**
+     * Get the time between two steerpoint.
      *
      * @param origin
+     *            the origin steerpoint
      * @param destination
-     * @return
+     *            the destination steerpoint
+     * @return the duration.
      */
     public static long getTimeBetweenWaypoint(final SteerPointReader origin, final SteerPointReader destination) {
         final double velocity = origin.getVelocity().doubleValue(SI.METERS_PER_SECOND);
-        final long result = (long) (calculateDistanceBeetwenPoint(origin, destination) / velocity);
-
-        System.out.println("Durée entre : " + origin + " et " + destination + " = " + result + " s soit " + new Period(result
-                * 1000));
+        final long result = (long) (calculateDistanceBeetwenPoint(origin, destination) / velocity * THOUSAND);
 
         return result;
     }
@@ -163,7 +173,6 @@ public class GeographicProcessor {
 
         final double result = new GeodeticCalculator().calculateGeodeticMeasurement(Ellipsoid.WGS84, startWaypoint, endWaypoint)
                 .getPointToPointDistance();
-        System.out.println("Distance entre : " + origin + " et " + destination + " = " + result + " m");
         return result;
     }
 
@@ -239,8 +248,73 @@ public class GeographicProcessor {
         if (WEST.equals(hemOUmeridien) || SOUTH.equals(hemOUmeridien)) {
             signe = -1.0;
         }
-        latOrLon = signe * (Math.floor(degres) + Math.floor(minutes) / MINUTE_IN_SECOND + secondes / 3600.0);
+        latOrLon = signe * (Math.floor(degres) + Math.floor(minutes) / MINUTE_IN_SECOND + secondes / TIME_FACTOR);
 
         return latOrLon;
+    }
+
+    /**
+     *
+     * @param steerPointDatas
+     * @return
+     */
+    public static boolean validateSteerpoints(final String steerPointDatas) {
+        boolean result = true;
+        final String[] datas = steerPointDatas.split(" +");
+        // Check number of param
+        if (datas.length >= MIN_LENGTH) {
+            result &= isPositionValid(datas[LATITUDE_KEY]);
+            result &= isPositionValid(datas[LONGITUDE_KEY]);
+            result &= isAltitudeValid(datas[ALTITUDE_KEY]);
+            result &= isSpeedValid(datas[SPEED_KEY]);
+            result &= isMaxBankAngleValid(datas[MAX_BANKING_ANGLE_KEY]);
+            result &= null != datas[WAYPOINT_NAME_KEY];
+        }
+
+        return result;
+    }
+
+    /**
+     *
+     * @param value
+     * @return
+     */
+    private static boolean isPositionValid(final String value) {
+        final Pattern pattern = Pattern.compile("^\\d{1,3}+\\.?\\d{0,10}$");
+        final Matcher matcher = pattern.matcher(value);
+        return matcher.matches();
+    }
+
+    /**
+     *
+     * @param value
+     * @return
+     */
+    private static boolean isAltitudeValid(final String value) {
+        final Pattern pattern = Pattern.compile("^\\d{1,5}$");
+        final Matcher matcher = pattern.matcher(value);
+        return matcher.matches();
+    }
+
+    /**
+     *
+     * @param value
+     * @return
+     */
+    private static boolean isSpeedValid(final String value) {
+        final Pattern pattern = Pattern.compile("^\\d{1,3}$");
+        final Matcher matcher = pattern.matcher(value);
+        return matcher.matches();
+    }
+
+    /**
+     *
+     * @param value
+     * @return
+     */
+    private static boolean isMaxBankAngleValid(final String value) {
+        final Pattern pattern = Pattern.compile("^\\d{1,2}$");
+        final Matcher matcher = pattern.matcher(value);
+        return matcher.matches();
     }
 }
