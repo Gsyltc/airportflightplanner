@@ -485,7 +485,7 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
         final List<String> oldValue = getSteerPoints();
         if (null != value && !value.equals(oldValue)) {
             steerPoints = value;
-            firePropertyChange(FlightPlanProperties.STEERPOINTS_MAP, oldValue, steerPoints);
+            firePropertyChange(FlightPlanProperties.STEERPOINTS_LIST, oldValue, steerPoints);
         }
     }
     

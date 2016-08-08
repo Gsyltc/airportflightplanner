@@ -26,9 +26,10 @@ import org.apache.logging.log4j.Logger;
 import com.airportflightplanner.common.api.adapter.FlightPlanModelAdapter;
 import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
 import com.airportflightplanner.common.models.daysselection.DaysSelectionModel;
+import com.airportflightplanner.common.processors.GeographicProcessor;
+import com.airportflightplanner.common.processors.GoogleMapProcessor;
 import com.airportflightplanner.common.slotsignal.TopicName;
 import com.airportflightplanner.common.types.ActionTypes;
-import com.airportflightplanner.common.utils.geographics.GeographicUtils;
 import com.airportflightplanner.flightplancreation.api.model.googlemap.GoogleMapWriter;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
 import com.airportflightplanner.flightplancreation.model.GoogleMapModel;
@@ -234,8 +235,8 @@ public class FlightPlanCreationPanel extends AbstractCommandablePanel {
 
                     final GoogleMapWriter googleMapWriter = new GoogleMapModel();
                     googlePresenter.setBean((GoogleMapModel) googleMapWriter);
-                    googleMapWriter.setMarkers(GeographicUtils.getSteerPoints(flightPlanReader.getSteerPoints()));
-                    final EncodedPolyline polyline = GeographicUtils.getEncodePolyline(flightPlanReader.getSteerPoints());
+                    googleMapWriter.setMarkers(GeographicProcessor.getSteerPoints(flightPlanReader.getSteerPoints()));
+                    final EncodedPolyline polyline = GoogleMapProcessor.getEncodePolyline(flightPlanReader.getSteerPoints());
                     googleMapWriter.setEncodedPolyline(polyline);
                 }
             }

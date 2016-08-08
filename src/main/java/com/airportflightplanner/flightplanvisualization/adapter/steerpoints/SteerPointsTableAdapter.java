@@ -14,8 +14,8 @@ import javax.swing.event.ListDataListener;
 
 import com.airportflightplanner.common.api.flightplan.collection.FlightPlanCollectionReader;
 import com.airportflightplanner.common.api.steerpoints.bean.SteerPointReader;
+import com.airportflightplanner.common.processors.GeographicProcessor;
 import com.airportflightplanner.common.types.GeographicFormatter;
-import com.airportflightplanner.common.utils.geographics.GeographicUtils;
 import com.jgoodies.binding.adapter.AbstractTableAdapter;
 
 /**
@@ -83,11 +83,11 @@ public class SteerPointsTableAdapter extends AbstractTableAdapter<FlightPlanColl
         final SteerPointReader steerpoint = (SteerPointReader) getListModel().getElementAt(row);
         switch (fpColumn) {
         case LATITUDE:
-            result = GeographicUtils.getFormattedLatitude(steerpoint.getLatLong());
+            result = GeographicProcessor.getFormattedLatitude(steerpoint.getLatLong());
             break;
 
         case LONGITUDE:
-            result = GeographicUtils.getFormattedLongitude(steerpoint.getLatLong());
+            result = GeographicProcessor.getFormattedLongitude(steerpoint.getLatLong());
             break;
 
         case ALTITUDE:

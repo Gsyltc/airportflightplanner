@@ -20,7 +20,7 @@ public final class FlightPlanProperties {
     
     
     /** */
-    public static final String STEERPOINTS_MAP = "steerPoints";
+    public static final String STEERPOINTS_LIST = "steerPoints";
     /** */
     public static final String DEPARTURE_AIRPORT = "departureAirport";
     /** */

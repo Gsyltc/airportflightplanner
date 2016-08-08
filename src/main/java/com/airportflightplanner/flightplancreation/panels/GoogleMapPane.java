@@ -18,11 +18,11 @@ import javax.swing.JEditorPane;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
+import com.airportflightplanner.common.processors.GoogleMapProcessor;
 import com.airportflightplanner.common.types.MapType;
 import com.airportflightplanner.common.utils.properties.CommonProperties;
 import com.airportflightplanner.flightplancreation.api.model.googlemap.GoogleMapModelProperties;
 import com.airportflightplanner.flightplancreation.model.GoogleMapModel;
-import com.airportflightplanner.flightplancreation.processor.GoogleMapProcessor;
 import com.jgoodies.binding.PresentationModel;
 
 /**

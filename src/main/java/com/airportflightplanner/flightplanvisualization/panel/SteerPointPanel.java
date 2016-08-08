@@ -19,8 +19,8 @@ import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
 import com.airportflightplanner.common.api.steerpoints.bean.SteerPointReader;
 import com.airportflightplanner.common.api.steerpoints.collection.SteerPointsCollectionReader;
 import com.airportflightplanner.common.models.steerpoints.SteerPointsCollectionModel;
+import com.airportflightplanner.common.processors.GeographicProcessor;
 import com.airportflightplanner.common.slotsignal.TopicName;
-import com.airportflightplanner.common.utils.geographics.GeographicUtils;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
 import com.airportflightplanner.flightplanvisualization.presenter.steerpoints.SteerPointsPresenter;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -111,7 +111,7 @@ public class SteerPointPanel extends AbstractCommandablePanel {
             public void doAction(final FlightPlanReader flightPlanReader) {
                 steerPointsModel.getSteerPointsListModel().clear();
                 if (null != flightPlanReader) {
-                    final List<SteerPointReader> steerPoints = GeographicUtils.getSteerPoints(flightPlanReader.getSteerPoints());
+                    final List<SteerPointReader> steerPoints = GeographicProcessor.getSteerPoints(flightPlanReader.getSteerPoints());
                     steerPointsModel.addSteerPoints(steerPoints);
                 }
             }

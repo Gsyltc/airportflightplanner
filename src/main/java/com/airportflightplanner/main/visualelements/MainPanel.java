@@ -119,7 +119,8 @@ public class MainPanel extends JPanel {
      * @return the panel.
      */
     private WaypointEditionPanel createWaypointEditionPanel() {
-        final WaypointEditionPanel panel = new WaypointEditionPanel();
+        final WaypointEditionPanel panel = new WaypointEditionPanel(//
+                ModelsProvider.INSTANCE.findModelByName(BeanNames.CURRENT_FP_MODEL));
         panel.build();
         return panel;
     }
