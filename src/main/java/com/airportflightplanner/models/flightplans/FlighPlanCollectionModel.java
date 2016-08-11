@@ -22,18 +22,20 @@ import com.jgoodies.common.collect.LinkedListModel;
  * @author Goubaud Sylvain
  *
  */
-public class FlighPlanCollectionModel extends Model implements FlightPlanCollectionWriter, FlightPlanVisualizationListModelListener {
-
+public class FlighPlanCollectionModel extends Model implements FlightPlanCollectionWriter,
+        FlightPlanVisualizationListModelListener {
+    
+    
     /** */
-    protected final LinkedListModel<FlightPlanReader>            flightPlanListModel = new LinkedListModel<>();
+    protected final LinkedListModel<FlightPlanReader> flightPlanListModel = new LinkedListModel<>();
     /**
      *
      */
-    private static final long                                    serialVersionUID    = -3596872287379176646L;
-    /** */
-    private String                                               currentAirport      = "";
-    /** */
-    private final List<FlightPlanVisualizationListModelListener> listeners           = new ArrayList<FlightPlanVisualizationListModelListener>();
+    private static final long serialVersionUID = -3596872287379176646L;
+    /** Current airport. */
+    private String currentAirport = "";
+    /** Listeners. */
+    protected final List<FlightPlanVisualizationListModelListener> listeners = new ArrayList<FlightPlanVisualizationListModelListener>();
 
     /**
      *
@@ -53,9 +55,29 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
         if (!flightPlanListModel.contains(value)) {
             flightPlanListModel.add(value);
         }
-        for (FlightPlanVisualizationListModelListener listener : listeners) {
-            listener.addFlightPlan(value);
+
+        if (SwingUtilities.isEventDispatchThread()) {
+            SwingUtilities.invokeLater(new Runnable() {
+                
+                
+                /**
+                 *
+                 *
+                 * {@inheritDoc}.
+                 */
+                @Override
+                public void run() {
+                    for (final FlightPlanVisualizationListModelListener listener : getListeners()) {
+                        listener.addFlightPlan(value);
+                    }
+                }
+            });
+        } else {
+            for (final FlightPlanVisualizationListModelListener listener : getListeners()) {
+                listener.addFlightPlan(value);
+            }
         }
+
         commitChange();
     }
 
@@ -69,8 +91,26 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
             flightPlanListModel.remove(value);
 
         }
-        for (FlightPlanVisualizationListModelListener listener : listeners) {
-            listener.removeFlightPlan(value);
+        if (SwingUtilities.isEventDispatchThread()) {
+            SwingUtilities.invokeLater(new Runnable() {
+                
+                
+                /**
+                 *
+                 *
+                 * {@inheritDoc}.
+                 */
+                @Override
+                public void run() {
+                    for (final FlightPlanVisualizationListModelListener listener : getListeners()) {
+                        listener.removeFlightPlan(value);
+                    }
+                }
+            });
+        } else {
+            for (final FlightPlanVisualizationListModelListener listener : getListeners()) {
+                listener.removeFlightPlan(value);
+            }
         }
 
         commitChange();
@@ -124,7 +164,8 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
             firePropertyChange(FlightPlanCollectionProperties.FLIGHT_PLANS, null, flightPlanListModel);
         } else {
             SwingUtilities.invokeLater(new Runnable() {
-
+                
+                
                 /**
                  *
                  * {@inheritDoc}.
@@ -154,6 +195,15 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
     public void resetFlightPlans() {
         flightPlanListModel.clear();
         commitChange();
+    }
+
+    /**
+     * Get the listeners.
+     *
+     * @return the listeners
+     */
+    private List<FlightPlanVisualizationListModelListener> getListeners() {
+        return listeners;
     }
 
     /**
