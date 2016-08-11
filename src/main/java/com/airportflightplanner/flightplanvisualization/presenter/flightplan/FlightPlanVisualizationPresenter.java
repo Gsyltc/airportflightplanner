@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 28 juil. 2016.
+ * Modified : 11 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -22,8 +22,8 @@ import com.jgoodies.binding.beans.Model;
  *
  */
 public class FlightPlanVisualizationPresenter extends PresentationModel<FlightPlanCollectionReader> {
-
-
+    
+    
     /**
      *
      */
