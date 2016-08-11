@@ -22,13 +22,13 @@ import javax.swing.JCheckBox;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.airportflightplanner.common.api.dayselection.bean.DaySelectionProperties;
-import com.airportflightplanner.common.api.dayselection.bean.DaySelectionReader;
-import com.airportflightplanner.common.api.flightplan.bean.FlightPlanProperties;
-import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
 import com.airportflightplanner.common.slotsignal.TopicName;
 import com.airportflightplanner.common.types.ActionTypes;
 import com.airportflightplanner.common.types.StartDays;
+import com.airportflightplanner.models.daysselection.api.bean.DaySelectionProperties;
+import com.airportflightplanner.models.daysselection.api.bean.DaySelectionReader;
+import com.airportflightplanner.models.flightplans.api.bean.FlightPlanProperties;
+import com.airportflightplanner.models.flightplans.api.bean.FlightPlanReader;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.adapter.BasicComponentFactory;
 import com.jgoodies.binding.value.BufferedValueModel;

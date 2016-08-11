@@ -18,11 +18,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joda.time.Period;
 
-import com.airportflightplanner.common.api.flightplan.bean.FlightPlanProperties;
-import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
 import com.airportflightplanner.common.processors.GeographicProcessor;
 import com.airportflightplanner.common.slotsignal.TopicName;
 import com.airportflightplanner.common.types.ActionTypes;
+import com.airportflightplanner.models.flightplans.api.bean.FlightPlanProperties;
+import com.airportflightplanner.models.flightplans.api.bean.FlightPlanReader;
+import com.airportflightplanner.models.steerpoints.api.collection.SteerPointsCollectionReader;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.beans.Model;
 import com.jgoodies.binding.value.BufferedValueModel;
@@ -54,18 +55,24 @@ public class WaypointEditionPanel extends AbstractCommandablePanel {
     private static final int FP_PRESENTER = 0;
     /** */
     private static final int[] COLUMN_GROUP = new int[] { 2, 4 };
+    /** the steer points presenter index. */
+    private static final int STEERPOINTS_PRESENTER = 1;
     
     /**
      * Create the panel.
      *
      * @param currentFpBean
+     * @param steerpointModel
      */
     // formatter:off
-    public WaypointEditionPanel(final Model currentFpBean) { // NOPMD by sylva
-                                                             // on 31/07/16
-                                                             // 15:43
+    public WaypointEditionPanel(final Model currentFpBean, final Model steerpointModel) { // NOPMD
+        // by
+        // sylva
+        // on 31/07/16
+        // 15:43
         // formatter:on
-        super(new PresentationModel<FlightPlanReader>((FlightPlanReader) currentFpBean));
+        super(new PresentationModel<FlightPlanReader>((FlightPlanReader) currentFpBean), //
+                new PresentationModel<>((SteerPointsCollectionReader) steerpointModel));
     }
     
     /**
@@ -93,9 +100,10 @@ public class WaypointEditionPanel extends AbstractCommandablePanel {
         setLayout(formLayout);
         
         final PresentationModel<FlightPlanReader> presenter = (PresentationModel<FlightPlanReader>) getPresenter(FP_PRESENTER);
-        
-        add(createWaypointTextPanel(presenter), "2, 2,3,1,fill,fill");
-        add(createResumePanel(presenter), "2, 4,3,1,fill,fill");
+        final PresentationModel<SteerPointsCollectionReader> stpPresenter = (PresentationModel<SteerPointsCollectionReader>) getPresenter(
+                STEERPOINTS_PRESENTER);
+        add(createWaypointTextPanel(presenter, stpPresenter), "2, 2,3,1,fill,fill");
+        add(createResumePanel(presenter, stpPresenter), "2, 4,3,1,fill,fill");
         // add(createDaysSelectionPanel(), "2, 4, 3, 1, fill, fill");
         
     }
@@ -105,10 +113,12 @@ public class WaypointEditionPanel extends AbstractCommandablePanel {
      *
      * @param presenter
      *            the flight plan presenter
+     * @param stpPresenter
      * @return the panel
      */
-    private WaypointTextPanel createWaypointTextPanel(final PresentationModel<FlightPlanReader> presenter) {
-        final WaypointTextPanel panel = new WaypointTextPanel(presenter);
+    private WaypointTextPanel createWaypointTextPanel(final PresentationModel<FlightPlanReader> presenter,
+            final PresentationModel<SteerPointsCollectionReader> stpPresenter) {
+        final WaypointTextPanel panel = new WaypointTextPanel(presenter, stpPresenter);
         panel.build();
         
         return panel;
@@ -119,10 +129,12 @@ public class WaypointEditionPanel extends AbstractCommandablePanel {
      *
      * @param presenter
      *            the flight plan presenter
+     * @param stpPresenter
      * @return the panel
      */
-    private FlightResumePanel createResumePanel(final PresentationModel<FlightPlanReader> presenter) {
-        final FlightResumePanel panel = new FlightResumePanel(presenter);
+    private FlightResumePanel createResumePanel(final PresentationModel<FlightPlanReader> presenter,
+            final PresentationModel<SteerPointsCollectionReader> stpPresenter) {
+        final FlightResumePanel panel = new FlightResumePanel(presenter, stpPresenter);
         panel.build();
         
         return panel;

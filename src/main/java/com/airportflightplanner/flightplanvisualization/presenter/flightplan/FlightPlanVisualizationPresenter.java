@@ -12,10 +12,8 @@
 
 package com.airportflightplanner.flightplanvisualization.presenter.flightplan;
 
-import javax.swing.ListModel;
-
-import com.airportflightplanner.common.models.flightplans.FlighPlanCollectionModel;
 import com.airportflightplanner.flightplanvisualization.adapter.flightplan.FlightPlanVisualizationTableAdapter;
+import com.airportflightplanner.models.flightplans.api.collection.FlightPlanCollectionReader;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.beans.Model;
 
@@ -23,9 +21,9 @@ import com.jgoodies.binding.beans.Model;
  * @author Goubaud Sylvain
  *
  */
-public class FlightPlanVisualizationPresenter extends PresentationModel<FlighPlanCollectionModel> {
-    
-    
+public class FlightPlanVisualizationPresenter extends PresentationModel<FlightPlanCollectionReader> {
+
+
     /**
      *
      */
@@ -38,25 +36,11 @@ public class FlightPlanVisualizationPresenter extends PresentationModel<FlighPla
      * @param bean
      *            the bean for presenter.
      */
-    public FlightPlanVisualizationPresenter(final Model bean) { // NOPMD by sylva on 31/07/16 15:41
-        super((FlighPlanCollectionModel) bean);
-    }
-
-    /**
-     * Get the list model.
-     *
-     * @return the ListModel.
-     */
-    public FlightPlanVisualizationListModel getListModel() {
-        if (null == this.tableAdapter) {
-            getTableAdapter();
-        }
-        FlightPlanVisualizationListModel result = null;
-        final ListModel<?> model = this.tableAdapter.getListModel();
-        if (model instanceof FlightPlanVisualizationListModel) {
-            result = (FlightPlanVisualizationListModel) model;
-        }
-        return result;
+    public FlightPlanVisualizationPresenter(final Model bean) { // NOPMD by
+                                                                // sylva on
+                                                                // 31/07/16
+                                                                // 15:41
+        super((FlightPlanCollectionReader) bean);
     }
 
     /**
@@ -65,10 +49,11 @@ public class FlightPlanVisualizationPresenter extends PresentationModel<FlighPla
      * @return the Table adapter.
      */
     public FlightPlanVisualizationTableAdapter getTableAdapter() {
-        if (null == this.tableAdapter) {
-            setTableAdapter(new FlightPlanVisualizationTableAdapter(getBean().getFlightPlanListModel()));
+        if (null == tableAdapter) {
+            final FlightPlanCollectionReader listModel = getBean();
+            setTableAdapter(new FlightPlanVisualizationTableAdapter(listModel));
         }
-        return this.tableAdapter;
+        return tableAdapter;
     }
 
     /**
@@ -78,6 +63,6 @@ public class FlightPlanVisualizationPresenter extends PresentationModel<FlighPla
      *            the tableAdapter to set
      */
     private void setTableAdapter(final FlightPlanVisualizationTableAdapter newTableAdapter) {
-        this.tableAdapter = newTableAdapter;
+        tableAdapter = newTableAdapter;
     }
 }

@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 4 août 2016.
+ * Modified : 9 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -27,20 +27,20 @@ public enum MapType {
     HYBRID(2),
     /** */
     TERRAIN(3);
-    
+
     /** */
     private static final String PREFIX = "arrivaltype.";
     /** */
     private int value;
-    
+
     /**
      *
-     * @param value
+     * @param newValue
      */
-    private MapType(final int value) {
-        this.value = value;
+    MapType(final int newValue) {
+        this.value = newValue;
     }
-    
+
     /**
      *
      * @param typeIndex
@@ -55,7 +55,7 @@ public enum MapType {
         }
         return result;
     }
-    
+
     /**
      * Get i18nString.
      *
@@ -65,7 +65,7 @@ public enum MapType {
     public static String getI18NName(final int typeIndex) {
         return Internationalizer.getI18String(PREFIX + valueOf(typeIndex).name());
     }
-    
+
     /**
      *
      * @param type
@@ -73,6 +73,6 @@ public enum MapType {
      */
     public static int getIndex(final MapType type) {
         return type.value;
-        
+
     }
 }

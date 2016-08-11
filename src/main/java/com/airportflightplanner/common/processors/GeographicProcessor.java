@@ -32,9 +32,9 @@ import org.gavaghan.geodesy.GlobalPosition;
 import org.jscience.geography.coordinates.Altitude;
 import org.jscience.geography.coordinates.LatLong;
 
-import com.airportflightplanner.common.api.steerpoints.bean.SteerPointReader;
-import com.airportflightplanner.common.models.steerpoints.SteerPointModel;
 import com.airportflightplanner.common.types.GeographicFormatter;
+import com.airportflightplanner.models.steerpoints.SteerPointModel;
+import com.airportflightplanner.models.steerpoints.api.bean.SteerPointReader;
 
 /**
  * @author Goubaud Sylvain

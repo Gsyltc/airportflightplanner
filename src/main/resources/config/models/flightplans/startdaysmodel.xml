@@ -3,6 +3,22 @@
 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 
-    <bean id="id-DaySelectionModel" class="com.airportflightplanner.common.models.daysselection.DaysSelectionModel" />
+    <!-- Add Models to the lifecylce -->
+    <bean depends-on="id-Models" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject" ref="id-Models" />
+        <property name="targetMethod" value="putAll" />
+        <property name="arguments" ref="id-StartDaysModels" />
+    </bean>
+
+    <util:map id="id-StartDaysModels">
+        <entry>
+            <key>
+                <util:constant static-field="com.airportflightplanner.common.types.BeanNames.DAYS_MODEL" />
+            </key>
+            <ref bean="id-DaySelectionModel" />
+        </entry>
+    </util:map>
+
+    <bean id="id-DaySelectionModel" class="com.airportflightplanner.models.daysselection.DaysSelectionModel" />
 
 </beans>

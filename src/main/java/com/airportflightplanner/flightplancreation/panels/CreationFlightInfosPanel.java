@@ -26,11 +26,8 @@ import javax.swing.border.TitledBorder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.airportflightplanner.common.api.adapter.AircraftTypeAdapter;
-import com.airportflightplanner.common.api.adapter.StartDaysAdapter;
-import com.airportflightplanner.common.api.dayselection.bean.DaySelectionReader;
-import com.airportflightplanner.common.api.flightplan.bean.FlightPlanProperties;
-import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
+import com.airportflightplanner.adapters.api.AircraftTypeAdapter;
+import com.airportflightplanner.adapters.api.modeladapters.StartDaysAdapter;
 import com.airportflightplanner.common.utils.aircraft.AircraftDecoder;
 import com.airportflightplanner.flightplancreation.api.model.flightinfos.FlightInfosProperties;
 import com.airportflightplanner.flightplancreation.api.model.flightinfos.FlightInfosReader;
@@ -38,6 +35,9 @@ import com.airportflightplanner.flightplancreation.api.model.flightinfos.FlightI
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
 import com.airportflightplanner.flightplancreation.model.FlightInfosModel;
 import com.airportflightplanner.flightplancreation.renderers.CommonComboBoxCellRenderer;
+import com.airportflightplanner.models.daysselection.api.bean.DaySelectionReader;
+import com.airportflightplanner.models.flightplans.api.bean.FlightPlanProperties;
+import com.airportflightplanner.models.flightplans.api.bean.FlightPlanReader;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.adapter.BasicComponentFactory;
 import com.jgoodies.binding.list.SelectionInList;

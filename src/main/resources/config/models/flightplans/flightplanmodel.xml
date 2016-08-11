@@ -3,7 +3,29 @@
 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 
-    <bean id="id-FlightPlansCollection" class="com.airportflightplanner.common.models.flightplans.FlighPlanCollectionModel" scope="singleton" />
+    <!-- Add Adapters to the lifecylce -->
+    <bean depends-on="id-Models" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject" ref="id-Models" />
+        <property name="targetMethod" value="putAll" />
+        <property name="arguments" ref="id-FlightPlanModels" />
+    </bean>
 
-    <bean id="id-CurrentFlightPlan" class="com.airportflightplanner.common.models.flightplans.FlightPlanModel" scope="singleton" />
+    <util:map id="id-FlightPlanModels">
+        <entry>
+            <key>
+                <util:constant static-field="com.airportflightplanner.common.types.BeanNames.FP_COLLECTION_MODEL" />
+            </key>
+            <ref bean="id-FlightPlansCollection" />
+        </entry>
+        <entry>
+            <key>
+                <util:constant static-field="com.airportflightplanner.common.types.BeanNames.CURRENT_FP_MODEL" />
+            </key>
+            <ref bean="id-CurrentFlightPlan" />
+        </entry>
+    </util:map>
+
+    <bean id="id-FlightPlansCollection" class="com.airportflightplanner.models.flightplans.FlighPlanCollectionModel" scope="singleton" />
+
+    <bean id="id-CurrentFlightPlan" class="com.airportflightplanner.models.flightplans.FlightPlanModel" scope="singleton" />
 </beans>

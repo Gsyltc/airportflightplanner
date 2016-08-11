@@ -30,15 +30,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jscience.geography.coordinates.Altitude;
 
-import com.airportflightplanner.common.api.flightplan.bean.FlightPlanProperties;
-import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
-import com.airportflightplanner.common.models.flightplans.FlightPlanModel;
 import com.airportflightplanner.common.types.ArrivalType;
 import com.airportflightplanner.common.types.DepartureType;
 import com.airportflightplanner.common.types.FlightType;
 import com.airportflightplanner.common.types.UnitTypes;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
 import com.airportflightplanner.flightplancreation.renderers.CommonComboBoxCellRenderer;
+import com.airportflightplanner.models.flightplans.FlightPlanModel;
+import com.airportflightplanner.models.flightplans.api.bean.FlightPlanProperties;
+import com.airportflightplanner.models.flightplans.api.bean.FlightPlanReader;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.adapter.BasicComponentFactory;
 import com.jgoodies.binding.list.SelectionInList;

@@ -3,6 +3,22 @@
 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 
-    <bean id="id-SteerPointsCollectionModel" class="com.airportflightplanner.common.models.steerpoints.SteerPointsCollectionModel" />
+    <!-- Add Models to the lifecylce -->
+    <bean depends-on="id-Models" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject" ref="id-Models" />
+        <property name="targetMethod" value="putAll" />
+        <property name="arguments" ref="id-SteerPointModels" />
+    </bean>
+
+    <util:map id="id-SteerPointModels">
+        <entry>
+            <key>
+                <util:constant static-field="com.airportflightplanner.common.types.BeanNames.STEERPOINT_MODEL" />
+            </key>
+            <ref bean="id-SteerPointsCollectionModel" />
+        </entry>
+    </util:map>
+
+    <bean id="id-SteerPointsCollectionModel" class="com.airportflightplanner.models.steerpoints.SteerPointsCollectionModel" />
 
 </beans>

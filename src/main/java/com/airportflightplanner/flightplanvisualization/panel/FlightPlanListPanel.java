@@ -30,14 +30,14 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import com.airportflightplanner.common.api.adapter.FlightPlanCollectionAdapter;
-import com.airportflightplanner.common.api.adapter.FlightPlanModelAdapter;
-import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
+import com.airportflightplanner.adapters.api.modeladapters.FlightPlanCollectionAdapter;
+import com.airportflightplanner.adapters.api.modeladapters.FlightPlanModelAdapter;
 import com.airportflightplanner.common.slotsignal.TopicName;
 import com.airportflightplanner.common.types.ActionTypes;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
 import com.airportflightplanner.flightplanvisualization.messages.FlightPlanVisualizationMessages;
 import com.airportflightplanner.flightplanvisualization.presenter.flightplan.FlightPlanVisualizationPresenter;
+import com.airportflightplanner.models.flightplans.api.bean.FlightPlanReader;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;

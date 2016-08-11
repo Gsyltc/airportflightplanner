@@ -18,9 +18,9 @@ import javax.measure.unit.NonSI;
 
 import org.jscience.geography.coordinates.LatLong;
 
-import com.airportflightplanner.common.api.steerpoints.bean.SteerPointReader;
 import com.airportflightplanner.flightplancreation.api.model.googlemap.GoogleMapReader;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
+import com.airportflightplanner.models.steerpoints.api.bean.SteerPointReader;
 import com.google.maps.model.EncodedPolyline;
 
 /**

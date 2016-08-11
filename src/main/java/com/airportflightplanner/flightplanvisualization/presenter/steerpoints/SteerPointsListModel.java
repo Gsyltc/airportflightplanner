@@ -10,8 +10,8 @@ import java.util.List;
 
 import javax.swing.AbstractListModel;
 
-import com.airportflightplanner.common.api.steerpoints.bean.SteerPointReader;
 import com.airportflightplanner.flightplanvisualization.api.SteerPointsListModelListener;
+import com.airportflightplanner.models.steerpoints.api.bean.SteerPointReader;
 
 /**
  * @author Goubaud Sylvain
