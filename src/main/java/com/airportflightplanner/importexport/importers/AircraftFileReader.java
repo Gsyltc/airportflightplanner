@@ -20,7 +20,7 @@ import java.nio.file.Path;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.airportflightplanner.common.api.adapter.AircraftTypeAdapter;
+import com.airportflightplanner.adapters.api.AircraftTypeAdapter;
 import com.airportflightplanner.common.utils.properties.CommonProperties;
 
 /**

@@ -9,7 +9,7 @@ import java.util.List;
 
 import org.jscience.geography.coordinates.LatLong;
 
-import com.airportflightplanner.common.api.steerpoints.bean.SteerPointReader;
+import com.airportflightplanner.models.steerpoints.api.bean.SteerPointReader;
 import com.google.maps.model.EncodedPolyline;
 
 /**

@@ -12,10 +12,10 @@ import javax.swing.ListModel;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
-import com.airportflightplanner.common.api.flightplan.collection.FlightPlanCollectionReader;
-import com.airportflightplanner.common.api.steerpoints.bean.SteerPointReader;
 import com.airportflightplanner.common.processors.GeographicProcessor;
 import com.airportflightplanner.common.types.GeographicFormatter;
+import com.airportflightplanner.models.flightplans.api.collection.FlightPlanCollectionReader;
+import com.airportflightplanner.models.steerpoints.api.bean.SteerPointReader;
 import com.jgoodies.binding.adapter.AbstractTableAdapter;
 
 /**

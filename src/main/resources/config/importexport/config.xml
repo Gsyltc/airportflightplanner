@@ -14,7 +14,8 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 
     <bean id="id-FlightPlanFileReader" class="com.airportflightplanner.importexport.importers.FlightPlanFileReader" init-method="init">
         <property name="flightPlanModelAdapter" ref="id-FlightPlanModelAdapter" />
-        <property name="flighPlanCollectionModel" ref="id-FlightPlansCollection" />
+        <property name="flighPlanCollectionReader" ref="id-FlightPlansCollection" />
+        <property name="flightPlanCollectionAdapter" ref="id-FlightPlanCollectionAdapter" />
     </bean>
 
 

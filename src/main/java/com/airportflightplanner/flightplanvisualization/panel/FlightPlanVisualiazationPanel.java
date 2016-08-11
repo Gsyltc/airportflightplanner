@@ -12,11 +12,12 @@
 
 package com.airportflightplanner.flightplanvisualization.panel;
 
-import com.airportflightplanner.common.api.dayselection.bean.DaySelectionReader;
-import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
-import com.airportflightplanner.common.api.flightplan.collection.FlightPlanCollectionReader;
+import com.airportflightplanner.adapters.api.modeladapters.FlightPlanCollectionAdapter;
 import com.airportflightplanner.flightplanvisualization.presenter.flightplan.FlightPlanVisualizationPresenter;
 import com.airportflightplanner.flightplanvisualization.presenter.steerpoints.SteerPointsPresenter;
+import com.airportflightplanner.models.daysselection.api.bean.DaySelectionReader;
+import com.airportflightplanner.models.flightplans.api.bean.FlightPlanReader;
+import com.airportflightplanner.models.flightplans.api.collection.FlightPlanCollectionReader;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.beans.Model;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -52,6 +53,8 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
 
     /** */
     private FlightPlanCollectionReader fpCollection;
+    /** */
+    protected static final String ADAPTER_NAME = FlightPlanCollectionAdapter.class.getSimpleName();
 
     /**
      * @param newFPCollectionModel
@@ -77,6 +80,13 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
     @Override
     public final void build() {
         super.build();
+        
+        // final FlightPlanCollectionAdapter adapter =
+        // (FlightPlanCollectionAdapter) findAdapter(ADAPTER_NAME);
+        // final FlighPlanCollectionModel model = adapter.getModel();
+        // adapter.addListener(model);
+        // adapter.addListener(model.getFlightPlanListModel());
+        
         final FormLayout formLayout = new FormLayout(new ColumnSpec[] { FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(
                 "3dlu:grow"), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
@@ -161,5 +171,14 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
      */
     protected FlightPlanCollectionReader getFpCollection() {
         return fpCollection;
+    }
+
+    /**
+     * {@inheritDoc}.
+     */
+    @Override
+    public void createAdapters() {
+        super.createAdapters();
+        attachAdapter(ADAPTER_NAME);
     }
 }

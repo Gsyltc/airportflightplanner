@@ -19,8 +19,8 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.border.TitledBorder;
 
-import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
+import com.airportflightplanner.models.flightplans.api.bean.FlightPlanReader;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;

@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 31 juil. 2016.
+ * Modified : 10 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -18,8 +18,8 @@ import java.util.List;
 
 import javax.swing.AbstractListModel;
 
-import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
 import com.airportflightplanner.flightplanvisualization.api.FlightPlanVisualizationListModelListener;
+import com.airportflightplanner.models.flightplans.api.bean.FlightPlanReader;
 
 /**
  * @author Goubaud Sylvain
@@ -129,5 +129,14 @@ public class FlightPlanVisualizationListModel extends AbstractListModel<FlightPl
     protected final void fireIntervalAdded(final int elementCOunt) {
         final int index0 = list.size() - elementCOunt;
         fireIntervalAdded(this, Math.max(FIRST_ROW, index0), Math.max(FIRST_ROW, list.size() - 1));
+    }
+
+    /**
+     *
+     * {@inheritDoc}.
+     */
+    @Override
+    public void resetFlightPlans() {
+        clear();
     }
 }

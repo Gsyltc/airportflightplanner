@@ -22,7 +22,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -32,12 +31,13 @@ import com.airportflightplanner.common.slotsignal.TopicName;
 import fr.gsyltc.framework.slotsignals.action.api.SlotAction;
 import fr.gsyltc.framework.slotsignals.slotreceiver.api.SlotReceiver;
 import fr.gsyltc.framework.slotsignals.slots.Slot;
+import fr.gsyltc.framework.utils.constants.AbstractCommandableConstant;
 
 /**
  * @author Goubaud Sylvain
  *
  */
-public class PropertiesUtils implements SlotReceiver {
+public class PropertiesUtils implements SlotReceiver, AbstractCommandableConstant {
     
     
     /** */
@@ -53,8 +53,9 @@ public class PropertiesUtils implements SlotReceiver {
     /** files. */
     private List<String> fileNames;
     /** map of attached slots. */
-    private final Map<String, Slot> slotsMap = new ConcurrentHashMap<String, Slot>();
-
+    // private final Map<String, Slot> slotsMap = new ConcurrentHashMap<String,
+    // Slot>();
+    
     /**
      *
      * @param key
@@ -67,16 +68,16 @@ public class PropertiesUtils implements SlotReceiver {
                 result = properties.getProperty(key);
                 break;
             }
-
+            
         }
-
+        
         if (result.isEmpty() && LOGGER.isErrorEnabled()) {
             LOGGER.error("Error while loading properties. Property " + key + " not found");
         }
-
+        
         return result;
     }
-
+    
     /**
      *
      * @param key
@@ -87,7 +88,7 @@ public class PropertiesUtils implements SlotReceiver {
             userProperties.setProperty(key, value);
         }
     }
-
+    
     /**
      * {@inheritDoc}.
      */
@@ -96,35 +97,32 @@ public class PropertiesUtils implements SlotReceiver {
         // Nothing to do or to return
         return null;
     }
-
+    
     /**
      *
      * {@inheritDoc}
      */
     @Override
     public final void createSlots() {
-        // LA CREATION DES SLOTS DOIT ETRE MANUELLE POUR NE PAS CASSER L'ARCHI.
-
-        final Slot airportSlot = new Slot(TopicName.UPDATE_AIRPORT_TOPIC, PropertiesUtils.class.getSimpleName());
-        airportSlot.registerSlot();
-        airportSlot.setSlotAction(new SlotAction<String>() {
+        final Slot test = findSlot(TopicName.UPDATE_AIRPORT_TOPIC);
+        test.registerSlot();
+        test.setSlotAction(new SlotAction<String>() {
             
             
             /**
              *
-             * {@inheritDoc}
+             *
+             * {@inheritDoc}.
              */
             @Override
             public void doAction(final String arg) {
                 setPropertyByName(CommonProperties.DEFAULT_AIRPORT, arg);
                 updateProperties();
             }
-
+            
         });
-        slotsMap.put(airportSlot.getTopicName(), airportSlot);
-
+        
         final Slot googleSlot = new Slot(TopicName.GOOGLE_PARAMETERS_TOPIC, PropertiesUtils.class.getSimpleName());
-        googleSlot.registerSlot();
         googleSlot.setSlotAction(new SlotAction<Map<String, String>>() {
             
             
@@ -140,19 +138,19 @@ public class PropertiesUtils implements SlotReceiver {
                 setPropertyByName(CommonProperties.GOOGLE_POLYLINE_WIDTH, arg.get(CommonProperties.GOOGLE_POLYLINE_WIDTH));
                 updateProperties();
             }
-
+            
         });
-
-        slotsMap.put(googleSlot.getTopicName(), googleSlot);
+        
+        // slotsMap.put(googleSlot.getTopicName(), googleSlot);
     }
-
+    
     /**
      * @return the fileNames
      */
     private List<String> getFileNames() {
         return Collections.unmodifiableList(fileNames);
     }
-
+    
     /**
      * Initialize properties.
      */
@@ -160,7 +158,7 @@ public class PropertiesUtils implements SlotReceiver {
         createSlots();
         PROPERTIES.add(userProperties);
         PROPERTIES.add(applicationProperties);
-
+        
         for (final String fileName : getFileNames()) {
             final File configFile = new File(USER_CONFIG_PATH + fileName);
             if (configFile.exists()) {
@@ -182,7 +180,7 @@ public class PropertiesUtils implements SlotReceiver {
             }
         }
     }
-
+    
     /**
      *
      * @param newFileNames
@@ -191,7 +189,7 @@ public class PropertiesUtils implements SlotReceiver {
     public void setFileNames(final List<String> newFileNames) {
         fileNames = newFileNames;
     }
-
+    
     /**
      * Update the user properties fles.
      */
@@ -205,19 +203,13 @@ public class PropertiesUtils implements SlotReceiver {
             }
         }
     }
-
+    
     /**
+     *
      * {@inheritDoc}.
      */
     @Override
     public Slot findSlot(final String topicName) {
-        return slotsMap.get(topicName);
-    }
-    
-    /**
-     * @return the slotsMap
-     */
-    public Map<String, Slot> getSlotsMap() {
-        return slotsMap;
+        return SLOT_PROVIDER.findSlotBySlotName(topicName + "." + getClass().getSimpleName());
     }
 }

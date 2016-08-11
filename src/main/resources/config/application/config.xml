@@ -8,7 +8,6 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <constructor-arg value="PropertiesUtils" />
     </bean>
 
-
     <bean id="id-PropertiesLoader" class="com.airportflightplanner.common.utils.properties.PropertiesUtils" init-method="init">
         <property name="fileNames">
             <util:list>
@@ -16,19 +15,5 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
                 <value>com/airportflightplanner/common/utils/geographics/googleKey.properties</value>
             </util:list>
         </property>
-    </bean>
-
-    <bean id="id-PropertiesLoaderAirportSignal" class="fr.gsyltc.framework.slotsignals.slots.Slot">
-        <constructor-arg index="0">
-            <util:constant static-field="com.airportflightplanner.common.slotsignal.TopicName.UPDATE_AIRPORT_TOPIC" />
-        </constructor-arg>
-        <constructor-arg index="1" ref="id-PropertiesLoaderName" />
-    </bean>
-
-    <bean id="id-PropertiesLoaderGoogleSignal"  class="fr.gsyltc.framework.slotsignals.slots.Slot">
-        <constructor-arg index="0">
-            <util:constant static-field="com.airportflightplanner.common.slotsignal.TopicName.GOOGLE_PARAMETERS_TOPIC" />
-        </constructor-arg>
-        <constructor-arg index="1" ref="id-PropertiesLoaderName" />
     </bean>
 </beans>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xmlns:util="http://www.springframework.org/schema/util" xmlns:p="http://www.springframework.org/schema/p" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+
+    <!-- Add Adapters to the lifecylce -->
+    <bean depends-on="id-Adapters" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject" ref="id-Adapters" />
+        <property name="targetMethod" value="addAll" />
+        <property name="arguments" ref="id-ModelAdapters" />
+    </bean>
+
+    <util:list id="id-ModelAdapters">
+        <ref bean="id-FlightPlanModelAdapter" />
+        <ref bean="id-StartDaysAdapter" />
+        <ref bean="id-FlightPlanCollectionAdapter" />
+    </util:list>
+
+    <bean id="id-FlightPlanModelAdapter" class="com.airportflightplanner.adapters.impl.modeladapters.FlightPlanModelAdapterImpl" init-method="init">
+        <property name="adapterName" value="FlightPlanModelAdapter" />
+        <property name="model" ref="id-CurrentFlightPlan" />
+        <property name="slots">
+            <util:list>
+                <bean class="fr.gsyltc.framework.slotsignals.slots.Slot">
+                    <constructor-arg index="0">
+                        <util:constant static-field="com.airportflightplanner.common.slotsignal.TopicName.FP_TABLE_SELECTED_TOPIC" />
+                    </constructor-arg>
+                    <constructor-arg index="1" value="FlightPlanModelAdapter" />
+                </bean>
+                <bean class="fr.gsyltc.framework.slotsignals.slots.Slot">
+                    <constructor-arg index="0">
+                        <util:constant static-field="com.airportflightplanner.common.slotsignal.TopicName.FP_MODIFIED_TOPIC" />
+                    </constructor-arg>
+                    <constructor-arg index="1" value="FlightPlanModelAdapter" />
+                </bean>
+            </util:list>
+        </property>
+    </bean>
+
+    <bean id="id-StartDaysAdapter" class="com.airportflightplanner.adapters.impl.modeladapters.StartDaysAdapterImpl" init-method="init">
+        <property name="adapterName" value="StartDaysAdapter" />
+        <property name="model" ref="id-DaySelectionModel" />
+        <property name="slots">
+            <bean class="fr.gsyltc.framework.slotsignals.slots.Slot">
+                <constructor-arg index="0">
+                    <util:constant static-field="com.airportflightplanner.common.slotsignal.TopicName.FP_TABLE_SELECTED_TOPIC" />
+                </constructor-arg>
+                <constructor-arg index="1" value="StartDaysAdapter" />
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="id-FlightPlanCollectionAdapter" class="com.airportflightplanner.adapters.impl.modeladapters.FlightPlanCollectionAdapterImpl">
+        <property name="adapterName" value="FlightPlanCollectionAdapter" />
+        <property name="model" ref="id-FlightPlansCollection" />
+    </bean>
+
+
+</beans>

@@ -20,7 +20,8 @@ import javax.swing.JTextField;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
+import com.airportflightplanner.models.flightplans.api.bean.FlightPlanReader;
+import com.airportflightplanner.models.steerpoints.api.collection.SteerPointsCollectionReader;
 import com.airportflightplanner.waypointmodifications.messages.WaypointModificationMessages;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -44,20 +45,24 @@ public class FlightResumePanel extends AbstractCommonPanel {
 
     /** the flight plan presenter. */
     private static final int FP_PRESENTER = 0;
+    /** the steer points presenter index. */
+    private static final int STEERPOINTS_PRESENTER = 1;
 
     /**
      * Create the panel.
      *
      * @param currentFpBean
+     * @param stpPresenter
      */
     // formatter:off
-    public FlightResumePanel(final PresentationModel<FlightPlanReader> currentFpBean) { // NOPMD
-                                                                                        // by
-                                                                                        // sylva
+    public FlightResumePanel(final PresentationModel<FlightPlanReader> currentFpBean,
+            final PresentationModel<SteerPointsCollectionReader> stpPresenter) { // NOPMD
+        // by
+        // sylva
         // on 31/07/16
         // 15:43
         // formatter:on
-        super(currentFpBean);
+        super(currentFpBean, stpPresenter);
     }
 
     /**
