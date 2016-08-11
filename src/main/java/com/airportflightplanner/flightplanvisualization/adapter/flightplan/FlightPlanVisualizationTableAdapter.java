@@ -15,10 +15,13 @@ package com.airportflightplanner.flightplanvisualization.adapter.flightplan;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
-import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
-import com.airportflightplanner.common.api.flightplan.collection.FlightPlanCollectionReader;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.airportflightplanner.common.utils.time.TimeUtils;
 import com.airportflightplanner.flightplanvisualization.presenter.flightplan.FlightPlanVisualizationListModel;
+import com.airportflightplanner.models.flightplans.api.bean.FlightPlanReader;
+import com.airportflightplanner.models.flightplans.api.collection.FlightPlanCollectionReader;
 import com.jgoodies.binding.adapter.AbstractTableAdapter;
 
 import fr.gsyltc.framework.utils.internationalizer.Internationalizer;
@@ -29,6 +32,9 @@ import fr.gsyltc.framework.utils.internationalizer.Internationalizer;
  */
 public class FlightPlanVisualizationTableAdapter extends AbstractTableAdapter<FlightPlanCollectionReader> {
     
+    
+    /** The logger of this class. */
+    private static final Logger LOGGER = LogManager.getLogger(FlightPlanVisualizationTableAdapter.class);
     
     /**
      *
@@ -197,11 +203,11 @@ public class FlightPlanVisualizationTableAdapter extends AbstractTableAdapter<Fl
             break;
         
         default:
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error(fpColumn + " not exist");
+            }
             break;
         }
-        // if (null == result) {
-        // throw new IllegalArgumentException();
-        // }
         return result;
     }
 }

@@ -12,8 +12,8 @@
 
 package com.airportflightplanner.flightplanvisualization.presenter.steerpoints;
 
-import com.airportflightplanner.common.models.steerpoints.SteerPointsCollectionModel;
 import com.airportflightplanner.flightplanvisualization.adapter.steerpoints.SteerPointsTableAdapter;
+import com.airportflightplanner.models.steerpoints.SteerPointsCollectionModel;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.beans.Model;
 

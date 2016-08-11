@@ -3,8 +3,15 @@
 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 
+    <!-- Add Models to the lifecylce -->
+    <bean depends-on="id-Signals" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject" ref="id-Signals" />
+        <property name="targetMethod" value="addAll" />
+        <property name="arguments" ref="id-GenericSignals" />
+    </bean>
+
     <!-- CREATE THE GENERIC SIGNAL LIST - id-Signals is the common list called in the lifecycle -->
-    <util:list id="id-Signals" value-type="fr.gsyltc.framework.slotsignals.signals.Signal">
+    <util:list id="id-GenericSignals" value-type="fr.gsyltc.framework.slotsignals.signals.Signal">
         <ref bean="id-UpdateAirportSignal" />
         <ref bean="id-FpTableSelectionSignal" />
         <ref bean="id-WriteFpSignal" />

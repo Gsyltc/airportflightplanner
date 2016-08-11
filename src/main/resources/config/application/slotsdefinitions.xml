@@ -4,14 +4,14 @@ http://www.springframework.org/schema/lang http://www.springframework.org/schema
 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 
-    <bean id="id-PropertiesLoaderAirportSignal" class="fr.gsyltc.framework.slotsignals.slots.Slot">
+    <bean id="id-PropertiesLoaderAirportSlot" class="fr.gsyltc.framework.slotsignals.slots.Slot">
         <constructor-arg index="0">
             <util:constant static-field="com.airportflightplanner.common.slotsignal.TopicName.UPDATE_AIRPORT_TOPIC" />
         </constructor-arg>
         <constructor-arg index="1" ref="id-PropertiesLoaderName" />
     </bean>
 
-    <bean id="id-PropertiesLoaderGoogleSignal" class="fr.gsyltc.framework.slotsignals.slots.Slot">
+    <bean id="id-PropertiesLoaderGoogleSlot" class="fr.gsyltc.framework.slotsignals.slots.Slot">
         <constructor-arg index="0">
             <util:constant static-field="com.airportflightplanner.common.slotsignal.TopicName.GOOGLE_PARAMETERS_TOPIC" />
         </constructor-arg>
@@ -19,11 +19,11 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     </bean>
 
     <util:list id="id-PropertiesSlots" value-type="fr.gsyltc.framework.slotsignals.slots.Slot">
-        <ref bean="id-PropertiesLoaderAirportSignal" />
-        <ref bean="id-PropertiesLoaderGoogleSignal" />
+        <ref bean="id-PropertiesLoaderAirportSlot" />
+        <ref bean="id-PropertiesLoaderGoogleSlot" />
     </util:list>
 
-    <!-- Add Slots to the lifecylce -->
+<!--     Add Slots to the lifecylce -->
     <bean depends-on="id-Slots" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
         <property name="targetObject" ref="id-Slots" />
         <property name="targetMethod" value="addAll" />

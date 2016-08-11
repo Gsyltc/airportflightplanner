@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 4 août 2016.
+ * Modified : 9 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -35,11 +35,11 @@ public enum ArrivalType {
     
     /**
      * Protected constructor.
-     * 
-     * @param value
+     *
+     * @param newValue
      */
-    private ArrivalType(final int value) {
-        this.value = value;
+    ArrivalType(final int newValue) {
+        this.value = newValue;
     }
     
     /**

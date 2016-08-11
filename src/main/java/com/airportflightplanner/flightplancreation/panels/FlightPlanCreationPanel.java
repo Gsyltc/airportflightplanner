@@ -23,9 +23,7 @@ import javax.swing.border.TitledBorder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.airportflightplanner.common.api.adapter.FlightPlanModelAdapter;
-import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
-import com.airportflightplanner.common.models.daysselection.DaysSelectionModel;
+import com.airportflightplanner.adapters.api.modeladapters.FlightPlanModelAdapter;
 import com.airportflightplanner.common.processors.GeographicProcessor;
 import com.airportflightplanner.common.processors.GoogleMapProcessor;
 import com.airportflightplanner.common.slotsignal.TopicName;
@@ -33,6 +31,8 @@ import com.airportflightplanner.common.types.ActionTypes;
 import com.airportflightplanner.flightplancreation.api.model.googlemap.GoogleMapWriter;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
 import com.airportflightplanner.flightplancreation.model.GoogleMapModel;
+import com.airportflightplanner.models.daysselection.api.bean.DaySelectionReader;
+import com.airportflightplanner.models.flightplans.api.bean.FlightPlanReader;
 import com.google.maps.model.EncodedPolyline;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.beans.Model;
@@ -83,7 +83,7 @@ public class FlightPlanCreationPanel extends AbstractCommandablePanel {
                                                                                           // 15:43
         super(new PresentationModel<FlightPlanReader>((FlightPlanReader) currentFpBean), //
                 new PresentationModel<GoogleMapModel>(new GoogleMapModel()), //
-                new PresentationModel<DaysSelectionModel>((DaysSelectionModel) daySelection));
+                new PresentationModel<DaySelectionReader>((DaySelectionReader) daySelection));
     }
 
     /**

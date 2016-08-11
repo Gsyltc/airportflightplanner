@@ -12,13 +12,11 @@
 		<config>src/main/resources/config/internationalization/config.xml</config>
 		<config>src/main/resources/config/models/flightplans/flightplanmodel.xml</config>
 		<config>src/main/resources/config/slotsignals/definitions/signalsdefinitions.xml</config>
-		<config>src/main/resources/config/models/modelslist/config.xml</config>
 		<config>src/main/resources/config/models/flightplans/startdaysmodel.xml</config>
 		<config>src/main/resources/config/slotsignals/imports.xml</config>
 		<config>src/main/resources/config/models/flightplans/steerpointsmodel.xml</config>
-		<config>src/main/resources/config/adapters/config.xml</config>
-		<config>src/main/resources/config/slotsignals/definitions/slotsdefinitions.xml</config>
 		<config>src/main/resources/config/log/config.xml</config>
+		<config>src/main/resources/config/adapters/adapters.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>
@@ -32,13 +30,11 @@
 				<config>src/main/resources/config/imports.xml</config>
 				<config>src/main/resources/config/internationalization/config.xml</config>
 				<config>src/main/resources/config/models/flightplans/flightplanmodel.xml</config>
-				<config>src/main/resources/config/adapters/config.xml</config>
 				<config>src/main/resources/config/models/flightplans/startdaysmodel.xml</config>
 				<config>src/main/resources/config/models/flightplans/steerpointsmodel.xml</config>
-				<config>src/main/resources/config/models/modelslist/config.xml</config>
 				<config>src/main/resources/config/slotsignals/definitions/signalsdefinitions.xml</config>
 				<config>src/main/resources/config/slotsignals/imports.xml</config>
-				<config>src/main/resources/config/slotsignals/definitions/slotsdefinitions.xml</config>
+				<config>src/main/resources/config/adapters/adapters.xml</config>
 			</configs>
 			<profiles>
 			</profiles>

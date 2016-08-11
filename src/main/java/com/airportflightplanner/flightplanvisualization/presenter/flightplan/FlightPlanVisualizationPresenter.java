@@ -14,8 +14,8 @@ package com.airportflightplanner.flightplanvisualization.presenter.flightplan;
 
 import javax.swing.ListModel;
 
-import com.airportflightplanner.common.models.flightplans.FlighPlanCollectionModel;
 import com.airportflightplanner.flightplanvisualization.adapter.flightplan.FlightPlanVisualizationTableAdapter;
+import com.airportflightplanner.models.flightplans.FlighPlanCollectionModel;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.beans.Model;
 
@@ -32,45 +32,49 @@ public class FlightPlanVisualizationPresenter extends PresentationModel<FlighPla
     private static final long serialVersionUID = 2003878398284031619L;
     /** */
     private FlightPlanVisualizationTableAdapter tableAdapter;
-
+    
     /**
      *
      * @param bean
      *            the bean for presenter.
      */
-    public FlightPlanVisualizationPresenter(final Model bean) { // NOPMD by sylva on 31/07/16 15:41
+    public FlightPlanVisualizationPresenter(final Model bean) { // NOPMD by
+                                                                // sylva on
+                                                                // 31/07/16
+                                                                // 15:41
         super((FlighPlanCollectionModel) bean);
     }
-
+    
     /**
      * Get the list model.
      *
      * @return the ListModel.
      */
     public FlightPlanVisualizationListModel getListModel() {
-        if (null == this.tableAdapter) {
+        if (null == tableAdapter) {
             getTableAdapter();
         }
         FlightPlanVisualizationListModel result = null;
-        final ListModel<?> model = this.tableAdapter.getListModel();
+        final ListModel<?> model = tableAdapter.getListModel();
         if (model instanceof FlightPlanVisualizationListModel) {
             result = (FlightPlanVisualizationListModel) model;
         }
         return result;
     }
-
+    
     /**
      * Get the table adapter for the flight plan visualization panel.
      *
      * @return the Table adapter.
      */
     public FlightPlanVisualizationTableAdapter getTableAdapter() {
-        if (null == this.tableAdapter) {
-            setTableAdapter(new FlightPlanVisualizationTableAdapter(getBean().getFlightPlanListModel()));
+        if (null == tableAdapter) {
+            final FlightPlanVisualizationListModel listModel = getBean().getFlightPlanListModel();
+            setTableAdapter(new FlightPlanVisualizationTableAdapter(listModel));
         }
-        return this.tableAdapter;
+        return tableAdapter;
     }
-
+    
     /**
      * Set the table adapter.
      *
@@ -78,6 +82,6 @@ public class FlightPlanVisualizationPresenter extends PresentationModel<FlighPla
      *            the tableAdapter to set
      */
     private void setTableAdapter(final FlightPlanVisualizationTableAdapter newTableAdapter) {
-        this.tableAdapter = newTableAdapter;
+        tableAdapter = newTableAdapter;
     }
 }

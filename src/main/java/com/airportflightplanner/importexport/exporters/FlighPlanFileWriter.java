@@ -26,7 +26,6 @@ import org.apache.logging.log4j.Logger;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormatterBuilder;
 
-import com.airportflightplanner.common.api.flightplan.bean.FlightPlanReader;
 import com.airportflightplanner.common.slotsignal.TopicName;
 import com.airportflightplanner.common.types.ArrivalType;
 import com.airportflightplanner.common.types.DepartureType;
@@ -35,6 +34,7 @@ import com.airportflightplanner.common.types.FlightType;
 import com.airportflightplanner.common.types.StartDays;
 import com.airportflightplanner.common.utils.properties.CommonProperties;
 import com.airportflightplanner.common.utils.time.TimeUtils;
+import com.airportflightplanner.models.flightplans.api.bean.FlightPlanReader;
 
 import fr.gsyltc.framework.slotsignals.action.api.SlotAction;
 import fr.gsyltc.framework.slotsignals.slotreceiver.api.SlotReceiver;

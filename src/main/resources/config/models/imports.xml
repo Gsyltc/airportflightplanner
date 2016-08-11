@@ -7,5 +7,4 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     <import resource="./flightplans/flightplanmodel.xml" />
     <import resource="./flightplans/startdaysmodel.xml" />
     <import resource="./flightplans/steerpointsmodel.xml" />
-    <import resource="./modelslist/config.xml" />
 </beans>

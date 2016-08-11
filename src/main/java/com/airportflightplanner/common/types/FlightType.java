@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 4 août 2016.
+ * Modified : 9 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -25,22 +25,22 @@ public enum FlightType {
     CIVILIAN(0),
     /** */
     MILITARY(1);
-    
+
     /**
      *
      */
     private static final String PREFIX = "FlightType.";
     /** */
     private int value;
-    
+
     /**
      *
      * @param newValue
      */
-    private FlightType(final int newValue) {
+    FlightType(final int newValue) {
         value = newValue;
     }
-    
+
     /**
      *
      * @param typeIndex
@@ -55,7 +55,7 @@ public enum FlightType {
         }
         return result;
     }
-    
+
     /**
      * Get i18nString.
      *
@@ -65,7 +65,7 @@ public enum FlightType {
     public static String getI18NName(final int typeIndex) {
         return Internationalizer.getI18String(PREFIX + valueOf(typeIndex).name());
     }
-    
+
     /**
      *
      * @param type
@@ -73,6 +73,6 @@ public enum FlightType {
      */
     public static int getIndex(final FlightType type) {
         return type.value;
-        
+
     }
 }
