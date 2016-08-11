@@ -29,7 +29,6 @@ import fr.gsyltc.framework.utils.internationalizer.Internationalizer;
  *
  */
 public class FlightPlanVisualizationTableAdapter extends AbstractTableAdapter<FlightPlanCollectionReader> {
-
     /** The logger of this class. */
     private static final Logger                               LOGGER           = LogManager.getLogger(FlightPlanVisualizationTableAdapter.class);
     private final LinkedListModel<FlightPlanReader>           listModel        = new LinkedListModel<FlightPlanReader>();
