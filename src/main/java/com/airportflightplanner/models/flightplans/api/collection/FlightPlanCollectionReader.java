@@ -60,5 +60,4 @@ public interface FlightPlanCollectionReader extends Serializable {
     /**
      * @param listener  */
     void removeListener(FlightPlanVisualizationListModelListener listener);
-
 }
