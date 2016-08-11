@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 28 juil. 2016.
+ * Modified : 11 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -26,7 +26,6 @@ import fr.gsyltc.framework.slotsignals.slots.Slot;
 
 /**
  * @author Goubaud Sylvain
- *
  */
 public class StartDaysAdapterImpl extends AbstractReceiverModelAdapterImpl<DaysSelectionModel> implements StartDaysAdapter {
     
@@ -35,7 +34,7 @@ public class StartDaysAdapterImpl extends AbstractReceiverModelAdapterImpl<DaysS
      *
      */
     private static final long serialVersionUID = 8742702470474381772L;
-
+    
     /**
      *
      * {@inheritDoc}.
@@ -50,7 +49,7 @@ public class StartDaysAdapterImpl extends AbstractReceiverModelAdapterImpl<DaysS
              *
              */
             private static final long serialVersionUID = -1849859877568448215L;
-
+            
             /**
              *
              * {@inheritDoc}.
@@ -63,7 +62,7 @@ public class StartDaysAdapterImpl extends AbstractReceiverModelAdapterImpl<DaysS
             }
         });
     }
-
+    
     /**
      *
      * {@inheritDoc}.
@@ -72,7 +71,7 @@ public class StartDaysAdapterImpl extends AbstractReceiverModelAdapterImpl<DaysS
     public void init() {
         createSlots();
     }
-
+    
     /**
      * {@inheritDoc}
      */

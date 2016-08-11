@@ -86,7 +86,6 @@ public class FlightPlanVisualizationTableAdapter extends AbstractTableAdapter<Fl
             @Override
             public void contentsChanged(final ListDataEvent event) {
                 fireTableDataChanged();
-
             }
         });
 
@@ -210,4 +209,5 @@ public class FlightPlanVisualizationTableAdapter extends AbstractTableAdapter<Fl
         }
         return result;
     }
+    
 }

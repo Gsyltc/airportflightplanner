@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 7 août 2016.
+ * Modified : 11 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -23,7 +23,8 @@ import fr.gsyltc.framework.adapters.api.DomainModelAdapter;
  * Specific interface of a Flight plan Domain Model Adapter.
  *
  * @author Goubaud Sylvain
- *
+ * @param <E>
+ *            the listener object type.
  */
 public interface FlightPlanModelAdapter extends DomainModelAdapter<FlightPlanModel> {
     

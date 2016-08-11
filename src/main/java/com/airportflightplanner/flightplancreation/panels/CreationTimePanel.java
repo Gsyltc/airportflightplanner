@@ -55,28 +55,28 @@ public class CreationTimePanel extends AbstractCommonPanel {
     
     /** The logger of this class. */
     protected static final Logger LOGGER = LogManager.getLogger(CreationTimePanel.class);
-    
+
     /**
     *
     */
     private static final long serialVersionUID = 8098225641658386495L;
-    
+
     /** */
     private static final int FP_PRESENTER = 0;
     /** */
     private static final int TIME_TEXT_LENGHT = 5;
     /** */
     private static final int BACKSPACE_CHAR = 8;
-    
+
     /** */
     protected transient JTextField endTextField;
-    
+
     /** */
     protected transient JTextField startTextField;
-    
+
     /** */
     protected transient JTextField timeTextField;
-    
+
     /**
      *
      * @author Goubaud Sylvain
@@ -87,7 +87,7 @@ public class CreationTimePanel extends AbstractCommonPanel {
         
         /** */
         private final transient JTextField textField;
-        
+
         /**
          * @param nTextField
          *
@@ -95,7 +95,7 @@ public class CreationTimePanel extends AbstractCommonPanel {
         public KeyTypingListener(final JTextField nTextField) {
             textField = nTextField;
         }
-        
+
         /**
          *
          * {@inheritDoc}
@@ -104,7 +104,7 @@ public class CreationTimePanel extends AbstractCommonPanel {
         public void keyPressed(final KeyEvent event) {
             //
         }
-        
+
         /**
          *
          * {@inheritDoc}
@@ -122,7 +122,7 @@ public class CreationTimePanel extends AbstractCommonPanel {
                     textField.setText(buff.toString());
                 }
             }
-            
+
             if (TIME_TEXT_LENGHT == newText.length()) {
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Update Other Fextfield : Sender is " + textField);
@@ -130,7 +130,7 @@ public class CreationTimePanel extends AbstractCommonPanel {
                 textField.postActionEvent();
             }
         }
-        
+
         /**
          *
          * {@inheritDoc}
@@ -142,7 +142,7 @@ public class CreationTimePanel extends AbstractCommonPanel {
             }
         }
     }
-    
+
     /**
      *
      * @author Goubaud Sylvain
@@ -156,7 +156,7 @@ public class CreationTimePanel extends AbstractCommonPanel {
         /** */
         TIME
     }
-    
+
     /**
      * @param newCcurrentFlightPlan
      *            Flightplan.
@@ -164,7 +164,7 @@ public class CreationTimePanel extends AbstractCommonPanel {
     public CreationTimePanel(final PresentationModel<FlightPlanReader> newCcurrentFlightPlan) {
         super(newCcurrentFlightPlan);
     }
-    
+
     /**
      *
      */
@@ -186,30 +186,25 @@ public class CreationTimePanel extends AbstractCommonPanel {
                         FormSpecs.PREF_ROWSPEC, //
                         FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC }));
-        
+
         final PresentationModel<FlightPlanReader> presenter = (PresentationModel<FlightPlanReader>) getPresenter(FP_PRESENTER);
-        
+
         final TitledBorder timePanelBorder = new TitledBorder(FlightPlanCreationPanelMessages.SCHEDULE_LABEL);
         setBorder(timePanelBorder);
-        
+
         final JLabel startLabel = new JLabel(FlightPlanCreationPanelMessages.START_LABEL);
         add(startLabel, "2,2,3,1");
         add(createStartTextField(presenter), "2,4,3,1");
-        
+
         final JLabel endLabel = new JLabel(FlightPlanCreationPanelMessages.END_LABEL);
         add(endLabel, "6,2,3,1");
         add(createEndTextField(presenter), "6,4,3,1");
-        
+
         final JLabel timeLabel = new JLabel(FlightPlanCreationPanelMessages.TIME_LABEL);
         add(timeLabel, "10,2,3,1");
         add(createTimeTextField(presenter), "10,4,3,1");
-        
-        // // Attach listener for flight time
-        // newFlightPlan.addPropertyChangeListener(FlightPlanProperties.DURATION,
-        // new FlightPlanPropertyChangeListener(
-        // newFlightPlan));
     }
-    
+
     /**
      * Create the end text field.
      *
@@ -219,7 +214,7 @@ public class CreationTimePanel extends AbstractCommonPanel {
      */
     private JTextField createEndTextField(final PresentationModel<FlightPlanReader> presenter) {
         final BufferedValueModel model = presenter.getBufferedModel(FlightPlanProperties.END_TIME);
-        
+
         final ValueModel value = ConverterFactory.createStringConverter(model, new Format() {
             
             
@@ -227,7 +222,7 @@ public class CreationTimePanel extends AbstractCommonPanel {
              *
              */
             private static final long serialVersionUID = 2946901254606932313L;
-            
+
             /**
              *
              *
@@ -244,7 +239,7 @@ public class CreationTimePanel extends AbstractCommonPanel {
                 }
                 return result;
             }
-            
+
             /**
              *
              *
@@ -259,9 +254,9 @@ public class CreationTimePanel extends AbstractCommonPanel {
                 pos.setIndex(source.length() - 1);
                 return result;
             }
-            
+
         });
-        
+
         endTextField = BasicComponentFactory.createTextField(value);
         endTextField.addKeyListener(new KeyTypingListener(endTextField));
         endTextField.addActionListener(new ActionListener() {
@@ -282,7 +277,7 @@ public class CreationTimePanel extends AbstractCommonPanel {
         });
         return endTextField;
     }
-    
+
     /**
      * Create the start text field.
      *
@@ -293,7 +288,7 @@ public class CreationTimePanel extends AbstractCommonPanel {
      */
     private JTextField createStartTextField(final PresentationModel<FlightPlanReader> presenter) {
         final BufferedValueModel model = presenter.getBufferedModel(FlightPlanProperties.START_TIME);
-        
+
         final ValueModel value = ConverterFactory.createStringConverter(model, new Format() {
             
             
@@ -301,7 +296,7 @@ public class CreationTimePanel extends AbstractCommonPanel {
              *
              */
             private static final long serialVersionUID = 8021308744564004518L;
-            
+
             /**
              *
              *
@@ -318,7 +313,7 @@ public class CreationTimePanel extends AbstractCommonPanel {
                 }
                 return result;
             }
-            
+
             /**
              *
              *
@@ -333,7 +328,7 @@ public class CreationTimePanel extends AbstractCommonPanel {
                 pos.setIndex(source.length() - 1);
                 return result;
             }
-            
+
         });
         startTextField = BasicComponentFactory.createTextField(value);
         startTextField.addKeyListener(new KeyTypingListener(startTextField));
@@ -355,7 +350,7 @@ public class CreationTimePanel extends AbstractCommonPanel {
         });
         return startTextField;
     }
-    
+
     /**
      * Create the time text field.
      *
@@ -366,7 +361,7 @@ public class CreationTimePanel extends AbstractCommonPanel {
      */
     private JTextField createTimeTextField(final PresentationModel<FlightPlanReader> presenter) {
         final BufferedValueModel model = presenter.getBufferedModel(FlightPlanProperties.DURATION);
-        
+
         final ValueModel value = ConverterFactory.createStringConverter(model, new Format() {
             
             
@@ -374,7 +369,7 @@ public class CreationTimePanel extends AbstractCommonPanel {
              *
              */
             private static final long serialVersionUID = 8021308744564004518L;
-            
+
             /**
              *
              *
@@ -391,7 +386,7 @@ public class CreationTimePanel extends AbstractCommonPanel {
                 }
                 return result;
             }
-            
+
             /**
              *
              *
@@ -406,14 +401,14 @@ public class CreationTimePanel extends AbstractCommonPanel {
                 pos.setIndex(source.length() - 1);
                 return result;
             }
-            
+
         });
-        
+
         timeTextField = BasicComponentFactory.createTextField(value);
         timeTextField.setEditable(false);
         return timeTextField;
     }
-    
+
     /**
      * Update the correct text field start, end not empty & time empty=> update
      * time// if start ,time not empty & end empty=> update end // if end, time
@@ -429,7 +424,7 @@ public class CreationTimePanel extends AbstractCommonPanel {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Update text fields - Sender is " + sender.name());
         }
-        
+
         final FlightPlanReader reader = presenter.getBean();
         switch (sender) {
         case START:

@@ -26,14 +26,14 @@ import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
 import fr.gsyltc.framework.slotsignals.signals.Signal;
-import fr.gsyltc.framework.visualelements.AbstractCommonPanel;
+import fr.gsyltc.framework.visualelements.AbstractCommandablePanel;
 import fr.gsyltc.framework.visualelements.types.LayoutSpecs;
 
 /**
  * @author Goubaud Sylvain
  *
  */
-public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
+public class FlightPlanVisualiazationPanel extends AbstractCommandablePanel {
     
     
     /** */
@@ -50,12 +50,12 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
     private static final long serialVersionUID = -6354635338489926005L;
     /** */
     protected transient Signal signal;
-
+    
     /** */
     private FlightPlanCollectionReader fpCollection;
     /** */
     protected static final String ADAPTER_NAME = FlightPlanCollectionAdapter.class.getSimpleName();
-
+    
     /**
      * @param newFPCollectionModel
      *            the Flightplan collection model.
@@ -73,20 +73,13 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
                 new PresentationModel<FlightPlanReader>((FlightPlanReader) currentFp), //
                 new PresentationModel<DaySelectionReader>((DaySelectionReader) daysSelectionModel));
     }
-
+    
     /**
      *
      */
     @Override
     public final void build() {
         super.build();
-        
-        // final FlightPlanCollectionAdapter adapter =
-        // (FlightPlanCollectionAdapter) findAdapter(ADAPTER_NAME);
-        // final FlighPlanCollectionModel model = adapter.getModel();
-        // adapter.addListener(model);
-        // adapter.addListener(model.getFlightPlanListModel());
-        
         final FormLayout formLayout = new FormLayout(new ColumnSpec[] { FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(
                 "3dlu:grow"), //
                 FormSpecs.RELATED_GAP_COLSPEC, //
@@ -101,18 +94,18 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
                         FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC, //
                         FormSpecs.RELATED_GAP_ROWSPEC, });
-
+        
         formLayout.setColumnGroups(new int[][] { new int[] { 2, 4 } });
         setLayout(formLayout);
         final FlightPlanVisualizationPresenter presenter = (FlightPlanVisualizationPresenter) getPresenter(FP_PRESENTER);
         setFpCollection(presenter.getBean());
-
+        
         add(createCurrentAirportPanel(), "2, 2, 3, 1, fill, fill");
         add(createDaysSelectionPanel(), "2, 4, 3, 1, fill, fill");
         add(createFlightPlanListPanel(), "2, 6, 3, 1");
         add(createSteerPointPanel(), "2, 8, 3, 1");
     }
-
+    
     /**
      *
      * @return
@@ -123,7 +116,7 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
         panel.build();
         return panel;
     }
-
+    
     /**
      *
      * @return
@@ -135,7 +128,7 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
         panel.build();
         return panel;
     }
-
+    
     /**
      *
      * @return
@@ -146,7 +139,7 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
         panel.build();
         return panel;
     }
-
+    
     /**
      *
      * @return
@@ -157,7 +150,7 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
         panel.build();
         return panel;
     }
-
+    
     /**
      *
      * @param newFpCollection
@@ -165,14 +158,14 @@ public class FlightPlanVisualiazationPanel extends AbstractCommonPanel {
     private void setFpCollection(final FlightPlanCollectionReader newFpCollection) {
         fpCollection = newFpCollection;
     }
-
+    
     /**
      * @return the fpCollection
      */
     protected FlightPlanCollectionReader getFpCollection() {
         return fpCollection;
     }
-
+    
     /**
      * {@inheritDoc}.
      */

@@ -26,9 +26,11 @@
         <Logger name="com.airportflightplanner.flightplancreation.panels.CreationStartDaysPanel" level="error">
             <AppenderRef ref="Console" />
         </Logger>
-   <Logger name="com.airportflightplanner.main.visualelements.panels.WaypointEditionPanel" level="debug">
+        <Logger name="com.airportflightplanner.main.visualelements.panels.WaypointEditionPanel" level="debug">
             <AppenderRef ref="Console" />
         </Logger>
-
+        <Logger name="com.airportflightplanner.flightplanvisualization.panel.FlightPlanListPanel" level="debug">
+            <AppenderRef ref="Console" />
+        </Logger>
     </Loggers>
 </Configuration>
