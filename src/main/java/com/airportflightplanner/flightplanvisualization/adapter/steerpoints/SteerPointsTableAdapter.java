@@ -1,47 +1,67 @@
-/* @(#)FlightPlanTableModel.java
+/*
+ * @(#)SteerPointsTableAdapter.java
  *
- * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
+ * Goubaud Sylvain
+ * Created : 2016
+ * Modified : 13 août 2016.
+ *
+ * This code may be freely used and modified on any personal or professional
+ * project.  It comes with no warranty.
+ *
  */
+
 package com.airportflightplanner.flightplanvisualization.adapter.steerpoints;
 
 import java.text.MessageFormat;
 
 import javax.measure.quantity.Velocity;
 import javax.measure.unit.NonSI;
-import javax.swing.ListModel;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.airportflightplanner.common.processors.GeographicProcessor;
 import com.airportflightplanner.common.types.GeographicFormatter;
-import com.airportflightplanner.models.flightplans.api.collection.FlightPlanCollectionReader;
+import com.airportflightplanner.flightplanvisualization.adapter.flightplan.FlightPlanVisualizationTableAdapter;
 import com.airportflightplanner.models.steerpoints.api.bean.SteerPointReader;
+import com.airportflightplanner.models.steerpoints.api.collection.SteerPointsCollectionReader;
 import com.jgoodies.binding.adapter.AbstractTableAdapter;
+import com.jgoodies.common.collect.LinkedListModel;
 
 /**
  * @author Goubaud Sylvain
  *
  */
-public class SteerPointsTableAdapter extends AbstractTableAdapter<FlightPlanCollectionReader> {
+public class SteerPointsTableAdapter extends AbstractTableAdapter<SteerPointsCollectionReader> {
+    
+    
+    /** The logger of this class. */
+    protected static final Logger LOGGER = LogManager.getLogger(FlightPlanVisualizationTableAdapter.class);
     /**
      *
      */
-    private static final long                     serialVersionUID = -1614722326210452309L;
+    private static final long serialVersionUID = -1614722326210452309L;
     /** */
-    private static final SteerPointsTableColumn[] COLUMN_NAME      = new SteerPointsTableColumn[] {   //
-            SteerPointsTableColumn.LATITUDE,                                                          //
-            SteerPointsTableColumn.LONGITUDE,                                                         //
-            SteerPointsTableColumn.VELOCITY,                                                          //
-            SteerPointsTableColumn.ALTITUDE };                                                        //
+    private static final SteerPointsTableColumn[] COLUMN_NAME = new SteerPointsTableColumn[] { //
+            SteerPointsTableColumn.LATITUDE, //
+            SteerPointsTableColumn.LONGITUDE, //
+            SteerPointsTableColumn.VELOCITY, //
+            SteerPointsTableColumn.ALTITUDE }; //
 
     /**
      *
-     * @param listModel
+     * @param steerPointCollReader
      *            List model for the steerpoint.
      */
-    public SteerPointsTableAdapter(final ListModel<SteerPointReader> listModel) {
-        super(listModel);
+    public SteerPointsTableAdapter(final SteerPointsCollectionReader steerPointCollReader) {
+        super();
+        final LinkedListModel<SteerPointReader> listModel = steerPointCollReader.getSteerPointsListModel();
+        setListModel(listModel);
         listModel.addListDataListener(new ListDataListener() {
+            
+            
             /**
              *
              * {@inheritDoc}
@@ -85,19 +105,20 @@ public class SteerPointsTableAdapter extends AbstractTableAdapter<FlightPlanColl
         case LATITUDE:
             result = GeographicProcessor.getFormattedLatitude(steerpoint.getLatLong());
             break;
-
+        
         case LONGITUDE:
             result = GeographicProcessor.getFormattedLongitude(steerpoint.getLatLong());
             break;
-
+        
         case ALTITUDE:
-            result = MessageFormat.format(GeographicFormatter.ALTITUDE_FOOT, new Object[] { steerpoint.getAltitude().longValue(NonSI.FOOT) });
+            result = MessageFormat.format(GeographicFormatter.ALTITUDE_FOOT, new Object[] { steerpoint.getAltitude().longValue(
+                    NonSI.FOOT) });
             break;
-
+        
         case VELOCITY:
             result = MessageFormat.format(GeographicFormatter.VELOCITY_KNOT, new Object[] { steerpoint.getVelocity().getValue() });
             break;
-
+        
         default:
             break;
         }
@@ -138,19 +159,19 @@ public class SteerPointsTableAdapter extends AbstractTableAdapter<FlightPlanColl
         case LATITUDE:
             result = String.class;
             break;
-
+        
         case LONGITUDE:
             result = String.class;
             break;
-
+        
         case ALTITUDE:
             result = String.class;
             break;
-
+        
         case VELOCITY:
             result = Velocity.class;
             break;
-
+        
         default:
             break;
         }

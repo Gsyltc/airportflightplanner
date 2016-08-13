@@ -1,7 +1,9 @@
 /*
- * @(#)AircraftsLiveriesMapper.java
+ * @(#)AircraftsLiveriesAdapter.java
  *
- * Goubaud Sylvain - 2016.
+ * Goubaud Sylvain
+ * Created : 2016
+ * Modified : 13 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -12,11 +14,13 @@ package com.airportflightplanner.adapters.api;
 
 import java.util.SortedSet;
 
+import fr.gsyltc.framework.adapters.api.CommonAdapter;
+
 /**
  * @author Goubaud Sylvain
  *
  */
-public interface AircraftsLiveriesAdapter {
+public interface AircraftsLiveriesAdapter extends CommonAdapter {
     
     
     /**

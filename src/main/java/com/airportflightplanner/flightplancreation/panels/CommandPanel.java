@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 31 juil. 2016.
+ * Modified : 13 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -18,7 +18,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.border.TitledBorder;
 
-import com.airportflightplanner.adapters.api.modeladapters.FlightPlanModelAdapter;
+import com.airportflightplanner.adapters.AdapterNames;
 import com.airportflightplanner.common.slotsignal.TopicName;
 import com.airportflightplanner.common.types.ActionTypes;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
@@ -38,9 +38,6 @@ import fr.gsyltc.framework.visualelements.AbstractCommandablePanel;
  */
 public class CommandPanel extends AbstractCommandablePanel {
     
-    
-    /** the adapters. */
-    private static final String FP_ADAPTER_NAME = FlightPlanModelAdapter.class.getSimpleName();
     
     /**
      *
@@ -142,6 +139,6 @@ public class CommandPanel extends AbstractCommandablePanel {
     @Override
     public void createAdapters() {
         super.createAdapters();
-        attachAdapter(FP_ADAPTER_NAME);
+        attachAdapter(AdapterNames.FP_ADAPTER_NAME);
     }
 }

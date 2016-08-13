@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 11 août 2016.
+ * Modified : 13 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -33,12 +33,12 @@ import javax.swing.table.TableRowSorter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.airportflightplanner.adapters.api.modeladapters.FlightPlanCollectionAdapter;
+import com.airportflightplanner.adapters.AdapterNames;
+import com.airportflightplanner.adapters.api.modeladapters.FlightPlanCollectionModelAdapter;
 import com.airportflightplanner.adapters.api.modeladapters.FlightPlanModelAdapter;
 import com.airportflightplanner.common.slotsignal.TopicName;
 import com.airportflightplanner.common.types.ActionTypes;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
-import com.airportflightplanner.flightplanvisualization.adapter.flightplan.FlightPlanVisualizationTableAdapter;
 import com.airportflightplanner.flightplanvisualization.messages.FlightPlanVisualizationMessages;
 import com.airportflightplanner.flightplanvisualization.presenter.flightplan.FlightPlanVisualizationPresenter;
 import com.airportflightplanner.models.flightplans.api.bean.FlightPlanReader;
@@ -64,12 +64,12 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
     
     /** The logger of this class. */
     protected static final Logger LOGGER = LogManager.getLogger(FlightPlanListPanel.class);
-
+    
     /**
      *
      */
     private static final long serialVersionUID = -6354635338489926005L;
-
+    
     /** */
     protected static final int FP_COLLECTION_PRESENTER = 0;
     /** */
@@ -77,10 +77,10 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
     /** The current flight plan. */
     protected FlightPlanReader currentFlightPlan;
     /** The table. */
-    protected JTable table;
+    private transient JTable table;
     /** the current selected index of the table. */
     private int selectedIndex;
-
+    
     /**
      * @param presenter
      *            the list presenter.
@@ -88,7 +88,7 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
     public FlightPlanListPanel(final FlightPlanVisualizationPresenter presenter) {
         super(presenter);
     }
-
+    
     /**
      *
      */
@@ -104,31 +104,31 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
                 new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC, //
                         FormSpecs.RELATED_GAP_ROWSPEC, }));
-
+        
         final TitledBorder panelBorder = new TitledBorder(FlightPlanCreationPanelMessages.FLIGHTSLIST_TITLE);
         setBorder(panelBorder);
-
+        
         add(createFlightScrollPane(), "2, 2, 3, 1");
-
+        
     }
-
+    
     /**
      * {@inheritDoc}.
      */
     @Override
     public void createAdapters() {
         super.createAdapters();
-        attachAdapter(FlightPlanCollectionAdapter.class.getSimpleName());
-        attachAdapter(FlightPlanModelAdapter.class.getSimpleName());
+        attachAdapter(AdapterNames.FP_COLL_ADAPTER_NAME);
+        attachAdapter(AdapterNames.FP_ADAPTER_NAME);
     }
-
+    
     /**
      * @return the panel.
      *
      */
     private JScrollPane createFlightScrollPane() {
-        final FlightPlanCollectionAdapter adapter = (FlightPlanCollectionAdapter) findAdapter(FlightPlanCollectionAdapter.class
-                .getSimpleName());
+        final FlightPlanCollectionModelAdapter adapter = (FlightPlanCollectionModelAdapter) findAdapter(
+                AdapterNames.FP_COLL_ADAPTER_NAME);
         final DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
         final FlightPlanVisualizationPresenter presenter = (FlightPlanVisualizationPresenter) getPresenter(FP_COLLECTION_PRESENTER);
@@ -136,7 +136,7 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
         table.setDefaultRenderer(String.class, centerRenderer);
         table.setFillsViewportHeight(true);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
+        
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             
             
@@ -149,8 +149,7 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("The table value has changed : " + event);
                 }
-                final FlightPlanModelAdapter fpAdapter = (FlightPlanModelAdapter) findAdapter(FlightPlanModelAdapter.class
-                        .getSimpleName());
+                final FlightPlanModelAdapter fpAdapter = (FlightPlanModelAdapter) findAdapter(AdapterNames.FP_ADAPTER_NAME);
                 if (event.getValueIsAdjusting()) {
                     if (fpAdapter.isModificationToCommit()) {
                         // use repaint to avoid graphical problem with the
@@ -159,14 +158,14 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
                         showConfirmDialog();
                     }
                     final ListSelectionModel lsm = (ListSelectionModel) event.getSource();
-
+                    
                     if (!lsm.isSelectionEmpty()) {
                         final int minIndex = lsm.getMinSelectionIndex();
                         final int maxIndex = lsm.getMaxSelectionIndex();
                         for (int i = minIndex; i <= maxIndex; i++) {
                             if (lsm.isSelectedIndex(i)) { // NOPMD by sylva on
                                                           // 31/07/16 15:42
-
+                                
                                 setCurrentFlightPlan(((FlightPlanCollectionReader) adapter.getModel()).getFlightPlanByIndex(i));
                                 setSelectedIndex(i);
                             }
@@ -176,14 +175,14 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
                     signal.fireSignal(getCurrentFlightPlan());
                 }
             }
-
+            
             /**
              * Show the confirm dialog (Current flight plan is modified).
              */
             private void showConfirmDialog() {
                 final JOptionPane confirmDialog = new JOptionPane(FlightPlanVisualizationMessages.CONFIRM_DIALOG_TEXT,
                         JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
-
+                
                 final JDialog dialog = confirmDialog.createDialog(null, FlightPlanVisualizationMessages.CONFIRM_DIALOG_TITLE);
                 dialog.setVisible(true);
                 final Object result = confirmDialog.getValue();
@@ -195,27 +194,27 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
                 }
             }
         });
-
+        
         final TableRowSorter<TableModel> sorter = new TableRowSorter<>(table.getModel());
         table.setRowSorter(sorter);
         final List<RowSorter.SortKey> sortKeys = new ArrayList<>();
         sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
-
+        
         sorter.setSortKeys(sortKeys);
         sorter.sort();
-
+        
         final JScrollPane scrollPane = new JScrollPane();
         scrollPane.setViewportView(table);
         return scrollPane;
     }
-
+    
     /**
      * {@inheritDoc}.
      */
     @Override
     public final void createSlots() {
         super.createSlots();
-
+        
         final Slot slot = new Slot(TopicName.FP_TABLE_SELECTED_TOPIC, getClass().getSimpleName());
         slot.setSlotAction(new SlotAction<FlightPlanReader>() {
             
@@ -224,7 +223,7 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
              *
              */
             private static final long serialVersionUID = -6027127491253834166L;
-
+            
             /**
              *
              * {@inheritDoc}
@@ -237,7 +236,7 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
                 fpPresenter.setBean(bean);
             }
         });
-
+        
         final Slot validationSlot = new Slot(TopicName.VALIDATION_TOPIC, getClass().getSimpleName());
         validationSlot.setSlotAction(new SlotAction<ActionTypes>() {
             
@@ -246,7 +245,7 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
              *
              */
             private static final long serialVersionUID = -6027127491253834166L;
-
+            
             /**
              *
              * {@inheritDoc}
@@ -255,13 +254,12 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
             public void doAction(final ActionTypes action) {
                 final FlightPlanVisualizationPresenter presenter = (FlightPlanVisualizationPresenter) getPresenter(
                         FP_COLLECTION_PRESENTER);
-                final FlightPlanVisualizationTableAdapter tableAdapter = presenter.getTableAdapter();
                 presenter.getTableAdapter().fireTableDataChanged();
-                table.setRowSelectionInterval(getSelectedIndex(), getSelectedIndex());
+                getTable().setRowSelectionInterval(getSelectedIndex(), getSelectedIndex());
             }
         });
     }
-
+    
     /**
      * {@inheritDoc}.
      */
@@ -271,14 +269,14 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
         attachSignal(TopicName.FP_TABLE_SELECTED_TOPIC);
         attachSignal(TopicName.VALIDATION_TOPIC);
     }
-
+    
     /**
      * @return the currentFlightPlan
      */
     protected FlightPlanReader getCurrentFlightPlan() {
         return currentFlightPlan;
     }
-
+    
     /**
      *
      * @param newFp
@@ -287,7 +285,7 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
     protected void setCurrentFlightPlan(final FlightPlanReader newFp) {
         currentFlightPlan = newFp;
     }
-
+    
     /**
      * @param newSelectedIndex
      *            the selectedIndex to set
@@ -295,11 +293,18 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
     protected void setSelectedIndex(final int newSelectedIndex) {
         selectedIndex = newSelectedIndex;
     }
-
+    
     /**
      * @return the selectedIndex
      */
     protected int getSelectedIndex() {
         return selectedIndex;
+    }
+    
+    /**
+     * @return the table
+     */
+    protected JTable getTable() {
+        return table;
     }
 }

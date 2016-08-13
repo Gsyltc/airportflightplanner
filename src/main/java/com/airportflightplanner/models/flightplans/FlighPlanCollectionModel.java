@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 11 août 2016.
+ * Modified : 14 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -34,7 +34,7 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
     
     
     /** */
-    protected final LinkedListModel<FlightPlanReader> flightPlanListModel = new LinkedListModel<>();
+    protected final LinkedListModel<FlightPlanReader> flightPlanListModel = new LinkedListModel<FlightPlanReader>();
     /**
      *
      */

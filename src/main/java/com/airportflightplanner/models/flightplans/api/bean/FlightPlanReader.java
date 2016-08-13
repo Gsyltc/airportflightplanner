@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 7 août 2016.
+ * Modified : 13 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -24,6 +24,7 @@ import com.airportflightplanner.common.types.ArrivalType;
 import com.airportflightplanner.common.types.DepartureType;
 import com.airportflightplanner.common.types.FlightType;
 import com.airportflightplanner.common.types.StartDays;
+import com.airportflightplanner.models.steerpoints.api.bean.SteerPointReader;
 
 /**
  * @author Goubaud Sylvain
@@ -144,6 +145,6 @@ public interface FlightPlanReader extends Serializable {
      *
      * @return
      */
-    List<String> getSteerPoints();
+    List<SteerPointReader> getSteerPoints();
     
 }

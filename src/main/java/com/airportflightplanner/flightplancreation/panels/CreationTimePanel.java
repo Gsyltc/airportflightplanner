@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 7 août 2016.
+ * Modified : 13 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -425,7 +425,6 @@ public class CreationTimePanel extends AbstractCommonPanel {
             LOGGER.debug("Update text fields - Sender is " + sender.name());
         }
 
-        final FlightPlanReader reader = presenter.getBean();
         switch (sender) {
         case START:
             presenter.setBufferedValue(FlightPlanProperties.END_TIME, //

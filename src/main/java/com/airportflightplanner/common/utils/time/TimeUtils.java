@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 7 août 2016.
+ * Modified : 13 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -44,13 +44,13 @@ public final class TimeUtils {
     
     /** */
     public static final PeriodFormatter PERIOD_DISPLAYER = //
-            new PeriodFormatterBuilder().minimumPrintedDigits(2).appendHours().appendSeparator(":") //
+            new PeriodFormatterBuilder().minimumPrintedDigits(2).printZeroAlways().appendHours().appendSeparator(":") //
                     .minimumPrintedDigits(2).printZeroAlways().appendMinutes().toFormatter();
     
     /** */
     public static final PeriodFormatter FP_PERIOD_DISPLAYER = //
-            new PeriodFormatterBuilder().appendHours().appendSuffix(" h ", " h "). //
-                    printZeroRarelyLast().appendMinutes().appendSuffix(" m", " m").toFormatter();
+            new PeriodFormatterBuilder().printZeroAlways().appendHours().appendSuffix(" h ", " h "). //
+                    appendMinutes().appendSuffix(" m", " m").toFormatter();
     
     /** */
     public static final DateTimeFormatter TIME_DISPLAYER = //

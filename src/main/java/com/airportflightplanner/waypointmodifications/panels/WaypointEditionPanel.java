@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 24 juil. 2016.
+ * Modified : 14 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -23,6 +23,8 @@ import com.airportflightplanner.common.slotsignal.TopicName;
 import com.airportflightplanner.common.types.ActionTypes;
 import com.airportflightplanner.models.flightplans.api.bean.FlightPlanProperties;
 import com.airportflightplanner.models.flightplans.api.bean.FlightPlanReader;
+import com.airportflightplanner.models.steerpoints.SteerPointsCollectionModel;
+import com.airportflightplanner.models.steerpoints.api.bean.SteerPointReader;
 import com.airportflightplanner.models.steerpoints.api.collection.SteerPointsCollectionReader;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.beans.Model;
@@ -46,7 +48,7 @@ public class WaypointEditionPanel extends AbstractCommandablePanel {
     
     /** The logger of this class. */
     protected static final Logger LOGGER = LogManager.getLogger(WaypointEditionPanel.class);
-    
+
     /**
      *
      */
@@ -57,7 +59,7 @@ public class WaypointEditionPanel extends AbstractCommandablePanel {
     private static final int[] COLUMN_GROUP = new int[] { 2, 4 };
     /** the steer points presenter index. */
     private static final int STEERPOINTS_PRESENTER = 1;
-    
+
     /**
      * Create the panel.
      *
@@ -74,7 +76,7 @@ public class WaypointEditionPanel extends AbstractCommandablePanel {
         super(new PresentationModel<FlightPlanReader>((FlightPlanReader) currentFpBean), //
                 new PresentationModel<>((SteerPointsCollectionReader) steerpointModel));
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -95,19 +97,19 @@ public class WaypointEditionPanel extends AbstractCommandablePanel {
                         FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC, //
                         FormSpecs.RELATED_GAP_ROWSPEC, });
-        
+
         formLayout.setColumnGroups(new int[][] { COLUMN_GROUP });
         setLayout(formLayout);
-        
+
         final PresentationModel<FlightPlanReader> presenter = (PresentationModel<FlightPlanReader>) getPresenter(FP_PRESENTER);
         final PresentationModel<SteerPointsCollectionReader> stpPresenter = (PresentationModel<SteerPointsCollectionReader>) getPresenter(
                 STEERPOINTS_PRESENTER);
         add(createWaypointTextPanel(presenter, stpPresenter), "2, 2,3,1,fill,fill");
         add(createResumePanel(presenter, stpPresenter), "2, 4,3,1,fill,fill");
         // add(createDaysSelectionPanel(), "2, 4, 3, 1, fill, fill");
-        
+
     }
-    
+
     /**
      * Create the text panel area.
      *
@@ -120,10 +122,10 @@ public class WaypointEditionPanel extends AbstractCommandablePanel {
             final PresentationModel<SteerPointsCollectionReader> stpPresenter) {
         final WaypointTextPanel panel = new WaypointTextPanel(presenter, stpPresenter);
         panel.build();
-        
+
         return panel;
     }
-    
+
     /**
      * Create the text panel area.
      *
@@ -136,10 +138,10 @@ public class WaypointEditionPanel extends AbstractCommandablePanel {
             final PresentationModel<SteerPointsCollectionReader> stpPresenter) {
         final FlightResumePanel panel = new FlightResumePanel(presenter, stpPresenter);
         panel.build();
-        
+
         return panel;
     }
-    
+
     /**
      *
      * {@inheritDoc}.
@@ -156,7 +158,7 @@ public class WaypointEditionPanel extends AbstractCommandablePanel {
             *
             */
             private static final long serialVersionUID = 1240749169986714101L;
-            
+
             /**
              *
              * {@inheritDoc}
@@ -165,16 +167,21 @@ public class WaypointEditionPanel extends AbstractCommandablePanel {
             public void doAction(final FlightPlanReader flightPlanReader) {
                 final PresentationModel<FlightPlanReader> fpPresenter = (PresentationModel<FlightPlanReader>) //
                 getPresenter(FP_PRESENTER);
-                if (null != flightPlanReader) {
-                    fpPresenter.triggerFlush();
-                    fpPresenter.setBean(flightPlanReader);
+
+                final SteerPointsCollectionModel bean = new SteerPointsCollectionModel();
+                bean.setCurrentFlightPlan(flightPlanReader);
+                for (final SteerPointReader steerPoint : flightPlanReader.getSteerPoints()) {
+                    bean.addSteerPoint(steerPoint);
                 }
+                final PresentationModel<SteerPointsCollectionReader> stpPresenter = (PresentationModel<SteerPointsCollectionReader>) getPresenter(
+                        STEERPOINTS_PRESENTER);
+                stpPresenter.setBean(bean);
             }
         });
-        
+
         final Slot validationSlot = new Slot(TopicName.VALIDATION_TOPIC, getClass().getSimpleName());
         validationSlot.registerSlot();
-        
+
         final PresentationModel<FlightPlanReader> presenter = (PresentationModel<FlightPlanReader>) getPresenter(FP_PRESENTER);
         validationSlot.setSlotAction(new SlotAction<ActionTypes>() {
             
@@ -183,7 +190,7 @@ public class WaypointEditionPanel extends AbstractCommandablePanel {
              *
              */
             private static final long serialVersionUID = 1289014075739897031L;
-            
+
             /**
              *
              * {@inheritDoc}
@@ -197,7 +204,7 @@ public class WaypointEditionPanel extends AbstractCommandablePanel {
                     }
                     final BufferedValueModel steerpoints = presenter.getBufferedModel(FlightPlanProperties.STEERPOINTS_LIST);
                     presenter.setValue(FlightPlanProperties.DURATION, new Period(GeographicProcessor.getFlightTime(
-                            (List<String>) steerpoints.getValue())));
+                            (List<SteerPointReader>) steerpoints.getValue())));
                     presenter.triggerCommit();
                     break;
                 

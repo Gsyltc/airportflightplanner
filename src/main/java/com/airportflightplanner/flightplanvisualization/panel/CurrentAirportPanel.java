@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 1 août 2016.
+ * Modified : 13 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -19,7 +19,8 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.border.TitledBorder;
 
-import com.airportflightplanner.adapters.api.modeladapters.FlightPlanCollectionAdapter;
+import com.airportflightplanner.adapters.AdapterNames;
+import com.airportflightplanner.adapters.api.modeladapters.FlightPlanCollectionModelAdapter;
 import com.airportflightplanner.common.slotsignal.TopicName;
 import com.airportflightplanner.common.utils.properties.CommonProperties;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
@@ -50,9 +51,7 @@ public class CurrentAirportPanel extends AbstractCommandablePanel {
      *
      */
     private static final long serialVersionUID = -8872582029412974363L;
-    /** */
-    protected static final String ADAPTER_NAME = FlightPlanCollectionAdapter.class.getSimpleName();
-
+    
     /**
      * @param fpVizuPresenter
      *            The flight plan visualization presenter
@@ -60,9 +59,9 @@ public class CurrentAirportPanel extends AbstractCommandablePanel {
      */
     public CurrentAirportPanel(final FlightPlanVisualizationPresenter fpVizuPresenter) {
         super(fpVizuPresenter);
-
+        
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -82,31 +81,31 @@ public class CurrentAirportPanel extends AbstractCommandablePanel {
                 new RowSpec[] { FormSpecs.PREF_ROWSPEC, });
         formLayout.setColumnGroups(new int[][] { new int[] { 1, 5 }, new int[] { 3, 7 } });
         setLayout(formLayout);
-
+        
         final TitledBorder panelBorder = new TitledBorder(FlightPlanCreationPanelMessages.AIRPORT_TITLE);
         setBorder(panelBorder);
-
+        
         final JLabel airportLabel = DefaultComponentFactory.getInstance().createLabel(FlightPlanVisualizationMessages.AIRPORT);
         add(airportLabel, "1, 1, right, default");
-
+        
         final JLabel timeLabel = DefaultComponentFactory.getInstance().createLabel(FlightPlanVisualizationMessages.TIME);
         add(timeLabel, "5, 1, right, default");
-
+        
         add(createAirportComboxBox(), "3, 1, fill, default");
         add(createTimeComboxBox(), "7, 1, fill, default");
-
+        
     }
-
+    
     /**
      *
      * @return combobox for the airport.
      */
     private JComboBox<?> createAirportComboxBox() {
         final JComboBox<?> comboBox = new JComboBox<String>();
-
+        
         final ValueModel selectionHolder = new ValueHolder();
         comboBox.setModel(new ComboBoxAdapter<String>(AirportFileReader.getAirports(), selectionHolder));
-
+        
         comboBox.addItemListener(new ItemListener() {
             
             
@@ -118,28 +117,29 @@ public class CurrentAirportPanel extends AbstractCommandablePanel {
             public void itemStateChanged(final ItemEvent event) {
                 if (event.getStateChange() == ItemEvent.SELECTED) {
                     final String currentAirport = event.getItem().toString();
-                    final FlightPlanCollectionAdapter adapter = (FlightPlanCollectionAdapter) findAdapter(ADAPTER_NAME);
+                    final FlightPlanCollectionModelAdapter adapter = (FlightPlanCollectionModelAdapter) findAdapter(
+                            AdapterNames.FP_COLL_ADAPTER_NAME);
                     adapter.setCurrentAirport(currentAirport);
                     final Signal signal = findSignal(TopicName.UPDATE_AIRPORT_TOPIC);
                     signal.fireSignal(currentAirport);
                 }
             }
         });
-
+        
         comboBox.setSelectedItem(CommonProperties.getPropertyValue(CommonProperties.DEFAULT_AIRPORT));
         return comboBox;
     }
-
+    
     /**
      *
      * @return Combobox for the time.
      */
     private JComboBox<?> createTimeComboxBox() {
         final JComboBox<?> comboBox = new JComboBox<Object>();
-
+        
         return comboBox;
     }
-
+    
     /**
      * {@inheritDoc}.
      */
@@ -148,13 +148,13 @@ public class CurrentAirportPanel extends AbstractCommandablePanel {
         super.createSignals();
         attachSignal(TopicName.UPDATE_AIRPORT_TOPIC);
     }
-
+    
     /**
      * {@inheritDoc}.
      */
     @Override
     public void createAdapters() {
         super.createAdapters();
-        attachAdapter(ADAPTER_NAME);
+        attachAdapter(AdapterNames.FP_COLL_ADAPTER_NAME);
     }
 }

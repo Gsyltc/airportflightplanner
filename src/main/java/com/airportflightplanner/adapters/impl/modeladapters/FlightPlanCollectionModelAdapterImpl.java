@@ -1,9 +1,9 @@
 /*
- * @(#)FlightPlanCollectionAdapterImpl.java
+ * @(#)FlightPlanCollectionModelAdapterImpl.java
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 11 août 2016.
+ * Modified : 13 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -15,7 +15,7 @@ package com.airportflightplanner.adapters.impl.modeladapters;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.airportflightplanner.adapters.api.modeladapters.FlightPlanCollectionAdapter;
+import com.airportflightplanner.adapters.api.modeladapters.FlightPlanCollectionModelAdapter;
 import com.airportflightplanner.flightplanvisualization.api.FlightPlanVisualizationListModelListener;
 import com.airportflightplanner.models.flightplans.FlighPlanCollectionModel;
 import com.airportflightplanner.models.flightplans.api.bean.FlightPlanReader;
@@ -29,15 +29,15 @@ import fr.gsyltc.framework.adapters.AbstractModelAdapterImpl;
  *
  */
 
-public class FlightPlanCollectionAdapterImpl extends AbstractModelAdapterImpl<FlighPlanCollectionModel> //
-        implements FlightPlanCollectionAdapter {
+public class FlightPlanCollectionModelAdapterImpl extends AbstractModelAdapterImpl<FlighPlanCollectionModel> //
+        implements FlightPlanCollectionModelAdapter {
     
     
     /** . */
     private static final long serialVersionUID = 4408549118062180286L;
     /** */
     private final List<FlightPlanVisualizationListModelListener> listeners = new ArrayList<FlightPlanVisualizationListModelListener>();
-
+    
     /**
      * {@inheritDoc}.
      */
@@ -45,7 +45,7 @@ public class FlightPlanCollectionAdapterImpl extends AbstractModelAdapterImpl<Fl
     public void init() {
         // Nothing to do
     }
-
+    
     /**
      * {@inheritDoc}
      */
@@ -53,7 +53,7 @@ public class FlightPlanCollectionAdapterImpl extends AbstractModelAdapterImpl<Fl
     public void setCurrentAirport(final String value) {
         getModel().setCurrentAirport(value);
     }
-
+    
     /**
      *
      * {@inheritDoc}.
@@ -66,7 +66,7 @@ public class FlightPlanCollectionAdapterImpl extends AbstractModelAdapterImpl<Fl
             }
         }
     }
-
+    
     /**
      *
      * {@inheritDoc}.
@@ -79,7 +79,7 @@ public class FlightPlanCollectionAdapterImpl extends AbstractModelAdapterImpl<Fl
             }
         }
     }
-
+    
     /**
      *
      * {@inheritDoc}.
@@ -88,7 +88,7 @@ public class FlightPlanCollectionAdapterImpl extends AbstractModelAdapterImpl<Fl
     public final void addListener(final FlightPlanVisualizationListModelListener listener) {
         getListeners().add(listener);
     }
-
+    
     /**
      *
      * {@inheritDoc}.
@@ -97,7 +97,7 @@ public class FlightPlanCollectionAdapterImpl extends AbstractModelAdapterImpl<Fl
     public final void removeListener(final FlightPlanVisualizationListModelListener listener) {
         getListeners().remove(listener);
     }
-
+    
     /**
      *
      * @ @Override private List
@@ -114,7 +114,7 @@ public class FlightPlanCollectionAdapterImpl extends AbstractModelAdapterImpl<Fl
             listener.resetFlightPlans();
         }
     }
-
+    
     /**
      * @return the listeners
      */

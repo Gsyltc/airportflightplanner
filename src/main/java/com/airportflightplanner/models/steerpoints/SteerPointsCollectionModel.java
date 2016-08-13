@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 10 août 2016.
+ * Modified : 13 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -18,12 +18,12 @@ import java.util.List;
 import javax.swing.SwingUtilities;
 
 import com.airportflightplanner.flightplanvisualization.api.SteerPointsListModelListener;
-import com.airportflightplanner.flightplanvisualization.presenter.steerpoints.SteerPointsListModel;
 import com.airportflightplanner.models.flightplans.api.bean.FlightPlanReader;
 import com.airportflightplanner.models.flightplans.api.collection.FlightPlanCollectionProperties;
 import com.airportflightplanner.models.steerpoints.api.bean.SteerPointReader;
 import com.airportflightplanner.models.steerpoints.api.collection.SteerPointsCollectionWriter;
 import com.jgoodies.binding.beans.Model;
+import com.jgoodies.common.collect.LinkedListModel;
 
 /**
  * @author Goubaud Sylvain
@@ -37,7 +37,7 @@ public class SteerPointsCollectionModel extends Model implements SteerPointsColl
      */
     private static final long serialVersionUID = -3596872287379176646L;
     /** */
-    protected final SteerPointsListModel steerPointsListModel = new SteerPointsListModel();
+    protected final LinkedListModel<SteerPointReader> steerPointsListModel = new LinkedListModel<SteerPointReader>();
     /** */
     private final List<SteerPointsListModelListener> listeners = new ArrayList<SteerPointsListModelListener>();
     /** */
@@ -48,15 +48,34 @@ public class SteerPointsCollectionModel extends Model implements SteerPointsColl
      * {@inheritDoc}
      */
     @Override
-    public final void addSteerPoints(final List<SteerPointReader> value) {
-        if (null != value) {
-            for (final SteerPointsListModelListener listener : getListeners()) {
-                for (final SteerPointReader steerPointModel : value) {
-                    listener.addSteerPoint(steerPointModel);
-                }
-            }
-            commitChange();
+    public final void addSteerPoint(final SteerPointReader value) {
+        if (!steerPointsListModel.contains(value)) {
+            steerPointsListModel.add(value);
         }
+        
+        if (SwingUtilities.isEventDispatchThread()) {
+            SwingUtilities.invokeLater(new Runnable() {
+                
+                
+                /**
+                 *
+                 *
+                 * {@inheritDoc}.
+                 */
+                @Override
+                public void run() {
+                    for (final SteerPointsListModelListener listener : getListeners()) {
+                        listener.addSteerPoint(value);
+                    }
+                }
+            });
+        } else {
+            for (final SteerPointsListModelListener listener : getListeners()) {
+                listener.addSteerPoint(value);
+            }
+        }
+        
+        commitChange();
     }
     
     /**
@@ -65,12 +84,33 @@ public class SteerPointsCollectionModel extends Model implements SteerPointsColl
      */
     @Override
     public final void removeSteerPoint(final SteerPointReader value) {
-        if (null != value) {
+        if (!steerPointsListModel.contains(value)) {
+            steerPointsListModel.add(value);
+        }
+        
+        if (SwingUtilities.isEventDispatchThread()) {
+            SwingUtilities.invokeLater(new Runnable() {
+                
+                
+                /**
+                 *
+                 *
+                 * {@inheritDoc}.
+                 */
+                @Override
+                public void run() {
+                    for (final SteerPointsListModelListener listener : getListeners()) {
+                        listener.removeSteerPoint(value);
+                    }
+                }
+            });
+        } else {
             for (final SteerPointsListModelListener listener : getListeners()) {
                 listener.removeSteerPoint(value);
             }
-            commitChange();
         }
+        
+        commitChange();
     }
     
     /**
@@ -79,7 +119,7 @@ public class SteerPointsCollectionModel extends Model implements SteerPointsColl
      */
     @Override
     public final SteerPointReader getSteerPointByIndex(final int value) {
-        return steerPointsListModel.getElementAt(value);
+        return steerPointsListModel.get(value);
     }
     
     /**
@@ -122,6 +162,7 @@ public class SteerPointsCollectionModel extends Model implements SteerPointsColl
         } else {
             SwingUtilities.invokeLater(new Runnable() {
                 
+                
                 /**
                  *
                  * {@inheritDoc}
@@ -139,7 +180,7 @@ public class SteerPointsCollectionModel extends Model implements SteerPointsColl
      * {@inheritDoc}
      */
     @Override
-    public final SteerPointsListModel getSteerPointsListModel() {
+    public final LinkedListModel<SteerPointReader> getSteerPointsListModel() {
         return steerPointsListModel;
     }
     
@@ -148,7 +189,7 @@ public class SteerPointsCollectionModel extends Model implements SteerPointsColl
      * {@inheritDoc}
      */
     @Override
-    public final void addSteerPointsListModelListener(final SteerPointsListModelListener listener) {
+    public final void addListener(final SteerPointsListModelListener listener) {
         getListeners().add(listener);
     }
     
@@ -157,7 +198,7 @@ public class SteerPointsCollectionModel extends Model implements SteerPointsColl
      * {@inheritDoc}
      */
     @Override
-    public final void removeSteerPointsListModelListener(final SteerPointsListModelListener listener) {
+    public final void removeListener(final SteerPointsListModelListener listener) {
         getListeners().remove(listener);
     }
     

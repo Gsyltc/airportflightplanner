@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 11 août 2016.
+ * Modified : 13 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -57,7 +57,7 @@ public class FlightPlanVisualizationTableAdapter extends AbstractTableAdapter<Fl
     public FlightPlanVisualizationTableAdapter(final FlightPlanCollectionReader flightPlansCollReader) {
         super();
         final LinkedListModel<FlightPlanReader> listModel = flightPlansCollReader.getFlightPlanListModel();
-        setListModel(flightPlansCollReader.getFlightPlanListModel());
+        setListModel(listModel);
         listModel.addListDataListener(new ListDataListener() {
             
             

@@ -14,10 +14,13 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <ref bean="id-FlightPlanModelAdapter" />
         <ref bean="id-StartDaysAdapter" />
         <ref bean="id-FlightPlanCollectionAdapter" />
+        <ref bean="id-SteerPointModelAdapter" />
     </util:list>
 
     <bean id="id-FlightPlanModelAdapter" class="com.airportflightplanner.adapters.impl.modeladapters.FlightPlanModelAdapterImpl" init-method="init">
-        <property name="adapterName" value="FlightPlanModelAdapter" />
+        <property name="adapterName">
+            <util:constant static-field="com.airportflightplanner.adapters.AdapterNames.FP_ADAPTER_NAME" />
+        </property>
         <property name="model" ref="id-CurrentFlightPlan" />
         <property name="slots">
             <util:list>
@@ -25,35 +28,50 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
                     <constructor-arg index="0">
                         <util:constant static-field="com.airportflightplanner.common.slotsignal.TopicName.FP_TABLE_SELECTED_TOPIC" />
                     </constructor-arg>
-                    <constructor-arg index="1" value="FlightPlanModelAdapter" />
+                    <constructor-arg index="1">
+                        <util:constant static-field="com.airportflightplanner.adapters.AdapterNames.FP_ADAPTER_NAME" />
+                    </constructor-arg>
                 </bean>
                 <bean class="fr.gsyltc.framework.slotsignals.slots.Slot">
                     <constructor-arg index="0">
                         <util:constant static-field="com.airportflightplanner.common.slotsignal.TopicName.FP_MODIFIED_TOPIC" />
                     </constructor-arg>
-                    <constructor-arg index="1" value="FlightPlanModelAdapter" />
+                    <constructor-arg index="1">
+                        <util:constant static-field="com.airportflightplanner.adapters.AdapterNames.FP_ADAPTER_NAME" />
+                    </constructor-arg>
                 </bean>
             </util:list>
         </property>
     </bean>
 
-    <bean id="id-StartDaysAdapter" class="com.airportflightplanner.adapters.impl.modeladapters.StartDaysAdapterImpl" init-method="init">
-        <property name="adapterName" value="StartDaysAdapter" />
+    <bean id="id-StartDaysAdapter" class="com.airportflightplanner.adapters.impl.modeladapters.StartDaysModelAdapterImpl" init-method="init">
+        <property name="adapterName">
+            <util:constant static-field="com.airportflightplanner.adapters.AdapterNames.STARTDAYS_ADAPTER_NAME" />
+        </property>
         <property name="model" ref="id-DaySelectionModel" />
         <property name="slots">
             <bean class="fr.gsyltc.framework.slotsignals.slots.Slot">
                 <constructor-arg index="0">
                     <util:constant static-field="com.airportflightplanner.common.slotsignal.TopicName.FP_TABLE_SELECTED_TOPIC" />
                 </constructor-arg>
-                <constructor-arg index="1" value="StartDaysAdapter" />
+                <constructor-arg index="1">
+                    <util:constant static-field="com.airportflightplanner.adapters.AdapterNames.STARTDAYS_ADAPTER_NAME" />
+                </constructor-arg>
             </bean>
         </property>
     </bean>
 
-    <bean id="id-FlightPlanCollectionAdapter" class="com.airportflightplanner.adapters.impl.modeladapters.FlightPlanCollectionAdapterImpl">
-        <property name="adapterName" value="FlightPlanCollectionAdapter" />
+    <bean id="id-FlightPlanCollectionAdapter" class="com.airportflightplanner.adapters.impl.modeladapters.FlightPlanCollectionModelAdapterImpl">
+        <property name="adapterName">
+            <util:constant static-field="com.airportflightplanner.adapters.AdapterNames.FP_COLL_ADAPTER_NAME" />
+        </property>
         <property name="model" ref="id-FlightPlansCollection" />
     </bean>
 
-
+    <bean id="id-SteerPointModelAdapter" class="com.airportflightplanner.adapters.impl.modeladapters.SteerPointModelAdapterImpl">
+        <property name="adapterName">
+            <util:constant static-field="com.airportflightplanner.adapters.AdapterNames.STEERP_ADAPTER_NAME" />
+        </property>
+        <property name="model" ref="id-SteerPointsCollectionModel" />
+    </bean>
 </beans>

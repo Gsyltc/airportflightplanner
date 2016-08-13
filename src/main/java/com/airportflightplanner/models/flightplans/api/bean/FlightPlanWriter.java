@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 7 août 2016.
+ * Modified : 13 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -23,6 +23,7 @@ import com.airportflightplanner.common.types.ArrivalType;
 import com.airportflightplanner.common.types.DepartureType;
 import com.airportflightplanner.common.types.FlightType;
 import com.airportflightplanner.common.types.StartDays;
+import com.airportflightplanner.models.steerpoints.api.bean.SteerPointReader;
 
 /**
  * Flight plan writer.
@@ -40,7 +41,7 @@ public interface FlightPlanWriter extends FlightPlanReader {
      *            the company to set.
      */
     void setAircraftCie(String value);
-    
+
     /**
      * Livery of the aircraft.
      *
@@ -48,7 +49,7 @@ public interface FlightPlanWriter extends FlightPlanReader {
      *            the type to set.
      */
     void setAircraftLivery(String value);
-    
+
     /**
      * Class of the aircraft.
      *
@@ -56,7 +57,7 @@ public interface FlightPlanWriter extends FlightPlanReader {
      *            the class to set.
      */
     void setAircraftClass(String value);
-    
+
     /**
      * Alternate airport of the aircraft.
      *
@@ -64,7 +65,7 @@ public interface FlightPlanWriter extends FlightPlanReader {
      *            the alternate airport.
      */
     void setAlternateAirport(String value);
-    
+
     /**
      * The destination of the flight.
      *
@@ -72,7 +73,7 @@ public interface FlightPlanWriter extends FlightPlanReader {
      *            the arrival airport.
      */
     void setArrivalAirport(String value);
-    
+
     /**
      * the arrival type.
      *
@@ -80,7 +81,7 @@ public interface FlightPlanWriter extends FlightPlanReader {
      *            the type.
      */
     void setArrivalType(ArrivalType value);
-    
+
     /**
      * The call sign of the flight.
      *
@@ -88,7 +89,7 @@ public interface FlightPlanWriter extends FlightPlanReader {
      *            the call sign.
      */
     void setCallSign(String value);
-    
+
     /**
      * The departure airport.
      *
@@ -96,7 +97,7 @@ public interface FlightPlanWriter extends FlightPlanReader {
      *            the airport.
      */
     void setDepartureAirport(String value);
-    
+
     /**
      * The departure type.
      *
@@ -104,7 +105,7 @@ public interface FlightPlanWriter extends FlightPlanReader {
      *            the type.
      */
     void setDepartureType(DepartureType value);
-    
+
     /**
      * Duration of the flight.
      *
@@ -112,7 +113,7 @@ public interface FlightPlanWriter extends FlightPlanReader {
      *            the duration.
      */
     void setDuration(Period value);
-    
+
     /**
      * The arrival time.
      *
@@ -120,7 +121,7 @@ public interface FlightPlanWriter extends FlightPlanReader {
      *            the time.
      */
     void setEndTime(LocalTime value);
-    
+
     /**
      * the file name of the flight plan.
      *
@@ -128,7 +129,7 @@ public interface FlightPlanWriter extends FlightPlanReader {
      *            the file name.
      */
     void setFileName(String value);
-    
+
     /**
      * The type of completion.
      *
@@ -136,7 +137,7 @@ public interface FlightPlanWriter extends FlightPlanReader {
      *            the type.
      */
     void setFlightToCompletion(Boolean value);
-    
+
     /**
      * the flight type (Civilian, / Military).
      *
@@ -144,7 +145,7 @@ public interface FlightPlanWriter extends FlightPlanReader {
      *            the type.
      */
     void setFlightType(FlightType value);
-    
+
     /**
      * The altitude to switch the landing light on.
      *
@@ -152,7 +153,7 @@ public interface FlightPlanWriter extends FlightPlanReader {
      *            the altitude.
      */
     void setLandingLightAltitude(Altitude value);
-    
+
     /**
      * Name of the flight plan.
      *
@@ -160,7 +161,7 @@ public interface FlightPlanWriter extends FlightPlanReader {
      *            the name.
      */
     void setName(String value);
-    
+
     /**
      * Sets of the start days (When the flight is available).
      *
@@ -168,7 +169,7 @@ public interface FlightPlanWriter extends FlightPlanReader {
      *            the days.
      */
     void setStartDays(Set<StartDays> value);
-    
+
     /**
      * Departure time.
      *
@@ -176,12 +177,12 @@ public interface FlightPlanWriter extends FlightPlanReader {
      *            the time.
      */
     void setStartTime(LocalTime value);
-    
+
     /**
      * List of the steer points.
      *
      * @param value
      *            the steer points.
      */
-    void setSteerPoints(List<String> value);
+    void setSteerPoints(List<SteerPointReader> value);
 }

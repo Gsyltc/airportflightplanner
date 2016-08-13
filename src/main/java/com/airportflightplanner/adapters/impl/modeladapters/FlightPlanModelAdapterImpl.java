@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 11 août 2016.
+ * Modified : 13 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -33,6 +33,7 @@ import com.airportflightplanner.common.types.FlightType;
 import com.airportflightplanner.common.types.StartDays;
 import com.airportflightplanner.common.utils.time.TimeUtils;
 import com.airportflightplanner.models.flightplans.FlightPlanModel;
+import com.airportflightplanner.models.steerpoints.api.bean.SteerPointReader;
 
 import fr.gsyltc.framework.adapters.AbstractReceiverModelAdapterImpl;
 import fr.gsyltc.framework.slotsignals.action.api.SlotAction;
@@ -49,33 +50,33 @@ public class FlightPlanModelAdapterImpl extends AbstractReceiverModelAdapterImpl
      *
      */
     private static final long serialVersionUID = -7652261197111997309L;
-    
+
     /** The logger of this class. */
     /** The logger of this class. */
     private static final Logger LOGGER = LogManager.getLogger(FlightPlanModelAdapterImpl.class);
-    
+
     /** */
     private static final int NUMBER_ZERO = 0;
     /** */
     private static final int NUMBER_ONE = 1;
     /** Definied if the current flight plan has been modified. */
     private transient boolean modificationtoCommit;
-    
+
     /**
      *
      * {@inheritDoc}.
      */
     @Override
-    public final void addSteerpoints(final List<String> steerpoints) {
+    public final void addSteerpoints(final List<SteerPointReader> steerpoints) {
         getModel().setSteerPoints(steerpoints);
-        
+
         // calculate Flight Time
-        final long result = GeographicProcessor.getFlightTime(steerpoints);
+        final long result = GeographicProcessor.getFlightTime(getModel().getSteerPoints());
         final Period duration = new Period(result);
         getModel().setDuration(duration);
         getModel().setEndTime(getModel().getStartTime().plus(duration));
     }
-    
+
     /**
      *
      * {@inheritDoc}.
@@ -88,7 +89,7 @@ public class FlightPlanModelAdapterImpl extends AbstractReceiverModelAdapterImpl
             
             /** . */
             private static final long serialVersionUID = 4397834631502532479L;
-            
+
             /**
              *
              * {@inheritDoc}.
@@ -98,14 +99,14 @@ public class FlightPlanModelAdapterImpl extends AbstractReceiverModelAdapterImpl
                 setModel(bean);
             }
         });
-        
+
         final Slot modifiedSlot = attachSlot(TopicName.FP_MODIFIED_TOPIC);
         modifiedSlot.setSlotAction(new SlotAction<Boolean>() {
             
             
             /** . */
             private static final long serialVersionUID = 4397834631502532479L;
-            
+
             /**
              *
              * {@inheritDoc}.
@@ -116,7 +117,7 @@ public class FlightPlanModelAdapterImpl extends AbstractReceiverModelAdapterImpl
             }
         });
     }
-    
+
     /**
      * /** {@inheritDoc}..
      */
@@ -124,7 +125,7 @@ public class FlightPlanModelAdapterImpl extends AbstractReceiverModelAdapterImpl
     public void init() {
         this.createSlots();
     }
-    
+
     /**
      *
      * {@inheritDoc}.
@@ -138,7 +139,7 @@ public class FlightPlanModelAdapterImpl extends AbstractReceiverModelAdapterImpl
                 result = true;
             }
             getModel().setFlightToCompletion(result);
-            
+
             break;
         case START_LANDING_LIGHT_ALT:
             getModel().setLandingLightAltitude(Altitude.valueOf(Double.valueOf(line), NonSI.FOOT));
@@ -153,7 +154,7 @@ public class FlightPlanModelAdapterImpl extends AbstractReceiverModelAdapterImpl
             if (splitAirCraft.length > NUMBER_ONE) {
                 getModel().setAircraftCie(splitAirCraft[1]);
             }
-            
+
             break;
         case STARTALTERNATEAIRPORT:
             getModel().setAlternateAirport(line);
@@ -212,12 +213,12 @@ public class FlightPlanModelAdapterImpl extends AbstractReceiverModelAdapterImpl
         
         case STARTDAYS:
             final String[] days = line.split(" +");
-            
+
             final Set<StartDays> daysSet = new HashSet<StartDays>();
             for (final String day : days) {
                 daysSet.add(StartDays.valueOf(Integer.parseInt(day)));
             }
-            
+
             getModel().setStartDays(daysSet);
             break;
         
@@ -225,7 +226,7 @@ public class FlightPlanModelAdapterImpl extends AbstractReceiverModelAdapterImpl
             break;
         }
     }
-    
+
     /**
      * {@inheritDoc}.
      */
@@ -233,7 +234,7 @@ public class FlightPlanModelAdapterImpl extends AbstractReceiverModelAdapterImpl
     public boolean isModificationToCommit() {
         return modificationtoCommit;
     }
-    
+
     /**
      * {@inheritDoc}.
      */

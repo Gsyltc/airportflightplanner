@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 11 août 2016.
+ * Modified : 13 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -16,6 +16,7 @@ import java.util.List;
 
 import com.airportflightplanner.common.types.FlightPlanInformationTypes;
 import com.airportflightplanner.models.flightplans.FlightPlanModel;
+import com.airportflightplanner.models.steerpoints.api.bean.SteerPointReader;
 
 import fr.gsyltc.framework.adapters.api.DomainModelAdapter;
 
@@ -23,8 +24,6 @@ import fr.gsyltc.framework.adapters.api.DomainModelAdapter;
  * Specific interface of a Flight plan Domain Model Adapter.
  *
  * @author Goubaud Sylvain
- * @param <E>
- *            the listener object type.
  */
 public interface FlightPlanModelAdapter extends DomainModelAdapter<FlightPlanModel> {
     
@@ -33,9 +32,9 @@ public interface FlightPlanModelAdapter extends DomainModelAdapter<FlightPlanMod
      * Construct a route for the flight plan.
      *
      * @param steerpoints
-     *            list of steerpoints.
+     *            list of steer points.
      */
-    void addSteerpoints(List<String> steerpoints);
+    void addSteerpoints(List<SteerPointReader> steerpoints);
     
     /**
      * Update the flight plan.
@@ -61,5 +60,4 @@ public interface FlightPlanModelAdapter extends DomainModelAdapter<FlightPlanMod
      *            the value to set
      */
     void setModificationtoCommit(boolean value);
-    
 }

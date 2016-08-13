@@ -1,24 +1,32 @@
-/* @(#)FlightPlanVisualisationReader.java
+/*
+ * @(#)SteerPointsCollectionWriter.java
  *
- * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
+ * Goubaud Sylvain
+ * Created : 2016
+ * Modified : 13 août 2016.
+ *
+ * This code may be freely used and modified on any personal or professional
+ * project.  It comes with no warranty.
+ *
  */
-package com.airportflightplanner.models.steerpoints.api.collection;
 
-import java.util.List;
+package com.airportflightplanner.models.steerpoints.api.collection;
 
 import com.airportflightplanner.models.flightplans.api.bean.FlightPlanReader;
 import com.airportflightplanner.models.steerpoints.api.bean.SteerPointReader;
 
-/**
- * @author Goubaud Sylvain
+/***
  *
- */
+ * @author Goubaud Sylvain
+ **/
 public interface SteerPointsCollectionWriter extends SteerPointsCollectionReader {
+    
+    
     /**
      *
      * @param value
      */
-    void addSteerPoints(List<SteerPointReader> value);
+    void addSteerPoint(SteerPointReader value);
 
     /**
      *

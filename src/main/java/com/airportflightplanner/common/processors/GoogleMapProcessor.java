@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 7 août 2016.
+ * Modified : 13 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -71,12 +71,11 @@ public final class GoogleMapProcessor {
     
     /**
      *
-     * @param steerpointsString
-     *            List of steerpoints.
+     * @param steerPoints
+     *            List of steer points.
      * @return Encoded Polyline.
      */
-    public static EncodedPolyline getEncodePolyline(final List<String> steerpointsString) {
-        final List<SteerPointReader> steerPoints = GeographicProcessor.getSteerPoints(steerpointsString);
+    public static EncodedPolyline getEncodePolyline(final List<SteerPointReader> steerPoints) {
         final StringBuilder stringBuilder = new StringBuilder();
         for (final SteerPointReader steerPointReader : steerPoints) {
             stringBuilder.append(ROUTE_SEPARATOR).append(steerPointReader.getLatLong().latitudeValue(NonSI.DEGREE_ANGLE))//

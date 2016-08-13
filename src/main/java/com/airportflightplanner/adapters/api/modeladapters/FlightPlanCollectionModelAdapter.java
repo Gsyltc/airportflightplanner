@@ -1,9 +1,9 @@
 /*
- * @(#)FlightPlanCollectionAdapter.java
+ * @(#)FlightPlanCollectionModelAdapter.java
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 11 août 2016.
+ * Modified : 13 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -23,7 +23,7 @@ import fr.gsyltc.framework.adapters.api.DomainModelAdapter;
  *
  */
 
-public interface FlightPlanCollectionAdapter extends DomainModelAdapter<FlighPlanCollectionModel> {
+public interface FlightPlanCollectionModelAdapter extends DomainModelAdapter<FlighPlanCollectionModel> {
     
     
     /**
@@ -31,32 +31,32 @@ public interface FlightPlanCollectionAdapter extends DomainModelAdapter<FlighPla
      * @param value
      */
     void setCurrentAirport(String value);
-
+    
     /**
      *
      * @param listener
      */
     void addListener(FlightPlanVisualizationListModelListener listener);
-
+    
     /**
      *
      * @param listener
      */
     void removeListener(FlightPlanVisualizationListModelListener listener);
-
+    
     /**
      * @param value
      */
     void addFlightPlan(FlightPlanReader value);
-
+    
     /**
      * @param value
      */
     void removeFlightPlan(FlightPlanReader value);
-
+    
     /**
      *
      */
     void resetFlightPlans();
-
+    
 }

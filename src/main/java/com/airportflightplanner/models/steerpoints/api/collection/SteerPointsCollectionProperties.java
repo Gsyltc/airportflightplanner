@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 9 août 2016.
+ * Modified : 13 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -12,10 +12,9 @@
 
 package com.airportflightplanner.models.steerpoints.api.collection;
 
-/**
+/***
  * @author Goubaud Sylvain
- *
- */
+ **/
 public final class SteerPointsCollectionProperties {
     
     
@@ -28,7 +27,7 @@ public final class SteerPointsCollectionProperties {
      * Protected constructor.
      */
     private SteerPointsCollectionProperties() {
-        //
+        
     }
 
 }

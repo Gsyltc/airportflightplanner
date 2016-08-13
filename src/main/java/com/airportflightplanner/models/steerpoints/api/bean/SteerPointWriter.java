@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 9 août 2016.
+ * Modified : 13 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -13,6 +13,8 @@
 package com.airportflightplanner.models.steerpoints.api.bean;
 
 import javax.measure.DecimalMeasure;
+import javax.measure.Measure;
+import javax.measure.quantity.Angle;
 import javax.measure.quantity.Velocity;
 
 import org.jscience.geography.coordinates.Altitude;
@@ -70,4 +72,9 @@ public interface SteerPointWriter extends SteerPointReader {
      *            the heading to set
      */
     void setHeading(DecimalMeasure<Heading> value);
+
+    /**
+     * @param value
+     */
+    void setMaxBankingAngle(Measure<Integer, Angle> value);
 }

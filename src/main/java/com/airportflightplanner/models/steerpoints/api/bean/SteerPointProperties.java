@@ -1,6 +1,13 @@
-/* @(#)FlightPlanVisualisationReader.java
+/*
+ * @(#)SteerPointProperties.java
  *
- * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
+ * Goubaud Sylvain
+ * Created : 2016
+ * Modified : 13 août 2016.
+ *
+ * This code may be freely used and modified on any personal or professional
+ * project.  It comes with no warranty.
+ *
  */
 
 package com.airportflightplanner.models.steerpoints.api.bean;
@@ -26,6 +33,8 @@ public final class SteerPointProperties {
     public static final String HEADING = "heading";
     /** the formation type property. */
     public static final String FORMATION_TYPE = "formation";
+    /** */
+    public static final String MAX_BANKING_ANGLE = "maxBankingAngle";
     
     /**
      * Protected constructor.

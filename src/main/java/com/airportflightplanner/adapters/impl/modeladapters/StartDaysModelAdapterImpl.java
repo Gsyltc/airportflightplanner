@@ -1,9 +1,9 @@
 /*
- * @(#)StartDaysAdapterImpl.java
+ * @(#)StartDaysModelAdapterImpl.java
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 11 août 2016.
+ * Modified : 13 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -14,7 +14,7 @@ package com.airportflightplanner.adapters.impl.modeladapters;
 
 import java.util.Set;
 
-import com.airportflightplanner.adapters.api.modeladapters.StartDaysAdapter;
+import com.airportflightplanner.adapters.api.modeladapters.StartDaysModelAdapter;
 import com.airportflightplanner.common.slotsignal.TopicName;
 import com.airportflightplanner.common.types.StartDays;
 import com.airportflightplanner.models.daysselection.DaysSelectionModel;
@@ -27,14 +27,15 @@ import fr.gsyltc.framework.slotsignals.slots.Slot;
 /**
  * @author Goubaud Sylvain
  */
-public class StartDaysAdapterImpl extends AbstractReceiverModelAdapterImpl<DaysSelectionModel> implements StartDaysAdapter {
+public class StartDaysModelAdapterImpl extends AbstractReceiverModelAdapterImpl<DaysSelectionModel> implements
+        StartDaysModelAdapter {
     
     
     /**
      *
      */
     private static final long serialVersionUID = 8742702470474381772L;
-    
+
     /**
      *
      * {@inheritDoc}.
@@ -49,7 +50,7 @@ public class StartDaysAdapterImpl extends AbstractReceiverModelAdapterImpl<DaysS
              *
              */
             private static final long serialVersionUID = -1849859877568448215L;
-            
+
             /**
              *
              * {@inheritDoc}.
@@ -62,7 +63,7 @@ public class StartDaysAdapterImpl extends AbstractReceiverModelAdapterImpl<DaysS
             }
         });
     }
-    
+
     /**
      *
      * {@inheritDoc}.
@@ -71,7 +72,7 @@ public class StartDaysAdapterImpl extends AbstractReceiverModelAdapterImpl<DaysS
     public void init() {
         createSlots();
     }
-    
+
     /**
      * {@inheritDoc}
      */

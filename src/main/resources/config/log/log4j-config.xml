@@ -26,10 +26,13 @@
         <Logger name="com.airportflightplanner.flightplancreation.panels.CreationStartDaysPanel" level="error">
             <AppenderRef ref="Console" />
         </Logger>
-        <Logger name="com.airportflightplanner.main.visualelements.panels.WaypointEditionPanel" level="debug">
+        <Logger name="com.airportflightplanner.main.visualelements.panels.WaypointEditionPanel" level="error">
             <AppenderRef ref="Console" />
         </Logger>
-        <Logger name="com.airportflightplanner.flightplanvisualization.panel.FlightPlanListPanel" level="debug">
+        <Logger name="com.airportflightplanner.flightplanvisualization.panel.FlightPlanListPanel" level="error">
+            <AppenderRef ref="Console" />
+        </Logger>
+        <Logger name="com.airportflightplanner.waypointmodifications.panels.WaypointTextPanel" level="debug">
             <AppenderRef ref="Console" />
         </Logger>
     </Loggers>

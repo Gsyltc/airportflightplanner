@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 29 juil. 2016.
+ * Modified : 13 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -12,22 +12,29 @@
 
 package com.airportflightplanner.adapters.impl;
 
-import java.io.Serializable;
 import java.util.Collections;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.airportflightplanner.adapters.api.AircraftsLiveriesAdapter;
 import com.airportflightplanner.common.utils.aircraft.AircraftDecoder;
+
+import fr.gsyltc.framework.adapters.AbstractAdapterImpl;
 
 /**
  * @author Goubaud Sylvain
  *
  */
-public class AircraftsLiveriesAdapterImpl implements AircraftsLiveriesAdapter, Serializable {
+public class AircraftsLiveriesAdapterImpl extends AbstractAdapterImpl implements AircraftsLiveriesAdapter {
     
+    
+    /** The logger of this class. */
+    private static final Logger LOGGER = LogManager.getLogger(AircraftsLiveriesAdapterImpl.class);
     
     /**
      *
@@ -40,10 +47,11 @@ public class AircraftsLiveriesAdapterImpl implements AircraftsLiveriesAdapter, S
     
     /**
      * @param newAircraftType
-     *            The companie.
+     *            The company.
      */
     public AircraftsLiveriesAdapterImpl(final String newAircraftType) {
-        this.aircraftType = newAircraftType;
+        super();
+        aircraftType = newAircraftType;
     }
     
     /**
@@ -69,7 +77,7 @@ public class AircraftsLiveriesAdapterImpl implements AircraftsLiveriesAdapter, S
      */
     @Override
     public String getAircraftType() {
-        return this.aircraftType;
+        return aircraftType;
     }
     
     /**
@@ -98,6 +106,17 @@ public class AircraftsLiveriesAdapterImpl implements AircraftsLiveriesAdapter, S
      * @return the liveriesMap
      */
     private Map<String, SortedSet<String>> getLiveriesMap() {
-        return this.liveriesMap;
+        return liveriesMap;
+    }
+    
+    /**
+     *
+     * {@inheritDoc}.
+     */
+    @Override
+    public void init() {
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Init Adapter");
+        }
     }
 }

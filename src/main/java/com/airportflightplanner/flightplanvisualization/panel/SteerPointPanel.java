@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 9 août 2016.
+ * Modified : 13 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -21,12 +21,12 @@ import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import com.airportflightplanner.common.processors.GeographicProcessor;
+import com.airportflightplanner.adapters.AdapterNames;
+import com.airportflightplanner.adapters.api.modeladapters.SteerPointModelAdapter;
 import com.airportflightplanner.common.slotsignal.TopicName;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
 import com.airportflightplanner.flightplanvisualization.presenter.steerpoints.SteerPointsPresenter;
 import com.airportflightplanner.models.flightplans.api.bean.FlightPlanReader;
-import com.airportflightplanner.models.steerpoints.SteerPointsCollectionModel;
 import com.airportflightplanner.models.steerpoints.api.bean.SteerPointReader;
 import com.airportflightplanner.models.steerpoints.api.collection.SteerPointsCollectionReader;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -52,11 +52,11 @@ public class SteerPointPanel extends AbstractCommandablePanel {
     private static final long serialVersionUID = -6354635338489926005L;
     /** */
     private static final int STEERPOINT_PRESENTER = 0;
-    
+
     /**
      *
      */
-    
+
     /**
      * @param presenter
      *
@@ -64,7 +64,7 @@ public class SteerPointPanel extends AbstractCommandablePanel {
     public SteerPointPanel(final SteerPointsPresenter presenter) {
         super(presenter);
     }
-    
+
     /**
      *
      */
@@ -80,18 +80,13 @@ public class SteerPointPanel extends AbstractCommandablePanel {
                 new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC, //
                         FormSpecs.RELATED_GAP_ROWSPEC, }));
-        
+
         final TitledBorder panelBorder = new TitledBorder(FlightPlanCreationPanelMessages.STEERPOINTS_TITLE);
         setBorder(panelBorder);
-        
+
         add(createSteerPointsPanel(), "2, 2, 3, 1");
-        
-        final SteerPointsPresenter presenter = (SteerPointsPresenter) getPresenter(STEERPOINT_PRESENTER);
-        final SteerPointsCollectionReader reader = presenter.getBean();
-        reader.addSteerPointsListModelListener(presenter.getListModel());
-        
     }
-    
+
     /**
      * {@inheritDoc}.
      */
@@ -100,7 +95,7 @@ public class SteerPointPanel extends AbstractCommandablePanel {
         super.createSlots();
         final Slot slot = new Slot(TopicName.FP_TABLE_SELECTED_TOPIC, getClass().getSimpleName());
         final SteerPointsPresenter presenter = (SteerPointsPresenter) getPresenter(STEERPOINT_PRESENTER);
-        final SteerPointsCollectionModel steerPointsModel = presenter.getBean();
+        final SteerPointsCollectionReader steerPointsModel = presenter.getBean();
         slot.setSlotAction(new SlotAction<FlightPlanReader>() {
             
             
@@ -115,16 +110,20 @@ public class SteerPointPanel extends AbstractCommandablePanel {
              */
             @Override
             public void doAction(final FlightPlanReader flightPlanReader) {
+                final SteerPointModelAdapter adapter = (SteerPointModelAdapter) findAdapter(AdapterNames.STEERP_ADAPTER_NAME);
                 steerPointsModel.getSteerPointsListModel().clear();
                 if (null != flightPlanReader) {
-                    final List<SteerPointReader> steerPoints = GeographicProcessor.getSteerPoints(flightPlanReader
-                            .getSteerPoints());
-                    steerPointsModel.addSteerPoints(steerPoints);
+                    final List<SteerPointReader> steerPoints = flightPlanReader.getSteerPoints();
+                    for (final SteerPointReader steerPointReader : steerPoints) {
+                        adapter.addSteerPoint(steerPointReader);
+                    }
+
+                    // steerPointsModel.addSteerPoints(steerPoints);
                 }
             }
         });
     }
-    
+
     /**
      * @return SteerPoint Panel.
      *
@@ -136,11 +135,21 @@ public class SteerPointPanel extends AbstractCommandablePanel {
         final JTable table = new JTable(presenter.getTableAdapter());
         table.setColumnSelectionAllowed(true);
         table.setDefaultRenderer(String.class, centerRenderer);
-        
+
         table.setFillsViewportHeight(true);
         final JScrollPane scrollPane = new JScrollPane();
         scrollPane.setPreferredSize(new Dimension(400, 300));
         scrollPane.setViewportView(table);
         return scrollPane;
+    }
+
+    /**
+     *
+     * {@inheritDoc}.
+     */
+    @Override
+    public void createAdapters() {
+        super.createAdapters();
+        attachAdapter(AdapterNames.STEERP_ADAPTER_NAME);
     }
 }

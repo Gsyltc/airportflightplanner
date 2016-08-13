@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 9 août 2016.
+ * Modified : 13 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -11,6 +11,9 @@
  */
 
 package com.airportflightplanner.common.types;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.gsyltc.framework.utils.internationalizer.Internationalizer;
 
@@ -39,6 +42,9 @@ public enum FormationType {
     /** */
     BOX(7);
     
+    /** The logger of this class. */
+    private static final Logger LOGGER = LogManager.getLogger(FormationType.class);
+    
     /** */
     private static final String PREFIX = "FormationType.";
     /** */
@@ -59,7 +65,7 @@ public enum FormationType {
      * @return
      */
     public static FormationType valueOf(final int typeIndex) {
-        FormationType result = null;
+        FormationType result = FormationType.UNDEFINED;
         for (final FormationType type : FormationType.values()) {
             if (type.ordinal() == typeIndex) {
                 result = type;
@@ -86,5 +92,39 @@ public enum FormationType {
     public static int getIndex(final FormationType type) {
         return type.value;
         
+    }
+    
+    /**
+     * @param value
+     * @return
+     */
+    public static boolean isValid(final String value) {
+        return !FormationType.UNDEFINED.equals(valueFrom(value));
+    }
+    
+    /**
+     * @param value
+     * @return
+     */
+    public static FormationType valueFrom(final String value) {
+        FormationType result = FormationType.UNDEFINED;
+        
+        for (final FormationType type : FormationType.values()) {
+            if (type.name().equals(value)) {
+                result = type;
+            }
+        }
+        
+        if (FormationType.UNDEFINED.equals(result)) {
+            try {
+                final int intValue = Integer.parseInt(value);
+                result = valueOf(intValue);
+            } catch (final NumberFormatException e) {
+                if (LOGGER.isErrorEnabled()) {
+                    LOGGER.error("", e);
+                }
+            }
+        }
+        return result;
     }
 }

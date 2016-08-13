@@ -1,21 +1,30 @@
-/* @(#)FlightPlanVisualisationReader.java
+/*
+ * @(#)SteerPointsCollectionReader.java
  *
- * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
+ * Goubaud Sylvain
+ * Created : 2016
+ * Modified : 13 août 2016.
+ *
+ * This code may be freely used and modified on any personal or professional
+ * project.  It comes with no warranty.
+ *
  */
-package com.airportflightplanner.models.steerpoints.api.collection;
 
-import javax.swing.ListModel;
+package com.airportflightplanner.models.steerpoints.api.collection;
 
 import com.airportflightplanner.flightplanvisualization.api.SteerPointsListModelListener;
 import com.airportflightplanner.models.flightplans.api.bean.FlightPlanReader;
 import com.airportflightplanner.models.steerpoints.api.bean.SteerPointReader;
+import com.jgoodies.common.collect.LinkedListModel;
 
-/**
+/***
+ *
  * @author Goubaud Sylvain
  *
  */
 public interface SteerPointsCollectionReader {
-
+    
+    
     /**
      *
      * @param value
@@ -33,7 +42,7 @@ public interface SteerPointsCollectionReader {
      *
      * @return
      */
-    ListModel<SteerPointReader> getSteerPointsListModel();
+    LinkedListModel<SteerPointReader> getSteerPointsListModel();
 
     /**
      *
@@ -45,12 +54,12 @@ public interface SteerPointsCollectionReader {
      *
      * @param listener
      */
-    void addSteerPointsListModelListener(SteerPointsListModelListener listener);
+    void addListener(SteerPointsListModelListener listener);
 
     /**
      *
      * @param listener
      */
-    void removeSteerPointsListModelListener(SteerPointsListModelListener listener);
+    void removeListener(SteerPointsListModelListener listener);
 
 }

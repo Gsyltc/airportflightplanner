@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 28 juil. 2016.
+ * Modified : 13 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -14,6 +14,7 @@ package com.airportflightplanner.flightplanvisualization.presenter.steerpoints;
 
 import com.airportflightplanner.flightplanvisualization.adapter.steerpoints.SteerPointsTableAdapter;
 import com.airportflightplanner.models.steerpoints.SteerPointsCollectionModel;
+import com.airportflightplanner.models.steerpoints.api.collection.SteerPointsCollectionReader;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.beans.Model;
 
@@ -21,7 +22,7 @@ import com.jgoodies.binding.beans.Model;
  * @author Goubaud Sylvain
  *
  */
-public class SteerPointsPresenter extends PresentationModel<SteerPointsCollectionModel> {
+public class SteerPointsPresenter extends PresentationModel<SteerPointsCollectionReader> {
     
     
     /**
@@ -35,32 +36,22 @@ public class SteerPointsPresenter extends PresentationModel<SteerPointsCollectio
      *
      * @param bean
      */
-    public SteerPointsPresenter(final Model bean) { // NOPMD by sylva on 31/07/16 15:42
+    public SteerPointsPresenter(final Model bean) { // NOPMD by sylva on
+                                                    // 31/07/16 15:42
         super((SteerPointsCollectionModel) bean);
     }
-    
-    /**
-     * Get the list model.
-     *
-     * @return
-     */
-    public SteerPointsListModel getListModel() {
-        if (null == this.tableAdapter) {
-            getTableAdapter();
-        }
-        return (SteerPointsListModel) getTableAdapter().getListModel();
-    }
-    
+
     /**
      * Get the table adapter for the flight plan visualization panel.
      *
      * @return
      */
     public SteerPointsTableAdapter getTableAdapter() {
-        if (null == this.tableAdapter) {
-            setTableAdapter(new SteerPointsTableAdapter(getBean().getSteerPointsListModel()));
+        if (null == tableAdapter) {
+            final SteerPointsCollectionReader listModel = getBean();
+            setTableAdapter(new SteerPointsTableAdapter(listModel));
         }
-        return this.tableAdapter;
+        return tableAdapter;
     }
     
     /**
@@ -68,6 +59,6 @@ public class SteerPointsPresenter extends PresentationModel<SteerPointsCollectio
      *            the tableAdapter to set
      */
     private void setTableAdapter(final SteerPointsTableAdapter nTableAdapter) {
-        this.tableAdapter = nTableAdapter;
+        tableAdapter = nTableAdapter;
     }
 }

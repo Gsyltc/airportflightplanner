@@ -16,11 +16,14 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <property name="flightPlanModelAdapter" ref="id-FlightPlanModelAdapter" />
         <property name="flighPlanCollectionReader" ref="id-FlightPlansCollection" />
         <property name="flightPlanCollectionAdapter" ref="id-FlightPlanCollectionAdapter" />
+        <property name="steerPointsConvertAdapter" ref="id-SteerPointConvertAdapter" />
     </bean>
 
 
 
     <!-- Writers -->
-    <bean id="id-FlighPlanFileWriter" class="com.airportflightplanner.importexport.exporters.FlighPlanFileWriter" />
+    <bean id="id-FlighPlanFileWriter" class="com.airportflightplanner.importexport.exporters.FlighPlanFileWriter">
+        <property name="steerPointsConvertAdapter" ref="id-SteerPointConvertAdapter" />
+    </bean>
 
 </beans>

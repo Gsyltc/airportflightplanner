@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 9 août 2016.
+ * Modified : 13 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -48,7 +48,7 @@ public enum AltitudeType {
      * @return
      */
     public static AltitudeType valueOf(final int typeIndex) {
-        AltitudeType result = null;
+        AltitudeType result = AltitudeType.UNDEFINED;
         for (final AltitudeType type : AltitudeType.values()) {
             if (type.ordinal() == typeIndex) {
                 result = type;
@@ -75,5 +75,20 @@ public enum AltitudeType {
     public static int getIndex(final AltitudeType type) {
         return type.value;
         
+    }
+    
+    /**
+     *
+     * @param value
+     * @return
+     */
+    public static boolean isValid(final String value) {
+        boolean result = false;
+        for (final AltitudeType type : AltitudeType.values()) {
+            if (type.name().equals(value)) {
+                result = true;
+            }
+        }
+        return result;
     }
 }

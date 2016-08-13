@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 7 août 2016.
+ * Modified : 14 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -26,6 +26,7 @@ import org.apache.logging.log4j.Logger;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormatterBuilder;
 
+import com.airportflightplanner.adapters.api.SteerPointsConvertAdapter;
 import com.airportflightplanner.common.slotsignal.TopicName;
 import com.airportflightplanner.common.types.ArrivalType;
 import com.airportflightplanner.common.types.DepartureType;
@@ -35,6 +36,7 @@ import com.airportflightplanner.common.types.StartDays;
 import com.airportflightplanner.common.utils.properties.CommonProperties;
 import com.airportflightplanner.common.utils.time.TimeUtils;
 import com.airportflightplanner.models.flightplans.api.bean.FlightPlanReader;
+import com.airportflightplanner.models.steerpoints.api.bean.SteerPointReader;
 
 import fr.gsyltc.framework.slotsignals.action.api.SlotAction;
 import fr.gsyltc.framework.slotsignals.slotreceiver.api.SlotReceiver;
@@ -53,18 +55,15 @@ public class FlighPlanFileWriter implements SlotReceiver {
     /** */
     public static final DateTimeFormatter WRITER_FORMATTER = new DateTimeFormatterBuilder().appendHourOfDay(2). //
             appendMinuteOfHour(2).toFormatter();
-    
     /**
-     * {@inheritDoc}
+     *
      */
-    @Override
-    public Slot attachSlot(final String topicName) {
-        // Nothing to do
-        return null;
-    }
+    private SteerPointsConvertAdapter adapter;
     
     /**
-     * {@inheritDoc}
+     *
+     *
+     * {@inheritDoc}.
      */
     @Override
     public void createSlots() {
@@ -185,8 +184,9 @@ public class FlighPlanFileWriter implements SlotReceiver {
                     // STARTSTEERPOINTS
                     fileWriter.write(FlightPlanInformationTypes.STARTSTEERPOINTS.name());
                     fileWriter.write(System.lineSeparator());
-                    for (final String steerPoint : flightPlan.getSteerPoints()) {
-                        fileWriter.write(steerPoint);
+                    for (final SteerPointReader steerPoint : flightPlan.getSteerPoints()) {
+                        final String data = adapter.convertSteerPointToString(steerPoint);
+                        fileWriter.write(data);
                         fileWriter.write(System.lineSeparator());
                     }
                     fileWriter.write(FlightPlanInformationTypes.ENDSTEERPOINTS.name());
@@ -283,5 +283,23 @@ public class FlighPlanFileWriter implements SlotReceiver {
     public Slot findSlot(final String topicName) {
         // Nothing to do
         return null;
+    }
+    
+    /**
+     *
+     * {@inheritDoc}.
+     */
+    @Override
+    public Slot attachSlot(final String topicName) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+    
+    /**
+     *
+     * @param newAdapter
+     */
+    public void setSteerPointsConvertAdapter(final SteerPointsConvertAdapter newAdapter) {
+        adapter = newAdapter;
     }
 }

@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 8 août 2016.
+ * Modified : 14 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -25,10 +25,7 @@ import javax.swing.ScrollPaneConstants;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.joda.time.Period;
 
-import com.airportflightplanner.common.processors.GeographicProcessor;
-import com.airportflightplanner.flightplanvisualization.presenter.steerpoints.SteerPointsListModel;
 import com.airportflightplanner.models.flightplans.api.bean.FlightPlanReader;
 import com.airportflightplanner.models.steerpoints.api.bean.SteerPointReader;
 import com.airportflightplanner.models.steerpoints.api.collection.SteerPointsCollectionProperties;
@@ -39,6 +36,7 @@ import com.jgoodies.binding.adapter.BasicComponentFactory;
 import com.jgoodies.binding.value.BufferedValueModel;
 import com.jgoodies.binding.value.ConverterFactory;
 import com.jgoodies.binding.value.ValueModel;
+import com.jgoodies.common.collect.LinkedListModel;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
@@ -67,7 +65,7 @@ public class WaypointTextPanel extends AbstractCommonPanel {
     private static final int ROW_COUNTS = 20;
     /** the steer points presenter index. */
     private static final int STEERPOINTS_PRESENTER = 1;
-    
+
     /**
      * Create the panel.
      *
@@ -77,9 +75,9 @@ public class WaypointTextPanel extends AbstractCommonPanel {
     public WaypointTextPanel(final PresentationModel<FlightPlanReader> currentFpBean,
             final PresentationModel<SteerPointsCollectionReader> stpPresenter) {
         super(currentFpBean, stpPresenter);
-        
+
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -91,17 +89,17 @@ public class WaypointTextPanel extends AbstractCommonPanel {
                 new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC, //
                         FormSpecs.RELATED_GAP_ROWSPEC, });
-        
+
         setLayout(formLayout);
         setBorder(BorderFactory.createTitledBorder(WaypointModificationMessages.WAYPOINT_LIST_TITLE));
-        
+
         final PresentationModel<FlightPlanReader> presenter = (PresentationModel<FlightPlanReader>) getPresenter(FP_PRESENTER);
         final PresentationModel<SteerPointsCollectionReader> stpPresenter = (PresentationModel<SteerPointsCollectionReader>) getPresenter(
                 STEERPOINTS_PRESENTER);
         add(createTextArea(stpPresenter), "2, 2");
-        
+
     }
-    
+
     /**
      * Create the text area.
      *
@@ -120,7 +118,7 @@ public class WaypointTextPanel extends AbstractCommonPanel {
              *
              */
             private static final long serialVersionUID = 5858092520252522599L;
-            
+
             /**
              *
              * {@inheritDoc}
@@ -128,10 +126,10 @@ public class WaypointTextPanel extends AbstractCommonPanel {
             @Override
             public StringBuffer format(final Object obj, final StringBuffer toAppendTo, final FieldPosition pos) {
                 final StringBuffer buff = new StringBuffer();
-                if (obj instanceof SteerPointsListModel) {
-                    final SteerPointsListModel steerPoints = (SteerPointsListModel) obj;
-                    
-                    for (final SteerPointReader steerPoint : steerPoints.getList()) {
+                if (obj instanceof LinkedListModel) {
+                    final LinkedListModel<SteerPointReader> steerPoints = (LinkedListModel<SteerPointReader>) obj;
+
+                    for (final SteerPointReader steerPoint : steerPoints) {
                         buff.append(steerPoint).append(NEW_LINE);
                     }
                     if (LOGGER.isDebugEnabled()) {
@@ -140,7 +138,7 @@ public class WaypointTextPanel extends AbstractCommonPanel {
                 }
                 return buff;
             }
-            
+
             /**
              *
              * {@inheritDoc}
@@ -153,24 +151,25 @@ public class WaypointTextPanel extends AbstractCommonPanel {
                 final String[] lines = source.split(NEW_LINE);
                 for (final String line : lines) {
                     
-                    if (GeographicProcessor.validateSteerpoints(line)) {
-                        steerpoints.add(line);
-                    }
+                    // if (GeographicProcessor.validateSteerpoints(line)) {
+                    // steerpoints.add(line);
+                    // }
                 }
-                
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Flight time : " + new Period(GeographicProcessor.getFlightTime(steerpoints)));
-                }
-                GeographicProcessor.getFlightTime(steerpoints);
+                //
+                // if (LOGGER.isDebugEnabled()) {
+                // LOGGER.debug("Flight time : " + new
+                // Period(GeographicProcessor.getFlightTime(steerpoints)));
+                // }
+                // GeographicProcessor.getFlightTime(steerpoints);
                 pos.setIndex(source.length() - 1);
                 return steerpoints;
             }
         });
-        
+
         final JTextArea area = BasicComponentFactory.createTextArea(value);
         area.setRows(ROW_COUNTS);
         area.setColumns(1);
-        
+
         pane.add(area);
         pane.setViewportView(area);
         pane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);

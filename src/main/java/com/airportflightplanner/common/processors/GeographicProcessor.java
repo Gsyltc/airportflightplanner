@@ -1,9 +1,9 @@
 /*
- * @(#)GeographicUtils.java
+ * @(#)GeographicProcessor.java
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 7 août 2016.
+ * Modified : 13 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -12,28 +12,20 @@
 
 package com.airportflightplanner.common.processors;
 
-import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import javax.measure.DecimalMeasure;
-import javax.measure.quantity.Velocity;
 import javax.measure.unit.NonSI;
 import javax.measure.unit.SI;
 
 import org.gavaghan.geodesy.Ellipsoid;
 import org.gavaghan.geodesy.GeodeticCalculator;
 import org.gavaghan.geodesy.GlobalPosition;
-import org.jscience.geography.coordinates.Altitude;
 import org.jscience.geography.coordinates.LatLong;
 
 import com.airportflightplanner.common.types.GeographicFormatter;
-import com.airportflightplanner.models.steerpoints.SteerPointModel;
 import com.airportflightplanner.models.steerpoints.api.bean.SteerPointReader;
 
 /**
@@ -44,14 +36,6 @@ public class GeographicProcessor {
     
     
     /** */
-    private static final int LATITUDE_INDEX = 0;
-    /** */
-    private static final int LONGITUDE_INDEX = 1;
-    /** */
-    private static final int ALTITUDE_INDEX = 2;
-    /** */
-    private static final int VELOCITY_INDEX = 4;
-    /** */
     private static final String SOUTH = "S";
     /** */
     private static final String WEST = "W";
@@ -60,44 +44,7 @@ public class GeographicProcessor {
     /** */
     private static final int MINUTE_IN_SECOND = 60;
     /** */
-    private static final int MIN_LENGTH = 6;
-    /** */
-    private static final int LATITUDE_KEY = 0;
-    /** */
-    private static final int LONGITUDE_KEY = 1;
-    /** */
-    private static final int ALTITUDE_KEY = 2;
-    /** */
-    private static final int SPEED_KEY = 3;
-    /** */
-    private static final int MAX_BANKING_ANGLE_KEY = 5;
-    /** */
-    private static final int WAYPOINT_NAME_KEY = 9;
-    /** */
     private static final double TIME_FACTOR = 3600.0;
-
-    /**
-     *
-     * @param steerpointsString
-     *            List of steerpoints.
-     * @return List of steerpoints.
-     */
-    public static List<SteerPointReader> getSteerPoints(final List<String> steerpointsString) {
-        final List<SteerPointReader> steerPointList = new ArrayList<SteerPointReader>();
-        for (final String lines : steerpointsString) {
-            final SteerPointModel steerPoint = new SteerPointModel();
-            final Pattern pattern = Pattern.compile(" +");
-            // séparation en sous-chaînes
-            final String[] items = pattern.split(lines, 10);
-            steerPoint.setLatLong(LatLong.valueOf(Double.valueOf(items[LATITUDE_INDEX]), //
-                    Double.valueOf(items[LONGITUDE_INDEX]), NonSI.DEGREE_ANGLE));
-            steerPoint.setVelocity(new DecimalMeasure<Velocity>(new BigDecimal(items[VELOCITY_INDEX]), NonSI.KNOT));
-            steerPoint.setAltitude(Altitude.valueOf(Double.valueOf(items[ALTITUDE_INDEX]), NonSI.FOOT));
-
-            steerPointList.add(steerPoint);
-        }
-        return steerPointList;
-    }
 
     /**
      *
@@ -122,15 +69,15 @@ public class GeographicProcessor {
     /**
      * Get the duration of the flight.
      *
-     * @param steerpointsString
-     *            list of the steerpoint
+     * @param steerPoints
+     *            list of the steer points
      * @return the duration.
      */
-    public static long getFlightTime(final List<String> steerpointsString) {
+    public static long getFlightTime(final List<SteerPointReader> steerPoints) {
         SteerPointReader origin = null;
         long result = 0L;
-        for (final SteerPointReader destination : getSteerPoints(steerpointsString)) {
-            if (null != origin) {
+        for (final SteerPointReader destination : steerPoints) {
+            if (null != origin && null != destination) {
                 result += getTimeBetweenWaypoint(origin, destination);
                 origin = destination;
             }
@@ -251,70 +198,5 @@ public class GeographicProcessor {
         latOrLon = signe * (Math.floor(degres) + Math.floor(minutes) / MINUTE_IN_SECOND + secondes / TIME_FACTOR);
 
         return latOrLon;
-    }
-
-    /**
-     *
-     * @param steerPointDatas
-     * @return
-     */
-    public static boolean validateSteerpoints(final String steerPointDatas) {
-        boolean result = true;
-        final String[] datas = steerPointDatas.split(" +");
-        // Check number of param
-        if (datas.length >= MIN_LENGTH) {
-            result &= isPositionValid(datas[LATITUDE_KEY]);
-            result &= isPositionValid(datas[LONGITUDE_KEY]);
-            result &= isAltitudeValid(datas[ALTITUDE_KEY]);
-            result &= isSpeedValid(datas[SPEED_KEY]);
-            result &= isMaxBankAngleValid(datas[MAX_BANKING_ANGLE_KEY]);
-            result &= null != datas[WAYPOINT_NAME_KEY];
-        }
-
-        return result;
-    }
-
-    /**
-     *
-     * @param value
-     * @return
-     */
-    private static boolean isPositionValid(final String value) {
-        final Pattern pattern = Pattern.compile("^\\d{1,3}+\\.?\\d{0,10}$");
-        final Matcher matcher = pattern.matcher(value);
-        return matcher.matches();
-    }
-
-    /**
-     *
-     * @param value
-     * @return
-     */
-    private static boolean isAltitudeValid(final String value) {
-        final Pattern pattern = Pattern.compile("^\\d{1,5}$");
-        final Matcher matcher = pattern.matcher(value);
-        return matcher.matches();
-    }
-
-    /**
-     *
-     * @param value
-     * @return
-     */
-    private static boolean isSpeedValid(final String value) {
-        final Pattern pattern = Pattern.compile("^\\d{1,3}$");
-        final Matcher matcher = pattern.matcher(value);
-        return matcher.matches();
-    }
-
-    /**
-     *
-     * @param value
-     * @return
-     */
-    private static boolean isMaxBankAngleValid(final String value) {
-        final Pattern pattern = Pattern.compile("^\\d{1,2}$");
-        final Matcher matcher = pattern.matcher(value);
-        return matcher.matches();
     }
 }
