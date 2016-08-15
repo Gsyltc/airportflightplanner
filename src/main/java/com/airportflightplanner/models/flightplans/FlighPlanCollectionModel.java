@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 14 août 2016.
+ * Modified : 15 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -43,7 +43,7 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
     private String currentAirport = "";
     /** Listeners. */
     protected final List<FlightPlanVisualizationListModelListener> listeners = new ArrayList<FlightPlanVisualizationListModelListener>();
-    
+
     /**
      *
      * {@inheritDoc}.
@@ -52,17 +52,17 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
     public final String getCurrentAirport() {
         return currentAirport;
     }
-    
+
     /**
      *
      * {@inheritDoc}.
      */
     @Override
-    public void addFlightPlan(final FlightPlanReader value) {
+    public void onFlightPlanAdded(final FlightPlanReader value) {
         if (!flightPlanListModel.contains(value)) {
             flightPlanListModel.add(value);
         }
-        
+
         if (SwingUtilities.isEventDispatchThread()) {
             SwingUtilities.invokeLater(new Runnable() {
                 
@@ -75,28 +75,28 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
                 @Override
                 public void run() {
                     for (final FlightPlanVisualizationListModelListener listener : getListeners()) {
-                        listener.addFlightPlan(value);
+                        listener.onFlightPlanAdded(value);
                     }
                 }
             });
         } else {
             for (final FlightPlanVisualizationListModelListener listener : getListeners()) {
-                listener.addFlightPlan(value);
+                listener.onFlightPlanAdded(value);
             }
         }
-        
+
         commitChange();
     }
-    
+
     /**
      *
      * {@inheritDoc}.
      */
     @Override
-    public void removeFlightPlan(final FlightPlanReader value) {
+    public void onFlightPlanRemoved(final FlightPlanReader value) {
         if (flightPlanListModel.contains(value)) {
             flightPlanListModel.remove(value);
-            
+
         }
         if (SwingUtilities.isEventDispatchThread()) {
             SwingUtilities.invokeLater(new Runnable() {
@@ -110,19 +110,19 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
                 @Override
                 public void run() {
                     for (final FlightPlanVisualizationListModelListener listener : getListeners()) {
-                        listener.removeFlightPlan(value);
+                        listener.onFlightPlanRemoved(value);
                     }
                 }
             });
         } else {
             for (final FlightPlanVisualizationListModelListener listener : getListeners()) {
-                listener.removeFlightPlan(value);
+                listener.onFlightPlanRemoved(value);
             }
         }
-        
+
         commitChange();
     }
-    
+
     /**
      *
      * {@inheritDoc}.
@@ -131,7 +131,7 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
     public final FlightPlanReader getFlightPlanByIndex(final int value) {
         return flightPlanListModel.get(value);
     }
-    
+
     /**
      *
      * {@inheritDoc}.
@@ -140,7 +140,7 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
     public final int getFlightPlanCollectionSize() {
         return flightPlanListModel.size();
     }
-    
+
     /**
      *
      * {@inheritDoc}.
@@ -149,7 +149,7 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
     public final LinkedListModel<FlightPlanReader> getFlightPlanListModel() {
         return flightPlanListModel;
     }
-    
+
     /**
      *
      * {@inheritDoc}.
@@ -162,7 +162,7 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
             firePropertyChange(FlightPlanCollectionProperties.CURRENT_AIRPORT, oldValue, currentAirport);
         }
     }
-    
+
     /**
      *
      */
@@ -184,7 +184,7 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
             });
         }
     }
-    
+
     /**
      *
      * {@inheritDoc}.
@@ -193,17 +193,17 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
     public List<FlightPlanReader> getFlightPlans() {
         return Collections.unmodifiableList(flightPlanListModel);
     }
-    
+
     /**
      *
      * {@inheritDoc}.
      */
     @Override
-    public void resetFlightPlans() {
+    public void onFlightPlansReset() {
         flightPlanListModel.clear();
         commitChange();
     }
-    
+
     /**
      * Get the listeners.
      *
@@ -212,7 +212,7 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
     private List<FlightPlanVisualizationListModelListener> getListeners() {
         return listeners;
     }
-    
+
     /**
      *
      */
@@ -220,7 +220,7 @@ public class FlighPlanCollectionModel extends Model implements FlightPlanCollect
     public void addListener(final FlightPlanVisualizationListModelListener listener) {
         listeners.add(listener);
     }
-    
+
     /**
      *
      * @param listener

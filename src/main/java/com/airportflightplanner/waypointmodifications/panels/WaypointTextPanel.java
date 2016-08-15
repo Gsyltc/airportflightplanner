@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 14 août 2016.
+ * Modified : 15 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -26,6 +26,8 @@ import javax.swing.ScrollPaneConstants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.airportflightplanner.adapters.AdapterNames;
+import com.airportflightplanner.adapters.api.SteerPointsConvertAdapter;
 import com.airportflightplanner.models.flightplans.api.bean.FlightPlanReader;
 import com.airportflightplanner.models.steerpoints.api.bean.SteerPointReader;
 import com.airportflightplanner.models.steerpoints.api.collection.SteerPointsCollectionProperties;
@@ -33,7 +35,6 @@ import com.airportflightplanner.models.steerpoints.api.collection.SteerPointsCol
 import com.airportflightplanner.waypointmodifications.messages.WaypointModificationMessages;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.adapter.BasicComponentFactory;
-import com.jgoodies.binding.value.BufferedValueModel;
 import com.jgoodies.binding.value.ConverterFactory;
 import com.jgoodies.binding.value.ValueModel;
 import com.jgoodies.common.collect.LinkedListModel;
@@ -75,7 +76,6 @@ public class WaypointTextPanel extends AbstractCommonPanel {
     public WaypointTextPanel(final PresentationModel<FlightPlanReader> currentFpBean,
             final PresentationModel<SteerPointsCollectionReader> stpPresenter) {
         super(currentFpBean, stpPresenter);
-
     }
 
     /**
@@ -96,6 +96,7 @@ public class WaypointTextPanel extends AbstractCommonPanel {
         final PresentationModel<FlightPlanReader> presenter = (PresentationModel<FlightPlanReader>) getPresenter(FP_PRESENTER);
         final PresentationModel<SteerPointsCollectionReader> stpPresenter = (PresentationModel<SteerPointsCollectionReader>) getPresenter(
                 STEERPOINTS_PRESENTER);
+
         add(createTextArea(stpPresenter), "2, 2");
 
     }
@@ -109,7 +110,8 @@ public class WaypointTextPanel extends AbstractCommonPanel {
      */
     private JScrollPane createTextArea(final PresentationModel<SteerPointsCollectionReader> stpPresenter) {
         final JScrollPane pane = new JScrollPane();
-        final BufferedValueModel bufModel = stpPresenter.getBufferedModel(SteerPointsCollectionProperties.STEERPOINTS_MAP);
+        final ValueModel bufModel = stpPresenter.getBufferedModel(SteerPointsCollectionProperties.STEERPOINTS_MAP);
+
         final ValueModel value = ConverterFactory.createStringConverter(bufModel, new Format() {
             
             
@@ -126,11 +128,13 @@ public class WaypointTextPanel extends AbstractCommonPanel {
             @Override
             public StringBuffer format(final Object obj, final StringBuffer toAppendTo, final FieldPosition pos) {
                 final StringBuffer buff = new StringBuffer();
-                if (obj instanceof LinkedListModel) {
+                if (obj instanceof LinkedListModel && !((LinkedListModel<?>) obj).isEmpty()) {
                     final LinkedListModel<SteerPointReader> steerPoints = (LinkedListModel<SteerPointReader>) obj;
 
+                    final SteerPointsConvertAdapter adapter = (SteerPointsConvertAdapter) findAdapter(
+                            AdapterNames.SP_CONVERT_ADAPTER_NAME);
                     for (final SteerPointReader steerPoint : steerPoints) {
-                        buff.append(steerPoint).append(NEW_LINE);
+                        buff.append(adapter.convertSteerPointToString(steerPoint)).append(NEW_LINE);
                     }
                     if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug("Formating steerpoints : \n" + buff.toString());
@@ -174,5 +178,15 @@ public class WaypointTextPanel extends AbstractCommonPanel {
         pane.setViewportView(area);
         pane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         return pane;
+    }
+
+    /**
+     *
+     * {@inheritDoc}.
+     */
+    @Override
+    public void createAdapters() {
+        super.createAdapters();
+        attachAdapter(AdapterNames.SP_CONVERT_ADAPTER_NAME);
     }
 }

@@ -1,5 +1,5 @@
 /*
- * @(#)Heading.java
+ * @(#)BankingAngle.java
  *
  * Goubaud Sylvain
  * Created : 2016
@@ -23,22 +23,22 @@ import fr.gsyltc.framework.domaintypes.DomainType;
  *
  * @author Goubaud Sylvain
  */
-public class Heading extends DomainType<Angle> {
+public class BankingAngle extends DomainType<Angle> {
     
     
     /**
     *
     */
     private static final long serialVersionUID = 7196558909459902910L;
-
+    
     /**
      * @param value
      * @param unit
      */
-    public Heading(final Double value, final Unit<Angle> unit) {
+    public BankingAngle(final Double value, final Unit<Angle> unit) {
         super(value, unit);
     }
-
+    
     /**
      *
      * @return

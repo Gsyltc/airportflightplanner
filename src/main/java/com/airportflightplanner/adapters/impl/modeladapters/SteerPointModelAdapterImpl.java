@@ -12,6 +12,9 @@
 
 package com.airportflightplanner.adapters.impl.modeladapters;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.airportflightplanner.adapters.api.modeladapters.SteerPointModelAdapter;
 import com.airportflightplanner.flightplanvisualization.api.SteerPointsListModelListener;
 import com.airportflightplanner.models.steerpoints.SteerPointsCollectionModel;
@@ -32,15 +35,17 @@ public class SteerPointModelAdapterImpl extends AbstractModelAdapterImpl<SteerPo
      *
      */
     private static final long serialVersionUID = -4401948080326943883L;
-
+    
+    /** */
+    private final List<SteerPointsListModelListener> listeners = new ArrayList<SteerPointsListModelListener>();
+    
     /**
      *
      * {@inheritDoc}.
      */
     @Override
     public void addListener(final SteerPointsListModelListener listener) {
-        // TODO Auto-generated method stub
-        
+        listeners.add(listener);
     }
     
     /**
@@ -49,8 +54,7 @@ public class SteerPointModelAdapterImpl extends AbstractModelAdapterImpl<SteerPo
      */
     @Override
     public void removeListener(final SteerPointsListModelListener listener) {
-        // TODO Auto-generated method stub
-        
+        listeners.remove(listener);
     }
     
     /**
@@ -59,8 +63,11 @@ public class SteerPointModelAdapterImpl extends AbstractModelAdapterImpl<SteerPo
      */
     @Override
     public void addSteerPoint(final SteerPointReader value) {
-        // TODO Auto-generated method stub
-        
+        if (null != value) {
+            for (final SteerPointsListModelListener listener : getListeners()) {
+                listener.onSteerPointAdded(value);
+            }
+        }
     }
     
     /**
@@ -69,8 +76,18 @@ public class SteerPointModelAdapterImpl extends AbstractModelAdapterImpl<SteerPo
      */
     @Override
     public void removeSteerPoint(final SteerPointReader value) {
-        // TODO Auto-generated method stub
-        
+        if (null != value) {
+            for (final SteerPointsListModelListener listener : getListeners()) {
+                listener.onSteerPointRemoved(value);
+            }
+        }
+    }
+    
+    /**
+     * @return the listeners
+     */
+    private List<SteerPointsListModelListener> getListeners() {
+        return listeners;
     }
     
     /**
@@ -79,8 +96,19 @@ public class SteerPointModelAdapterImpl extends AbstractModelAdapterImpl<SteerPo
      */
     @Override
     public void init() {
-        // TODO Auto-generated method stub
+        // Nothing to do
         
+    }
+    
+    /**
+     *
+     * {@inheritDoc}.
+     */
+    @Override
+    public void reset() {
+        for (final SteerPointsListModelListener listener : getListeners()) {
+            listener.onListReset();
+        }
     }
     
 }

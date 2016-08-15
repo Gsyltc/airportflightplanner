@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 9 août 2016.
+ * Modified : 15 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -14,8 +14,6 @@ package com.airportflightplanner.waypointmodifications.models;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-
-import javax.measure.DecimalMeasure;
 
 import org.joda.time.Period;
 
@@ -34,7 +32,7 @@ public class WaypointsEditorModel extends Model implements WaypointsEditorWriter
     
     
     /** the distance of the flight. */
-    DecimalMeasure<Distance> distance;
+    Distance distance;
     /** the duration of the flight. */
     Period flightTime;
     /** the list of waypoints. */
@@ -46,7 +44,7 @@ public class WaypointsEditorModel extends Model implements WaypointsEditorWriter
      * {@inheritDoc}.
      */
     @Override
-    public DecimalMeasure<Distance> getDistance() {
+    public Distance getDistance() {
         return distance;
     }
 
@@ -76,8 +74,8 @@ public class WaypointsEditorModel extends Model implements WaypointsEditorWriter
      * {@inheritDoc}.
      */
     @Override
-    public void setDistance(final DecimalMeasure<Distance> value) {
-        final DecimalMeasure<Distance> oldValue = getDistance();
+    public void setDistance(final Distance value) {
+        final Distance oldValue = getDistance();
         if (!distance.getValue().equals(value.getValue())) {
             distance = value;
             firePropertyChange(WaypointsEditorProperties.DISTANCE, oldValue, distance);

@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 13 août 2016.
+ * Modified : 15 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -12,15 +12,14 @@
 
 package com.airportflightplanner.models.steerpoints;
 
-import javax.measure.DecimalMeasure;
-import javax.measure.Measure;
-import javax.measure.quantity.Angle;
-import javax.measure.quantity.Velocity;
+import javax.measure.unit.NonSI;
 
 import org.jscience.geography.coordinates.Altitude;
 import org.jscience.geography.coordinates.LatLong;
 
+import com.airportflightplanner.common.domaintypes.BankingAngle;
 import com.airportflightplanner.common.domaintypes.Heading;
+import com.airportflightplanner.common.domaintypes.Speed;
 import com.airportflightplanner.common.types.AltitudeType;
 import com.airportflightplanner.common.types.FormationType;
 import com.airportflightplanner.models.steerpoints.api.bean.SteerPointProperties;
@@ -41,7 +40,7 @@ public class SteerPointModel extends Model implements SteerPointWriter {
     /** */
     private LatLong latLong;
     /** */
-    private DecimalMeasure<Velocity> velocity;
+    private Speed speed;
     /** */
     private Altitude altitude;
     /** */
@@ -49,14 +48,14 @@ public class SteerPointModel extends Model implements SteerPointWriter {
     /** */
     private String name = "";
     /** */
-    private DecimalMeasure<Heading> heading;
+    private Heading heading;
     /** */
     private FormationType formation;
     /** */
-    private Measure<Integer, Angle> maxBankingAngle;
-    
+    private BankingAngle maxBankingAngle;
+
     /** */
-    
+
     /**
      *
      * {@inheritDoc}
@@ -65,16 +64,16 @@ public class SteerPointModel extends Model implements SteerPointWriter {
     public LatLong getLatLong() {
         return latLong;
     }
-    
+
     /**
      *
      * {@inheritDoc}
      */
     @Override
-    public DecimalMeasure<Velocity> getVelocity() {
-        return velocity;
+    public Speed getSpeed() {
+        return speed;
     }
-    
+
     /**
      *
      * {@inheritDoc}
@@ -83,7 +82,7 @@ public class SteerPointModel extends Model implements SteerPointWriter {
     public Altitude getAltitude() {
         return altitude;
     }
-    
+
     /**
      *
      * {@inheritDoc}
@@ -92,7 +91,7 @@ public class SteerPointModel extends Model implements SteerPointWriter {
     public String getName() {
         return name;
     }
-    
+
     /**
      *
      * {@inheritDoc}
@@ -101,17 +100,17 @@ public class SteerPointModel extends Model implements SteerPointWriter {
     public AltitudeType getAltType() {
         return altType;
     }
-    
+
     /**
      *
      *
      * {@inheritDoc}.
      */
     @Override
-    public DecimalMeasure<Heading> getHeading() {
-        return heading;
+    public Heading getHeading() {
+        return new Heading(Double.valueOf(0.0), NonSI.DEGREE_ANGLE);
     }
-    
+
     /**
      *
      *
@@ -121,16 +120,16 @@ public class SteerPointModel extends Model implements SteerPointWriter {
     public FormationType getFormation() {
         return formation;
     }
-    
+
     /**
      *
      * {@inheritDoc}.
      */
     @Override
-    public Measure<Integer, Angle> getMaxBankingAngle() {
+    public BankingAngle getMaxBankingAngle() {
         return maxBankingAngle;
     }
-    
+
     /**
      *
      * {@inheritDoc}
@@ -143,20 +142,20 @@ public class SteerPointModel extends Model implements SteerPointWriter {
             firePropertyChange(SteerPointProperties.LAT_LONG, oldValue, latLong);
         }
     }
-    
+
     /**
      *
      * {@inheritDoc}
      */
     @Override
-    public void setVelocity(final DecimalMeasure<Velocity> decimalMeasure) {
-        final DecimalMeasure<Velocity> oldValue = getVelocity();
+    public void setSpeed(final Speed decimalMeasure) {
+        final Speed oldValue = getSpeed();
         if (!decimalMeasure.equals(oldValue)) {
-            velocity = decimalMeasure;
-            firePropertyChange(SteerPointProperties.VELOCITY, oldValue, velocity);
+            speed = decimalMeasure;
+            firePropertyChange(SteerPointProperties.VELOCITY, oldValue, speed);
         }
     }
-    
+
     /**
      *
      * {@inheritDoc}
@@ -169,7 +168,7 @@ public class SteerPointModel extends Model implements SteerPointWriter {
             firePropertyChange(SteerPointProperties.VELOCITY, oldValue, altitude);
         }
     }
-    
+
     /**
      *
      * {@inheritDoc}
@@ -182,7 +181,7 @@ public class SteerPointModel extends Model implements SteerPointWriter {
             firePropertyChange(SteerPointProperties.NAME, oldValue, name);
         }
     }
-    
+
     /**
      *
      * @param value
@@ -195,21 +194,21 @@ public class SteerPointModel extends Model implements SteerPointWriter {
             firePropertyChange(SteerPointProperties.ALT_TYPE, oldValue, altType);
         }
     }
-    
+
     /**
      *
      *
      * {@inheritDoc}.
      */
     @Override
-    public void setHeading(final DecimalMeasure<Heading> value) {
-        final DecimalMeasure<Heading> oldValue = getHeading();
+    public void setHeading(final Heading value) {
+        final Heading oldValue = getHeading();
         if (!value.equals(oldValue)) {
             heading = value;
             firePropertyChange(SteerPointProperties.HEADING, oldValue, heading);
         }
     }
-    
+
     /**
      *
      *
@@ -223,15 +222,15 @@ public class SteerPointModel extends Model implements SteerPointWriter {
             firePropertyChange(SteerPointProperties.FORMATION_TYPE, oldValue, formation);
         }
     }
-    
+
     /**
      *
      *
      * {@inheritDoc}.
      */
     @Override
-    public void setMaxBankingAngle(final Measure<Integer, Angle> value) {
-        final Measure<Integer, Angle> oldValue = getMaxBankingAngle();
+    public void setMaxBankingAngle(final BankingAngle value) {
+        final BankingAngle oldValue = getMaxBankingAngle();
         if (!value.equals(oldValue)) {
             maxBankingAngle = value;
             firePropertyChange(SteerPointProperties.MAX_BANKING_ANGLE, oldValue, maxBankingAngle);

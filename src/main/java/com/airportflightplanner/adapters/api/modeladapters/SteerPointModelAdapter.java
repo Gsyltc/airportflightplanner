@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 13 août 2016.
+ * Modified : 15 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -46,4 +46,9 @@ public interface SteerPointModelAdapter extends CommonAdapter {
      * @param value
      */
     void removeSteerPoint(SteerPointReader value);
+
+    /**
+     *
+     */
+    void reset();
 }

@@ -1,5 +1,5 @@
 /*
- * @(#)Heading.java
+ * @(#)Speed.java
  *
  * Goubaud Sylvain
  * Created : 2016
@@ -12,39 +12,43 @@
 
 package com.airportflightplanner.common.domaintypes;
 
-import javax.measure.quantity.Angle;
+import java.util.regex.Pattern;
+
+import javax.measure.quantity.Velocity;
 import javax.measure.unit.Unit;
 
 import fr.gsyltc.framework.domaintypes.DomainType;
 
 /**
- * This class represents a heading angle. The system unit for this quantity is
- * "°" (degree).
+ * This class represents a speed. The system unit for this quantity is "m/s"
+ * (meter per seconds).
  *
  * @author Goubaud Sylvain
  */
-public class Heading extends DomainType<Angle> {
+public class Speed extends DomainType<Velocity> {
     
     
     /**
-    *
-    */
+     *
+     */
     private static final long serialVersionUID = 7196558909459902910L;
 
     /**
      * @param value
      * @param unit
      */
-    public Heading(final Double value, final Unit<Angle> unit) {
+    public Speed(final Double value, final Unit<Velocity> unit) {
         super(value, unit);
+        setPattern(Pattern.compile("^\\d{1,3}$"));
     }
 
     /**
      *
-     * @return
+     * {@inheritDoc}.
      */
     @Override
-    public Unit<Angle> getSIUnit() {
-        return Angle.UNIT;
+    public Unit<Velocity> getSIUnit() {
+        return Velocity.UNIT;
     }
+
 }

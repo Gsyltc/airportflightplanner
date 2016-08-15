@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 13 août 2016.
+ * Modified : 15 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -14,7 +14,6 @@ package com.airportflightplanner.flightplanvisualization.adapter.steerpoints;
 
 import java.text.MessageFormat;
 
-import javax.measure.quantity.Velocity;
 import javax.measure.unit.NonSI;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
@@ -22,6 +21,7 @@ import javax.swing.event.ListDataListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.airportflightplanner.common.domaintypes.Speed;
 import com.airportflightplanner.common.processors.GeographicProcessor;
 import com.airportflightplanner.common.types.GeographicFormatter;
 import com.airportflightplanner.flightplanvisualization.adapter.flightplan.FlightPlanVisualizationTableAdapter;
@@ -116,7 +116,7 @@ public class SteerPointsTableAdapter extends AbstractTableAdapter<SteerPointsCol
             break;
         
         case VELOCITY:
-            result = MessageFormat.format(GeographicFormatter.VELOCITY_KNOT, new Object[] { steerpoint.getVelocity().getValue() });
+            result = MessageFormat.format(GeographicFormatter.VELOCITY_KNOT, new Object[] { steerpoint.getSpeed().getValue() });
             break;
         
         default:
@@ -169,7 +169,7 @@ public class SteerPointsTableAdapter extends AbstractTableAdapter<SteerPointsCol
             break;
         
         case VELOCITY:
-            result = Velocity.class;
+            result = Speed.class;
             break;
         
         default:

@@ -1,7 +1,15 @@
-/* @(#)FlightPlanListModelListener.java
+/*
+ * @(#)SteerPointsListModelListener.java
  *
- * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
+ * Goubaud Sylvain
+ * Created : 2016
+ * Modified : 15 août 2016.
+ *
+ * This code may be freely used and modified on any personal or professional
+ * project.  It comes with no warranty.
+ *
  */
+
 package com.airportflightplanner.flightplanvisualization.api;
 
 import com.airportflightplanner.models.steerpoints.api.bean.SteerPointReader;
@@ -11,16 +19,22 @@ import com.airportflightplanner.models.steerpoints.api.bean.SteerPointReader;
  *
  */
 public interface SteerPointsListModelListener {
+    
+    
+    /**
+     *
+     * @param steerPointReader
+     */
+    void onSteerPointAdded(SteerPointReader steerPointReader);
 
     /**
      *
      * @param steerPointReader
      */
-    void addSteerPoint(SteerPointReader steerPointReader);
+    void onSteerPointRemoved(SteerPointReader steerPointReader);
 
     /**
      *
-     * @param steerPointReader
      */
-    void removeSteerPoint(SteerPointReader steerPointReader);
+    void onListReset();
 }

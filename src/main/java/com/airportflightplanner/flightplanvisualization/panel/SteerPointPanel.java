@@ -28,7 +28,6 @@ import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPa
 import com.airportflightplanner.flightplanvisualization.presenter.steerpoints.SteerPointsPresenter;
 import com.airportflightplanner.models.flightplans.api.bean.FlightPlanReader;
 import com.airportflightplanner.models.steerpoints.api.bean.SteerPointReader;
-import com.airportflightplanner.models.steerpoints.api.collection.SteerPointsCollectionReader;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
@@ -94,8 +93,7 @@ public class SteerPointPanel extends AbstractCommandablePanel {
     public final void createSlots() {
         super.createSlots();
         final Slot slot = new Slot(TopicName.FP_TABLE_SELECTED_TOPIC, getClass().getSimpleName());
-        final SteerPointsPresenter presenter = (SteerPointsPresenter) getPresenter(STEERPOINT_PRESENTER);
-        final SteerPointsCollectionReader steerPointsModel = presenter.getBean();
+        
         slot.setSlotAction(new SlotAction<FlightPlanReader>() {
             
             
@@ -103,7 +101,7 @@ public class SteerPointPanel extends AbstractCommandablePanel {
              *
              */
             private static final long serialVersionUID = -2598479386857311222L;
-
+            
             /**
              *
              * {@inheritDoc}
@@ -111,22 +109,23 @@ public class SteerPointPanel extends AbstractCommandablePanel {
             @Override
             public void doAction(final FlightPlanReader flightPlanReader) {
                 final SteerPointModelAdapter adapter = (SteerPointModelAdapter) findAdapter(AdapterNames.STEERP_ADAPTER_NAME);
-                steerPointsModel.getSteerPointsListModel().clear();
+                adapter.reset();
                 if (null != flightPlanReader) {
                     final List<SteerPointReader> steerPoints = flightPlanReader.getSteerPoints();
                     for (final SteerPointReader steerPointReader : steerPoints) {
                         adapter.addSteerPoint(steerPointReader);
                     }
-
-                    // steerPointsModel.addSteerPoints(steerPoints);
+                    
                 }
+                final SteerPointsPresenter presenter = (SteerPointsPresenter) getPresenter(STEERPOINT_PRESENTER);
+                presenter.triggerCommit();
             }
         });
     }
 
     /**
-     * @return SteerPoint Panel.
      *
+     * @return
      */
     private JScrollPane createSteerPointsPanel() {
         final DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
