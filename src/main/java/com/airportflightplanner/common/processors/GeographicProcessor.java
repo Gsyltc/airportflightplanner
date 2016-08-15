@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 13 août 2016.
+ * Modified : 15 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -45,7 +45,7 @@ public class GeographicProcessor {
     private static final int MINUTE_IN_SECOND = 60;
     /** */
     private static final double TIME_FACTOR = 3600.0;
-
+    
     /**
      *
      * @param latLong
@@ -55,7 +55,7 @@ public class GeographicProcessor {
     public static String getFormattedLatitude(final LatLong latLong) {
         return decimalToDMS(latLong.latitudeValue(NonSI.DEGREE_ANGLE), true);
     }
-
+    
     /**
      *
      * @param latLong
@@ -65,7 +65,7 @@ public class GeographicProcessor {
     public static String getFormattedLongitude(final LatLong latLong) {
         return decimalToDMS(latLong.longitudeValue(NonSI.DEGREE_ANGLE), false);
     }
-
+    
     /**
      * Get the duration of the flight.
      *
@@ -85,7 +85,7 @@ public class GeographicProcessor {
         }
         return result;
     }
-
+    
     /**
      * Get the time between two steerpoint.
      *
@@ -96,12 +96,12 @@ public class GeographicProcessor {
      * @return the duration.
      */
     public static long getTimeBetweenWaypoint(final SteerPointReader origin, final SteerPointReader destination) {
-        final double velocity = origin.getVelocity().doubleValue(SI.METERS_PER_SECOND);
+        final double velocity = origin.getSpeed().doubleValue(SI.METERS_PER_SECOND);
         final long result = (long) (calculateDistanceBeetwenPoint(origin, destination) / velocity * THOUSAND);
-
+        
         return result;
     }
-
+    
     /**
      * Calculate distance between 2 points (Geodesic - WG84).
      *
@@ -114,15 +114,15 @@ public class GeographicProcessor {
     public static double calculateDistanceBeetwenPoint(final SteerPointReader origin, final SteerPointReader destination) {
         final GlobalPosition startWaypoint = new GlobalPosition(origin.getLatLong().latitudeValue(NonSI.DEGREE_ANGLE), //
                 origin.getLatLong().longitudeValue(NonSI.DEGREE_ANGLE), origin.getAltitude().doubleValue(NonSI.FOOT));
-
+        
         final GlobalPosition endWaypoint = new GlobalPosition(destination.getLatLong().latitudeValue(NonSI.DEGREE_ANGLE), //
                 destination.getLatLong().longitudeValue(NonSI.DEGREE_ANGLE), destination.getAltitude().doubleValue(NonSI.FOOT));
-
+        
         final double result = new GeodeticCalculator().calculateGeodeticMeasurement(Ellipsoid.WGS84, startWaypoint, endWaypoint)
                 .getPointToPointDistance();
         return result;
     }
-
+    
     /**
      * @param coord
      * @param isLAtitude
@@ -140,7 +140,7 @@ public class GeographicProcessor {
             formatDegree.setMinimumIntegerDigits(2);
             if (degree > 0) {
                 direction = "N";
-
+                
             } else {
                 direction = "S";
             }
@@ -154,7 +154,7 @@ public class GeographicProcessor {
             }
         }
         formatDegree.setRoundingMode(RoundingMode.CEILING);
-
+        
         // Minutes
         value = mod * MINUTE_IN_SECOND;
         mod = coord % 1;
@@ -164,17 +164,17 @@ public class GeographicProcessor {
         }
         final DecimalFormat formatMinutes = new DecimalFormat("##");
         formatMinutes.setRoundingMode(RoundingMode.CEILING);
-
+        
         final double second = mod * 60;
         final DecimalFormat formatSecond = new DecimalFormat("##.####");
         formatSecond.setRoundingMode(RoundingMode.CEILING);
-
+        
         return MessageFormat.format(GeographicFormatter.LATITUDE_DMS, new Object[] { formatDegree.format(degree), //
                 formatMinutes.format(intMinutes), //
                 formatSecond.format(second), direction });
-
+        
     }
-
+    
     /**
      * Conversion DMS to decimal.
      *
@@ -191,12 +191,12 @@ public class GeographicProcessor {
     public double dMSToDecimal(final String hemOUmeridien, final double degres, final double minutes, final double secondes) {
         double latOrLon = 0;
         double signe = 1.0;
-
+        
         if (WEST.equals(hemOUmeridien) || SOUTH.equals(hemOUmeridien)) {
             signe = -1.0;
         }
         latOrLon = signe * (Math.floor(degres) + Math.floor(minutes) / MINUTE_IN_SECOND + secondes / TIME_FACTOR);
-
+        
         return latOrLon;
     }
 }

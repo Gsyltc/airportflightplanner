@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 13 août 2016.
+ * Modified : 15 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -37,7 +37,7 @@ public class FlightPlanCollectionModelAdapterImpl extends AbstractModelAdapterIm
     private static final long serialVersionUID = 4408549118062180286L;
     /** */
     private final List<FlightPlanVisualizationListModelListener> listeners = new ArrayList<FlightPlanVisualizationListModelListener>();
-    
+
     /**
      * {@inheritDoc}.
      */
@@ -45,7 +45,7 @@ public class FlightPlanCollectionModelAdapterImpl extends AbstractModelAdapterIm
     public void init() {
         // Nothing to do
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -53,7 +53,7 @@ public class FlightPlanCollectionModelAdapterImpl extends AbstractModelAdapterIm
     public void setCurrentAirport(final String value) {
         getModel().setCurrentAirport(value);
     }
-    
+
     /**
      *
      * {@inheritDoc}.
@@ -62,11 +62,11 @@ public class FlightPlanCollectionModelAdapterImpl extends AbstractModelAdapterIm
     public final void addFlightPlan(final FlightPlanReader value) {
         if (null != value) {
             for (final FlightPlanVisualizationListModelListener listener : getListeners()) {
-                listener.addFlightPlan(value);
+                listener.onFlightPlanAdded(value);
             }
         }
     }
-    
+
     /**
      *
      * {@inheritDoc}.
@@ -75,11 +75,11 @@ public class FlightPlanCollectionModelAdapterImpl extends AbstractModelAdapterIm
     public final void removeFlightPlan(final FlightPlanReader value) {
         if (null != value) {
             for (final FlightPlanVisualizationListModelListener listener : getListeners()) {
-                listener.removeFlightPlan(value);
+                listener.onFlightPlanRemoved(value);
             }
         }
     }
-    
+
     /**
      *
      * {@inheritDoc}.
@@ -88,7 +88,7 @@ public class FlightPlanCollectionModelAdapterImpl extends AbstractModelAdapterIm
     public final void addListener(final FlightPlanVisualizationListModelListener listener) {
         getListeners().add(listener);
     }
-    
+
     /**
      *
      * {@inheritDoc}.
@@ -97,7 +97,7 @@ public class FlightPlanCollectionModelAdapterImpl extends AbstractModelAdapterIm
     public final void removeListener(final FlightPlanVisualizationListModelListener listener) {
         getListeners().remove(listener);
     }
-    
+
     /**
      *
      * @ @Override private List
@@ -111,10 +111,10 @@ public class FlightPlanCollectionModelAdapterImpl extends AbstractModelAdapterIm
     @Override
     public void resetFlightPlans() {
         for (final FlightPlanVisualizationListModelListener listener : getListeners()) {
-            listener.resetFlightPlans();
+            listener.onFlightPlansReset();
         }
     }
-    
+
     /**
      * @return the listeners
      */

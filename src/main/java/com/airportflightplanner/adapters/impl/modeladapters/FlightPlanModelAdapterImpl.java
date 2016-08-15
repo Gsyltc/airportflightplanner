@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 13 août 2016.
+ * Modified : 16 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -13,7 +13,6 @@
 package com.airportflightplanner.adapters.impl.modeladapters;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.measure.unit.NonSI;
@@ -34,6 +33,7 @@ import com.airportflightplanner.common.types.StartDays;
 import com.airportflightplanner.common.utils.time.TimeUtils;
 import com.airportflightplanner.models.flightplans.FlightPlanModel;
 import com.airportflightplanner.models.steerpoints.api.bean.SteerPointReader;
+import com.jgoodies.common.collect.LinkedListModel;
 
 import fr.gsyltc.framework.adapters.AbstractReceiverModelAdapterImpl;
 import fr.gsyltc.framework.slotsignals.action.api.SlotAction;
@@ -67,7 +67,7 @@ public class FlightPlanModelAdapterImpl extends AbstractReceiverModelAdapterImpl
      * {@inheritDoc}.
      */
     @Override
-    public final void addSteerpoints(final List<SteerPointReader> steerpoints) {
+    public final void addSteerpoints(final LinkedListModel<SteerPointReader> steerpoints) {
         getModel().setSteerPoints(steerpoints);
 
         // calculate Flight Time

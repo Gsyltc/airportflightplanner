@@ -1,6 +1,13 @@
-/* @(#)FlightPlanListModelListener.java
+/*
+ * @(#)FlightPlanVisualizationListModelListener.java
  *
- * Copyright (c) 2016 Goubaud Sylvain. All rights reserved.
+ * Goubaud Sylvain
+ * Created : 2016
+ * Modified : 15 août 2016.
+ *
+ * This code may be freely used and modified on any personal or professional
+ * project.  It comes with no warranty.
+ *
  */
 
 package com.airportflightplanner.flightplanvisualization.api;
@@ -18,16 +25,16 @@ public interface FlightPlanVisualizationListModelListener {
      *
      * @param flightPlan
      */
-    void addFlightPlan(FlightPlanReader flightPlan);
-
+    void onFlightPlanAdded(FlightPlanReader flightPlan);
+    
     /**
      *
      * @param flightPlan
      */
-    void removeFlightPlan(FlightPlanReader flightPlan);
-
+    void onFlightPlanRemoved(FlightPlanReader flightPlan);
+    
     /**
      *
      */
-    void resetFlightPlans();
+    void onFlightPlansReset();
 }

@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 14 août 2016.
+ * Modified : 16 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -22,8 +22,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 
@@ -40,6 +38,7 @@ import com.airportflightplanner.models.flightplans.FlightPlanModel;
 import com.airportflightplanner.models.flightplans.api.collection.FlightPlanCollectionProperties;
 import com.airportflightplanner.models.steerpoints.SteerPointModel;
 import com.airportflightplanner.models.steerpoints.api.bean.SteerPointReader;
+import com.jgoodies.common.collect.LinkedListModel;
 
 /**
  * @author Goubaud Sylvain
@@ -210,7 +209,7 @@ public class FlightPlanFileReader {
                                     break;
                                 
                                 case STARTSTEERPOINTS:
-                                    final List<SteerPointReader> steerpoints = new ArrayList<SteerPointReader>();
+                                    final LinkedListModel<SteerPointReader> steerpoints = new LinkedListModel<SteerPointReader>();
                                     line = reader.readLine();
                                     while (!FlightPlanInformationTypes.ENDSTEERPOINTS.name().equals(line)) {
                                         final SteerPointModel steerPoint = steerPointsConvertAdapter.convertSteerPoint(line);

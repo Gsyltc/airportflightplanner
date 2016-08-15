@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 13 août 2016.
+ * Modified : 16 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -36,6 +36,7 @@ import org.apache.logging.log4j.Logger;
 import com.airportflightplanner.adapters.AdapterNames;
 import com.airportflightplanner.adapters.api.modeladapters.FlightPlanCollectionModelAdapter;
 import com.airportflightplanner.adapters.api.modeladapters.FlightPlanModelAdapter;
+import com.airportflightplanner.adapters.api.modeladapters.SteerPointModelAdapter;
 import com.airportflightplanner.common.slotsignal.TopicName;
 import com.airportflightplanner.common.types.ActionTypes;
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
@@ -43,6 +44,7 @@ import com.airportflightplanner.flightplanvisualization.messages.FlightPlanVisua
 import com.airportflightplanner.flightplanvisualization.presenter.flightplan.FlightPlanVisualizationPresenter;
 import com.airportflightplanner.models.flightplans.api.bean.FlightPlanReader;
 import com.airportflightplanner.models.flightplans.api.collection.FlightPlanCollectionReader;
+import com.airportflightplanner.models.steerpoints.api.bean.SteerPointReader;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
@@ -120,6 +122,7 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
         super.createAdapters();
         attachAdapter(AdapterNames.FP_COLL_ADAPTER_NAME);
         attachAdapter(AdapterNames.FP_ADAPTER_NAME);
+        attachAdapter(AdapterNames.STEERP_ADAPTER_NAME);
     }
     
     /**
@@ -214,7 +217,8 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
     @Override
     public final void createSlots() {
         super.createSlots();
-        
+        final PresentationModel<FlightPlanReader> fpPresenter = (PresentationModel<FlightPlanReader>) getPresenter(
+                FP_COLLECTION_PRESENTER);
         final Slot slot = new Slot(TopicName.FP_TABLE_SELECTED_TOPIC, getClass().getSimpleName());
         slot.setSlotAction(new SlotAction<FlightPlanReader>() {
             
@@ -230,10 +234,16 @@ public class FlightPlanListPanel extends AbstractCommandablePanel {
              */
             @Override
             public void doAction(final FlightPlanReader bean) {
-                final PresentationModel<FlightPlanReader> fpPresenter = (PresentationModel<FlightPlanReader>) getPresenter(
-                        FP_COLLECTION_PRESENTER);
                 fpPresenter.triggerFlush();
                 fpPresenter.setBean(bean);
+                final SteerPointModelAdapter adapter = (SteerPointModelAdapter) findAdapter(AdapterNames.STEERP_ADAPTER_NAME);
+                adapter.reset();
+                if (null != bean) {
+                    final List<SteerPointReader> steerPoints = bean.getSteerPoints();
+                    for (final SteerPointReader steerPointReader : steerPoints) {
+                        adapter.addSteerPoint(steerPointReader);
+                    }
+                }
             }
         });
         

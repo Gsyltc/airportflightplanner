@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 13 août 2016.
+ * Modified : 16 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -14,7 +14,6 @@ package com.airportflightplanner.flightplanvisualization.adapter.steerpoints;
 
 import java.text.MessageFormat;
 
-import javax.measure.quantity.Velocity;
 import javax.measure.unit.NonSI;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
@@ -22,11 +21,12 @@ import javax.swing.event.ListDataListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.airportflightplanner.common.domaintypes.Speed;
 import com.airportflightplanner.common.processors.GeographicProcessor;
 import com.airportflightplanner.common.types.GeographicFormatter;
 import com.airportflightplanner.flightplanvisualization.adapter.flightplan.FlightPlanVisualizationTableAdapter;
+import com.airportflightplanner.models.flightplans.api.bean.FlightPlanReader;
 import com.airportflightplanner.models.steerpoints.api.bean.SteerPointReader;
-import com.airportflightplanner.models.steerpoints.api.collection.SteerPointsCollectionReader;
 import com.jgoodies.binding.adapter.AbstractTableAdapter;
 import com.jgoodies.common.collect.LinkedListModel;
 
@@ -34,7 +34,7 @@ import com.jgoodies.common.collect.LinkedListModel;
  * @author Goubaud Sylvain
  *
  */
-public class SteerPointsTableAdapter extends AbstractTableAdapter<SteerPointsCollectionReader> {
+public class SteerPointsTableAdapter extends AbstractTableAdapter<FlightPlanReader> {
     
     
     /** The logger of this class. */
@@ -52,14 +52,13 @@ public class SteerPointsTableAdapter extends AbstractTableAdapter<SteerPointsCol
 
     /**
      *
-     * @param steerPointCollReader
+     * @param model
      *            List model for the steerpoint.
      */
-    public SteerPointsTableAdapter(final SteerPointsCollectionReader steerPointCollReader) {
+    public SteerPointsTableAdapter(final LinkedListModel<SteerPointReader> model) {
         super();
-        final LinkedListModel<SteerPointReader> listModel = steerPointCollReader.getSteerPointsListModel();
-        setListModel(listModel);
-        listModel.addListDataListener(new ListDataListener() {
+        setListModel(model);
+        model.addListDataListener(new ListDataListener() {
             
             
             /**
@@ -116,7 +115,7 @@ public class SteerPointsTableAdapter extends AbstractTableAdapter<SteerPointsCol
             break;
         
         case VELOCITY:
-            result = MessageFormat.format(GeographicFormatter.VELOCITY_KNOT, new Object[] { steerpoint.getVelocity().getValue() });
+            result = MessageFormat.format(GeographicFormatter.VELOCITY_KNOT, new Object[] { steerpoint.getSpeed().getValue() });
             break;
         
         default:
@@ -169,7 +168,7 @@ public class SteerPointsTableAdapter extends AbstractTableAdapter<SteerPointsCol
             break;
         
         case VELOCITY:
-            result = Velocity.class;
+            result = Speed.class;
             break;
         
         default:

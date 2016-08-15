@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 14 août 2016.
+ * Modified : 16 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -18,13 +18,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joda.time.Period;
 
+import com.airportflightplanner.adapters.AdapterNames;
+import com.airportflightplanner.adapters.api.modeladapters.SteerPointModelAdapter;
 import com.airportflightplanner.common.processors.GeographicProcessor;
 import com.airportflightplanner.common.slotsignal.TopicName;
 import com.airportflightplanner.common.types.ActionTypes;
 import com.airportflightplanner.models.flightplans.api.bean.FlightPlanProperties;
 import com.airportflightplanner.models.flightplans.api.bean.FlightPlanReader;
-import com.airportflightplanner.models.steerpoints.SteerPointsCollectionModel;
 import com.airportflightplanner.models.steerpoints.api.bean.SteerPointReader;
+import com.airportflightplanner.models.steerpoints.api.collection.SteerPointsCollectionProperties;
 import com.airportflightplanner.models.steerpoints.api.collection.SteerPointsCollectionReader;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.beans.Model;
@@ -106,7 +108,6 @@ public class WaypointEditionPanel extends AbstractCommandablePanel {
                 STEERPOINTS_PRESENTER);
         add(createWaypointTextPanel(presenter, stpPresenter), "2, 2,3,1,fill,fill");
         add(createResumePanel(presenter, stpPresenter), "2, 4,3,1,fill,fill");
-        // add(createDaysSelectionPanel(), "2, 4, 3, 1, fill, fill");
 
     }
 
@@ -148,41 +149,38 @@ public class WaypointEditionPanel extends AbstractCommandablePanel {
      */
     @Override
     public void createSlots() {
+        final PresentationModel<SteerPointsCollectionReader> stpPresenter = (PresentationModel<SteerPointsCollectionReader>) getPresenter(
+                STEERPOINTS_PRESENTER);
+        final PresentationModel<FlightPlanReader> fpPresenter = (PresentationModel<FlightPlanReader>) //
+        getPresenter(FP_PRESENTER);
         super.createSlots();
-        final Slot slot = new Slot(TopicName.FP_TABLE_SELECTED_TOPIC, getClass().getSimpleName());
-        slot.registerSlot();
-        slot.setSlotAction(new SlotAction<FlightPlanReader>() {
+
+        final Slot fpSlot = new Slot(TopicName.FP_TABLE_SELECTED_TOPIC, getClass().getSimpleName());
+        fpSlot.setSlotAction(new SlotAction<FlightPlanReader>() {
             
             
             /**
-            *
-            */
-            private static final long serialVersionUID = 1240749169986714101L;
+             *
+             */
+            private static final long serialVersionUID = -5959157823719266328L;
 
             /**
              *
-             * {@inheritDoc}
+             *
+             * {@inheritDoc}.
              */
             @Override
-            public void doAction(final FlightPlanReader flightPlanReader) {
-                final PresentationModel<FlightPlanReader> fpPresenter = (PresentationModel<FlightPlanReader>) //
-                getPresenter(FP_PRESENTER);
-
-                final SteerPointsCollectionModel bean = new SteerPointsCollectionModel();
-                bean.setCurrentFlightPlan(flightPlanReader);
-                for (final SteerPointReader steerPoint : flightPlanReader.getSteerPoints()) {
-                    bean.addSteerPoint(steerPoint);
+            public void doAction(final FlightPlanReader bean) {
+                if (!fpPresenter.getBean().equals(bean)) {
+                    fpPresenter.setBean(bean);
+                    fpPresenter.triggerFlush();
                 }
-                final PresentationModel<SteerPointsCollectionReader> stpPresenter = (PresentationModel<SteerPointsCollectionReader>) getPresenter(
-                        STEERPOINTS_PRESENTER);
-                stpPresenter.setBean(bean);
             }
+
         });
 
         final Slot validationSlot = new Slot(TopicName.VALIDATION_TOPIC, getClass().getSimpleName());
         validationSlot.registerSlot();
-
-        final PresentationModel<FlightPlanReader> presenter = (PresentationModel<FlightPlanReader>) getPresenter(FP_PRESENTER);
         validationSlot.setSlotAction(new SlotAction<ActionTypes>() {
             
             
@@ -202,22 +200,30 @@ public class WaypointEditionPanel extends AbstractCommandablePanel {
                     if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug(this.getClass().getSimpleName() + " : " + "Validate");
                     }
-                    final BufferedValueModel steerpoints = presenter.getBufferedModel(FlightPlanProperties.STEERPOINTS_LIST);
-                    presenter.setValue(FlightPlanProperties.DURATION, new Period(GeographicProcessor.getFlightTime(
+                    
+                    final BufferedValueModel steerpoints = stpPresenter.getBufferedModel(
+                            SteerPointsCollectionProperties.STEERPOINTS_MAP);
+                    final List<SteerPointReader> list = (List<SteerPointReader>) steerpoints.getValue();
+                    fpPresenter.setBufferedValue(FlightPlanProperties.DURATION, new Period(GeographicProcessor.getFlightTime(
                             (List<SteerPointReader>) steerpoints.getValue())));
-                    presenter.triggerCommit();
+                    fpPresenter.setBufferedValue(FlightPlanProperties.STEERPOINTS_LIST, steerpoints.getValue());
+                    fpPresenter.triggerCommit();
+
+                    final SteerPointModelAdapter adapter = (SteerPointModelAdapter) findAdapter(AdapterNames.STEERP_ADAPTER_NAME);
+                    adapter.addSteerPoints(list);
+                    
                     break;
                 
                 case CANCEL:
                     if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug(this.getClass().getSimpleName() + " : " + "CANCEL");
                     }
-                    presenter.triggerFlush();
+                    stpPresenter.triggerFlush();
                     break;
                 
                 case REFRESH:
                     if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug(this.getClass().getSimpleName() + " : " + "REFREASH");
+                        LOGGER.debug(this.getClass().getSimpleName() + " : " + "REFRESH");
                     }
                     if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug("");
@@ -228,5 +234,15 @@ public class WaypointEditionPanel extends AbstractCommandablePanel {
                 }
             }
         });
+    }
+
+    /**
+     *
+     * {@inheritDoc}.
+     */
+    @Override
+    public void createAdapters() {
+        super.createAdapters();
+        attachAdapter(AdapterNames.STEERP_ADAPTER_NAME);
     }
 }

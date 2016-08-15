@@ -23,7 +23,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 
     <bean id="id-SteerPointConvertAdapter" class="com.airportflightplanner.adapters.impl.SteerPointsConvertAdapterImpl">
         <property name="adapterName">
-            <util:constant static-field="com.airportflightplanner.adapters.AdapterNames.AIR_CLASS_ADAPTER_NAME" />
+            <util:constant static-field="com.airportflightplanner.adapters.AdapterNames.SP_CONVERT_ADAPTER_NAME" />
         </property>
     </bean>
 </beans>

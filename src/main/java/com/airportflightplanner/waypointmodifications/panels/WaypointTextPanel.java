@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 14 août 2016.
+ * Modified : 16 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -15,8 +15,6 @@ package com.airportflightplanner.waypointmodifications.panels;
 import java.text.FieldPosition;
 import java.text.Format;
 import java.text.ParsePosition;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JScrollPane;
@@ -26,7 +24,10 @@ import javax.swing.ScrollPaneConstants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.airportflightplanner.adapters.AdapterNames;
+import com.airportflightplanner.adapters.api.SteerPointsConvertAdapter;
 import com.airportflightplanner.models.flightplans.api.bean.FlightPlanReader;
+import com.airportflightplanner.models.steerpoints.SteerPointModel;
 import com.airportflightplanner.models.steerpoints.api.bean.SteerPointReader;
 import com.airportflightplanner.models.steerpoints.api.collection.SteerPointsCollectionProperties;
 import com.airportflightplanner.models.steerpoints.api.collection.SteerPointsCollectionReader;
@@ -65,7 +66,7 @@ public class WaypointTextPanel extends AbstractCommonPanel {
     private static final int ROW_COUNTS = 20;
     /** the steer points presenter index. */
     private static final int STEERPOINTS_PRESENTER = 1;
-
+    
     /**
      * Create the panel.
      *
@@ -75,9 +76,9 @@ public class WaypointTextPanel extends AbstractCommonPanel {
     public WaypointTextPanel(final PresentationModel<FlightPlanReader> currentFpBean,
             final PresentationModel<SteerPointsCollectionReader> stpPresenter) {
         super(currentFpBean, stpPresenter);
-
+        // stpPresenter.setBean(new SteerPointsCollectionModel());
     }
-
+    
     /**
      * {@inheritDoc}
      */
@@ -89,17 +90,17 @@ public class WaypointTextPanel extends AbstractCommonPanel {
                 new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC, //
                         FormSpecs.RELATED_GAP_ROWSPEC, });
-
+        
         setLayout(formLayout);
         setBorder(BorderFactory.createTitledBorder(WaypointModificationMessages.WAYPOINT_LIST_TITLE));
-
-        final PresentationModel<FlightPlanReader> presenter = (PresentationModel<FlightPlanReader>) getPresenter(FP_PRESENTER);
+        
         final PresentationModel<SteerPointsCollectionReader> stpPresenter = (PresentationModel<SteerPointsCollectionReader>) getPresenter(
                 STEERPOINTS_PRESENTER);
+        
         add(createTextArea(stpPresenter), "2, 2");
-
+        
     }
-
+    
     /**
      * Create the text area.
      *
@@ -109,6 +110,8 @@ public class WaypointTextPanel extends AbstractCommonPanel {
      */
     private JScrollPane createTextArea(final PresentationModel<SteerPointsCollectionReader> stpPresenter) {
         final JScrollPane pane = new JScrollPane();
+        final SteerPointsConvertAdapter converterAdapter = (SteerPointsConvertAdapter) findAdapter(
+                AdapterNames.SP_CONVERT_ADAPTER_NAME);
         final BufferedValueModel bufModel = stpPresenter.getBufferedModel(SteerPointsCollectionProperties.STEERPOINTS_MAP);
         final ValueModel value = ConverterFactory.createStringConverter(bufModel, new Format() {
             
@@ -118,7 +121,7 @@ public class WaypointTextPanel extends AbstractCommonPanel {
              *
              */
             private static final long serialVersionUID = 5858092520252522599L;
-
+            
             /**
              *
              * {@inheritDoc}
@@ -126,11 +129,11 @@ public class WaypointTextPanel extends AbstractCommonPanel {
             @Override
             public StringBuffer format(final Object obj, final StringBuffer toAppendTo, final FieldPosition pos) {
                 final StringBuffer buff = new StringBuffer();
-                if (obj instanceof LinkedListModel) {
+                if (obj instanceof LinkedListModel && !((LinkedListModel<?>) obj).isEmpty()) {
                     final LinkedListModel<SteerPointReader> steerPoints = (LinkedListModel<SteerPointReader>) obj;
-
+                    
                     for (final SteerPointReader steerPoint : steerPoints) {
-                        buff.append(steerPoint).append(NEW_LINE);
+                        buff.append(converterAdapter.convertSteerPointToString(steerPoint)).append(NEW_LINE);
                     }
                     if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug("Formating steerpoints : \n" + buff.toString());
@@ -138,7 +141,7 @@ public class WaypointTextPanel extends AbstractCommonPanel {
                 }
                 return buff;
             }
-
+            
             /**
              *
              * {@inheritDoc}
@@ -146,33 +149,38 @@ public class WaypointTextPanel extends AbstractCommonPanel {
             @Override
             public Object parseObject(final String source, final ParsePosition pos) {
                 
-                final List<String> steerpoints = new ArrayList<String>();
+                final LinkedListModel<SteerPointModel> steerpoints = new LinkedListModel<SteerPointModel>();
+                
                 // Check if text is accepted
                 final String[] lines = source.split(NEW_LINE);
                 for (final String line : lines) {
-                    
-                    // if (GeographicProcessor.validateSteerpoints(line)) {
-                    // steerpoints.add(line);
-                    // }
+                    final SteerPointModel steerPoint = converterAdapter.convertSteerPoint(line);
+                    if (null != steerPoint) {
+                        steerpoints.add(steerPoint);
+                    }
                 }
-                //
-                // if (LOGGER.isDebugEnabled()) {
-                // LOGGER.debug("Flight time : " + new
-                // Period(GeographicProcessor.getFlightTime(steerpoints)));
-                // }
-                // GeographicProcessor.getFlightTime(steerpoints);
                 pos.setIndex(source.length() - 1);
                 return steerpoints;
             }
         });
-
+        
         final JTextArea area = BasicComponentFactory.createTextArea(value);
         area.setRows(ROW_COUNTS);
         area.setColumns(1);
-
+        
         pane.add(area);
         pane.setViewportView(area);
         pane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         return pane;
+    }
+    
+    /**
+     *
+     * {@inheritDoc}.
+     */
+    @Override
+    public void createAdapters() {
+        super.createAdapters();
+        attachAdapter(AdapterNames.SP_CONVERT_ADAPTER_NAME);
     }
 }

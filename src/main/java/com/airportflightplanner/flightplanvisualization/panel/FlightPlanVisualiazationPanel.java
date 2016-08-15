@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 13 août 2016.
+ * Modified : 16 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -13,6 +13,9 @@
 package com.airportflightplanner.flightplanvisualization.panel;
 
 import com.airportflightplanner.adapters.AdapterNames;
+import com.airportflightplanner.adapters.api.modeladapters.SteerPointModelAdapter;
+import com.airportflightplanner.common.types.BeanNames;
+import com.airportflightplanner.flightplanvisualization.api.SteerPointsListModelListener;
 import com.airportflightplanner.flightplanvisualization.presenter.flightplan.FlightPlanVisualizationPresenter;
 import com.airportflightplanner.flightplanvisualization.presenter.steerpoints.SteerPointsPresenter;
 import com.airportflightplanner.models.daysselection.api.bean.DaySelectionReader;
@@ -50,7 +53,7 @@ public class FlightPlanVisualiazationPanel extends AbstractCommandablePanel {
     private static final long serialVersionUID = -6354635338489926005L;
     /** */
     protected transient Signal signal;
-
+    
     /** */
     private FlightPlanCollectionReader fpCollection;
     
@@ -71,7 +74,7 @@ public class FlightPlanVisualiazationPanel extends AbstractCommandablePanel {
                 new PresentationModel<FlightPlanReader>((FlightPlanReader) currentFp), //
                 new PresentationModel<DaySelectionReader>((DaySelectionReader) daysSelectionModel));
     }
-
+    
     /**
      *
      */
@@ -92,18 +95,20 @@ public class FlightPlanVisualiazationPanel extends AbstractCommandablePanel {
                         FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC, //
                         FormSpecs.RELATED_GAP_ROWSPEC, });
-
+        
         formLayout.setColumnGroups(new int[][] { new int[] { 2, 4 } });
         setLayout(formLayout);
         final FlightPlanVisualizationPresenter presenter = (FlightPlanVisualizationPresenter) getPresenter(FP_PRESENTER);
         setFpCollection(presenter.getBean());
-
+        
+        final SteerPointModelAdapter spAdapter = (SteerPointModelAdapter) findAdapter(AdapterNames.STEERP_ADAPTER_NAME);
+        spAdapter.addListener((SteerPointsListModelListener) MODELS_PROVIDER.findModelByName(BeanNames.STEERPOINT_MODEL));
         add(createCurrentAirportPanel(), "2, 2, 3, 1, fill, fill");
         add(createDaysSelectionPanel(), "2, 4, 3, 1, fill, fill");
         add(createFlightPlanListPanel(), "2, 6, 3, 1");
         add(createSteerPointPanel(), "2, 8, 3, 1");
     }
-
+    
     /**
      *
      * @return
@@ -114,7 +119,7 @@ public class FlightPlanVisualiazationPanel extends AbstractCommandablePanel {
         panel.build();
         return panel;
     }
-
+    
     /**
      *
      * @return
@@ -126,7 +131,7 @@ public class FlightPlanVisualiazationPanel extends AbstractCommandablePanel {
         panel.build();
         return panel;
     }
-
+    
     /**
      *
      * @return
@@ -137,7 +142,7 @@ public class FlightPlanVisualiazationPanel extends AbstractCommandablePanel {
         panel.build();
         return panel;
     }
-
+    
     /**
      *
      * @return
@@ -148,7 +153,7 @@ public class FlightPlanVisualiazationPanel extends AbstractCommandablePanel {
         panel.build();
         return panel;
     }
-
+    
     /**
      *
      * @param newFpCollection
@@ -156,20 +161,20 @@ public class FlightPlanVisualiazationPanel extends AbstractCommandablePanel {
     private void setFpCollection(final FlightPlanCollectionReader newFpCollection) {
         fpCollection = newFpCollection;
     }
-
+    
     /**
      * @return the fpCollection
      */
     protected FlightPlanCollectionReader getFpCollection() {
         return fpCollection;
     }
-
+    
     /**
      * {@inheritDoc}.
      */
     @Override
     public void createAdapters() {
         super.createAdapters();
-        attachAdapter(AdapterNames.FP_COLL_ADAPTER_NAME);
+        attachAdapter(AdapterNames.STEERP_ADAPTER_NAME);
     }
 }

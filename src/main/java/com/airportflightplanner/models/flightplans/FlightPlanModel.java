@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 13 août 2016.
+ * Modified : 16 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -13,7 +13,6 @@
 package com.airportflightplanner.models.flightplans;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.measure.unit.SI;
@@ -30,6 +29,7 @@ import com.airportflightplanner.models.flightplans.api.bean.FlightPlanProperties
 import com.airportflightplanner.models.flightplans.api.bean.FlightPlanWriter;
 import com.airportflightplanner.models.steerpoints.api.bean.SteerPointReader;
 import com.jgoodies.binding.beans.Model;
+import com.jgoodies.common.collect.LinkedListModel;
 
 /**
  * @author Goubaud Sylvain
@@ -38,7 +38,7 @@ import com.jgoodies.binding.beans.Model;
 // @formatter:off
 public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPMD by sylva on 31/07/16 16:13
 // @formatter:on
-
+    
     /**
      *
      */
@@ -79,10 +79,10 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
     /** */
     private LocalTime startTime;
     /** */
-    private List<SteerPointReader> steerPoints;;
+    private LinkedListModel<SteerPointReader> steerPoints;
     /** */
     private String fileName = "";
-
+    
     /**
      *
      * {@inheritDoc}
@@ -91,7 +91,7 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
     public String getAircraftCie() {
         return aircraftCie;
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -100,7 +100,7 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
     public String getAircraftClass() {
         return aircraftClass;
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -109,7 +109,7 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
     public String getAircraftLivery() {
         return aircraftLivery;
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -118,7 +118,7 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
     public String getAlternateAirport() {
         return alternateAirport;
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -127,7 +127,7 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
     public String getArrivalAirport() {
         return arrivalAirport;
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -136,7 +136,7 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
     public ArrivalType getArrivalType() {
         return arrivalType;
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -145,7 +145,7 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
     public String getCallSign() {
         return callSign;
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -154,7 +154,7 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
     public String getDepartureAirport() {
         return departureAirport;
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -163,7 +163,7 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
     public DepartureType getDepartureType() {
         return departureType;
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -172,7 +172,7 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
     public Period getDuration() {
         return duration;
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -181,7 +181,7 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
     public LocalTime getEndTime() {
         return endTime;
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -190,7 +190,7 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
     public FlightType getFlightType() {
         return flightType;
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -199,7 +199,7 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
     public Altitude getLandingLightAltitude() {
         return landingLightAltitude;
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -208,7 +208,7 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
     public String getName() {
         return name;
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -217,7 +217,7 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
     public Set<StartDays> getStartDays() {
         return startDays;
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -226,16 +226,16 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
     public LocalTime getStartTime() {
         return startTime;
     }
-
+    
     /**
      *
      * {@inheritDoc}
      */
     @Override
-    public List<SteerPointReader> getSteerPoints() {
+    public LinkedListModel<SteerPointReader> getSteerPoints() {
         return steerPoints;
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -244,7 +244,7 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
     public Boolean getFlightToCompletion() {
         return isFightToCompletion;
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -253,7 +253,7 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
     public String getFileName() {
         return fileName;
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -266,7 +266,7 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
             firePropertyChange(FlightPlanProperties.AIRCRAFT_CIE, oldValue, aircraftCie);
         }
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -279,7 +279,7 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
             firePropertyChange(FlightPlanProperties.AIRCRAFT_LIVERY, oldValue, aircraftLivery);
         }
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -292,7 +292,7 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
             firePropertyChange(FlightPlanProperties.AIRCRAFT_CLASS, oldValue, aircraftClass);
         }
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -305,7 +305,7 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
             firePropertyChange(FlightPlanProperties.ALTERNATE_AIRPORT, oldValue, alternateAirport);
         }
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -318,7 +318,7 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
             firePropertyChange(FlightPlanProperties.ARRIVAL_AIRPORT, oldValue, arrivalAirport);
         }
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -331,7 +331,7 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
             firePropertyChange(FlightPlanProperties.ARRIVAL_TYPE, oldValue, arrivalType);
         }
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -344,7 +344,7 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
             firePropertyChange(FlightPlanProperties.CALLSIGN, oldValue, callSign);
         }
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -357,7 +357,7 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
             firePropertyChange(FlightPlanProperties.DEPARTURE_AIRPORT, oldValue, departureAirport);
         }
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -370,7 +370,7 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
             firePropertyChange(FlightPlanProperties.DEPARTURE_TYPE, oldValue, departureType);
         }
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -383,7 +383,7 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
             firePropertyChange(FlightPlanProperties.DURATION, oldValue, duration);
         }
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -396,7 +396,7 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
             firePropertyChange(FlightPlanProperties.END_TIME, oldValue, endTime);
         }
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -409,7 +409,7 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
             firePropertyChange(FlightPlanProperties.FLIGHT_TO_COMPLETION, oldValue, isFightToCompletion);
         }
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -422,7 +422,7 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
             firePropertyChange(FlightPlanProperties.FLIGHT_TYPE, oldValue, flightType);
         }
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -435,7 +435,7 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
             firePropertyChange(FlightPlanProperties.LANDING_LIGHT_ALTITUDE, oldValue, landingLightAltitude);
         }
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -448,7 +448,7 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
             firePropertyChange(FlightPlanProperties.NAME, oldValue, name);
         }
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -460,9 +460,9 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
             startDays = value;
             firePropertyChange(FlightPlanProperties.START_DAYS, oldValue, startDays);
         }
-
+        
     }
-
+    
     /**
      *
      * {@inheritDoc}
@@ -475,20 +475,20 @@ public class FlightPlanModel extends Model implements FlightPlanWriter { // NOPM
             firePropertyChange(FlightPlanProperties.START_TIME, oldValue, startTime);
         }
     }
-
+    
     /**
      *
      * {@inheritDoc}
      */
     @Override
-    public void setSteerPoints(final List<SteerPointReader> value) {
-        final List<SteerPointReader> oldValue = getSteerPoints();
+    public void setSteerPoints(final LinkedListModel<SteerPointReader> value) {
+        final LinkedListModel<SteerPointReader> oldValue = getSteerPoints();
         if (null != value && !value.equals(oldValue)) {
             steerPoints = value;
             firePropertyChange(FlightPlanProperties.STEERPOINTS_LIST, oldValue, steerPoints);
         }
     }
-
+    
     /**
      *
      * {@inheritDoc}

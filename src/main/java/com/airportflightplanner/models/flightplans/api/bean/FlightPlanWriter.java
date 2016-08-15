@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 13 août 2016.
+ * Modified : 16 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -12,7 +12,6 @@
 
 package com.airportflightplanner.models.flightplans.api.bean;
 
-import java.util.List;
 import java.util.Set;
 
 import org.joda.time.LocalTime;
@@ -24,6 +23,7 @@ import com.airportflightplanner.common.types.DepartureType;
 import com.airportflightplanner.common.types.FlightType;
 import com.airportflightplanner.common.types.StartDays;
 import com.airportflightplanner.models.steerpoints.api.bean.SteerPointReader;
+import com.jgoodies.common.collect.LinkedListModel;
 
 /**
  * Flight plan writer.
@@ -184,5 +184,5 @@ public interface FlightPlanWriter extends FlightPlanReader {
      * @param value
      *            the steer points.
      */
-    void setSteerPoints(List<SteerPointReader> value);
+    void setSteerPoints(LinkedListModel<SteerPointReader> value);
 }
