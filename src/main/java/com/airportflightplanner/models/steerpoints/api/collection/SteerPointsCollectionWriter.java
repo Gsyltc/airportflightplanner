@@ -28,7 +28,7 @@ public interface SteerPointsCollectionWriter extends SteerPointsCollectionReader
      * @param currentFlightPlan
      */
     void setCurrentFlightPlan(FlightPlanReader currentFlightPlan);
-
+    
     /**
      * @param newSPListModel
      */

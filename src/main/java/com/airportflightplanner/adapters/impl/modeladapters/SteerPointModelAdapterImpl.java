@@ -35,10 +35,10 @@ public class SteerPointModelAdapterImpl extends AbstractModelAdapterImpl<SteerPo
      *
      */
     private static final long serialVersionUID = -4401948080326943883L;
-
+    
     /** */
     private final List<SteerPointsListModelListener> listeners = new ArrayList<SteerPointsListModelListener>();
-
+    
     /**
      *
      * {@inheritDoc}.
@@ -47,7 +47,7 @@ public class SteerPointModelAdapterImpl extends AbstractModelAdapterImpl<SteerPo
     public void addListener(final SteerPointsListModelListener listener) {
         listeners.add(listener);
     }
-
+    
     /**
      *
      * {@inheritDoc}.
@@ -56,7 +56,7 @@ public class SteerPointModelAdapterImpl extends AbstractModelAdapterImpl<SteerPo
     public void removeListener(final SteerPointsListModelListener listener) {
         listeners.remove(listener);
     }
-
+    
     /**
      *
      * {@inheritDoc}.
@@ -69,7 +69,7 @@ public class SteerPointModelAdapterImpl extends AbstractModelAdapterImpl<SteerPo
             }
         }
     }
-
+    
     /**
      *
      * {@inheritDoc}.
@@ -81,7 +81,7 @@ public class SteerPointModelAdapterImpl extends AbstractModelAdapterImpl<SteerPo
             addSteerPoint(steerPointReader);
         }
     }
-
+    
     /**
      *
      * {@inheritDoc}.
@@ -94,14 +94,14 @@ public class SteerPointModelAdapterImpl extends AbstractModelAdapterImpl<SteerPo
             }
         }
     }
-
+    
     /**
      * @return the listeners
      */
     private List<SteerPointsListModelListener> getListeners() {
         return listeners;
     }
-
+    
     /**
      *
      * {@inheritDoc}.
@@ -109,9 +109,8 @@ public class SteerPointModelAdapterImpl extends AbstractModelAdapterImpl<SteerPo
     @Override
     public void init() {
         // Nothing to do
-
     }
-
+    
     /**
      *
      * {@inheritDoc}.

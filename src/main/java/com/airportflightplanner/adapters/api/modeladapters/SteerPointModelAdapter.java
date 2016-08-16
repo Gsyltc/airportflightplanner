@@ -32,28 +32,28 @@ public interface SteerPointModelAdapter extends CommonAdapter {
      * @param listener
      */
     void addListener(SteerPointsListModelListener listener);
-
+    
     /**
      *
      * @param listener
      */
     void removeListener(SteerPointsListModelListener listener);
-
+    
     /**
      * @param value
      */
     void addSteerPoint(SteerPointReader value);
-
+    
     /**
      * @param value
      */
     void removeSteerPoint(SteerPointReader value);
-
+    
     /**
      *
      */
     void reset();
-
+    
     /**
      * @param list
      */
