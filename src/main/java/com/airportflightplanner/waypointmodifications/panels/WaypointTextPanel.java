@@ -66,7 +66,7 @@ public class WaypointTextPanel extends AbstractCommonPanel {
     private static final int ROW_COUNTS = 20;
     /** the steer points presenter index. */
     private static final int STEERPOINTS_PRESENTER = 1;
-    
+
     /**
      * Create the panel.
      *
@@ -76,9 +76,8 @@ public class WaypointTextPanel extends AbstractCommonPanel {
     public WaypointTextPanel(final PresentationModel<FlightPlanReader> currentFpBean,
             final PresentationModel<SteerPointsCollectionReader> stpPresenter) {
         super(currentFpBean, stpPresenter);
-        // stpPresenter.setBean(new SteerPointsCollectionModel());
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -90,17 +89,16 @@ public class WaypointTextPanel extends AbstractCommonPanel {
                 new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC, //
                         FormSpecs.RELATED_GAP_ROWSPEC, });
-        
+
         setLayout(formLayout);
         setBorder(BorderFactory.createTitledBorder(WaypointModificationMessages.WAYPOINT_LIST_TITLE));
-        
+
         final PresentationModel<SteerPointsCollectionReader> stpPresenter = (PresentationModel<SteerPointsCollectionReader>) getPresenter(
                 STEERPOINTS_PRESENTER);
-        
         add(createTextArea(stpPresenter), "2, 2");
-        
+
     }
-    
+
     /**
      * Create the text area.
      *
@@ -121,7 +119,7 @@ public class WaypointTextPanel extends AbstractCommonPanel {
              *
              */
             private static final long serialVersionUID = 5858092520252522599L;
-            
+
             /**
              *
              * {@inheritDoc}
@@ -131,7 +129,7 @@ public class WaypointTextPanel extends AbstractCommonPanel {
                 final StringBuffer buff = new StringBuffer();
                 if (obj instanceof LinkedListModel && !((LinkedListModel<?>) obj).isEmpty()) {
                     final LinkedListModel<SteerPointReader> steerPoints = (LinkedListModel<SteerPointReader>) obj;
-                    
+
                     for (final SteerPointReader steerPoint : steerPoints) {
                         buff.append(converterAdapter.convertSteerPointToString(steerPoint)).append(NEW_LINE);
                     }
@@ -141,7 +139,7 @@ public class WaypointTextPanel extends AbstractCommonPanel {
                 }
                 return buff;
             }
-            
+
             /**
              *
              * {@inheritDoc}
@@ -150,7 +148,7 @@ public class WaypointTextPanel extends AbstractCommonPanel {
             public Object parseObject(final String source, final ParsePosition pos) {
                 
                 final LinkedListModel<SteerPointModel> steerpoints = new LinkedListModel<SteerPointModel>();
-                
+
                 // Check if text is accepted
                 final String[] lines = source.split(NEW_LINE);
                 for (final String line : lines) {
@@ -163,17 +161,17 @@ public class WaypointTextPanel extends AbstractCommonPanel {
                 return steerpoints;
             }
         });
-        
+
         final JTextArea area = BasicComponentFactory.createTextArea(value);
         area.setRows(ROW_COUNTS);
         area.setColumns(1);
-        
+
         pane.add(area);
         pane.setViewportView(area);
         pane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         return pane;
     }
-    
+
     /**
      *
      * {@inheritDoc}.

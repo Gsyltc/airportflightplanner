@@ -108,7 +108,6 @@ public class WaypointEditionPanel extends AbstractCommandablePanel {
                 STEERPOINTS_PRESENTER);
         add(createWaypointTextPanel(presenter, stpPresenter), "2, 2,3,1,fill,fill");
         add(createResumePanel(presenter, stpPresenter), "2, 4,3,1,fill,fill");
-
     }
 
     /**
@@ -200,7 +199,7 @@ public class WaypointEditionPanel extends AbstractCommandablePanel {
                     if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug(this.getClass().getSimpleName() + " : " + "Validate");
                     }
-                    
+
                     final BufferedValueModel steerpoints = stpPresenter.getBufferedModel(
                             SteerPointsCollectionProperties.STEERPOINTS_MAP);
                     final List<SteerPointReader> list = (List<SteerPointReader>) steerpoints.getValue();
@@ -211,7 +210,7 @@ public class WaypointEditionPanel extends AbstractCommandablePanel {
 
                     final SteerPointModelAdapter adapter = (SteerPointModelAdapter) findAdapter(AdapterNames.STEERP_ADAPTER_NAME);
                     adapter.addSteerPoints(list);
-                    
+
                     break;
                 
                 case CANCEL:

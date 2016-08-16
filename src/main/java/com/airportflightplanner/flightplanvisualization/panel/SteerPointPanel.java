@@ -49,11 +49,11 @@ public class SteerPointPanel extends AbstractCommandablePanel {
     protected static final int STEERPOINT_PRESENTER = 0;
     /** The table. */
     private JTable table;
-    
+
     /**
      *
      */
-    
+
     /**
      * @param presenter
      *
@@ -61,7 +61,7 @@ public class SteerPointPanel extends AbstractCommandablePanel {
     public SteerPointPanel(final SteerPointsPresenter presenter) {
         super(presenter);
     }
-    
+
     /**
      *
      */
@@ -77,13 +77,13 @@ public class SteerPointPanel extends AbstractCommandablePanel {
                 new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC, //
                         FormSpecs.RELATED_GAP_ROWSPEC, }));
-        
+
         final TitledBorder panelBorder = new TitledBorder(FlightPlanCreationPanelMessages.STEERPOINTS_TITLE);
         setBorder(panelBorder);
-        
+
         add(createSteerPointsPanel(), "2, 2, 3, 1");
     }
-    
+
     /**
      *
      * @return
@@ -95,14 +95,14 @@ public class SteerPointPanel extends AbstractCommandablePanel {
         table = new JTable(presenter.getTableAdapter());
         table.setColumnSelectionAllowed(true);
         table.setDefaultRenderer(String.class, centerRenderer);
-        
+
         table.setFillsViewportHeight(true);
         final JScrollPane scrollPane = new JScrollPane();
         scrollPane.setPreferredSize(new Dimension(400, 300));
         scrollPane.setViewportView(table);
         return scrollPane;
     }
-    
+
     /**
      * {@inheritDoc}.
      */
@@ -117,7 +117,7 @@ public class SteerPointPanel extends AbstractCommandablePanel {
              *
              */
             private static final long serialVersionUID = -6027127491253834166L;
-            
+
             /**
              *
              * {@inheritDoc}
@@ -129,7 +129,7 @@ public class SteerPointPanel extends AbstractCommandablePanel {
             }
         });
     }
-    
+
     /**
      * @return the table
      */

@@ -3,7 +3,7 @@
  *
  * Goubaud Sylvain
  * Created : 2016
- * Modified : 7 août 2016.
+ * Modified : 18 août 2016.
  *
  * This code may be freely used and modified on any personal or professional
  * project.  It comes with no warranty.
@@ -57,12 +57,12 @@ public final class FlightPlanProperties {
     public static final String FILENAME = "fileName";
     /** */
     public static final String AIRCRAFT_CLASS = "aircraftClass";
-
+    
     /**
      * Protected constructor.
      */
-    private FlightPlanProperties() {
+    protected FlightPlanProperties() {
         //
     }
-
+    
 }

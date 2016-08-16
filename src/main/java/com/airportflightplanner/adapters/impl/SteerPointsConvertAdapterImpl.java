@@ -46,7 +46,7 @@ public class SteerPointsConvertAdapterImpl extends AbstractAdapterImpl implement
     
     /** The logger of this class. */
     private static final Logger LOGGER = LogManager.getLogger(SteerPointsConvertAdapterImpl.class);
-
+    
     /**
      *
      */
@@ -73,7 +73,7 @@ public class SteerPointsConvertAdapterImpl extends AbstractAdapterImpl implement
     private static final int WAYPOINT_NAME_KEY = 9;
     /** */
     private static final Object SPACE = " ";
-
+    
     /**
      *
      * {@inheritDoc}.
@@ -81,9 +81,9 @@ public class SteerPointsConvertAdapterImpl extends AbstractAdapterImpl implement
     @Override
     public void init() {
         // TODO Auto-generated method stub
-
+        
     }
-
+    
     /**
      *
      * {@inheritDoc}.
@@ -97,10 +97,10 @@ public class SteerPointsConvertAdapterImpl extends AbstractAdapterImpl implement
                 result.add(steerPoint);
             }
         }
-
+        
         return result;
     }
-
+    
     /**
      *
      * {@inheritDoc}.
@@ -117,7 +117,7 @@ public class SteerPointsConvertAdapterImpl extends AbstractAdapterImpl implement
         }
         return result;
     }
-
+    
     /**
      *
      * {@inheritDoc}.
@@ -127,7 +127,7 @@ public class SteerPointsConvertAdapterImpl extends AbstractAdapterImpl implement
         final StringBuilder result = new StringBuilder();
         final DecimalFormat speedFormatter = new DecimalFormat("###");
         final String speed = speedFormatter.format(steerPoint.getSpeed().getValue(NonSI.KNOT));
-
+        
         result.append(steerPoint.getLatLong().latitudeValue(NonSI.DEGREE_ANGLE)).append(SPACE) //
                 .append(steerPoint.getLatLong().longitudeValue(NonSI.DEGREE_ANGLE)).append(SPACE) //
                 .append(steerPoint.getAltitude().longValue(NonSI.FOOT)).append(SPACE) //
@@ -137,10 +137,10 @@ public class SteerPointsConvertAdapterImpl extends AbstractAdapterImpl implement
                 .append(steerPoint.getHeading().getSIValue()).append(SPACE).append("-1").append(SPACE) //
                 .append(steerPoint.getFormation().name()).append(SPACE) //
                 .append(steerPoint.getName());
-
+        
         return result.toString();
     }
-
+    
     /**
      *
      * @param steerpointsString
@@ -156,7 +156,7 @@ public class SteerPointsConvertAdapterImpl extends AbstractAdapterImpl implement
                 Double.valueOf(items[LONGITUDE_KEY]), NonSI.DEGREE_ANGLE));
         steerPoint.setAltitude(Altitude.valueOf(Double.valueOf(items[ALTITUDE_KEY]), NonSI.FOOT));
         steerPoint.setAltType(AltitudeType.valueOf(items[ALTTYPE_KEY]));
-
+        
         steerPoint.setSpeed(new Speed(Double.valueOf(items[SPEED_KEY]), NonSI.KNOT));
         steerPoint.setMaxBankingAngle(new BankingAngle(Double.valueOf(items[MAX_BANKING_ANGLE_KEY]), NonSI.DEGREE_ANGLE));
         steerPoint.setHeading(new Heading(Double.valueOf(items[HEADING_KEY]), NonSI.DEGREE_ANGLE));
@@ -164,7 +164,7 @@ public class SteerPointsConvertAdapterImpl extends AbstractAdapterImpl implement
         steerPoint.setName(items[WAYPOINT_NAME_KEY]);
         return steerPoint;
     }
-
+    
     /**
      *
      * @param steerPointDatas
@@ -184,13 +184,13 @@ public class SteerPointsConvertAdapterImpl extends AbstractAdapterImpl implement
             result &= FormationType.isValid(datas[FORMATION_KEY]);
             result &= null != datas[WAYPOINT_NAME_KEY];
         }
-
+        
         if (!result && LOGGER.isErrorEnabled()) {
             LOGGER.error("steerpoint datas not valid : " + steerPointDatas);
         }
         return result;
     }
-
+    
     /**
      *
      * @param value
@@ -201,7 +201,7 @@ public class SteerPointsConvertAdapterImpl extends AbstractAdapterImpl implement
         final Matcher matcher = pattern.matcher(value);
         return matcher.matches();
     }
-
+    
     /**
      *
      * @param value
@@ -212,7 +212,7 @@ public class SteerPointsConvertAdapterImpl extends AbstractAdapterImpl implement
         final Matcher matcher = pattern.matcher(value);
         return matcher.matches();
     }
-
+    
     /**
      *
      * @param value
@@ -223,7 +223,7 @@ public class SteerPointsConvertAdapterImpl extends AbstractAdapterImpl implement
         final Matcher matcher = pattern.matcher(value);
         return matcher.matches();
     }
-
+    
     /**
      *
      * @param value

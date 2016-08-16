@@ -143,7 +143,7 @@ public class SteerPointsCollectionModel extends Model implements SteerPointsColl
             firePropertyChange(SteerPointsCollectionProperties.STEERPOINTS_MAP, oldValue, steerPointsListModel);
         }
     }
-    
+
     /**
      *
      * {@inheritDoc}
@@ -165,7 +165,7 @@ public class SteerPointsCollectionModel extends Model implements SteerPointsColl
     public final FlightPlanReader getCurrentFlightPlan() {
         return currentFlightPlan;
     }
-
+    
     /**
      *
      */
@@ -221,7 +221,7 @@ public class SteerPointsCollectionModel extends Model implements SteerPointsColl
     private List<SteerPointsListModelListener> getListeners() {
         return listeners;
     }
-    
+
     /**
      *
      * {@inheritDoc}.
@@ -230,5 +230,5 @@ public class SteerPointsCollectionModel extends Model implements SteerPointsColl
     public void onListReset() {
         steerPointsListModel.clear();
     }
-    
+
 }
