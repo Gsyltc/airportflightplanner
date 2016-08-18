@@ -14,4 +14,4 @@
  *
  */
 
-package com.airportflightplanner.waypointmodifications.messages;
+package com.airportflightplanner.routecreation.messages;

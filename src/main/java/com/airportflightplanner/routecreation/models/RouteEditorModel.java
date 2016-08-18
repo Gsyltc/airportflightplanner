@@ -10,7 +10,7 @@
  *
  */
 
-package com.airportflightplanner.waypointmodifications.models;
+package com.airportflightplanner.routecreation.models;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -19,8 +19,8 @@ import org.joda.time.Period;
 
 import com.airportflightplanner.common.domaintypes.Distance;
 import com.airportflightplanner.models.steerpoints.api.bean.SteerPointReader;
-import com.airportflightplanner.waypointmodifications.api.model.WaypointsEditorProperties;
-import com.airportflightplanner.waypointmodifications.api.model.WaypointsEditorWriter;
+import com.airportflightplanner.routecreation.api.model.RouteEditorProperties;
+import com.airportflightplanner.routecreation.api.model.RouteEditorWriter;
 import com.jgoodies.binding.beans.Model;
 
 /**
@@ -28,7 +28,7 @@ import com.jgoodies.binding.beans.Model;
  *
  */
 
-public class WaypointsEditorModel extends Model implements WaypointsEditorWriter {
+public class RouteEditorModel extends Model implements RouteEditorWriter {
     
     
     /** the distance of the flight. */
@@ -78,7 +78,7 @@ public class WaypointsEditorModel extends Model implements WaypointsEditorWriter
         final Distance oldValue = getDistance();
         if (!distance.getValue().equals(value.getValue())) {
             distance = value;
-            firePropertyChange(WaypointsEditorProperties.DISTANCE, oldValue, distance);
+            firePropertyChange(RouteEditorProperties.DISTANCE, oldValue, distance);
         }
     }
 
@@ -87,7 +87,7 @@ public class WaypointsEditorModel extends Model implements WaypointsEditorWriter
         final Period oldValue = getFlightTime();
         if (!flightTime.equals(value)) {
             flightTime = value;
-            firePropertyChange(WaypointsEditorProperties.FLIGHT_TIME, oldValue, flightTime);
+            firePropertyChange(RouteEditorProperties.FLIGHT_TIME, oldValue, flightTime);
         }
     }
 
@@ -101,7 +101,7 @@ public class WaypointsEditorModel extends Model implements WaypointsEditorWriter
         final List<SteerPointReader> oldValue = getWaypoints();
         if (!waypoints.equals(value)) {
             waypoints = value;
-            firePropertyChange(WaypointsEditorProperties.WAYPOINTS, oldValue, waypoints);
+            firePropertyChange(RouteEditorProperties.WAYPOINTS, oldValue, waypoints);
         }
     }
 

@@ -36,6 +36,7 @@ import fr.gsyltc.framework.visualelements.types.LayoutSpecs;
  */
 public class CreationRoutePanel extends AbstractCommonPanel {
     
+    
     /** The logger of this class. */
     /**
      *
@@ -43,7 +44,7 @@ public class CreationRoutePanel extends AbstractCommonPanel {
     private static final long serialVersionUID = -2692513903084994308L;
     /** */
     protected GoogleMapPane googleMap;
-    
+
     /**
      * @param currentFlightPlan
      *
@@ -51,7 +52,7 @@ public class CreationRoutePanel extends AbstractCommonPanel {
     public CreationRoutePanel(final PresentationModel<FlightPlanReader> currentFlightPlan) {
         super(currentFlightPlan);
     }
-    
+
     /**
      *
      * {@inheritDoc}
@@ -77,16 +78,16 @@ public class CreationRoutePanel extends AbstractCommonPanel {
                         FormSpecs.PREF_ROWSPEC, //
                         FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.PREF_ROWSPEC, }));
-        
+
         final TitledBorder timePanelBorder = new TitledBorder(FlightPlanCreationPanelMessages.ROUTE_PANEL_LABEL);
         setBorder(timePanelBorder);
-        
+
         final JLabel routeLabel = new JLabel(FlightPlanCreationPanelMessages.ROUTE_LABEL);
         add(routeLabel, "2, 2, 5, 1");
         add(createRouteSelectorCombo(), "2, 4, 11, 1");
-        
+
     }
-    
+
     /**
      *
      * @return
@@ -95,6 +96,7 @@ public class CreationRoutePanel extends AbstractCommonPanel {
         final JComboBox<String> routeSelector = new JComboBox<>();
         routeSelector.addItemListener(new ItemListener() {
             
+            
             /**
              *
              * {@inheritDoc}
@@ -102,10 +104,10 @@ public class CreationRoutePanel extends AbstractCommonPanel {
             @Override
             public void itemStateChanged(final ItemEvent arg0) {
                 // TODO Auto-generated method stub
-                
+
             }
         });
-        
+
         return routeSelector;
     }
 }

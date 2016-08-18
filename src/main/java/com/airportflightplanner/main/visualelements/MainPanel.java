@@ -20,7 +20,7 @@ import com.airportflightplanner.common.types.BeanNames;
 import com.airportflightplanner.flightplancreation.panels.FlightPlanCreationPanel;
 import com.airportflightplanner.flightplanvisualization.panel.FlightPlanVisualiazationPanel;
 import com.airportflightplanner.main.visualelements.messages.MainPanelMessages;
-import com.airportflightplanner.waypointmodifications.panels.WaypointEditionPanel;
+import com.airportflightplanner.routecreation.panels.RouteEditiorPanel;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
@@ -43,7 +43,7 @@ public class MainPanel extends JPanel implements AbstractCommonConstant {
      *
      */
     private static final int FIRST_TAB = 0;
-
+    
     /**
      * Main Panel.
      */
@@ -51,7 +51,7 @@ public class MainPanel extends JPanel implements AbstractCommonConstant {
         super();
         buildPanel();
     }
-
+    
     /**
      *
      */
@@ -68,14 +68,14 @@ public class MainPanel extends JPanel implements AbstractCommonConstant {
                         FormSpecs.RELATED_GAP_ROWSPEC, //
                         FormSpecs.DEFAULT_ROWSPEC, //
                         FormSpecs.RELATED_GAP_ROWSPEC, }));
-
+        
         // Create Panel
         final FlightPlanCreationPanel createPanel = createFlightPlanCreationPanel();
         //
         final FlightPlanVisualiazationPanel fpVisuPanel = createFlightPlanVisualiazationPanel();
         //
-        final WaypointEditionPanel wpEditionPanel = createWaypointEditionPanel();
-
+        final RouteEditiorPanel wpEditionPanel = createWaypointEditionPanel();
+        
         // Create TabbedPanel
         final JTabbedPane tabbedPane = new JTabbedPane(SwingConstants.TOP);
         tabbedPane.add(MainPanelMessages.CREATE, createPanel);
@@ -85,9 +85,9 @@ public class MainPanel extends JPanel implements AbstractCommonConstant {
         // Add component to main panel
         add(fpVisuPanel, "2, 2, fill, fill");
         add(tabbedPane, "4, 2, center, fill");
-
+        
     }
-
+    
     /**
      *
      * @return the panel.
@@ -99,7 +99,7 @@ public class MainPanel extends JPanel implements AbstractCommonConstant {
         panel.build();
         return panel;
     }
-
+    
     /**
      *
      * @return the panel.
@@ -113,15 +113,15 @@ public class MainPanel extends JPanel implements AbstractCommonConstant {
         panel.build();
         return panel;
     }
-
+    
     /**
      *
      * @return the panel.
      */
-    private WaypointEditionPanel createWaypointEditionPanel() {
-        final WaypointEditionPanel panel = new WaypointEditionPanel(//
-                MODELS_PROVIDER.findModelByName(BeanNames.CURRENT_FP_MODEL), //
-                MODELS_PROVIDER.findModelByName(BeanNames.STEERPOINT_MODEL));
+    private RouteEditiorPanel createWaypointEditionPanel() {
+        final RouteEditiorPanel panel = new RouteEditiorPanel();//
+        // MODELS_PROVIDER.findModelByName(BeanNames.CURRENT_FP_MODEL), //
+        // MODELS_PROVIDER.findModelByName(BeanNames.STEERPOINT_MODEL));
         panel.build();
         return panel;
     }

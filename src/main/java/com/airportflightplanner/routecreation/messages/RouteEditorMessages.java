@@ -10,7 +10,7 @@
  *
  */
 
-package com.airportflightplanner.waypointmodifications.messages;
+package com.airportflightplanner.routecreation.messages;
 
 import com.airportflightplanner.flightplancreation.messages.FlightPlanCreationPanelMessages;
 
@@ -20,11 +20,11 @@ import fr.gsyltc.framework.utils.internationalizer.AbstractMessages;
  * @author Goubaud Sylvain
  *
  */
-public class WaypointModificationMessages extends AbstractMessages {
+public class RouteEditorMessages extends AbstractMessages {
     
     
     /** */
-    private static final String PREFIX = WaypointModificationMessages.class.getSimpleName() + ".";
+    private static final String PREFIX = RouteEditorMessages.class.getSimpleName() + ".";
 
     /** */
     public static final String WAYPOINT_LIST_TITLE = format(PREFIX + "WAYPOINT_LIST" + TITLE);

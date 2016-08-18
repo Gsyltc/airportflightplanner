@@ -72,4 +72,6 @@ public class FlightPlanCreationPanelMessages extends AbstractMessages {
     public static final String MAP_TITLE = format(PREFIX + "MAP" + TITLE);
     /** */
     public static final String AIRPORT_TITLE = format(PREFIX + "AIRPORT" + TITLE);
+    /** */
+    public static final String DESTINATION = format(PREFIX + "DESTINATION" + LABEL);
 }

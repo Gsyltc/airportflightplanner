@@ -10,7 +10,7 @@
  *
  */
 
-package com.airportflightplanner.waypointmodifications.api.model;
+package com.airportflightplanner.routecreation.api.model;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ import com.airportflightplanner.models.steerpoints.api.bean.SteerPointReader;
  *
  */
 
-public interface WaypointsEditorReader {
+public interface RouteEditorReader {
     
     
     /**

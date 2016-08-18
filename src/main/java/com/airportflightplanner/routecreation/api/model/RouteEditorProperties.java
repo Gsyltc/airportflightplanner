@@ -10,14 +10,14 @@
  *
  */
 
-package com.airportflightplanner.waypointmodifications.api.model;
+package com.airportflightplanner.routecreation.api.model;
 
 /**
  * @author Goubaud Sylvain
  *
  */
 
-public class WaypointsEditorProperties {
+public class RouteEditorProperties {
     
     
     /** the distance properties. */
@@ -30,7 +30,7 @@ public class WaypointsEditorProperties {
     /**
      * Protected consturctor.
      */
-    protected WaypointsEditorProperties() {
+    protected RouteEditorProperties() {
         //
     }
 }
